@@ -1,12 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap");
 
 :root {
-  --primary: #4b413d;
-  --bg-light: #fff;
-  --bg-dark: #ececec;
-  --secondary-light: #ffda44;
-  --secondary-dark: #9c9795;
+  --text-primary: #4b413d;
+  --text-secondary: #9c9795;
+  --bg: #fff;
+  --border: #ececec;
+  --btn-primary: #ff9811;
   --padding: 10px;
   --margin: 10px;
   --gap: 5px;
@@ -20,9 +20,9 @@
 
 .wrapper {
   font-family: "Roboto", sans-serif;
-  color: var(--text);
+  color: var(--text-primary);
   font-weight: 300;
-  background-color: var(--bg-dark);
+  background-color: var(--bg);
 }
 
 a {

@@ -1,3 +1,36 @@
 .shadow {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
+.btn {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: var(--padding);
+  border-radius: 10px;
+  transition: 0.2s ease-in-out;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.btnPrimary {
+  border: 2px solid var(--btn-primary);
+  background-color: var(--btn-primary);
+  color: var(--bg);
+}
+
+.btnPrimary:hover {
+  background-color: var(--bg);
+  color: var(--btn-primary);
+}
+
+.btnSecondary {
+  border: 2px solid var(--border);
+  background-color: var(--bg);
+  color: var(--text-primary);
+}
+
+.btnSecondary:hover {
+  background-color: var(--border);
+}

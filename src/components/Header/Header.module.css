@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding: calc(var(--padding) * 2);
-  background-color: var(--bg-light);
+  background-color: var(--bg);
   gap: var(--gap);
 }
 
@@ -17,7 +17,7 @@
   justify-content: center;
   align-items: center;
   gap: var(--gap);
-  color: var(--primary);
+  color: var(--text-primary);
   width: fit-content;
 }
 
@@ -38,12 +38,12 @@
   align-items: center;
   gap: calc(var(--gap) * 2);
   padding: var(--padding);
-  border: 2px solid var(--bg-dark);
+  border: 2px solid var(--border);
   border-radius: 25px;
 }
 
 .searchIcon {
-  fill: var(--secondary-dark);
+  fill: var(--text-secondary);
   max-width: 15px;
   max-height: 15px;
   min-width: 15px;
@@ -56,7 +56,7 @@
   border: none;
   font-size: 1rem;
   font-weight: 500;
-  color: var(--primary);
+  color: var(--text-primary);
 }
 
 .searchInput:focus {
@@ -84,7 +84,7 @@
 }
 
 .viewIcon {
-  fill: var(--secondary-dark);
+  fill: var(--text-secondary);
   width: 25px;
   height: 25px;
 }
