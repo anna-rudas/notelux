@@ -1,0 +1,45 @@
+.notesConEmpty {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  display: flex;
+  justify-content: center;
+}
+
+.notesCon {
+  padding: calc(var(--padding) * 2);
+}
+
+.noteListCon {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: calc(var(--gap) * 3);
+}
+
+.noteCard {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gap) * 2);
+  height: fit-content;
+  border-radius: 5px;
+  padding: var(--padding);
+  pointer-events: none;
+}
+
+.noteTitle {
+  min-height: 50px;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.noteBody {
+  min-height: 50px;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+@media (max-width: 600px) {
+  .noteListCon {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
