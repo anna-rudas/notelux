@@ -5,6 +5,7 @@
   --text-primary: #4b413d;
   --text-secondary: #9c9795;
   --bg: #fff;
+  --bg-transparent: rgba(95, 95, 97, 0.5);
   --border: #ececec;
   --btn-primary: #ff9811;
   --padding: 10px;
@@ -18,11 +19,23 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
 .wrapper {
+  height: 100%;
   font-family: "Roboto", sans-serif;
   color: var(--text-primary);
   font-weight: 300;
   background-color: var(--bg);
+  position: relative;
+  overflow: auto;
 }
 
 a {

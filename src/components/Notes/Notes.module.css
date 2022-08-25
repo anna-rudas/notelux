@@ -17,13 +17,18 @@
 }
 
 .noteCard {
+  border: none;
+  background-color: var(--bg);
+
+  color: var(--text-primary);
   display: flex;
   flex-direction: column;
   gap: calc(var(--gap) * 2);
   height: fit-content;
   border-radius: 5px;
   padding: var(--padding);
-  pointer-events: none;
+  cursor: pointer;
+  text-align: left;
 }
 
 .noteTitle {

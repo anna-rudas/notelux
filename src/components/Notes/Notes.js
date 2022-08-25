@@ -4,7 +4,7 @@ import style from "./Notes.module.css";
 import NoteCard from "./NoteCard";
 //import shared from "../shared.module.css";
 
-function Notes({ notes }) {
+function Notes({ notes, handleEdit }) {
   return (
     <div {...className(!notes.length ? style.notesConEmpty : style.notesCon)}>
       {!notes.length ? (
@@ -12,7 +12,13 @@ function Notes({ notes }) {
       ) : (
         <div {...className(style.noteListCon)}>
           {notes.map((currentNote) => {
-            return <NoteCard {...currentNote} key={currentNote.id} />;
+            return (
+              <NoteCard
+                {...currentNote}
+                key={currentNote.id}
+                handleEdit={handleEdit}
+              />
+            );
           })}
         </div>
       )}
