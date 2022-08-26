@@ -17,3 +17,28 @@
 .editNoteBody {
   height: 300px;
 }
+
+.editNoteSet {
+  justify-content: space-between;
+}
+
+.btnsCon {
+  display: flex;
+  gap: calc(var(--gap) * 2);
+  justify-content: center;
+  align-items: center;
+}
+
+.btnDelete {
+  background-color: var(--bg);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.trashIcon {
+  width: 30px;
+  height: 30px;
+}

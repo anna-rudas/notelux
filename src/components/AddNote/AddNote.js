@@ -54,7 +54,7 @@ function AddNote({
             onChange={(event) => setBody(event.target.value)}
             {...className(style.addNoteBody, shared.noteBody)}
           ></textarea>
-          <div {...className(shared.noteSet)}>
+          <div {...className(shared.noteSet, style.addNoteSet)}>
             <button {...className(shared.btn, shared.btnPrimary)} type="submit">
               Save
             </button>

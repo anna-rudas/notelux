@@ -30,6 +30,10 @@
   height: 200px;
 }
 
+.addNoteSet {
+  justify-content: flex-end;
+}
+
 @media (max-width: 600px) {
   .addNoteInput {
     width: 80%;
