@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import AddNote from "./components/AddNote";
 import EditNote from "./components/EditNote";
@@ -11,9 +11,23 @@ const emptyNote = {
   id: "",
 };
 
+const getNotes = () => {
+  if (localStorage.getItem("savedNotes") === null) {
+    localStorage.setItem("savedNotes", JSON.stringify([]));
+    return [];
+  } else {
+    const notesLocal = JSON.parse(localStorage.getItem("savedNotes"));
+    return notesLocal;
+  }
+};
+
+const saveNotes = (notes) => {
+  localStorage.setItem("savedNotes", JSON.stringify(notes));
+};
+
 function App() {
   const [isOpen, setIsOpen] = useState(false);
-  const [notes, setNotes] = useState([]);
+  const [notes, setNotes] = useState(getNotes());
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [isEditing, setIsEditing] = useState(false);
@@ -24,6 +38,10 @@ function App() {
     setIsOpen(false);
     setEditNote(notes.find((currentNote) => currentNote.id === id));
   };
+
+  useEffect(() => {
+    saveNotes(notes);
+  }, [notes]);
 
   return (
     <div className="wrapper">
