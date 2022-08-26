@@ -32,6 +32,7 @@ function App() {
   const [body, setBody] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editNote, setEditNote] = useState(emptyNote);
+  const [search, setSearch] = useState("");
 
   const handleEdit = (event, id) => {
     setIsEditing(true);
@@ -45,7 +46,7 @@ function App() {
 
   return (
     <div className="wrapper">
-      <Header />
+      <Header search={search} setSearch={setSearch} />
       <AddNote
         isOpen={isOpen}
         setIsOpen={setIsOpen}
@@ -56,7 +57,7 @@ function App() {
         body={body}
         setBody={setBody}
       />
-      <Notes notes={notes} handleEdit={handleEdit} />
+      <Notes notes={notes} handleEdit={handleEdit} search={search} />
       {isEditing && (
         <EditNote
           notes={notes}

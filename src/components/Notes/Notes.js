@@ -4,14 +4,23 @@ import style from "./Notes.module.css";
 import NoteCard from "./NoteCard";
 //import shared from "../shared.module.css";
 
-function Notes({ notes, handleEdit }) {
+function Notes({ notes, handleEdit, search }) {
+  const searchFilteredNotes = notes.filter(function (current) {
+    return (
+      current.title.toLowerCase().includes(search.toLowerCase()) ||
+      current.body.toLowerCase().includes(search.toLowerCase())
+    );
+  });
+
   return (
-    <div {...className(!notes.length ? style.notesConEmpty : style.notesCon)}>
-      {!notes.length ? (
-        <span>You have no notes saved</span>
-      ) : (
+    <div
+      {...className(
+        searchFilteredNotes.length > 0 ? style.notesCon : style.notesConEmpty
+      )}
+    >
+      {searchFilteredNotes.length > 0 ? (
         <div {...className(style.noteListCon)}>
-          {notes.map((currentNote) => {
+          {searchFilteredNotes.map((currentNote) => {
             return (
               <NoteCard
                 {...currentNote}
@@ -21,6 +30,10 @@ function Notes({ notes, handleEdit }) {
             );
           })}
         </div>
+      ) : search !== "" ? (
+        <span>No notes match your search</span>
+      ) : (
+        <span>You have no notes saved</span>
       )}
     </div>
   );

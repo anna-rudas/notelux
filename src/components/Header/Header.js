@@ -7,7 +7,7 @@ import SearchIcon from "../../icons/SearchIcon";
 import GridIcon from "../../icons/GridIcon";
 import ListIcon from "../../icons/ListIcon";
 
-function Header() {
+function Header({ search, setSearch }) {
   const [isGrid, setIsGrid] = useState(true);
 
   const toggleGrid = () => {
@@ -28,6 +28,8 @@ function Header() {
           {...className(style.searchInput)}
           type="search"
           placeholder="Search"
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
         />
       </div>
       <div {...className(style.setCon)}>
