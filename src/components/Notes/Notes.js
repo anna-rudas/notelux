@@ -2,7 +2,6 @@ import React from "react";
 import { className } from "../../helpers";
 import style from "./Notes.module.css";
 import NoteCard from "./NoteCard";
-//import shared from "../shared.module.css";
 
 function Notes({ notes, handleEdit, search }) {
   const searchFilteredNotes = notes.filter(function (current) {

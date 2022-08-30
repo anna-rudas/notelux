@@ -19,7 +19,6 @@
 .noteCard {
   border: none;
   background-color: var(--bg);
-
   color: var(--text-primary);
   display: flex;
   flex-direction: column;

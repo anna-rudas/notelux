@@ -84,7 +84,7 @@
 }
 
 .viewIcon {
-  fill: var(--text-secondary);
+  fill: var(--text-primary);
   width: 25px;
   height: 25px;
 }

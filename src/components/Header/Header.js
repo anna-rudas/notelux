@@ -19,7 +19,7 @@ function Header({ search, setSearch }) {
       <div {...className(style.logoCon)}>
         <a {...className(style.linkCon)} href=".">
           <MyNotesLogo {...className(style.notesIcon)} />
-          <span {...className(style.name)}>MyNotes</span>
+          <span {...className(style.name)}>NoteLux</span>
         </a>
       </div>
       <div {...className(style.searchCon)}>

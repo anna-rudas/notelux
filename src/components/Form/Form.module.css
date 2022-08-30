@@ -1,0 +1,117 @@
+.noteForm {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* order: 2px solid var(--border); */
+  border-radius: 5px;
+  padding: var(--padding);
+  gap: var(--gap);
+}
+
+.noteTitle {
+  height: 50px;
+  width: 100%;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: var(--padding);
+  border: none;
+  color: var(--text-primary);
+}
+
+.noteTitle:focus {
+  outline: none;
+}
+
+.noteBody {
+  width: 100%;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  padding: var(--padding);
+  resize: none;
+  border: none;
+  color: var(--text-primary);
+}
+
+.noteBody:focus {
+  outline: none;
+}
+
+.noteSet {
+  display: flex;
+  width: 100%;
+  gap: calc(var(--gap) * 2);
+  padding-top: var(--padding);
+  justify-content: space-between;
+}
+
+.btnsCon {
+  display: flex;
+  gap: calc(var(--gap) * 2);
+  justify-content: center;
+  align-items: center;
+}
+
+.btnIcon {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.trashIcon {
+  width: 30px;
+  height: 30px;
+  fill: var(--text-primary);
+  padding: 0.5px;
+}
+
+.paletteCon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.paletteIcon {
+  width: 33px;
+  height: 33px;
+  fill: var(--text-primary);
+}
+
+.btn {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: var(--padding);
+  border-radius: 10px;
+  transition: 0.2s ease-in-out;
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.btnPrimary {
+  border: 1.5px solid var(--text-primary);
+  background-color: var(--text-primary);
+  color: var(--bg);
+}
+
+.btnPrimary:hover {
+  background-color: transparent;
+  color: var(--text-primary);
+}
+
+.btnSecondary {
+  border: 1.5px solid transparent !important;
+  border: none;
+  /* background-color: var(--bg); */
+  color: var(--text-primary);
+}
+
+.btnSecondary:hover {
+  border: 1.5px solid var(--text-primary) !important;
+}

@@ -1,0 +1,52 @@
+.colorsCon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap);
+  position: absolute;
+  bottom: 43px;
+  left: 0px;
+  padding: var(--padding);
+  width: 33px;
+  background-color: var(--text-primary);
+  border-radius: 5px;
+  animation-name: slowDisplay;
+  animation-duration: 0.5s;
+}
+
+@keyframes slowDisplay {
+  0% {
+    opacity: 50%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+.radioCon {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.radioInput {
+  appearance: none;
+}
+
+.radioInput:focus {
+  outline: none;
+}
+
+.colorRec {
+  border: 3px solid var(--text-primary);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  transition: all 0.1s ease-in-out;
+}
+
+.radioInput:focus + .colorRec {
+  border: 1px solid var(--text-primary);
+}

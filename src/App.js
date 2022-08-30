@@ -4,20 +4,15 @@ import AddNote from "./components/AddNote";
 import EditNote from "./components/EditNote";
 import Header from "./components/Header";
 import Notes from "./components/Notes";
-
-const emptyNote = {
-  title: "",
-  body: "",
-  id: "",
-};
+import { emptyNote } from "./constants";
 
 const getNotes = () => {
-  if (localStorage.getItem("savedNotes") === null) {
-    localStorage.setItem("savedNotes", JSON.stringify([]));
-    return [];
-  } else {
+  if (localStorage.getItem("savedNotes")) {
     const notesLocal = JSON.parse(localStorage.getItem("savedNotes"));
     return notesLocal;
+  } else {
+    localStorage.setItem("savedNotes", JSON.stringify([]));
+    return [];
   }
 };
 
@@ -28,16 +23,18 @@ const saveNotes = (notes) => {
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [notes, setNotes] = useState(getNotes());
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+  const [note, setNote] = useState(emptyNote);
   const [isEditing, setIsEditing] = useState(false);
   const [editNote, setEditNote] = useState(emptyNote);
   const [search, setSearch] = useState("");
+  const [bgColor, setBgColor] = useState("default");
 
   const handleEdit = (event, id) => {
     setIsEditing(true);
     setIsOpen(false);
-    setEditNote(notes.find((currentNote) => currentNote.id === id));
+    const tempNote = notes.find((currentNote) => currentNote.id === id);
+    setEditNote(tempNote);
+    setBgColor(tempNote.color);
   };
 
   useEffect(() => {
@@ -52,10 +49,10 @@ function App() {
         setIsOpen={setIsOpen}
         notes={notes}
         setNotes={setNotes}
-        title={title}
-        setTitle={setTitle}
-        body={body}
-        setBody={setBody}
+        note={note}
+        setNote={setNote}
+        bgColor={bgColor}
+        setBgColor={setBgColor}
       />
       <Notes notes={notes} handleEdit={handleEdit} search={search} />
       {isEditing && (
@@ -64,7 +61,10 @@ function App() {
           setNotes={setNotes}
           editNote={editNote}
           setEditNote={setEditNote}
+          isEditing={isEditing}
           setIsEditing={setIsEditing}
+          bgColor={bgColor}
+          setBgColor={setBgColor}
         />
       )}
     </div>
