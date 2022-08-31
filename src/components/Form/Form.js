@@ -29,6 +29,7 @@ function Form({
     >
       <input
         {...className(style.noteTitle)}
+        maxLength="200"
         type="text"
         placeholder="Title"
         value={note.title}

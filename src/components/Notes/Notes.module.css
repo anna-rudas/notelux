@@ -8,11 +8,24 @@
 
 .notesCon {
   padding: calc(var(--padding) * 2);
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .noteListCon {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 23%);
+  gap: calc(var(--gap) * 3);
+  max-width: 1500px;
+  width: 100%;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
   gap: calc(var(--gap) * 3);
 }
 
@@ -28,22 +41,35 @@
   padding: var(--padding);
   cursor: pointer;
   text-align: left;
+  overflow: hidden;
+  line-height: 20px;
 }
 
 .noteTitle {
   min-height: 50px;
   font-size: 1.2rem;
   font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .noteBody {
   min-height: 50px;
   font-size: 1rem;
   font-weight: 400;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
 }
 
 @media (max-width: 600px) {
   .noteListCon {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 48%);
+  }
+
+  .notesCon {
+    padding: var(--padding);
   }
 }
