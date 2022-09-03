@@ -25,6 +25,7 @@ function EditNote({
           currentNote.title = editNote.title;
           currentNote.body = editNote.body;
           currentNote.color = bgColor;
+          currentNote.date = new Date();
         }
         return currentNote;
       })

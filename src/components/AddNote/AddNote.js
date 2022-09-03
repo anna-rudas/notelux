@@ -16,7 +16,10 @@ function AddNote({
   setBgColor,
 }) {
   const handleSubmit = () => {
-    setNotes([...notes, { ...note, color: bgColor, id: uuidv4() }]);
+    setNotes([
+      ...notes,
+      { ...note, color: bgColor, id: uuidv4(), date: new Date() },
+    ]);
     setNote(emptyNote);
     setIsOpen(false);
     setBgColor("default");

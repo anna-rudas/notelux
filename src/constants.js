@@ -25,4 +25,5 @@ export const emptyNote = {
   body: "",
   color: "",
   id: "",
+  date: "",
 };
