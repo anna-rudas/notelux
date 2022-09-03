@@ -28,6 +28,7 @@ function App() {
   const [editNote, setEditNote] = useState(emptyNote);
   const [search, setSearch] = useState("");
   const [bgColor, setBgColor] = useState("default");
+  const [isGrid, setIsGrid] = useState(true);
 
   const handleEdit = (event, id) => {
     setIsEditing(true);
@@ -43,7 +44,12 @@ function App() {
 
   return (
     <div className="wrapper">
-      <Header search={search} setSearch={setSearch} />
+      <Header
+        search={search}
+        setSearch={setSearch}
+        isGrid={isGrid}
+        setIsGrid={setIsGrid}
+      />
       <AddNote
         isOpen={isOpen}
         setIsOpen={setIsOpen}
@@ -54,7 +60,12 @@ function App() {
         bgColor={bgColor}
         setBgColor={setBgColor}
       />
-      <Notes notes={notes} handleEdit={handleEdit} search={search} />
+      <Notes
+        notes={notes}
+        handleEdit={handleEdit}
+        search={search}
+        isGrid={isGrid}
+      />
       {isEditing && (
         <EditNote
           notes={notes}

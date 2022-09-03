@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { className } from "../../helpers";
 import style from "./Header.module.css";
 import shared from "../shared.module.css";
@@ -7,9 +7,7 @@ import SearchIcon from "../../icons/SearchIcon";
 import GridIcon from "../../icons/GridIcon";
 import ListIcon from "../../icons/ListIcon";
 
-function Header({ search, setSearch }) {
-  const [isGrid, setIsGrid] = useState(true);
-
+function Header({ search, setSearch, isGrid, setIsGrid }) {
   const toggleGrid = () => {
     setIsGrid(!isGrid);
   };
@@ -33,7 +31,11 @@ function Header({ search, setSearch }) {
         />
       </div>
       <div {...className(style.setCon)}>
-        <button {...className(style.iconBtn)} onClick={toggleGrid}>
+        <button
+          {...className(style.iconBtn)}
+          onClick={toggleGrid}
+          title={isGrid ? "Grid view" : "List view"}
+        >
           {isGrid ? (
             <GridIcon {...className(style.viewIcon)} />
           ) : (

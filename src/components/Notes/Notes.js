@@ -3,7 +3,7 @@ import { className, sortNotes } from "../../helpers";
 import style from "./Notes.module.css";
 import NoteCard from "./NoteCard";
 
-function Notes({ notes, handleEdit, search }) {
+function Notes({ notes, handleEdit, search, isGrid }) {
   const [matches, setMatches] = useState(
     window.matchMedia("(max-width: 600px)").matches
   );
@@ -14,7 +14,7 @@ function Notes({ notes, handleEdit, search }) {
       .addEventListener("change", (event) => setMatches(event.matches));
   }, []);
 
-  const numberOfColumns = matches ? 2 : 4;
+  const numberOfColumns = !isGrid ? 1 : matches ? 2 : 4;
 
   const searchFilteredNotes = notes.filter(function (current) {
     return (
@@ -32,7 +32,7 @@ function Notes({ notes, handleEdit, search }) {
       )}
     >
       {searchFilteredNotes.length > 0 ? (
-        <div {...className(style.noteListCon)}>
+        <div {...className(isGrid ? style.noteGridCon : style.noteListCon)}>
           {sortedNotes.map((currentColumn, index) => {
             return (
               <div key={index} {...className(style.column)}>
