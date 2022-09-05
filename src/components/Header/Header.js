@@ -6,10 +6,16 @@ import MyNotesLogo from "../../icons/MyNotesLogo";
 import SearchIcon from "../../icons/SearchIcon";
 import GridIcon from "../../icons/GridIcon";
 import ListIcon from "../../icons/ListIcon";
+import SunIcon from "../../icons/SunIcon";
+import MoonIcon from "../../icons/MoonIcon";
 
-function Header({ search, setSearch, isGrid, setIsGrid }) {
+function Header({ search, setSearch, isGrid, setIsGrid, theme, setTheme }) {
   const toggleGrid = () => {
     setIsGrid(!isGrid);
+  };
+
+  const toggleTheme = () => {
+    theme === "light" ? setTheme("dark") : setTheme("light");
   };
 
   return (
@@ -40,6 +46,17 @@ function Header({ search, setSearch, isGrid, setIsGrid }) {
             <GridIcon {...className(style.viewIcon)} />
           ) : (
             <ListIcon {...className(style.viewIcon)} />
+          )}
+        </button>
+        <button
+          {...className(style.iconBtn)}
+          onClick={toggleTheme}
+          title={theme === "light" ? "Light mode" : "Dark mode"}
+        >
+          {theme === "light" ? (
+            <SunIcon {...className(style.viewIcon)} />
+          ) : (
+            <MoonIcon {...className(style.viewIcon)} />
           )}
         </button>
       </div>

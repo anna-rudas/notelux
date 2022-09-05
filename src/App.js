@@ -27,7 +27,10 @@ function App() {
   const [isEditing, setIsEditing] = useState(false);
   const [editNote, setEditNote] = useState(emptyNote);
   const [search, setSearch] = useState("");
-  const [bgColor, setBgColor] = useState("default");
+  const [theme, setTheme] = useState("light");
+  const [bgColor, setBgColor] = useState(
+    theme === "light" ? "default" : "yellow"
+  );
   const [isGrid, setIsGrid] = useState(true);
 
   const handleEdit = (event, id) => {
@@ -42,13 +45,19 @@ function App() {
     saveNotes(notes);
   }, [notes]);
 
+  useEffect(() => {
+    setBgColor(theme === "light" ? "default" : "yellow");
+  }, [theme]);
+
   return (
-    <div className="wrapper">
+    <div className="wrapper" data-theme={theme}>
       <Header
         search={search}
         setSearch={setSearch}
         isGrid={isGrid}
         setIsGrid={setIsGrid}
+        theme={theme}
+        setTheme={setTheme}
       />
       <AddNote
         isOpen={isOpen}
@@ -59,6 +68,7 @@ function App() {
         setNote={setNote}
         bgColor={bgColor}
         setBgColor={setBgColor}
+        theme={theme}
       />
       <Notes
         notes={notes}
@@ -76,6 +86,7 @@ function App() {
           setIsEditing={setIsEditing}
           bgColor={bgColor}
           setBgColor={setBgColor}
+          theme={theme}
         />
       )}
     </div>

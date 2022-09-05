@@ -3,14 +3,18 @@
 
 :root {
   --text-primary: #38312e;
-  --text-secondary: #9c9795;
+  --text-secondary: #38312e;
   --bg: #fff;
   --bg-transparent: rgba(95, 95, 97, 0.5);
   --border: #ececec;
-  --btn-primary: #ff9811;
   --padding: 10px;
   --margin: 10px;
   --gap: 5px;
+}
+
+[data-theme="dark"] {
+  --bg: #38312e;
+  --text-secondary: #fff;
 }
 
 * {

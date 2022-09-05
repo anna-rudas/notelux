@@ -97,18 +97,16 @@
 .btnPrimary {
   border: 1.5px solid var(--text-primary);
   background-color: var(--text-primary);
-  color: var(--bg);
 }
 
 .btnPrimary:hover {
   background-color: transparent;
-  color: var(--text-primary);
+  color: var(--text-primary) !important;
 }
 
 .btnSecondary {
   border: 1.5px solid transparent !important;
   border: none;
-  /* background-color: var(--bg); */
   color: var(--text-primary);
 }
 

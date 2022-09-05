@@ -12,10 +12,11 @@ function EditNote({
   setNotes,
   bgColor,
   setBgColor,
+  theme,
 }) {
   const handleCancel = () => {
     setIsEditing(false);
-    setBgColor("default");
+    setBgColor(theme === "light" ? "default" : "yellow");
   };
 
   const handleSubmit = () => {
@@ -31,7 +32,7 @@ function EditNote({
       })
     );
     setIsEditing(false);
-    setBgColor("default");
+    setBgColor(theme === "light" ? "default" : "yellow");
   };
 
   const setEditNoteValue = (field, value) => {

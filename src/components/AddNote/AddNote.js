@@ -14,6 +14,7 @@ function AddNote({
   setNote,
   bgColor,
   setBgColor,
+  theme,
 }) {
   const handleSubmit = () => {
     setNotes([
@@ -22,13 +23,13 @@ function AddNote({
     ]);
     setNote(emptyNote);
     setIsOpen(false);
-    setBgColor("default");
+    setBgColor(theme === "light" ? "default" : "yellow");
   };
 
   const handleCancel = () => {
     setNote(emptyNote);
     setIsOpen(false);
-    setBgColor("default");
+    setBgColor(theme === "light" ? "default" : "yellow");
   };
 
   const setAddNoteValue = (field, value) => {

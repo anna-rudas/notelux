@@ -30,6 +30,7 @@
   font-family: "Oswald", sans-serif;
   font-weight: 600;
   font-size: 1.7rem;
+  color: var(--text-secondary);
 }
 
 .searchCon {
@@ -40,6 +41,7 @@
   padding: var(--padding);
   border: 2px solid var(--border);
   border-radius: 25px;
+  margin: 0 10px;
 }
 
 .searchIcon {
@@ -56,7 +58,8 @@
   border: none;
   font-size: 1rem;
   font-weight: 500;
-  color: var(--text-primary);
+  color: var(--text-secondary);
+  background-color: var(--bg);
 }
 
 .searchInput:focus {
@@ -67,6 +70,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  gap: calc(var(--gap) * 4);
 }
 
 .iconBtn {
@@ -84,17 +88,27 @@
 }
 
 .viewIcon {
-  fill: var(--text-primary);
+  fill: var(--text-secondary);
   width: 25px;
   height: 25px;
 }
 
 @media (max-width: 600px) {
   .header {
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-columns: 1fr 7fr 1fr;
+    padding: var(--padding);
   }
 
   .name {
     display: none;
+  }
+
+  .notesIcon {
+    width: 35px;
+    height: 35px;
+  }
+
+  .setCon {
+    gap: calc(var(--gap) * 2);
   }
 }

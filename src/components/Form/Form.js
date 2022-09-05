@@ -72,7 +72,11 @@ function Form({
           </div>
         </div>
         <div {...className(style.btnsCon)}>
-          <button {...className(style.btn, style.btnPrimary)} type="submit">
+          <button
+            style={{ color: colors[bgColor] }}
+            {...className(style.btn, style.btnPrimary)}
+            type="submit"
+          >
             Save
           </button>
           <button
