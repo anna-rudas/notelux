@@ -29,3 +29,8 @@ export const emptyNote = {
 };
 
 export const storageKey = "savedNotes";
+
+export const defaultNoteColor = {
+  light: "default",
+  dark: "yellow",
+};

@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  /* order: 2px solid var(--border); */
   border-radius: 5px;
   padding: var(--padding);
   gap: var(--gap);

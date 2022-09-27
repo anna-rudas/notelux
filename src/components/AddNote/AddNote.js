@@ -3,7 +3,7 @@ import { className } from "../../helpers";
 import style from "./AddNote.module.css";
 import { v4 as uuidv4 } from "uuid";
 import Form from "../Form";
-import { emptyNote } from "../../constants";
+import { emptyNote, defaultNoteColor } from "../../constants";
 
 function AddNote({
   isAddNoteOpen,
@@ -23,13 +23,13 @@ function AddNote({
     ]);
     setActiveNote(emptyNote);
     setIsAddNoteOpen(false);
-    setnoteColor(theme === "light" ? "default" : "yellow");
+    setnoteColor(defaultNoteColor[theme]);
   };
 
   const handleCancel = () => {
     setActiveNote(emptyNote);
     setIsAddNoteOpen(false);
-    setnoteColor(theme === "light" ? "default" : "yellow");
+    setnoteColor(defaultNoteColor[theme]);
   };
 
   const setAddNoteValue = (field, value) => {

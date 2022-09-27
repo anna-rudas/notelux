@@ -4,7 +4,7 @@ import AddNote from "./components/AddNote";
 import EditNote from "./components/EditNote";
 import Header from "./components/Header";
 import Notes from "./components/Notes";
-import { emptyNote, storageKey } from "./constants";
+import { emptyNote, storageKey, defaultNoteColor } from "./constants";
 
 const getNotes = () => {
   return JSON.parse(localStorage.getItem(storageKey)) || [];
@@ -21,9 +21,7 @@ function App() {
   const [activeNote, setActiveNote] = useState(emptyNote);
   const [search, setSearch] = useState("");
   const [theme, setTheme] = useState("light");
-  const [noteColor, setnoteColor] = useState(
-    theme === "light" ? "default" : "yellow"
-  );
+  const [noteColor, setnoteColor] = useState(defaultNoteColor[theme]);
   const [isGrid, setIsGrid] = useState(true);
 
   const handleEdit = (event, id) => {
@@ -39,7 +37,7 @@ function App() {
   }, [notes]);
 
   useEffect(() => {
-    setnoteColor(theme === "light" ? "default" : "yellow");
+    setnoteColor(defaultNoteColor[theme]);
   }, [theme]);
 
   return (

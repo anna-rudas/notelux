@@ -2,7 +2,7 @@ import React from "react";
 import { className } from "../../helpers";
 import style from "./EditNote.module.css";
 import Form from "../Form";
-import { emptyNote } from "../../constants";
+import { emptyNote, defaultNoteColor } from "../../constants";
 
 function EditNote({
   activeNote,
@@ -18,7 +18,7 @@ function EditNote({
   const handleCancel = () => {
     setIsEditing(false);
     setActiveNote(emptyNote);
-    setnoteColor(theme === "light" ? "default" : "yellow");
+    setnoteColor(defaultNoteColor[theme]);
   };
 
   const handleSubmit = () => {
@@ -35,7 +35,7 @@ function EditNote({
     );
     setIsEditing(false);
     setActiveNote(emptyNote);
-    setnoteColor(theme === "light" ? "default" : "yellow");
+    setnoteColor(defaultNoteColor[theme]);
   };
 
   const setEditNoteValue = (field, value) => {
