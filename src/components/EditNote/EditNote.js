@@ -2,49 +2,52 @@ import React from "react";
 import { className } from "../../helpers";
 import style from "./EditNote.module.css";
 import Form from "../Form";
+import { emptyNote } from "../../constants";
 
 function EditNote({
-  editNote,
-  setEditNote,
+  activeNote,
+  setActiveNote,
   isEditing,
   setIsEditing,
   notes,
   setNotes,
-  bgColor,
-  setBgColor,
+  noteColor,
+  setnoteColor,
   theme,
 }) {
   const handleCancel = () => {
     setIsEditing(false);
-    setBgColor(theme === "light" ? "default" : "yellow");
+    setActiveNote(emptyNote);
+    setnoteColor(theme === "light" ? "default" : "yellow");
   };
 
   const handleSubmit = () => {
     setNotes(
       notes.map((currentNote) => {
-        if (currentNote.id === editNote.id) {
-          currentNote.title = editNote.title;
-          currentNote.body = editNote.body;
-          currentNote.color = bgColor;
+        if (currentNote.id === activeNote.id) {
+          currentNote.title = activeNote.title;
+          currentNote.body = activeNote.body;
+          currentNote.color = noteColor;
           currentNote.date = new Date();
         }
         return currentNote;
       })
     );
     setIsEditing(false);
-    setBgColor(theme === "light" ? "default" : "yellow");
+    setActiveNote(emptyNote);
+    setnoteColor(theme === "light" ? "default" : "yellow");
   };
 
   const setEditNoteValue = (field, value) => {
-    setEditNote({
-      ...editNote,
+    setActiveNote({
+      ...activeNote,
       [field]: value,
     });
   };
 
   const handleDelete = () => {
     const newNotesList = notes.filter(
-      (currentNote) => currentNote.id !== editNote.id
+      (currentNote) => currentNote.id !== activeNote.id
     );
     setNotes(newNotesList);
     setIsEditing(false);
@@ -55,11 +58,11 @@ function EditNote({
       <Form
         handleSubmit={handleSubmit}
         handleCancel={handleCancel}
-        note={editNote}
+        activeNote={activeNote}
         setFormValue={setEditNoteValue}
         handleDelete={handleDelete}
-        bgColor={bgColor}
-        setBgColor={setBgColor}
+        noteColor={noteColor}
+        setnoteColor={setnoteColor}
         noteFormStyle={style.editNoteForm}
         noteBodyStyle={style.editNoteBody}
         isEditing={isEditing}

@@ -10,11 +10,11 @@ import shared from "../shared.module.css";
 function Form({
   handleSubmit,
   handleCancel,
-  note,
+  activeNote,
   setFormValue,
   handleDelete,
-  bgColor,
-  setBgColor,
+  noteColor,
+  setnoteColor,
   noteFormStyle,
   noteBodyStyle,
   isEditing,
@@ -25,24 +25,24 @@ function Form({
     <form
       {...className(noteFormStyle, style.noteForm, shared.shadow)}
       onSubmit={handleSubmit}
-      style={{ backgroundColor: colors[bgColor] }}
+      style={{ backgroundColor: colors[noteColor] }}
     >
       <input
         {...className(style.noteTitle)}
         maxLength="200"
         type="text"
         placeholder="Title"
-        value={note.title}
+        value={activeNote.title}
         onChange={(event) => setFormValue("title", event.target.value)}
-        style={{ backgroundColor: colors[bgColor] }}
+        style={{ backgroundColor: colors[noteColor] }}
         autoFocus
       />
       <textarea
         {...className(noteBodyStyle, style.noteBody)}
         placeholder="Take a note"
-        value={note.body}
+        value={activeNote.body}
         onChange={(event) => setFormValue("body", event.target.value)}
-        style={{ backgroundColor: colors[bgColor] }}
+        style={{ backgroundColor: colors[noteColor] }}
       ></textarea>
       <div {...className(style.noteSet)}>
         <div {...className(style.btnsCon)}>
@@ -67,20 +67,20 @@ function Form({
             </button>
 
             {isPaletteOpen && (
-              <ColorPalette bgColor={bgColor} setBgColor={setBgColor} />
+              <ColorPalette noteColor={noteColor} setnoteColor={setnoteColor} />
             )}
           </div>
         </div>
         <div {...className(style.btnsCon)}>
           <button
-            style={{ color: colors[bgColor] }}
+            style={{ color: colors[noteColor] }}
             {...className(style.btn, style.btnPrimary)}
             type="submit"
           >
             Save
           </button>
           <button
-            style={{ backgroundColor: colors[bgColor] }}
+            style={{ backgroundColor: colors[noteColor] }}
             {...className(style.btn, style.btnSecondary)}
             type="button"
             onClick={handleCancel}

@@ -21,24 +21,23 @@ const saveNotes = (notes) => {
 };
 
 function App() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
   const [notes, setNotes] = useState(getNotes());
-  const [note, setNote] = useState(emptyNote);
   const [isEditing, setIsEditing] = useState(false);
-  const [editNote, setEditNote] = useState(emptyNote);
+  const [activeNote, setActiveNote] = useState(emptyNote);
   const [search, setSearch] = useState("");
   const [theme, setTheme] = useState("light");
-  const [bgColor, setBgColor] = useState(
+  const [noteColor, setnoteColor] = useState(
     theme === "light" ? "default" : "yellow"
   );
   const [isGrid, setIsGrid] = useState(true);
 
   const handleEdit = (event, id) => {
     setIsEditing(true);
-    setIsOpen(false);
+    setIsAddNoteOpen(false);
     const tempNote = notes.find((currentNote) => currentNote.id === id);
-    setEditNote(tempNote);
-    setBgColor(tempNote.color);
+    setActiveNote(tempNote);
+    setnoteColor(tempNote.color);
   };
 
   useEffect(() => {
@@ -46,7 +45,7 @@ function App() {
   }, [notes]);
 
   useEffect(() => {
-    setBgColor(theme === "light" ? "default" : "yellow");
+    setnoteColor(theme === "light" ? "default" : "yellow");
   }, [theme]);
 
   return (
@@ -60,14 +59,14 @@ function App() {
         setTheme={setTheme}
       />
       <AddNote
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
+        isAddNoteOpen={isAddNoteOpen}
+        setIsAddNoteOpen={setIsAddNoteOpen}
         notes={notes}
         setNotes={setNotes}
-        note={note}
-        setNote={setNote}
-        bgColor={bgColor}
-        setBgColor={setBgColor}
+        activeNote={activeNote}
+        setActiveNote={setActiveNote}
+        noteColor={noteColor}
+        setnoteColor={setnoteColor}
         theme={theme}
       />
       <Notes
@@ -80,12 +79,12 @@ function App() {
         <EditNote
           notes={notes}
           setNotes={setNotes}
-          editNote={editNote}
-          setEditNote={setEditNote}
+          activeNote={activeNote}
+          setActiveNote={setActiveNote}
           isEditing={isEditing}
           setIsEditing={setIsEditing}
-          bgColor={bgColor}
-          setBgColor={setBgColor}
+          noteColor={noteColor}
+          setnoteColor={setnoteColor}
           theme={theme}
         />
       )}

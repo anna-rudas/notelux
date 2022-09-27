@@ -6,56 +6,56 @@ import Form from "../Form";
 import { emptyNote } from "../../constants";
 
 function AddNote({
-  isOpen,
-  setIsOpen,
+  isAddNoteOpen,
+  setIsAddNoteOpen,
   notes,
   setNotes,
-  note,
-  setNote,
-  bgColor,
-  setBgColor,
+  activeNote,
+  setActiveNote,
+  noteColor,
+  setnoteColor,
   theme,
 }) {
   const handleSubmit = () => {
     setNotes([
       ...notes,
-      { ...note, color: bgColor, id: uuidv4(), date: new Date() },
+      { ...activeNote, color: noteColor, id: uuidv4(), date: new Date() },
     ]);
-    setNote(emptyNote);
-    setIsOpen(false);
-    setBgColor(theme === "light" ? "default" : "yellow");
+    setActiveNote(emptyNote);
+    setIsAddNoteOpen(false);
+    setnoteColor(theme === "light" ? "default" : "yellow");
   };
 
   const handleCancel = () => {
-    setNote(emptyNote);
-    setIsOpen(false);
-    setBgColor(theme === "light" ? "default" : "yellow");
+    setActiveNote(emptyNote);
+    setIsAddNoteOpen(false);
+    setnoteColor(theme === "light" ? "default" : "yellow");
   };
 
   const setAddNoteValue = (field, value) => {
-    setNote({
-      ...note,
+    setActiveNote({
+      ...activeNote,
       [field]: value,
     });
   };
 
   return (
     <div {...className(style.addNoteCon)}>
-      {!isOpen ? (
+      {!isAddNoteOpen ? (
         <input
           type="text"
           placeholder="Take a note"
           {...className(style.addNoteInput)}
-          onFocus={() => setIsOpen(true)}
+          onFocus={() => setIsAddNoteOpen(true)}
         />
       ) : (
         <Form
           handleSubmit={handleSubmit}
           handleCancel={handleCancel}
-          note={note}
+          activeNote={activeNote}
           setFormValue={setAddNoteValue}
-          bgColor={bgColor}
-          setBgColor={setBgColor}
+          noteColor={noteColor}
+          setnoteColor={setnoteColor}
           noteFormStyle={style.addNoteForm}
           noteBodyStyle={style.addNoteBody}
         />
