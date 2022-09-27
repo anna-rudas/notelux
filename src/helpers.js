@@ -10,9 +10,7 @@ export const sortNotes = (notes, numberOfColumns) => {
     columns.push([]);
   }
 
-  notes.sort(function (a, b) {
-    return a.title.length - b.title.length;
-  });
+  notes.sort((a, b) => a.title.length - b.title.length);
 
   for (let i = 0; i < notes.length; i = i + numberOfColumns) {
     for (let j = 0; j < numberOfColumns; j++) {
@@ -22,11 +20,9 @@ export const sortNotes = (notes, numberOfColumns) => {
     }
   }
 
-  for (let i = 0; i < columns.length; i++) {
-    columns[i].sort(function (a, b) {
-      return new Date(b.date) - new Date(a.date);
-    });
-  }
+  columns.forEach((current) => {
+    current.sort((a, b) => new Date(b.date) - new Date(a.date));
+  });
 
   return columns;
 };
