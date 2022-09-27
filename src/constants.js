@@ -27,3 +27,5 @@ export const emptyNote = {
   id: "",
   date: "",
 };
+
+export const storageKey = "savedNotes";

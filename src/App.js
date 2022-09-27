@@ -4,20 +4,14 @@ import AddNote from "./components/AddNote";
 import EditNote from "./components/EditNote";
 import Header from "./components/Header";
 import Notes from "./components/Notes";
-import { emptyNote } from "./constants";
+import { emptyNote, storageKey } from "./constants";
 
 const getNotes = () => {
-  if (localStorage.getItem("savedNotes")) {
-    const notesLocal = JSON.parse(localStorage.getItem("savedNotes"));
-    return notesLocal;
-  } else {
-    localStorage.setItem("savedNotes", JSON.stringify([]));
-    return [];
-  }
+  return JSON.parse(localStorage.getItem(storageKey)) || [];
 };
 
 const saveNotes = (notes) => {
-  localStorage.setItem("savedNotes", JSON.stringify(notes));
+  localStorage.setItem(storageKey, JSON.stringify(notes));
 };
 
 function App() {
