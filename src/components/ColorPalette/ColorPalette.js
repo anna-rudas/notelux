@@ -5,7 +5,7 @@ import shared from "../shared.module.css";
 import { colorInputs } from "../../constants";
 import { colors } from "../../constants";
 
-function ChangeBackground({ noteColor, setnoteColor }) {
+function ChangeBackground({ noteColor, setNoteColor }) {
   return (
     <div {...className(style.colorsCon, shared.shadow)}>
       {colorInputs.map((currentInput) => {
@@ -19,7 +19,7 @@ function ChangeBackground({ noteColor, setnoteColor }) {
               value={currentInput}
               aria-label={currentInput}
               onClick={(event) => {
-                setnoteColor(event.target.value);
+                setNoteColor(event.target.value);
               }}
               autoFocus={currentInput === noteColor}
             />

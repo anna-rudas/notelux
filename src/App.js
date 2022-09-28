@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { createRoot } from "react-dom/client";
 import AddNote from "./components/AddNote";
 import EditNote from "./components/EditNote";
@@ -21,7 +21,7 @@ function App() {
   const [activeNote, setActiveNote] = useState(emptyNote);
   const [search, setSearch] = useState("");
   const [theme, setTheme] = useState("light");
-  const [noteColor, setnoteColor] = useState(defaultNoteColor[theme]);
+  const [noteColor, setNoteColor] = useState(defaultNoteColor[theme]);
   const [isGrid, setIsGrid] = useState(true);
 
   const handleEdit = (event, id) => {
@@ -29,16 +29,33 @@ function App() {
     setIsAddNoteOpen(false);
     const tempNote = notes.find((currentNote) => currentNote.id === id);
     setActiveNote(tempNote);
-    setnoteColor(tempNote.color);
+    setNoteColor(tempNote.color);
   };
+
+  const resetDefault = useCallback(() => {
+    setActiveNote(emptyNote);
+    setIsAddNoteOpen(false);
+    setIsEditing(false);
+    setNoteColor(defaultNoteColor[theme]);
+  }, [theme]);
 
   useEffect(() => {
     saveNotes(notes);
   }, [notes]);
 
   useEffect(() => {
-    setnoteColor(defaultNoteColor[theme]);
+    setNoteColor(defaultNoteColor[theme]);
   }, [theme]);
+
+  useEffect(() => {
+    const close = (e) => {
+      if (e.key === "Escape") {
+        resetDefault();
+      }
+    };
+    window.removeEventListener("keydown", close);
+    window.addEventListener("keydown", close);
+  }, [resetDefault]);
 
   return (
     <div className="wrapper" data-theme={theme}>
@@ -58,8 +75,8 @@ function App() {
         activeNote={activeNote}
         setActiveNote={setActiveNote}
         noteColor={noteColor}
-        setnoteColor={setnoteColor}
-        theme={theme}
+        setNoteColor={setNoteColor}
+        resetDefault={resetDefault}
       />
       <Notes
         notes={notes}
@@ -76,8 +93,8 @@ function App() {
           isEditing={isEditing}
           setIsEditing={setIsEditing}
           noteColor={noteColor}
-          setnoteColor={setnoteColor}
-          theme={theme}
+          setNoteColor={setNoteColor}
+          resetDefault={resetDefault}
         />
       )}
     </div>

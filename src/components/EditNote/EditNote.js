@@ -2,7 +2,6 @@ import React from "react";
 import { className } from "../../helpers";
 import style from "./EditNote.module.css";
 import Form from "../Form";
-import { emptyNote, defaultNoteColor } from "../../constants";
 
 function EditNote({
   activeNote,
@@ -12,15 +11,9 @@ function EditNote({
   notes,
   setNotes,
   noteColor,
-  setnoteColor,
-  theme,
+  setNoteColor,
+  resetDefault,
 }) {
-  const handleCancel = () => {
-    setIsEditing(false);
-    setActiveNote(emptyNote);
-    setnoteColor(defaultNoteColor[theme]);
-  };
-
   const handleSubmit = () => {
     setNotes(
       notes.map((currentNote) => {
@@ -33,9 +26,7 @@ function EditNote({
         return currentNote;
       })
     );
-    setIsEditing(false);
-    setActiveNote(emptyNote);
-    setnoteColor(defaultNoteColor[theme]);
+    resetDefault();
   };
 
   const setEditNoteValue = (field, value) => {
@@ -57,12 +48,12 @@ function EditNote({
     <div {...className(style.editNoteCon)}>
       <Form
         handleSubmit={handleSubmit}
-        handleCancel={handleCancel}
+        handleCancel={resetDefault}
         activeNote={activeNote}
         setFormValue={setEditNoteValue}
         handleDelete={handleDelete}
         noteColor={noteColor}
-        setnoteColor={setnoteColor}
+        setNoteColor={setNoteColor}
         noteFormStyle={style.editNoteForm}
         noteBodyStyle={style.editNoteBody}
         isEditing={isEditing}

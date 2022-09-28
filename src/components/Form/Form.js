@@ -14,7 +14,7 @@ function Form({
   setFormValue,
   handleDelete,
   noteColor,
-  setnoteColor,
+  setNoteColor,
   noteFormStyle,
   noteBodyStyle,
   isEditing,
@@ -51,6 +51,7 @@ function Form({
               {...className(style.btnIcon)}
               onClick={handleDelete}
               type="button"
+              title="Delete"
             >
               <TrashIcon {...className(style.trashIcon)} />
             </button>
@@ -62,26 +63,27 @@ function Form({
               onClick={() => {
                 setIsPaletteOpen(!isPaletteOpen);
               }}
+              title="Colors"
             >
               <PaletteIcon {...className(style.paletteIcon)} />
             </button>
 
             {isPaletteOpen && (
-              <ColorPalette noteColor={noteColor} setnoteColor={setnoteColor} />
+              <ColorPalette noteColor={noteColor} setNoteColor={setNoteColor} />
             )}
           </div>
         </div>
         <div {...className(style.btnsCon)}>
           <button
-            style={{ color: colors[noteColor] }}
             {...className(style.btn, style.btnPrimary)}
+            style={{ color: colors[noteColor] }}
             type="submit"
           >
             Save
           </button>
           <button
-            style={{ backgroundColor: colors[noteColor] }}
             {...className(style.btn, style.btnSecondary)}
+            style={{ backgroundColor: colors[noteColor] }}
             type="button"
             onClick={handleCancel}
           >

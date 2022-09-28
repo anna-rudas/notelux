@@ -3,7 +3,6 @@ import { className } from "../../helpers";
 import style from "./AddNote.module.css";
 import { v4 as uuidv4 } from "uuid";
 import Form from "../Form";
-import { emptyNote, defaultNoteColor } from "../../constants";
 
 function AddNote({
   isAddNoteOpen,
@@ -13,23 +12,15 @@ function AddNote({
   activeNote,
   setActiveNote,
   noteColor,
-  setnoteColor,
-  theme,
+  setNoteColor,
+  resetDefault,
 }) {
   const handleSubmit = () => {
     setNotes([
       ...notes,
       { ...activeNote, color: noteColor, id: uuidv4(), date: new Date() },
     ]);
-    setActiveNote(emptyNote);
-    setIsAddNoteOpen(false);
-    setnoteColor(defaultNoteColor[theme]);
-  };
-
-  const handleCancel = () => {
-    setActiveNote(emptyNote);
-    setIsAddNoteOpen(false);
-    setnoteColor(defaultNoteColor[theme]);
+    resetDefault();
   };
 
   const setAddNoteValue = (field, value) => {
@@ -51,11 +42,11 @@ function AddNote({
       ) : (
         <Form
           handleSubmit={handleSubmit}
-          handleCancel={handleCancel}
+          handleCancel={resetDefault}
           activeNote={activeNote}
           setFormValue={setAddNoteValue}
           noteColor={noteColor}
-          setnoteColor={setnoteColor}
+          setNoteColor={setNoteColor}
           noteFormStyle={style.addNoteForm}
           noteBodyStyle={style.addNoteBody}
         />
