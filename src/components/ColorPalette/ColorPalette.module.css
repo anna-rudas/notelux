@@ -10,7 +10,7 @@
   padding: var(--padding);
   width: 33px;
   background-color: var(--text-primary);
-  border-radius: 5px;
+  border-radius: var(--border-radius);
   animation-name: slowDisplay;
   animation-duration: 0.5s;
 }

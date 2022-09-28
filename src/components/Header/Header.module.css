@@ -40,7 +40,7 @@
   gap: calc(var(--gap) * 2);
   padding: var(--padding);
   border: 2px solid var(--border);
-  border-radius: 25px;
+  border-radius: calc(var(--border-radius) * 5);
   margin: 0 10px;
 }
 

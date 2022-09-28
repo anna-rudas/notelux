@@ -2,7 +2,7 @@ import React from "react";
 import { className } from "../../helpers";
 import style from "./Header.module.css";
 import shared from "../shared.module.css";
-import MyNotesLogo from "../../icons/MyNotesLogo";
+import NoteLuxLogo from "../../icons/NoteLuxLogo";
 import SearchIcon from "../../icons/SearchIcon";
 import GridIcon from "../../icons/GridIcon";
 import ListIcon from "../../icons/ListIcon";
@@ -22,7 +22,7 @@ function Header({ search, setSearch, isGrid, setIsGrid, theme, setTheme }) {
     <div {...className(style.header, shared.shadow)}>
       <div {...className(style.logoCon)}>
         <a {...className(style.linkCon)} href=".">
-          <MyNotesLogo {...className(style.notesIcon)} />
+          <NoteLuxLogo {...className(style.notesIcon)} />
           <span {...className(style.name)}>NoteLux</span>
         </a>
       </div>

@@ -4,14 +4,22 @@ import AddNote from "./components/AddNote";
 import EditNote from "./components/EditNote";
 import Header from "./components/Header";
 import Notes from "./components/Notes";
-import { emptyNote, storageKey, defaultNoteColor } from "./constants";
+import { emptyNote, notesKey, themeKey, defaultNoteColor } from "./constants";
 
 const getNotes = () => {
-  return JSON.parse(localStorage.getItem(storageKey)) || [];
+  return JSON.parse(localStorage.getItem(notesKey)) || [];
 };
 
 const saveNotes = (notes) => {
-  localStorage.setItem(storageKey, JSON.stringify(notes));
+  localStorage.setItem(notesKey, JSON.stringify(notes));
+};
+
+const getTheme = () => {
+  return JSON.parse(localStorage.getItem(themeKey)) || "light";
+};
+
+const saveTheme = (theme) => {
+  localStorage.setItem(themeKey, JSON.stringify(theme));
 };
 
 function App() {
@@ -20,7 +28,7 @@ function App() {
   const [isEditing, setIsEditing] = useState(false);
   const [activeNote, setActiveNote] = useState(emptyNote);
   const [search, setSearch] = useState("");
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(getTheme());
   const [noteColor, setNoteColor] = useState(defaultNoteColor[theme]);
   const [isGrid, setIsGrid] = useState(true);
 
@@ -45,6 +53,7 @@ function App() {
 
   useEffect(() => {
     setNoteColor(defaultNoteColor[theme]);
+    saveTheme(theme);
   }, [theme]);
 
   useEffect(() => {

@@ -28,7 +28,9 @@ export const emptyNote = {
   date: "",
 };
 
-export const storageKey = "savedNotes";
+export const notesKey = "savedNotes";
+
+export const themeKey = "savedTheme";
 
 export const defaultNoteColor = {
   light: "default",
