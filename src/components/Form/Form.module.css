@@ -81,34 +81,23 @@
   fill: var(--text-primary);
 }
 
-.btn {
-  font-size: 1rem;
-  font-weight: 500;
-  padding: var(--padding);
-  border-radius: calc(var(--border-radius) * 2);
-  transition: 0.2s ease-in-out;
-}
-
-.btn:hover {
-  cursor: pointer;
-}
-
 .btnPrimary {
   border: 1.5px solid var(--text-primary);
   background-color: var(--text-primary);
 }
 
-.btnPrimary:hover {
-  background-color: transparent;
-  color: var(--text-primary) !important;
-}
-
 .btnSecondary {
   border: 1.5px solid transparent !important;
-  border: none;
   color: var(--text-primary);
 }
 
-.btnSecondary:hover {
-  border: 1.5px solid var(--text-primary) !important;
+@media (hover: hover) {
+  .btnPrimary:hover {
+    background-color: transparent;
+    color: var(--text-primary) !important;
+  }
+
+  .btnSecondary:hover {
+    border: 1.5px solid var(--text-primary) !important;
+  }
 }

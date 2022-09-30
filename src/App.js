@@ -100,7 +100,6 @@ function App() {
           activeNote={activeNote}
           setActiveNote={setActiveNote}
           isEditing={isEditing}
-          setIsEditing={setIsEditing}
           noteColor={noteColor}
           setNoteColor={setNoteColor}
           resetDefault={resetDefault}

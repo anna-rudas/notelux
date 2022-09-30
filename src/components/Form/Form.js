@@ -12,7 +12,7 @@ function Form({
   handleCancel,
   activeNote,
   setFormValue,
-  handleDelete,
+  setIsDelConfOpen,
   noteColor,
   setNoteColor,
   noteFormStyle,
@@ -49,7 +49,9 @@ function Form({
           {isEditing && (
             <button
               {...className(style.btnIcon)}
-              onClick={handleDelete}
+              onClick={() => {
+                setIsDelConfOpen(true);
+              }}
               type="button"
               title="Delete"
             >
@@ -75,14 +77,14 @@ function Form({
         </div>
         <div {...className(style.btnsCon)}>
           <button
-            {...className(style.btn, style.btnPrimary)}
+            {...className(shared.btn, style.btnPrimary)}
             style={{ color: colors[noteColor] }}
             type="submit"
           >
             Save
           </button>
           <button
-            {...className(style.btn, style.btnSecondary)}
+            {...className(shared.btn, style.btnSecondary)}
             style={{ backgroundColor: colors[noteColor] }}
             type="button"
             onClick={handleCancel}

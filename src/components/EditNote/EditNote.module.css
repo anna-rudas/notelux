@@ -10,7 +10,8 @@
 
 .editNoteForm {
   margin: auto;
-  width: 80%;
+  width: 90%;
+  min-width: 250px;
   max-width: 1000px;
 }
 
