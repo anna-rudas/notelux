@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { className } from "../../helpers";
 import style from "./Header.module.css";
 import shared from "../shared.module.css";
@@ -8,8 +8,12 @@ import GridIcon from "../../icons/GridIcon";
 import ListIcon from "../../icons/ListIcon";
 import SunIcon from "../../icons/SunIcon";
 import MoonIcon from "../../icons/MoonIcon";
+import { AppContext } from "../../context";
 
-function Header({ search, setSearch, isGrid, setIsGrid, theme, setTheme }) {
+function Header() {
+  const { search, setSearch, isGrid, setIsGrid, theme, setTheme } =
+    useContext(AppContext);
+
   const toggleGrid = () => {
     setIsGrid(!isGrid);
   };

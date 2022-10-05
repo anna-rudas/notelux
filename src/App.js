@@ -1,114 +1,32 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useContext } from "react";
 import { createRoot } from "react-dom/client";
 import AddNote from "./components/AddNote";
 import EditNote from "./components/EditNote";
 import Header from "./components/Header";
 import Notes from "./components/Notes";
-import { emptyNote, notesKey, themeKey, defaultNoteColor } from "./constants";
-
-const getNotes = () => {
-  return JSON.parse(localStorage.getItem(notesKey)) || [];
-};
-
-const saveNotes = (notes) => {
-  localStorage.setItem(notesKey, JSON.stringify(notes));
-};
-
-const getTheme = () => {
-  return JSON.parse(localStorage.getItem(themeKey)) || "light";
-};
-
-const saveTheme = (theme) => {
-  localStorage.setItem(themeKey, JSON.stringify(theme));
-};
+import AppContextProvider, { AppContext } from "./context";
 
 function App() {
-  const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
-  const [notes, setNotes] = useState(getNotes());
-  const [isEditing, setIsEditing] = useState(false);
-  const [activeNote, setActiveNote] = useState(emptyNote);
-  const [search, setSearch] = useState("");
-  const [theme, setTheme] = useState(getTheme());
-  const [noteColor, setNoteColor] = useState(defaultNoteColor[theme]);
-  const [isGrid, setIsGrid] = useState(true);
-
-  const handleEdit = (event, id) => {
-    setIsEditing(true);
-    setIsAddNoteOpen(false);
-    const tempNote = notes.find((currentNote) => currentNote.id === id);
-    setActiveNote(tempNote);
-    setNoteColor(tempNote.color);
-  };
-
-  const resetDefault = useCallback(() => {
-    setActiveNote(emptyNote);
-    setIsAddNoteOpen(false);
-    setIsEditing(false);
-    setNoteColor(defaultNoteColor[theme]);
-  }, [theme]);
-
-  useEffect(() => {
-    saveNotes(notes);
-  }, [notes]);
-
-  useEffect(() => {
-    setNoteColor(defaultNoteColor[theme]);
-    saveTheme(theme);
-  }, [theme]);
-
-  useEffect(() => {
-    const close = (e) => {
-      if (e.key === "Escape") {
-        resetDefault();
-      }
-    };
-    window.removeEventListener("keydown", close);
-    window.addEventListener("keydown", close);
-  }, [resetDefault]);
+  const { isEditing, theme } = useContext(AppContext);
 
   return (
     <div className="wrapper" data-theme={theme}>
-      <Header
-        search={search}
-        setSearch={setSearch}
-        isGrid={isGrid}
-        setIsGrid={setIsGrid}
-        theme={theme}
-        setTheme={setTheme}
-      />
-      <AddNote
-        isAddNoteOpen={isAddNoteOpen}
-        setIsAddNoteOpen={setIsAddNoteOpen}
-        notes={notes}
-        setNotes={setNotes}
-        activeNote={activeNote}
-        setActiveNote={setActiveNote}
-        noteColor={noteColor}
-        setNoteColor={setNoteColor}
-        resetDefault={resetDefault}
-      />
-      <Notes
-        notes={notes}
-        handleEdit={handleEdit}
-        search={search}
-        isGrid={isGrid}
-      />
-      {isEditing && (
-        <EditNote
-          notes={notes}
-          setNotes={setNotes}
-          activeNote={activeNote}
-          setActiveNote={setActiveNote}
-          isEditing={isEditing}
-          noteColor={noteColor}
-          setNoteColor={setNoteColor}
-          resetDefault={resetDefault}
-        />
-      )}
+      <Header />
+      <AddNote />
+      <Notes />
+      {isEditing && <EditNote />}
     </div>
   );
 }
 
-export default App;
+function AppWithProvider() {
+  return (
+    <AppContextProvider>
+      <App />
+    </AppContextProvider>
+  );
+}
 
-createRoot(document.getElementById("root")).render(<App />);
+export default AppWithProvider;
+
+createRoot(document.getElementById("root")).render(<AppWithProvider />);

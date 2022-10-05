@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { className } from "../../helpers";
 import style from "./EditNote.module.css";
 import Form from "../Form";
 import DeleteConfirmation from "../DeleteConfirmation";
+import { AppContext } from "../../context";
 
-function EditNote({
-  activeNote,
-  setActiveNote,
-  isEditing,
-  notes,
-  setNotes,
-  noteColor,
-  setNoteColor,
-  resetDefault,
-}) {
+function EditNote() {
+  const {
+    activeNote,
+    setActiveNote,
+    notes,
+    setNotes,
+    noteColor,
+    resetDefault,
+  } = useContext(AppContext);
   const [isDelConfOpen, setIsDelConfOpen] = useState(false);
 
   const handleSubmit = () => {
@@ -52,14 +52,10 @@ function EditNote({
       <Form
         handleSubmit={handleSubmit}
         handleCancel={resetDefault}
-        activeNote={activeNote}
         setFormValue={setEditNoteValue}
         setIsDelConfOpen={setIsDelConfOpen}
-        noteColor={noteColor}
-        setNoteColor={setNoteColor}
         noteFormStyle={style.editNoteForm}
         noteBodyStyle={style.editNoteBody}
-        isEditing={isEditing}
       />
       {isDelConfOpen && (
         <DeleteConfirmation

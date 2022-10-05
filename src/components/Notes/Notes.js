@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { className, sortNotes } from "../../helpers";
 import style from "./Notes.module.css";
 import NoteCard from "./NoteCard";
+import { AppContext } from "../../context";
 
-function Notes({ notes, handleEdit, search, isGrid }) {
+function Notes() {
+  const { notes, handleEdit, search, isGrid } = useContext(AppContext);
+
   const [matches, setMatches] = useState(
     window.matchMedia("(max-width: 600px)").matches
   );

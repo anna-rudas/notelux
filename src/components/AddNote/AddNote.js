@@ -1,20 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { className } from "../../helpers";
 import style from "./AddNote.module.css";
 import { v4 as uuidv4 } from "uuid";
 import Form from "../Form";
+import { AppContext } from "../../context";
 
-function AddNote({
-  isAddNoteOpen,
-  setIsAddNoteOpen,
-  notes,
-  setNotes,
-  activeNote,
-  setActiveNote,
-  noteColor,
-  setNoteColor,
-  resetDefault,
-}) {
+function AddNote() {
+  const {
+    isAddNoteOpen,
+    setIsAddNoteOpen,
+    notes,
+    setNotes,
+    activeNote,
+    setActiveNote,
+    noteColor,
+    resetDefault,
+  } = useContext(AppContext);
+
   const handleSubmit = () => {
     setNotes([
       ...notes,
@@ -43,10 +45,7 @@ function AddNote({
         <Form
           handleSubmit={handleSubmit}
           handleCancel={resetDefault}
-          activeNote={activeNote}
           setFormValue={setAddNoteValue}
-          noteColor={noteColor}
-          setNoteColor={setNoteColor}
           noteFormStyle={style.addNoteForm}
           noteBodyStyle={style.addNoteBody}
         />

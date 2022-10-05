@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { className } from "../../helpers";
 import TrashIcon from "../../icons/TrashIcon";
 import PaletteIcon from "../../icons/PaletteIcon";
@@ -6,19 +6,20 @@ import ColorPalette from "../ColorPalette";
 import { colors } from "../../constants";
 import style from "./Form.module.css";
 import shared from "../shared.module.css";
+import { AppContext } from "../../context";
 
 function Form({
   handleSubmit,
   handleCancel,
-  activeNote,
+
   setFormValue,
   setIsDelConfOpen,
-  noteColor,
-  setNoteColor,
+
   noteFormStyle,
   noteBodyStyle,
-  isEditing,
 }) {
+  const { activeNote, noteColor, setNoteColor, isEditing } =
+    useContext(AppContext);
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
 
   return (
