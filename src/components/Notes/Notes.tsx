@@ -42,7 +42,7 @@ function Notes() {
                 {currentColumn.map((currentNote) => {
                   return (
                     <NoteCard
-                      {...currentNote}
+                      note={currentNote}
                       key={currentNote.id}
                       handleEdit={handleEdit}
                     />

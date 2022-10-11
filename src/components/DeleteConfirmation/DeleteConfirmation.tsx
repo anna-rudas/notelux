@@ -3,7 +3,15 @@ import style from "./DeleteConfirmation.module.css";
 import shared from "../shared.module.css";
 import { className } from "../../helpers";
 
-function DeleteConfirmation({ handleDelete, setIsDelConfOpen }) {
+type DeleteConfirmationProps = {
+  handleDelete: () => void;
+  setIsDelConfOpen: (value: boolean) => void;
+};
+
+function DeleteConfirmation({
+  handleDelete,
+  setIsDelConfOpen,
+}: DeleteConfirmationProps) {
   return (
     <div {...className(style.deleteConfCon)}>
       <div {...className(shared.shadow, style.deleteConf)}>

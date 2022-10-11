@@ -4,11 +4,17 @@ import style from "./Notes.module.css";
 import shared from "../shared.module.css";
 import { colors } from "../../constants";
 
-function NoteCard({ title, body, color, id, handleEdit }) {
+type NoteCardProps = {
+  note: Note;
+  handleEdit: (id: string) => void;
+};
+
+function NoteCard({ note, handleEdit }: NoteCardProps) {
+  const { title, body, color, id } = note;
   return (
     <button
       {...className(style.noteCard, shared.shadow)}
-      onClick={(event) => handleEdit(event, id)}
+      onClick={() => handleEdit(id)}
       style={{ backgroundColor: colors[color] }}
     >
       {title && <span {...className(style.noteTitle)}>{title}</span>}

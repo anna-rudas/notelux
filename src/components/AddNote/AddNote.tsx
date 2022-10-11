@@ -25,7 +25,7 @@ function AddNote() {
     resetDefault();
   };
 
-  const setAddNoteValue = (field, value) => {
+  const setAddNoteValue = (field: string, value: string) => {
     setActiveNote({
       ...activeNote,
       [field]: value,

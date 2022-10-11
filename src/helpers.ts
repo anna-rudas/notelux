@@ -1,10 +1,13 @@
-export const className = (...classNames) => {
+export const className = (...classNames: any) => {
   return {
     className: classNames.filter(Boolean).join(" "),
   };
 };
 
-export const sortNotes = (notes, numberOfColumns) => {
+export const sortNotes: (
+  notes: Array<Note>,
+  numberOfColumns: number
+) => Array<Array<Note>> = (notes, numberOfColumns) => {
   const columns = [];
   for (let i = 0; i < numberOfColumns; i++) {
     columns.push([]);
@@ -21,7 +24,9 @@ export const sortNotes = (notes, numberOfColumns) => {
   }
 
   columns.forEach((current) => {
-    current.sort((a, b) => new Date(b.date) - new Date(a.date));
+    current.sort(
+      (a, b) => new Date(b.date).valueOf() - new Date(a.date).valueOf()
+    );
   });
 
   return columns;

@@ -31,7 +31,7 @@ function EditNote() {
     resetDefault();
   };
 
-  const setEditNoteValue = (field, value) => {
+  const setEditNoteValue = (field: string, value: string) => {
     setActiveNote({
       ...activeNote,
       [field]: value,

@@ -8,18 +8,24 @@ import style from "./Form.module.css";
 import shared from "../shared.module.css";
 import { AppContext } from "../../context";
 
+type FormProps = {
+  handleSubmit: () => void;
+  handleCancel: () => void;
+  setFormValue: (field: string, value: string) => void;
+  setIsDelConfOpen?: (value: boolean) => void;
+  noteFormStyle: any;
+  noteBodyStyle: any;
+};
+
 function Form({
   handleSubmit,
   handleCancel,
-
   setFormValue,
   setIsDelConfOpen,
-
   noteFormStyle,
   noteBodyStyle,
-}) {
-  const { activeNote, noteColor, setNoteColor, isEditing } =
-    useContext(AppContext);
+}: FormProps) {
+  const { activeNote, noteColor, isEditing } = useContext(AppContext);
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
 
   return (
@@ -30,7 +36,7 @@ function Form({
     >
       <input
         {...className(style.noteTitle)}
-        maxLength="200"
+        maxLength={200}
         type="text"
         placeholder="Title"
         value={activeNote.title}
@@ -71,9 +77,7 @@ function Form({
               <PaletteIcon {...className(style.paletteIcon)} />
             </button>
 
-            {isPaletteOpen && (
-              <ColorPalette noteColor={noteColor} setNoteColor={setNoteColor} />
-            )}
+            {isPaletteOpen && <ColorPalette />}
           </div>
         </div>
         <div {...className(style.btnsCon)}>

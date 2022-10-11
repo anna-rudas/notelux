@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { className } from "../../helpers";
 import style from "./ColorPalette.module.css";
 import shared from "../shared.module.css";
 import { colorInputs } from "../../constants";
 import { colors } from "../../constants";
+import { AppContext } from "../../context";
 
-function ChangeBackground({ noteColor, setNoteColor }) {
+function ChangeBackground() {
+  const { setNoteColor, noteColor } = useContext(AppContext);
   return (
     <div {...className(style.colorsCon, shared.shadow)}>
       {colorInputs.map((currentInput) => {
@@ -19,7 +21,7 @@ function ChangeBackground({ noteColor, setNoteColor }) {
               value={currentInput}
               aria-label={currentInput}
               onClick={(event) => {
-                setNoteColor(event.target.value);
+                setNoteColor((event.target as HTMLInputElement).value as Color);
               }}
               autoFocus={currentInput === noteColor}
             />

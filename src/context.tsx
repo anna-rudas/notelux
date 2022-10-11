@@ -1,25 +1,76 @@
-import React, { useState, useEffect, useCallback, createContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  createContext,
+  ReactNode,
+} from "react";
 import { emptyNote, notesKey, themeKey, defaultNoteColor } from "./constants";
 
-const getNotes = () => {
-  return JSON.parse(localStorage.getItem(notesKey)) || [];
+interface AppContextInterface {
+  search: string;
+  setSearch: (value: string) => void;
+  isGrid: boolean;
+  setIsGrid: (value: boolean) => void;
+  theme: Theme;
+  setTheme: (value: Theme) => void;
+  isAddNoteOpen: boolean;
+  setIsAddNoteOpen: (value: boolean) => void;
+  notes: Array<Note>;
+  setNotes: (value: Array<Note>) => void;
+  activeNote: Note;
+  setActiveNote: (value: Note) => void;
+  noteColor: Color;
+  setNoteColor: (value: Color) => void;
+  resetDefault: () => void;
+  handleEdit: (id: string) => void;
+  isEditing: boolean;
+}
+
+const defaultContextValue: AppContextInterface = {
+  search: "",
+  setSearch: () => {},
+  isGrid: true,
+  setIsGrid: () => {},
+  theme: "light",
+  setTheme: () => {},
+  isAddNoteOpen: false,
+  setIsAddNoteOpen: () => {},
+  notes: [],
+  setNotes: () => {},
+  activeNote: emptyNote,
+  setActiveNote: () => {},
+  noteColor: "default",
+  setNoteColor: () => {},
+  resetDefault: () => {},
+  handleEdit: () => {},
+  isEditing: false,
 };
 
-const saveNotes = (notes) => {
+export const AppContext =
+  createContext<AppContextInterface>(defaultContextValue);
+
+const getNotes: () => Array<Note> = () => {
+  return JSON.parse(localStorage.getItem(notesKey) || "{}") || [];
+};
+
+const saveNotes = (notes: Array<Note>) => {
   localStorage.setItem(notesKey, JSON.stringify(notes));
 };
 
-const getTheme = () => {
-  return JSON.parse(localStorage.getItem(themeKey)) || "light";
+const getTheme: () => Theme = () => {
+  return JSON.parse(localStorage.getItem(themeKey) || "{}") || "light";
 };
 
-const saveTheme = (theme) => {
+const saveTheme = (theme: Theme) => {
   localStorage.setItem(themeKey, JSON.stringify(theme));
 };
 
-export const AppContext = createContext();
+type AppContextProviderProps = {
+  children?: ReactNode;
+};
 
-function AppContextProvider({ children }) {
+function AppContextProvider({ children }: AppContextProviderProps) {
   const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
   const [notes, setNotes] = useState(getNotes());
   const [isEditing, setIsEditing] = useState(false);
@@ -29,7 +80,7 @@ function AppContextProvider({ children }) {
   const [noteColor, setNoteColor] = useState(defaultNoteColor[theme]);
   const [isGrid, setIsGrid] = useState(true);
 
-  const handleEdit = (event, id) => {
+  const handleEdit = (id: string) => {
     setIsEditing(true);
     setIsAddNoteOpen(false);
     const tempNote = notes.find((currentNote) => currentNote.id === id);
@@ -54,7 +105,7 @@ function AppContextProvider({ children }) {
   }, [theme]);
 
   useEffect(() => {
-    const close = (e) => {
+    const close = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         resetDefault();
       }
