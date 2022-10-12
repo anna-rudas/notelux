@@ -19,22 +19,20 @@ function Notes() {
 
   const numberOfColumns = !isGrid ? 1 : matches ? 2 : 4;
 
-  const searchFilteredNotes = notes.filter(function (current) {
-    return (
-      current.title.toLowerCase().includes(search.toLowerCase()) ||
-      current.body.toLowerCase().includes(search.toLowerCase())
-    );
+  const filteredNotes = notes.filter(function (current) {
+    const searchRegex = new RegExp(search, "i");
+    return searchRegex.test(current.title) || searchRegex.test(current.body);
   });
 
-  const sortedNotes = sortNotes(searchFilteredNotes, numberOfColumns);
+  const sortedNotes = sortNotes(filteredNotes, numberOfColumns);
 
   return (
     <div
       {...className(
-        searchFilteredNotes.length > 0 ? style.notesCon : style.notesConEmpty
+        filteredNotes.length > 0 ? style.notesCon : style.notesConEmpty
       )}
     >
-      {searchFilteredNotes.length > 0 ? (
+      {filteredNotes.length > 0 ? (
         <div {...className(isGrid ? style.noteGridCon : style.noteListCon)}>
           {sortedNotes.map((currentColumn, index) => {
             return (
