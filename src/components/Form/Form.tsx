@@ -57,7 +57,9 @@ function Form({
             <button
               {...className(style.btnIcon)}
               onClick={() => {
-                setIsDelConfOpen(true);
+                if (setIsDelConfOpen) {
+                  setIsDelConfOpen(true);
+                }
               }}
               type="button"
               title="Delete"

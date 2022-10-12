@@ -8,7 +8,7 @@ export const sortNotes: (
   notes: Array<Note>,
   numberOfColumns: number
 ) => Array<Array<Note>> = (notes, numberOfColumns) => {
-  const columns = [];
+  const columns: Array<Array<Note>> = [];
   for (let i = 0; i < numberOfColumns; i++) {
     columns.push([]);
   }

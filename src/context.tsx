@@ -84,8 +84,10 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     setIsEditing(true);
     setIsAddNoteOpen(false);
     const tempNote = notes.find((currentNote) => currentNote.id === id);
-    setActiveNote(tempNote);
-    setNoteColor(tempNote.color);
+    if (tempNote) {
+      setActiveNote(tempNote);
+      setNoteColor(tempNote.color);
+    }
   };
 
   const resetDefault = useCallback(() => {

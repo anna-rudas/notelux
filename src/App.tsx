@@ -29,4 +29,4 @@ function AppWithProvider() {
 
 export default AppWithProvider;
 
-createRoot(document.getElementById("root")).render(<AppWithProvider />);
+createRoot(document.getElementById("root")!).render(<AppWithProvider />);
