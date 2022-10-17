@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { className } from "../../helpers";
-import style from "./AddNote.module.css";
+import * as style from "./AddNote.module.css";
 import { v4 as uuidv4 } from "uuid";
 import Form from "../Form";
 import { AppContext } from "../../context";

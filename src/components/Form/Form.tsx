@@ -4,8 +4,8 @@ import TrashIcon from "../../icons/TrashIcon";
 import PaletteIcon from "../../icons/PaletteIcon";
 import ColorPalette from "../ColorPalette";
 import { colors } from "../../constants";
-import style from "./Form.module.css";
-import shared from "../shared.module.css";
+import * as style from "./Form.module.css";
+import * as shared from "../shared.module.css";
 import { AppContext } from "../../context";
 
 type FormProps = {

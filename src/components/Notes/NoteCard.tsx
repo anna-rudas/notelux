@@ -1,7 +1,7 @@
 import React from "react";
 import { className } from "../../helpers";
-import style from "./Notes.module.css";
-import shared from "../shared.module.css";
+import * as style from "./Notes.module.css";
+import * as shared from "../shared.module.css";
 import { colors } from "../../constants";
 
 type NoteCardProps = {

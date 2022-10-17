@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { className } from "../../helpers";
-import style from "./ColorPalette.module.css";
-import shared from "../shared.module.css";
+import * as style from "./ColorPalette.module.css";
+import * as shared from "../shared.module.css";
 import { colorInputs } from "../../constants";
 import { colors } from "../../constants";
 import { AppContext } from "../../context";

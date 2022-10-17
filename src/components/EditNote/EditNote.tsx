@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { className } from "../../helpers";
-import style from "./EditNote.module.css";
+import * as style from "./EditNote.module.css";
 import Form from "../Form";
 import DeleteConfirmation from "../DeleteConfirmation";
 import { AppContext } from "../../context";

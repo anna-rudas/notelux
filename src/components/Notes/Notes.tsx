@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { className, sortNotes } from "../../helpers";
-import style from "./Notes.module.css";
+import * as style from "./Notes.module.css";
 import NoteCard from "./NoteCard";
 import { AppContext } from "../../context";
 

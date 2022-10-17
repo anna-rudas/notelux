@@ -1,6 +1,6 @@
 import React from "react";
-import style from "./DeleteConfirmation.module.css";
-import shared from "../shared.module.css";
+import * as style from "./DeleteConfirmation.module.css";
+import * as shared from "../shared.module.css";
 import { className } from "../../helpers";
 
 type DeleteConfirmationProps = {
