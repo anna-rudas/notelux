@@ -19,10 +19,12 @@ function Notes() {
 
   const numberOfColumns = !isGrid ? 1 : matches ? 2 : 4;
 
-  const filteredNotes = notes.filter(function (current) {
-    const searchRegex = new RegExp(search, "i");
-    return searchRegex.test(current.title) || searchRegex.test(current.body);
-  });
+  const filteredNotes =
+    notes &&
+    notes.filter(function (current) {
+      const searchRegex = new RegExp(search, "i");
+      return searchRegex.test(current.title) || searchRegex.test(current.body);
+    });
 
   const sortedNotes = sortNotes(filteredNotes, numberOfColumns);
 

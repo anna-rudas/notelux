@@ -51,7 +51,7 @@ export const AppContext =
   createContext<AppContextInterface>(defaultContextValue);
 
 const getNotes: () => Array<Note> = () => {
-  return JSON.parse(localStorage.getItem(notesKey) || "{}") || [];
+  return JSON.parse(localStorage.getItem(notesKey) || "[]");
 };
 
 const saveNotes = (notes: Array<Note>) => {
@@ -59,11 +59,15 @@ const saveNotes = (notes: Array<Note>) => {
 };
 
 const getTheme: () => Theme = () => {
-  return JSON.parse(localStorage.getItem(themeKey) || "{}") || "light";
+  const temp = localStorage.getItem(themeKey);
+  if (temp === "light" || temp === "dark") {
+    return temp;
+  }
+  return "light";
 };
 
 const saveTheme = (theme: Theme) => {
-  localStorage.setItem(themeKey, JSON.stringify(theme));
+  localStorage.setItem(themeKey, theme);
 };
 
 type AppContextProviderProps = {
