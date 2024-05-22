@@ -11,45 +11,43 @@ import { AppContext } from "../../context";
 type FormProps = {
   handleSubmit: () => void;
   handleCancel: () => void;
-  setFormValue: (field: string, value: string) => void;
   setIsDelConfOpen?: (value: boolean) => void;
-  noteFormStyle: any;
-  noteBodyStyle: any;
+  noteFormStyle: string;
+  noteBodyStyle: string;
 };
 
 function Form({
   handleSubmit,
   handleCancel,
-  setFormValue,
   setIsDelConfOpen,
   noteFormStyle,
   noteBodyStyle,
 }: FormProps) {
-  const { activeNote, noteColor, isEditing } = useContext(AppContext);
+  const { activeNote, isEditing, setActiveNoteValue } = useContext(AppContext);
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
 
   return (
     <form
       {...className(noteFormStyle, style.noteForm, shared.shadow)}
       onSubmit={handleSubmit}
-      style={{ backgroundColor: colors[noteColor] }}
+      style={{ backgroundColor: colors[(activeNote as Note).color] }}
     >
       <input
         {...className(style.noteTitle)}
         maxLength={200}
         type="text"
         placeholder="Title"
-        value={activeNote.title}
-        onChange={(event) => setFormValue("title", event.target.value)}
-        style={{ backgroundColor: colors[noteColor] }}
+        value={(activeNote as Note).title}
+        onChange={(event) => setActiveNoteValue("title", event.target.value)}
+        style={{ backgroundColor: colors[(activeNote as Note).color] }}
         autoFocus
       />
       <textarea
         {...className(noteBodyStyle, style.noteBody)}
         placeholder="Take a note"
-        value={activeNote.body}
-        onChange={(event) => setFormValue("body", event.target.value)}
-        style={{ backgroundColor: colors[noteColor] }}
+        value={(activeNote as Note).body}
+        onChange={(event) => setActiveNoteValue("body", event.target.value)}
+        style={{ backgroundColor: colors[(activeNote as Note).color] }}
       ></textarea>
       <div {...className(style.noteSet)}>
         <div {...className(style.btnsCon)}>
@@ -85,14 +83,14 @@ function Form({
         <div {...className(style.btnsCon)}>
           <button
             {...className(shared.btn, style.btnPrimary)}
-            style={{ color: colors[noteColor] }}
+            style={{ color: colors[(activeNote as Note).color] }}
             type="submit"
           >
             Save
           </button>
           <button
             {...className(shared.btn, style.btnSecondary)}
-            style={{ backgroundColor: colors[noteColor] }}
+            style={{ backgroundColor: colors[(activeNote as Note).color] }}
             type="button"
             onClick={handleCancel}
           >

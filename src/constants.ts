@@ -11,15 +11,9 @@ export const colors: Record<Color, string> = {
 
 export const colorInputs = Object.keys(colors) as Array<Color>;
 
-export const emptyNote: Note = {
-  title: "",
-  body: "",
-  color: "default",
-  id: "",
-  date: new Date(),
-};
+export const notesColKey = "notes";
 
-export const notesKey = "savedNotes";
+export const usersColKey = "users";
 
 export const themeKey = "savedTheme";
 
@@ -27,3 +21,5 @@ export const defaultNoteColor: Record<Theme, Color> = {
   light: "default",
   dark: "yellow",
 };
+
+export const defaultTheme: Theme = "light";

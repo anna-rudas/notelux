@@ -1,51 +1,59 @@
 import React, { useContext } from "react";
 import { className } from "../../helpers";
 import * as style from "./AddNote.module.css";
-import { v4 as uuidv4 } from "uuid";
 import Form from "../Form";
 import { AppContext } from "../../context";
+import { v4 as uuidv4 } from "uuid";
+import { defaultNoteColor, defaultTheme } from "../../constants";
 
 function AddNote() {
   const {
     isAddNoteOpen,
     setIsAddNoteOpen,
-    notes,
-    setNotes,
     activeNote,
     setActiveNote,
-    noteColor,
     resetDefault,
+    addNoteInDb,
+    loadNotesFromDb,
+    user,
   } = useContext(AppContext);
 
   const handleSubmit = () => {
-    setNotes([
-      ...notes,
-      { ...activeNote, color: noteColor, id: uuidv4(), date: new Date() },
-    ]);
-    resetDefault();
+    if (activeNote) {
+      addNoteInDb({
+        ...activeNote,
+        date: new Date(),
+      });
+      loadNotesFromDb();
+      resetDefault();
+    }
   };
 
-  const setAddNoteValue = (field: string, value: string) => {
+  const handleOpeningAddNote = () => {
     setActiveNote({
-      ...activeNote,
-      [field]: value,
+      id: uuidv4(),
+      title: "",
+      body: "",
+      color: defaultNoteColor[user?.theme ? user.theme : defaultTheme],
+      date: new Date(),
     });
+    setIsAddNoteOpen(true);
   };
 
   return (
     <div {...className(style.addNoteCon)}>
-      {!isAddNoteOpen ? (
+      {!isAddNoteOpen && (
         <input
           type="text"
           placeholder="Take a note"
           {...className(style.addNoteInput)}
-          onFocus={() => setIsAddNoteOpen(true)}
+          onFocus={handleOpeningAddNote}
         />
-      ) : (
+      )}{" "}
+      {isAddNoteOpen && activeNote !== null && (
         <Form
           handleSubmit={handleSubmit}
           handleCancel={resetDefault}
-          setFormValue={setAddNoteValue}
           noteFormStyle={style.addNoteForm}
           noteBodyStyle={style.addNoteBody}
         />

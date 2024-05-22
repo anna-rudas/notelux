@@ -1,9 +1,17 @@
 type Note = {
+  id: string;
   title: string;
   body: string;
   color: Color;
-  id: string;
   date: Date;
+};
+
+type User = {
+  id: string;
+  userId: string;
+  theme?: Theme;
+  nickname?: string;
+  name?: string;
 };
 
 type Theme = "light" | "dark";

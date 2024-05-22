@@ -8,43 +8,28 @@ import { AppContext } from "../../context";
 function EditNote() {
   const {
     activeNote,
-    setActiveNote,
-    notes,
-    setNotes,
-    noteColor,
     resetDefault,
+    updateNoteInDb,
+    loadNotesFromDb,
+    deleteNoteInDb,
   } = useContext(AppContext);
   const [isDelConfOpen, setIsDelConfOpen] = useState(false);
 
   const handleSubmit = () => {
-    setNotes(
-      notes.map((currentNote) => {
-        if (currentNote.id === activeNote.id) {
-          currentNote.title = activeNote.title;
-          currentNote.body = activeNote.body;
-          currentNote.color = noteColor;
-          currentNote.date = new Date();
-        }
-        return currentNote;
-      })
-    );
-    resetDefault();
-  };
-
-  const setEditNoteValue = (field: string, value: string) => {
-    setActiveNote({
-      ...activeNote,
-      [field]: value,
-    });
+    if (activeNote) {
+      updateNoteInDb({ ...activeNote, date: new Date() });
+      loadNotesFromDb();
+      resetDefault();
+    }
   };
 
   const handleDelete = () => {
-    const newNotesList = notes.filter(
-      (currentNote) => currentNote.id !== activeNote.id
-    );
-    setNotes(newNotesList);
-    resetDefault();
-    setIsDelConfOpen(false);
+    if (activeNote) {
+      deleteNoteInDb(activeNote);
+      loadNotesFromDb();
+      resetDefault();
+      setIsDelConfOpen(false);
+    }
   };
 
   return (
@@ -52,7 +37,6 @@ function EditNote() {
       <Form
         handleSubmit={handleSubmit}
         handleCancel={resetDefault}
-        setFormValue={setEditNoteValue}
         setIsDelConfOpen={setIsDelConfOpen}
         noteFormStyle={style.editNoteForm}
         noteBodyStyle={style.editNoteBody}

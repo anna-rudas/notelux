@@ -9,9 +9,10 @@ import ListIcon from "../../icons/ListIcon";
 import SunIcon from "../../icons/SunIcon";
 import MoonIcon from "../../icons/MoonIcon";
 import { AppContext } from "../../context";
+import { defaultTheme } from "../../constants";
 
 function Header() {
-  const { search, setSearch, isGrid, setIsGrid, theme, setTheme } =
+  const { search, setSearch, isGrid, setIsGrid, user, setUser } =
     useContext(AppContext);
 
   const toggleGrid = () => {
@@ -19,7 +20,12 @@ function Header() {
   };
 
   const toggleTheme = () => {
-    theme === "light" ? setTheme("dark") : setTheme("light");
+    if (user) {
+      setUser({
+        ...user,
+        theme: user.theme === "light" ? "dark" : "light",
+      });
+    }
   };
 
   return (
@@ -55,9 +61,13 @@ function Header() {
         <button
           {...className(style.iconBtn)}
           onClick={toggleTheme}
-          title={theme === "light" ? "Light mode" : "Dark mode"}
+          title={
+            (user?.theme ?? defaultTheme) === "light"
+              ? "Light mode"
+              : "Dark mode"
+          }
         >
-          {theme === "light" ? (
+          {(user?.theme ?? defaultTheme) === "light" ? (
             <SunIcon {...className(style.viewIcon)} />
           ) : (
             <MoonIcon {...className(style.viewIcon)} />

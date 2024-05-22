@@ -1,4 +1,4 @@
-export const className = (...classNames: any) => {
+export const className = (...classNames: string[]) => {
   return {
     className: classNames.filter(Boolean).join(" "),
   };

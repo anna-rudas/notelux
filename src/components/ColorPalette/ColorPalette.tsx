@@ -7,7 +7,7 @@ import { colors } from "../../constants";
 import { AppContext } from "../../context";
 
 function ChangeBackground() {
-  const { setNoteColor, noteColor } = useContext(AppContext);
+  const { activeNote, setActiveNoteValue } = useContext(AppContext);
   return (
     <div {...className(style.colorsCon, shared.shadow)}>
       {colorInputs.map((currentInput) => {
@@ -20,10 +20,10 @@ function ChangeBackground() {
               name="bg-color"
               value={currentInput}
               aria-label={currentInput}
-              onClick={(event) => {
-                setNoteColor((event.target as HTMLInputElement).value as Color);
+              onClick={() => {
+                setActiveNoteValue("color", currentInput);
               }}
-              autoFocus={currentInput === noteColor}
+              autoFocus={currentInput === activeNote?.color}
             />
             <div
               title={currentInput}

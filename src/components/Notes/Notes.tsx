@@ -5,7 +5,7 @@ import NoteCard from "./NoteCard";
 import { AppContext } from "../../context";
 
 function Notes() {
-  const { notes, handleEdit, search, isGrid } = useContext(AppContext);
+  const { notes, search, isGrid } = useContext(AppContext);
 
   const [matches, setMatches] = useState(
     window.matchMedia("(max-width: 600px)").matches
@@ -40,13 +40,7 @@ function Notes() {
             return (
               <div key={index} {...className(style.column)}>
                 {currentColumn.map((currentNote) => {
-                  return (
-                    <NoteCard
-                      note={currentNote}
-                      key={currentNote.id}
-                      handleEdit={handleEdit}
-                    />
-                  );
+                  return <NoteCard note={currentNote} key={currentNote.id} />;
                 })}
               </div>
             );
