@@ -9,6 +9,7 @@ import {
   getDocs,
   deleteDoc,
   doc,
+  setDoc,
 } from "firebase/firestore";
 import { db } from "./firestore";
 
@@ -33,7 +34,9 @@ interface AppContextInterface {
   updateNoteInDb: (value: Note) => Promise<void>;
   deleteNoteInDb: (value: Note) => Promise<void>;
   loadUserFromDb: () => Promise<void>;
+  addUserInDb: (value: User) => Promise<void>;
   updateUserInDb: (value: User) => Promise<void>;
+  deleteUserInDb: (value: User) => Promise<void>;
   setActiveNoteValue: (field: string, value: string) => void;
 }
 
@@ -58,7 +61,9 @@ const defaultContextValue: AppContextInterface = {
   updateNoteInDb: async () => {},
   deleteNoteInDb: async () => {},
   loadUserFromDb: async () => {},
+  addUserInDb: async () => {},
   updateUserInDb: async () => {},
+  deleteUserInDb: async () => {},
   setActiveNoteValue: () => {},
 };
 
@@ -145,7 +150,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
 
   const addNoteInDb = async (noteToAdd: Note): Promise<void> => {
     try {
-      await addDoc(notesColRef, noteToAdd);
+      await setDoc(doc(db, notesColKey, noteToAdd.id), noteToAdd);
     } catch (err) {
       console.error(err);
     }
@@ -213,7 +218,9 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         updateNoteInDb,
         deleteNoteInDb,
         loadUserFromDb,
+        addUserInDb,
         updateUserInDb,
+        deleteUserInDb,
         user,
         setUser,
         activeNote,
