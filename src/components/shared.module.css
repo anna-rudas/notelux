@@ -13,3 +13,49 @@
 .btn:hover {
   cursor: pointer;
 }
+
+.generalInput {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: calc(var(--gap) * 2);
+  padding: var(--padding);
+  border: 2px solid var(--border);
+  border-radius: calc(var(--border-radius) * 5);
+  margin: 0 10px;
+  height: fit-content;
+}
+
+.generalInput:focus {
+  outline: none;
+}
+
+.buttonPrimary {
+  border: 1.5px solid var(--text-primary);
+  background-color: var(--text-primary);
+}
+
+.buttonSecondary {
+  border: 1.5px solid transparent !important;
+  color: var(--text-secondary);
+  background-color: var(--bg);
+  white-space: nowrap;
+}
+
+@media (hover: hover) {
+  .buttonSecondary:hover {
+    border: 1.5px solid var(--text-secondary) !important;
+  }
+
+  .buttonPrimary:hover {
+    background-color: transparent;
+    color: var(--text-primary) !important;
+  }
+}
+
+.titleText {
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+  font-size: 1.7rem;
+  color: var(--text-secondary);
+}

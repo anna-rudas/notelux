@@ -4,6 +4,7 @@
   padding: calc(var(--padding) * 2);
   background-color: var(--bg);
   gap: var(--gap);
+  align-items: center;
 }
 
 .logoCon {
@@ -24,24 +25,6 @@
 .notesIcon {
   width: 40px;
   height: 40px;
-}
-
-.name {
-  font-family: "Oswald", sans-serif;
-  font-weight: 600;
-  font-size: 1.7rem;
-  color: var(--text-secondary);
-}
-
-.searchCon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: calc(var(--gap) * 2);
-  padding: var(--padding);
-  border: 2px solid var(--border);
-  border-radius: calc(var(--border-radius) * 5);
-  margin: 0 10px;
 }
 
 .searchIcon {

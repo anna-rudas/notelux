@@ -10,8 +10,13 @@ import SunIcon from "../../icons/SunIcon";
 import MoonIcon from "../../icons/MoonIcon";
 import { AppContext } from "../../context";
 import { defaultTheme } from "../../constants";
+import { Link } from "react-router-dom";
 
-function Header() {
+type HeaderProps = {
+  loggedInStyle: boolean;
+};
+
+function Header({ loggedInStyle }: HeaderProps) {
   const { search, setSearch, isGrid, setIsGrid, user, setUser } =
     useContext(AppContext);
 
@@ -31,49 +36,56 @@ function Header() {
   return (
     <div {...className(style.header, shared.shadow)}>
       <div {...className(style.logoCon)}>
-        <a {...className(style.linkCon)} href=".">
+        <Link {...className(style.linkCon)} to="/">
           <NoteLuxLogo {...className(style.notesIcon)} />
-          <span {...className(style.name)}>NoteLux</span>
-        </a>
+          <span {...className(style.name, shared.titleText)}>NoteLux</span>
+        </Link>
       </div>
-      <div {...className(style.searchCon)}>
-        <SearchIcon {...className(style.searchIcon)} />
-        <input
-          {...className(style.searchInput)}
-          type="search"
-          placeholder="Search"
-          value={search}
-          onChange={(event) => setSearch(event.target.value)}
-        />
-      </div>
-      <div {...className(style.setCon)}>
-        <button
-          {...className(style.iconBtn)}
-          onClick={toggleGrid}
-          title={isGrid ? "Grid view" : "List view"}
-        >
-          {isGrid ? (
-            <GridIcon {...className(style.viewIcon)} />
-          ) : (
-            <ListIcon {...className(style.viewIcon)} />
-          )}
-        </button>
-        <button
-          {...className(style.iconBtn)}
-          onClick={toggleTheme}
-          title={
-            (user?.theme ?? defaultTheme) === "light"
-              ? "Light mode"
-              : "Dark mode"
-          }
-        >
-          {(user?.theme ?? defaultTheme) === "light" ? (
-            <SunIcon {...className(style.viewIcon)} />
-          ) : (
-            <MoonIcon {...className(style.viewIcon)} />
-          )}
-        </button>
-      </div>
+      {loggedInStyle && (
+        <div {...className(shared.generalInput)}>
+          <SearchIcon {...className(style.searchIcon)} />
+          <input
+            {...className(style.searchInput)}
+            type="search"
+            placeholder="Search"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+          />
+        </div>
+      )}
+      {loggedInStyle && (
+        <div {...className(style.setCon)}>
+          <button
+            {...className(style.iconBtn)}
+            onClick={toggleGrid}
+            title={isGrid ? "Grid view" : "List view"}
+          >
+            {isGrid ? (
+              <GridIcon {...className(style.viewIcon)} />
+            ) : (
+              <ListIcon {...className(style.viewIcon)} />
+            )}
+          </button>
+          <button
+            {...className(style.iconBtn)}
+            onClick={toggleTheme}
+            title={
+              (user?.theme ?? defaultTheme) === "light"
+                ? "Light mode"
+                : "Dark mode"
+            }
+          >
+            {(user?.theme ?? defaultTheme) === "light" ? (
+              <SunIcon {...className(style.viewIcon)} />
+            ) : (
+              <MoonIcon {...className(style.viewIcon)} />
+            )}
+          </button>
+          <button {...className(shared.btn, shared.buttonSecondary)}>
+            Sign out
+          </button>
+        </div>
+      )}
     </div>
   );
 }

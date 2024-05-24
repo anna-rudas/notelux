@@ -80,24 +80,3 @@
   height: 33px;
   fill: var(--text-primary);
 }
-
-.btnPrimary {
-  border: 1.5px solid var(--text-primary);
-  background-color: var(--text-primary);
-}
-
-.btnSecondary {
-  border: 1.5px solid transparent !important;
-  color: var(--text-primary);
-}
-
-@media (hover: hover) {
-  .btnPrimary:hover {
-    background-color: transparent;
-    color: var(--text-primary) !important;
-  }
-
-  .btnSecondary:hover {
-    border: 1.5px solid var(--text-primary) !important;
-  }
-}

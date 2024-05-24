@@ -1,15 +1,26 @@
 import React, { useContext, useEffect } from "react";
 import { createRoot } from "react-dom/client";
-import AddNote from "./components/AddNote";
-import EditNote from "./components/EditNote";
-import Header from "./components/Header";
-import Notes from "./components/Notes";
 import AppContextProvider, { AppContext } from "./context";
-import { defaultTheme } from "./constants";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Dashboard from "./routes/Dashboard";
+import SignIn from "./routes/SignIn";
+import SignUp from "./routes/SignUp";
+import NotFound from "./routes/NotFound";
 
 function App() {
-  const { isEditing, loadNotesFromDb, loadUserFromDb, resetDefault, user } =
+  const { loadNotesFromDb, loadUserFromDb, resetDefault } =
     useContext(AppContext);
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Dashboard />,
+    },
+    { path: "/dashboard", element: <Dashboard /> },
+    { path: "/signin", element: <SignIn /> },
+    { path: "/signup", element: <SignUp /> },
+    { path: "/*", element: <NotFound /> },
+  ]);
 
   useEffect(() => {
     //init
@@ -27,14 +38,7 @@ function App() {
     window.addEventListener("keydown", close);
   }, [resetDefault]);
 
-  return (
-    <div className="wrapper" data-theme={user?.theme ?? defaultTheme}>
-      <Header />
-      <AddNote />
-      <Notes />
-      {isEditing && <EditNote />}
-    </div>
-  );
+  return <RouterProvider router={router}></RouterProvider>;
 }
 
 function AppWithProvider() {
