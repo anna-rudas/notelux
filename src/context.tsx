@@ -2,7 +2,6 @@ import React, { useState, createContext, ReactNode, useEffect } from "react";
 import { defaultTheme, notesColKey, usersColKey } from "./constants";
 import {
   collection,
-  addDoc,
   updateDoc,
   query,
   where,
@@ -11,7 +10,7 @@ import {
   doc,
   setDoc,
 } from "firebase/firestore";
-import { db } from "./firestore";
+import { db } from "./firestoreConfig";
 
 interface AppContextInterface {
   search: string;
@@ -23,9 +22,9 @@ interface AppContextInterface {
   notes: Array<Note>;
   setNotes: (value: Array<Note>) => void;
   activeNote: Note | null;
-  setActiveNote: (value: Note) => void;
+  setActiveNote: (value: Note | null) => void;
   user: User | null;
-  setUser: (value: User) => void;
+  setUser: (value: User | null) => void;
   isEditing: boolean;
   resetDefault: () => void;
   handleEdit: (id: Note) => void;
@@ -33,11 +32,17 @@ interface AppContextInterface {
   addNoteInDb: (value: Note) => Promise<void>;
   updateNoteInDb: (value: Note) => Promise<void>;
   deleteNoteInDb: (value: Note) => Promise<void>;
-  loadUserFromDb: () => Promise<void>;
+  loadUserFromDb: (value: string) => Promise<void>;
   addUserInDb: (value: User) => Promise<void>;
   updateUserInDb: (value: User) => Promise<void>;
   deleteUserInDb: (value: User) => Promise<void>;
   setActiveNoteValue: (field: string, value: string) => void;
+  email: string;
+  setEmail: (value: string) => void;
+  password: string;
+  setPassword: (value: string) => void;
+  isLoading: boolean;
+  setIsLoading: (value: boolean) => void;
 }
 
 const defaultContextValue: AppContextInterface = {
@@ -65,6 +70,12 @@ const defaultContextValue: AppContextInterface = {
   updateUserInDb: async () => {},
   deleteUserInDb: async () => {},
   setActiveNoteValue: () => {},
+  email: "",
+  setEmail: () => {},
+  password: "",
+  setPassword: () => {},
+  isLoading: true,
+  setIsLoading: () => {},
 };
 
 export const AppContext =
@@ -82,6 +93,9 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [activeNote, setActiveNote] = useState<Note | null>(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   //collection refs
   const notesColRef = collection(db, notesColKey);
@@ -89,15 +103,14 @@ function AppContextProvider({ children }: AppContextProviderProps) {
 
   //users
 
-  const loadUserFromDb = async (): Promise<void> => {
-    const q = query(usersColRef, where("name", "==", "John Smith"));
+  const loadUserFromDb = async (userId: string): Promise<void> => {
+    const q = query(usersColRef, where("id", "==", userId));
     const querySnapshot = await getDocs(q);
     const resolvedUser: User[] = [];
     querySnapshot.docs.map((doc) =>
       resolvedUser.push({
         ...doc.data(),
         id: doc.id,
-        userId: doc.data().userId,
       })
     );
     if (!Object.hasOwn(resolvedUser[0], "theme")) {
@@ -107,7 +120,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
 
   const addUserInDb = async (userToAdd: User): Promise<void> => {
     try {
-      await addDoc(usersColRef, userToAdd);
+      await setDoc(doc(db, usersColKey, userToAdd.id), userToAdd);
     } catch (err) {
       console.error(err);
     }
@@ -134,18 +147,22 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   //notes
 
   const loadNotesFromDb = async (): Promise<void> => {
-    const querySnapshot = await getDocs(notesColRef);
-    const resolvedNotes: Note[] = [];
-    querySnapshot.docs.map((doc) => {
-      resolvedNotes.push({
-        id: doc.id,
-        title: doc.data().title,
-        color: doc.data().color,
-        body: doc.data().body,
-        date: doc.data().date,
+    if (user) {
+      const q = query(notesColRef, where("userId", "==", user.id));
+      const querySnapshot = await getDocs(q);
+      const resolvedNotes: Note[] = [];
+      querySnapshot.docs.map((doc) => {
+        resolvedNotes.push({
+          id: doc.id,
+          title: doc.data().title,
+          color: doc.data().color,
+          body: doc.data().body,
+          date: doc.data().date,
+          userId: doc.data().userId,
+        });
       });
-    });
-    setNotes(resolvedNotes);
+      setNotes(resolvedNotes);
+    }
   };
 
   const addNoteInDb = async (noteToAdd: Note): Promise<void> => {
@@ -228,6 +245,12 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         setActiveNoteValue,
         resetDefault,
         handleEdit,
+        email,
+        setEmail,
+        password,
+        setPassword,
+        isLoading,
+        setIsLoading,
       }}
     >
       {children}

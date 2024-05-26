@@ -11,14 +11,19 @@ import MoonIcon from "../../icons/MoonIcon";
 import { AppContext } from "../../context";
 import { defaultTheme } from "../../constants";
 import { Link } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 type HeaderProps = {
   loggedInStyle: boolean;
 };
 
 function Header({ loggedInStyle }: HeaderProps) {
-  const { search, setSearch, isGrid, setIsGrid, user, setUser } =
+  const { search, setSearch, isGrid, setIsGrid, user, setUser, isLoading } =
     useContext(AppContext);
+
+  const auth = getAuth();
+  const navigate = useNavigate();
 
   const toggleGrid = () => {
     setIsGrid(!isGrid);
@@ -32,11 +37,25 @@ function Header({ loggedInStyle }: HeaderProps) {
       });
     }
   };
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+      navigate("/signin");
+    } catch (error: unknown) {
+      if (error) {
+        console.error(error);
+      }
+    }
+  };
 
   return (
     <div {...className(style.header, shared.shadow)}>
       <div {...className(style.logoCon)}>
-        <Link {...className(style.linkCon)} to="/">
+        <Link
+          {...className(style.linkCon, isLoading && shared.disabledLink)}
+          to="/"
+        >
           <NoteLuxLogo {...className(style.notesIcon)} />
           <span {...className(style.name, shared.titleText)}>NoteLux</span>
         </Link>
@@ -81,7 +100,12 @@ function Header({ loggedInStyle }: HeaderProps) {
               <MoonIcon {...className(style.viewIcon)} />
             )}
           </button>
-          <button {...className(shared.btn, shared.buttonSecondary)}>
+          <button
+            onClick={() => {
+              handleSignOut();
+            }}
+            {...className(shared.btn, shared.buttonSecondary)}
+          >
             Sign out
           </button>
         </div>

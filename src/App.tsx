@@ -8,15 +8,17 @@ import SignUp from "./routes/SignUp";
 import NotFound from "./routes/NotFound";
 
 function App() {
-  const { loadNotesFromDb, loadUserFromDb, resetDefault } =
-    useContext(AppContext);
+  const { loadNotesFromDb, resetDefault, user } = useContext(AppContext);
 
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Dashboard />,
     },
-    { path: "/dashboard", element: <Dashboard /> },
+    {
+      path: "/dashboard",
+      element: <Dashboard />,
+    },
     { path: "/signin", element: <SignIn /> },
     { path: "/signup", element: <SignUp /> },
     { path: "/*", element: <NotFound /> },
@@ -25,8 +27,7 @@ function App() {
   useEffect(() => {
     //init
     loadNotesFromDb();
-    loadUserFromDb();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     const close = (e: KeyboardEvent) => {

@@ -30,14 +30,17 @@ function AddNote() {
   };
 
   const handleOpeningAddNote = () => {
-    setActiveNote({
-      id: uuidv4(),
-      title: "",
-      body: "",
-      color: defaultNoteColor[user?.theme ? user.theme : defaultTheme],
-      date: new Date(),
-    });
-    setIsAddNoteOpen(true);
+    if (user) {
+      setActiveNote({
+        id: uuidv4(),
+        title: "",
+        body: "",
+        color: defaultNoteColor[user?.theme ? user.theme : defaultTheme],
+        date: new Date(),
+        userId: user.id,
+      });
+      setIsAddNoteOpen(true);
+    }
   };
 
   return (

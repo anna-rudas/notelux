@@ -4,11 +4,11 @@ type Note = {
   body: string;
   color: Color;
   date: Date;
+  userId: string;
 };
 
 type User = {
   id: string;
-  userId: string;
   theme?: Theme;
   nickname?: string;
   name?: string;
