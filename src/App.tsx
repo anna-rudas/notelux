@@ -6,6 +6,7 @@ import Dashboard from "./routes/Dashboard";
 import SignIn from "./routes/SignIn";
 import SignUp from "./routes/SignUp";
 import NotFound from "./routes/NotFound";
+import RouteGuard from "./routes/RouteGuard";
 
 function App() {
   const { loadNotesFromDb, resetDefault, user } = useContext(AppContext);
@@ -13,14 +14,36 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Dashboard />,
+      element: (
+        <RouteGuard>
+          <Dashboard />
+        </RouteGuard>
+      ),
     },
     {
       path: "/dashboard",
-      element: <Dashboard />,
+      element: (
+        <RouteGuard>
+          <Dashboard />
+        </RouteGuard>
+      ),
     },
-    { path: "/signin", element: <SignIn /> },
-    { path: "/signup", element: <SignUp /> },
+    {
+      path: "/signin",
+      element: (
+        <RouteGuard>
+          <SignIn />
+        </RouteGuard>
+      ),
+    },
+    {
+      path: "/signup",
+      element: (
+        <RouteGuard>
+          <SignUp />
+        </RouteGuard>
+      ),
+    },
     { path: "/*", element: <NotFound /> },
   ]);
 

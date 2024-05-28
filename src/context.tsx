@@ -43,6 +43,8 @@ interface AppContextInterface {
   setPassword: (value: string) => void;
   isLoading: boolean;
   setIsLoading: (value: boolean) => void;
+  isPageLoading: boolean;
+  setIsPageLoading: (value: boolean) => void;
 }
 
 const defaultContextValue: AppContextInterface = {
@@ -76,6 +78,8 @@ const defaultContextValue: AppContextInterface = {
   setPassword: () => {},
   isLoading: true,
   setIsLoading: () => {},
+  isPageLoading: true,
+  setIsPageLoading: () => {},
 };
 
 export const AppContext =
@@ -96,6 +100,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isPageLoading, setIsPageLoading] = useState(true);
 
   //collection refs
   const notesColRef = collection(db, notesColKey);
@@ -251,6 +256,8 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         setPassword,
         isLoading,
         setIsLoading,
+        isPageLoading,
+        setIsPageLoading,
       }}
     >
       {children}
