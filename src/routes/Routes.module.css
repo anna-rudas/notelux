@@ -8,25 +8,12 @@
   width: 100%;
 }
 
-.formCon {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-width: 300px;
-  align-items: center;
-}
-
 .redirectCon {
   display: flex;
   flex-direction: row;
   gap: 5px;
   justify-content: center;
   align-items: center;
-}
-
-.buttonSubmit {
-  color: var(--bg);
-  width: fit-content;
 }
 
 .loadingContainer {

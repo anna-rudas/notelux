@@ -14,7 +14,7 @@ function NotFound() {
         <span>Looks like that page doesn&apos;t exist.</span>
         <Link
           to="/"
-          {...className(shared.btn, shared.buttonPrimary, style.buttonSubmit)}
+          {...className(shared.btn, shared.buttonPrimary, shared.buttonSubmit)}
         >
           Go back
         </Link>

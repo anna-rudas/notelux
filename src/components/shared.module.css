@@ -42,6 +42,11 @@
   white-space: nowrap;
 }
 
+.buttonSubmit {
+  color: var(--bg);
+  width: fit-content;
+}
+
 @media (hover: hover) {
   .buttonSecondary:hover {
     border: 1.5px solid var(--text-secondary) !important;

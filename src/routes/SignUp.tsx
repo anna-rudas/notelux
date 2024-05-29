@@ -7,17 +7,11 @@ import { className } from "../helpers";
 import { AppContext } from "../context";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
+import AuthForm from "../components/AuthForm";
 
 function SignUp() {
-  const {
-    setEmail,
-    setPassword,
-    email,
-    password,
-    isLoading,
-    setIsLoading,
-    addUserInDb,
-  } = useContext(AppContext);
+  const { email, password, isLoading, setIsLoading, addUserInDb } =
+    useContext(AppContext);
 
   const auth = getAuth();
 
@@ -46,33 +40,7 @@ function SignUp() {
       <Header loggedInStyle={false} />
       <div {...className(style.contentCon)}>
         <span {...className(shared.titleText)}>Sign up</span>
-        <form onSubmit={handleSignUp} action="#" {...className(style.formCon)}>
-          <input
-            disabled={isLoading}
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            {...className(shared.generalInput)}
-            type="text"
-            placeholder="Email"
-          />
-          <input
-            disabled={isLoading}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            {...className(shared.generalInput)}
-            type="text"
-            placeholder="Password"
-          />
-          <button
-            disabled={isLoading}
-            type="submit"
-            {...className(shared.btn, shared.buttonPrimary, style.buttonSubmit)}
-          >
-            Sign up
-          </button>
-        </form>
+        <AuthForm handleSubmit={handleSignUp} primaryButtonText="Sign up" />
         <div {...className(style.redirectCon)}>
           <span>Already have an account?</span>
           <Link
