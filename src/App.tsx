@@ -58,8 +58,11 @@ function App() {
         resetDefault();
       }
     };
-    window.removeEventListener("keydown", close);
+
     window.addEventListener("keydown", close);
+    return () => {
+      window.removeEventListener("keydown", close);
+    };
   }, [resetDefault]);
 
   return <RouterProvider router={router}></RouterProvider>;

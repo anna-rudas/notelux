@@ -16,6 +16,7 @@ function AddNote() {
     addNoteInDb,
     loadNotesFromDb,
     user,
+    setIsDropdownOpen,
   } = useContext(AppContext);
 
   const handleSubmit = () => {
@@ -39,6 +40,7 @@ function AddNote() {
         date: new Date(),
         userId: user.id,
       });
+      setIsDropdownOpen(false);
       setIsAddNoteOpen(true);
     }
   };

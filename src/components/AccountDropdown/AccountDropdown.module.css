@@ -1,0 +1,42 @@
+.dropdownCon {
+  background-color: var(--bg);
+  border-radius: calc(var(--border-radius) * 2);
+  position: absolute;
+  padding: 10px;
+  right: 20px;
+  top: 75px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  width: 250px;
+  height: fit-content;
+  border: 2px solid var(--border);
+}
+
+.dropdownItemCon {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.dropdownItem {
+  color: var(--text-secondary);
+  background-color: var(--bg);
+  white-space: nowrap;
+  font-size: 1rem;
+  font-weight: 500 !important;
+  padding: var(--padding);
+  border: none;
+}
+
+.divider {
+  border: 1px solid var(--border);
+  width: 100%;
+}
+
+.emailText {
+  color: var(--text-secondary);
+}

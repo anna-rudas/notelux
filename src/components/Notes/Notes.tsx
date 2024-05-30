@@ -15,6 +15,12 @@ function Notes() {
     window
       .matchMedia("(max-width: 600px)")
       .addEventListener("change", (event) => setMatches(event.matches));
+
+    return () => {
+      window
+        .matchMedia("(max-width: 600px)")
+        .removeEventListener("change", (event) => setMatches(event.matches));
+    };
   }, []);
 
   const numberOfColumns = !isGrid ? 1 : matches ? 2 : 4;

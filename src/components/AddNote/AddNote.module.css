@@ -16,6 +16,7 @@
   margin: var(--margin);
   border-radius: var(--border-radius);
   background-color: var(--bg);
+  max-width: 1500px;
 }
 
 .addNoteInput:focus {
@@ -25,6 +26,7 @@
 .addNoteForm {
   margin: var(--margin);
   width: 60%;
+  max-width: 1500px;
 }
 
 .addNoteBody {

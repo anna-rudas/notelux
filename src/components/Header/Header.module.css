@@ -76,10 +76,30 @@
   height: 25px;
 }
 
+.buttonAccount {
+  padding: 5px;
+  border: 2px solid var(--text-secondary);
+  background-color: var(--bg);
+  display: flex;
+}
+
+.buttonAccount:hover {
+  background-color: var(--text-secondary);
+}
+
+.accountIcon {
+  width: 35px;
+  height: 35px;
+  fill: var(--text-secondary);
+}
+
+.buttonAccount:hover .accountIcon {
+  fill: var(--bg);
+}
+
 @media (max-width: 600px) {
   .header {
     grid-template-columns: 1fr 7fr 1fr;
-    padding: var(--padding);
   }
 
   .name {

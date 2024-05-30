@@ -11,19 +11,25 @@ import MoonIcon from "../../icons/MoonIcon";
 import { AppContext } from "../../context";
 import { defaultTheme } from "../../constants";
 import { Link } from "react-router-dom";
-import { getAuth, signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import PersonIcon from "../../icons/PersonIcon";
 
 type HeaderProps = {
   loggedInStyle: boolean;
 };
 
 function Header({ loggedInStyle }: HeaderProps) {
-  const { search, setSearch, isGrid, setIsGrid, user, setUser, isLoading } =
-    useContext(AppContext);
-
-  const auth = getAuth();
-  const navigate = useNavigate();
+  const {
+    search,
+    setSearch,
+    isGrid,
+    setIsGrid,
+    user,
+    setUser,
+    isLoading,
+    setIsDropdownOpen,
+    isDropdownOpen,
+    dropdownButtonRef,
+  } = useContext(AppContext);
 
   const toggleGrid = () => {
     setIsGrid(!isGrid);
@@ -35,17 +41,6 @@ function Header({ loggedInStyle }: HeaderProps) {
         ...user,
         theme: user.theme === "light" ? "dark" : "light",
       });
-    }
-  };
-  const handleSignOut = async () => {
-    try {
-      await signOut(auth);
-      setUser(null);
-      navigate("/signin");
-    } catch (error: unknown) {
-      if (error) {
-        console.error(error);
-      }
     }
   };
 
@@ -101,12 +96,16 @@ function Header({ loggedInStyle }: HeaderProps) {
             )}
           </button>
           <button
+            ref={dropdownButtonRef}
+            id="account-btn"
             onClick={() => {
-              handleSignOut();
+              setTimeout(() => {
+                setIsDropdownOpen(!isDropdownOpen);
+              });
             }}
-            {...className(shared.btn, shared.buttonSecondary)}
+            {...className(shared.btn, style.buttonAccount)}
           >
-            Sign out
+            <PersonIcon {...className(style.accountIcon)} />
           </button>
         </div>
       )}

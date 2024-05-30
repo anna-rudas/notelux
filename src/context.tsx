@@ -1,4 +1,11 @@
-import React, { useState, createContext, ReactNode, useEffect } from "react";
+import React, {
+  useState,
+  createContext,
+  ReactNode,
+  useEffect,
+  useRef,
+  RefObject,
+} from "react";
 import { defaultTheme, notesColKey, usersColKey } from "./constants";
 import {
   collection,
@@ -45,6 +52,10 @@ interface AppContextInterface {
   setIsLoading: (value: boolean) => void;
   isPageLoading: boolean;
   setIsPageLoading: (value: boolean) => void;
+  isDropdownOpen: boolean;
+  setIsDropdownOpen: (value: boolean) => void;
+  dropdownRef: RefObject<HTMLDivElement> | null;
+  dropdownButtonRef: RefObject<HTMLButtonElement> | null;
 }
 
 const defaultContextValue: AppContextInterface = {
@@ -80,6 +91,10 @@ const defaultContextValue: AppContextInterface = {
   setIsLoading: () => {},
   isPageLoading: true,
   setIsPageLoading: () => {},
+  isDropdownOpen: false,
+  setIsDropdownOpen: () => {},
+  dropdownRef: null,
+  dropdownButtonRef: null,
 };
 
 export const AppContext =
@@ -101,6 +116,9 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isPageLoading, setIsPageLoading] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const dropdownButtonRef = useRef(null);
 
   //collection refs
   const notesColRef = collection(db, notesColKey);
@@ -258,6 +276,10 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         setIsLoading,
         isPageLoading,
         setIsPageLoading,
+        isDropdownOpen,
+        setIsDropdownOpen,
+        dropdownRef,
+        dropdownButtonRef,
       }}
     >
       {children}

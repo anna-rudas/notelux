@@ -5,13 +5,15 @@ import Header from "../components/Header";
 import Notes from "../components/Notes";
 import { defaultTheme } from "../constants";
 import { AppContext } from "../context";
+import AccountDropdown from "../components/AccountDropdown";
 
 function Dashboard() {
-  const { isEditing, user } = useContext(AppContext);
+  const { isEditing, user, isDropdownOpen } = useContext(AppContext);
 
   return (
     <div className="wrapper" data-theme={user?.theme ?? defaultTheme}>
       <Header loggedInStyle={true} />
+      {isDropdownOpen && <AccountDropdown />}
       <AddNote />
       <Notes />
       {isEditing && <EditNote />}
