@@ -7,6 +7,7 @@ import SignIn from "./routes/SignIn";
 import SignUp from "./routes/SignUp";
 import NotFound from "./routes/NotFound";
 import RouteGuard from "./routes/RouteGuard";
+import AccountSettings from "./routes/AccountSettings";
 
 function App() {
   const { loadNotesFromDb, resetDefault, user } = useContext(AppContext);
@@ -25,6 +26,14 @@ function App() {
       element: (
         <RouteGuard>
           <Dashboard />
+        </RouteGuard>
+      ),
+    },
+    {
+      path: "/settings",
+      element: (
+        <RouteGuard>
+          <AccountSettings />
         </RouteGuard>
       ),
     },

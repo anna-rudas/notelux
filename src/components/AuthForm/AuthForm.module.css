@@ -1,7 +1,7 @@
 .formCon {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: calc(var(--gap) * 2);
   max-width: 300px;
   align-items: center;
 }
@@ -23,7 +23,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: var(--gap);
   padding: var(--padding);
   border: 2px solid var(--border);
   border-radius: calc(var(--border-radius) * 5);

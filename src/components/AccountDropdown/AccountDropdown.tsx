@@ -61,10 +61,10 @@ function AccountDropdown() {
       <span {...className(style.emailText)}>test@test.com</span>
       <span {...className(shared.titleText)}>Hello, friend!</span>
       <div {...className(style.dropdownItemCon)}>
-        <Link to="" {...className(style.dropdownItem)}>
+        <Link to="/settings" {...className(style.dropdownItem)}>
           Account settings
         </Link>
-        <div {...className(style.divider)} />
+        <div {...className(shared.divider)} />
         <button
           onClick={() => {
             handleSignOut();

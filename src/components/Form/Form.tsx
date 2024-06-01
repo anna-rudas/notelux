@@ -82,14 +82,14 @@ function Form({
         </div>
         <div {...className(style.btnsCon)}>
           <button
-            {...className(shared.btn, shared.buttonPrimary)}
+            {...className(shared.btn, shared.buttonNotePrimary)}
             style={{ color: colors[(activeNote as Note).color] }}
             type="submit"
           >
             Save
           </button>
           <button
-            {...className(shared.btn, shared.buttonSecondary)}
+            {...className(shared.btn, shared.buttonNoteSecondary)}
             style={{ backgroundColor: colors[(activeNote as Note).color] }}
             type="button"
             onClick={handleCancel}

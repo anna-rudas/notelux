@@ -45,6 +45,10 @@
   background-color: var(--bg);
 }
 
+.searchInputCon {
+  margin: 0 10px;
+}
+
 .searchInput:focus {
   outline: none;
 }

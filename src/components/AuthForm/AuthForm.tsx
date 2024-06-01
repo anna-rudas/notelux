@@ -56,7 +56,7 @@ function AuthForm({ handleSubmit, primaryButtonText }: AuthFormProps) {
       <button
         disabled={isLoading}
         type="submit"
-        {...className(shared.btn, shared.buttonPrimary, shared.buttonSubmit)}
+        {...className(shared.btn, shared.buttonPrimary)}
       >
         {primaryButtonText}
       </button>

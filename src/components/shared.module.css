@@ -2,18 +2,6 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.btn {
-  font-size: 1rem;
-  font-weight: 500;
-  padding: var(--padding);
-  border-radius: calc(var(--border-radius) * 2);
-  transition: 0.2s ease-in-out;
-}
-
-.btn:hover {
-  cursor: pointer;
-}
-
 .generalInput {
   display: flex;
   justify-content: center;
@@ -22,39 +10,79 @@
   padding: var(--padding);
   border: 2px solid var(--border);
   border-radius: calc(var(--border-radius) * 5);
-  margin: 0 10px;
   height: fit-content;
+  background-color: var(--bg);
+  color: var(--text-secondary);
 }
 
 .generalInput:focus {
   outline: none;
 }
 
-.buttonPrimary {
+.btn {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: var(--padding);
+  border-radius: calc(var(--border-radius) * 2);
+  transition: 0.2s ease-in-out;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+.buttonNotePrimary {
   border: 1.5px solid var(--text-primary);
   background-color: var(--text-primary);
+}
+
+.buttonNoteSecondary {
+  border: 1.5px solid transparent !important;
+  color: var(--text-primary);
+}
+
+.buttonPrimary {
+  border: 1.5px solid var(--text-secondary);
+  background-color: var(--text-secondary);
+  color: var(--bg);
 }
 
 .buttonSecondary {
   border: 1.5px solid transparent !important;
   color: var(--text-secondary);
   background-color: var(--bg);
-  white-space: nowrap;
 }
 
-.buttonSubmit {
-  color: var(--bg);
-  width: fit-content;
+.buttonDanger {
+  border: 1.5px solid var(--danger);
+  background-color: var(--danger);
+  color: var(--lightest);
 }
 
 @media (hover: hover) {
-  .buttonSecondary:hover {
+  .btn:hover {
+    cursor: pointer;
+  }
+
+  .buttonNotePrimary:hover {
+    background-color: transparent;
+    color: var(--text-primary) !important;
+  }
+
+  .buttonNoteSecondary:hover {
     border: 1.5px solid var(--text-secondary) !important;
   }
 
   .buttonPrimary:hover {
-    background-color: transparent;
-    color: var(--text-primary) !important;
+    background-color: var(--bg);
+    color: var(--text-secondary);
+  }
+
+  .buttonSecondary:hover {
+    border: 1.5px solid var(--text-secondary) !important;
+  }
+
+  .buttonDanger:hover {
+    background-color: var(--lightest);
+    color: var(--text-primary);
   }
 }
 
@@ -62,6 +90,17 @@
   font-family: "Oswald", sans-serif;
   font-weight: 600;
   font-size: 1.7rem;
+  color: var(--text-secondary);
+}
+
+.normalText {
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+.secondaryTitleText {
+  font-weight: 600;
+  font-size: 1rem;
   color: var(--text-secondary);
 }
 
@@ -74,4 +113,10 @@
 
 .disabledLink {
   pointer-events: none;
+}
+
+.divider {
+  border: 1px solid var(--border);
+  width: 100%;
+  max-width: 500px;
 }
