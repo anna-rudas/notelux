@@ -1,5 +1,17 @@
+/* general */
+
 .shadow {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.disabledLink {
+  pointer-events: none;
+}
+
+.divider {
+  border: 1px solid var(--border);
+  width: 100%;
+  max-width: 500px;
 }
 
 .generalInput {
@@ -18,6 +30,8 @@
 .generalInput:focus {
   outline: none;
 }
+
+/* buttons */
 
 .btn {
   font-size: 1rem;
@@ -68,7 +82,7 @@
   }
 
   .buttonNoteSecondary:hover {
-    border: 1.5px solid var(--text-secondary) !important;
+    border: 1.5px solid var(--text-primary) !important;
   }
 
   .buttonPrimary:hover {
@@ -85,6 +99,8 @@
     color: var(--text-primary);
   }
 }
+
+/* text styles */
 
 .titleText {
   font-family: "Oswald", sans-serif;
@@ -104,6 +120,8 @@
   color: var(--text-secondary);
 }
 
+/* modals */
+
 .loadingModal {
   background-color: rgba(0, 0, 0, 0.2);
   position: absolute;
@@ -111,12 +129,35 @@
   pointer-events: none;
 }
 
-.disabledLink {
-  pointer-events: none;
+.confModalContainer {
+  position: fixed;
+  inset: 0;
+  background-color: var(--bg-transparent);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  z-index: 4;
 }
 
-.divider {
-  border: 1px solid var(--border);
+.confModal {
+  margin: auto;
+  width: 90%;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: var(--border-radius);
+  padding: calc(var(--padding) * 2);
+  background-color: var(--bg);
+  color: var(--text-secondary);
+  position: fixed;
+  inset: 0;
+}
+
+.confModalBtnsCon {
   width: 100%;
-  max-width: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: calc(var(--gap) * 2);
 }

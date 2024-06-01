@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Header from "../components/Header";
 import { defaultTheme } from "../constants";
 import { AppContext } from "../context";
@@ -6,9 +6,49 @@ import AccountDropdown from "../components/AccountDropdown";
 import { className } from "../helpers";
 import * as style from "./Routes.module.css";
 import * as shared from "../components/shared.module.css";
+import {
+  getAuth,
+  deleteUser,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+} from "firebase/auth";
+import DeleteUserConfirmation from "../components/DeleteUserConfirmation";
+import { FirebaseError } from "firebase/app";
+import { useNavigate } from "react-router-dom";
 
 function AccountSettings() {
-  const { user, isDropdownOpen, isLoading } = useContext(AppContext);
+  const { user, isDropdownOpen, isLoading, password } = useContext(AppContext);
+  const [isDelConfOpen, setIsDelConfOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const auth = getAuth();
+
+  const handleDeleteUser = async () => {
+    if (auth.currentUser && auth.currentUser.email) {
+      const email = auth.currentUser.email;
+      const credential = EmailAuthProvider.credential(email, password);
+      try {
+        const reAuthResult = await reauthenticateWithCredential(
+          auth.currentUser,
+          credential
+        );
+        if (reAuthResult) {
+          try {
+            await deleteUser(auth.currentUser);
+            navigate(0);
+          } catch (error: unknown) {
+            if (error instanceof FirebaseError) {
+              console.error(error.code);
+            }
+          }
+        }
+      } catch (error: unknown) {
+        if (error instanceof FirebaseError) {
+          console.error(error.code);
+        }
+      }
+    }
+  };
 
   return (
     <div className="wrapper" data-theme={user?.theme ?? defaultTheme}>
@@ -49,11 +89,22 @@ function AccountSettings() {
             If you delete your account you won&apos;t be able to access your
             notes anymore
           </span>
-          <button {...className(shared.btn, shared.buttonDanger)}>
+          <button
+            onClick={() => {
+              setIsDelConfOpen(true);
+            }}
+            {...className(shared.btn, shared.buttonDanger)}
+          >
             Delete account
           </button>
         </div>
       </div>
+      {isDelConfOpen && (
+        <DeleteUserConfirmation
+          handleDelete={handleDeleteUser}
+          setIsDelConfOpen={setIsDelConfOpen}
+        />
+      )}
     </div>
   );
 }

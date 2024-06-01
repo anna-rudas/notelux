@@ -1,66 +1,8 @@
-.deleteConfCon {
-  position: fixed;
-  inset: 0;
-  background-color: var(--bg-transparent);
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  z-index: 4;
-}
-
-.deleteConf {
-  margin: auto;
-  width: 30%;
+.delNoteModal {
+  min-height: 210px;
+  max-height: 210px;
   min-width: 250px;
   max-width: 400px;
-  height: 50%;
-  min-height: 200px;
-  max-height: 200px;
-  display: flex;
-  align-items: center;
   justify-content: space-around;
-  flex-direction: column;
-  border-radius: var(--border-radius);
-  padding: calc(var(--padding) * 2);
   gap: var(--gap);
-  background-color: var(--bg);
-  color: var(--text-secondary);
-  position: fixed;
-  inset: 0;
-}
-
-.delText {
-  text-align: center;
-  font-weight: 500;
-}
-
-.btnsCon {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: calc(var(--gap) * 2);
-}
-
-.btnPrimary {
-  border: 1.5px solid var(--text-secondary);
-  background-color: var(--text-secondary);
-  color: var(--bg);
-}
-
-.btnSecondary {
-  border: 1.5px solid transparent;
-  color: var(--text-secondary);
-  background-color: transparent;
-}
-
-@media (hover: hover) {
-  .btnPrimary:hover {
-    background-color: transparent;
-    color: var(--text-secondary);
-  }
-
-  .btnSecondary:hover {
-    border: 1.5px solid var(--text-secondary);
-  }
 }
