@@ -62,7 +62,7 @@ function AccountSettings() {
         <div {...className(style.settingsItem)}>
           <span {...className(shared.secondaryTitleText)}>Email address</span>
           <div {...className(style.settingsItemCon)}>
-            <span>Your current email address: test@test.com</span>
+            <span>Your current email address: {user?.email}</span>
             <button {...className(shared.btn, shared.buttonSecondary)}>
               Change
             </button>

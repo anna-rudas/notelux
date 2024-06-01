@@ -134,6 +134,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
       resolvedUser.push({
         ...doc.data(),
         id: doc.id,
+        email: doc.data().email,
       })
     );
     if (!Object.hasOwn(resolvedUser[0], "theme")) {

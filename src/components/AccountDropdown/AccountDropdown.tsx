@@ -8,6 +8,7 @@ import { AppContext } from "../../context";
 
 function AccountDropdown() {
   const {
+    user,
     setUser,
     setIsDropdownOpen,
     isDropdownOpen,
@@ -58,7 +59,7 @@ function AccountDropdown() {
       id="account-modal"
       {...className(style.dropdownCon, shared.shadow)}
     >
-      <span {...className(style.emailText)}>test@test.com</span>
+      <span {...className(style.emailText)}>{user?.email}</span>
       <span {...className(shared.titleText)}>Hello, friend!</span>
       <div {...className(style.dropdownItemCon)}>
         <Link to="/settings" {...className(style.dropdownItem)}>

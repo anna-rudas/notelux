@@ -24,7 +24,13 @@ function SignUp() {
         email,
         password
       );
-      addUserInDb({ id: signUpResult.user.uid });
+      if (signUpResult.user.email) {
+        addUserInDb({
+          id: signUpResult.user.uid,
+          email: signUpResult.user.email,
+        });
+      }
+
       setIsLoading(false);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {

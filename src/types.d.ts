@@ -9,6 +9,7 @@ type Note = {
 
 type User = {
   id: string;
+  email: string;
   theme?: Theme;
   nickname?: string;
   name?: string;

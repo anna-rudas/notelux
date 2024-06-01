@@ -14,7 +14,7 @@ function DeleteUserConfirmation({
   handleDelete,
   setIsDelConfOpen,
 }: DeleteConfirmationProps) {
-  const { setEmail, setPassword } = useContext(AppContext);
+  const { setEmail, setPassword, user } = useContext(AppContext);
 
   return (
     <div {...className(shared.confModalContainer)}>
@@ -25,7 +25,7 @@ function DeleteUserConfirmation({
         <div {...className(style.inputsCon)}>
           <GeneralInput
             setInputValue={setEmail}
-            inputValue="test@test.com"
+            inputValue={user?.email}
             placeholder="Email"
             isDisabled={true}
           />
