@@ -13,11 +13,15 @@
   --margin: 10px;
   --gap: 5px;
   --border-radius: 5px;
+  --error-bg: #eec8c5;
+  --success-bg: #dcf3d6;
 }
 
 [data-theme="dark"] {
   --bg: #38312e;
   --text-secondary: #fff;
+  --error-bg: #38312e;
+  --success-bg: #38312e;
 }
 
 * {
