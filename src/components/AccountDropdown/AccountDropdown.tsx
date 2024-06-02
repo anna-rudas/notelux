@@ -60,7 +60,9 @@ function AccountDropdown() {
       {...className(style.dropdownCon, shared.shadow)}
     >
       <span {...className(style.emailText)}>{user?.email}</span>
-      <span {...className(shared.titleText)}>Hello, friend!</span>
+      <span {...className(shared.titleText)}>
+        Hello, {user?.username !== "" ? user?.username : "guest"}!
+      </span>
       <div {...className(style.dropdownItemCon)}>
         <Link to="/settings" {...className(style.dropdownItem)}>
           Account settings

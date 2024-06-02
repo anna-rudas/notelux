@@ -15,10 +15,13 @@ import {
 import DeleteUserConfirmation from "../components/DeleteUserConfirmation";
 import { FirebaseError } from "firebase/app";
 import { useNavigate } from "react-router-dom";
+import GeneralInput from "../components/GeneralInput";
 
 function AccountSettings() {
-  const { user, isDropdownOpen, isLoading, password } = useContext(AppContext);
+  const { user, isDropdownOpen, isLoading, password, setUser, setIsLoading } =
+    useContext(AppContext);
   const [isDelConfOpen, setIsDelConfOpen] = useState(false);
+  const [name, setName] = useState(user?.username);
   const navigate = useNavigate();
 
   const auth = getAuth();
@@ -50,6 +53,14 @@ function AccountSettings() {
     }
   };
 
+  const handleNameChange = () => {
+    setIsLoading(true);
+    if (name && user) {
+      setUser({ ...user, username: name });
+    }
+    setIsLoading(false);
+  };
+
   return (
     <div className="wrapper" data-theme={user?.theme ?? defaultTheme}>
       {isLoading && <div {...className(shared.loadingModal)}></div>}
@@ -72,12 +83,15 @@ function AccountSettings() {
           <span {...className(shared.secondaryTitleText)}>Name</span>
           <span>Set what name to display in the menu</span>
           <div {...className(style.settingsItemCon, style.settingsItemConName)}>
-            <input
-              type="text"
-              {...className(shared.generalInput)}
+            <GeneralInput
+              setInputValue={setName}
               placeholder="Name"
+              inputValue={name}
             />
-            <button {...className(shared.btn, shared.buttonPrimary)}>
+            <button
+              onClick={handleNameChange}
+              {...className(shared.btn, shared.buttonPrimary)}
+            >
               Save changes
             </button>
           </div>

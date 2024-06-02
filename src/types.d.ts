@@ -11,8 +11,7 @@ type User = {
   id: string;
   email: string;
   theme?: Theme;
-  nickname?: string;
-  name?: string;
+  username: string;
 };
 
 type Theme = "light" | "dark";

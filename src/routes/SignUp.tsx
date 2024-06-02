@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Header from "../components/Header";
 import * as style from "./Routes.module.css";
 import * as shared from "../components/shared.module.css";
@@ -12,6 +12,7 @@ import AuthForm from "../components/AuthForm";
 function SignUp() {
   const { email, password, isLoading, setIsLoading, addUserInDb } =
     useContext(AppContext);
+  const [name, setName] = useState("");
 
   const auth = getAuth();
 
@@ -28,6 +29,7 @@ function SignUp() {
         addUserInDb({
           id: signUpResult.user.uid,
           email: signUpResult.user.email,
+          username: name,
         });
       }
 
@@ -46,7 +48,11 @@ function SignUp() {
       <Header loggedInStyle={false} />
       <div {...className(style.contentCon)}>
         <span {...className(shared.titleText)}>Sign up</span>
-        <AuthForm handleSubmit={handleSignUp} primaryButtonText="Sign up" />
+        <AuthForm
+          handleSubmit={handleSignUp}
+          primaryButtonText="Sign up"
+          setName={setName}
+        />
         <div {...className(style.redirectCon)}>
           <span>Already have an account?</span>
           <Link
