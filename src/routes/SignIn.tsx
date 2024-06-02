@@ -31,7 +31,9 @@ function SignIn() {
         email,
         password
       );
-      loadUserFromDb(signInResult.user.uid);
+      if (signInResult.user.emailVerified) {
+        loadUserFromDb(signInResult.user.uid);
+      }
       setIsLoading(false);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {

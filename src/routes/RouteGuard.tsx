@@ -17,7 +17,7 @@ function RouteGuard({ children }: RouteGuardProps) {
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (userResult) => {
-      if (userResult) {
+      if (userResult?.emailVerified) {
         loadUserFromDb(userResult.uid);
       } else {
         setIsPageLoading(false);

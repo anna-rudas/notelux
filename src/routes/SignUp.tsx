@@ -5,7 +5,12 @@ import * as shared from "../components/shared.module.css";
 import { Link } from "react-router-dom";
 import { className } from "../helpers";
 import { AppContext } from "../context";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  signOut,
+} from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import AuthForm from "../components/AuthForm";
 
@@ -25,14 +30,33 @@ function SignUp() {
         email,
         password
       );
-      if (signUpResult.user.email) {
+      if (signUpResult && signUpResult.user.email) {
         addUserInDb({
           id: signUpResult.user.uid,
           email: signUpResult.user.email,
           username: name,
         });
+        try {
+          if (auth.currentUser) {
+            await sendEmailVerification(auth.currentUser, {
+              url: "http://localhost:1234/signin",
+            });
+          }
+        } catch (error: unknown) {
+          if (error instanceof FirebaseError) {
+            console.error(error.code);
+          }
+        }
+        try {
+          if (auth.currentUser) {
+            await signOut(auth);
+          }
+        } catch (error: unknown) {
+          if (error instanceof FirebaseError) {
+            console.error(error.code);
+          }
+        }
       }
-
       setIsLoading(false);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
