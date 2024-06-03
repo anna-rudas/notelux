@@ -24,6 +24,7 @@ import {
 } from "firebase/firestore";
 import { db } from "./firestoreConfig";
 import { FirebaseError } from "firebase/app";
+import { InfoMsg, Note, User } from "./types";
 
 interface AppContextInterface {
   search: string;

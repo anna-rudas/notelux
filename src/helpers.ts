@@ -1,4 +1,5 @@
-import { firebaseErrorCodes, errorCodeInputs } from "./constants";
+import { firebaseErrorCodes } from "./constants";
+import { Note } from "./types";
 
 export const className = (...classNames: string[]) => {
   return {
@@ -35,15 +36,5 @@ export const sortNotes: (
 };
 
 export const evalErrorCode = (code: string): string => {
-  const simplified = code.split("/").join("").split("-").join("");
-  const result: string[] = [];
-  errorCodeInputs.map((currCode) => {
-    if (currCode == simplified) {
-      result.push(firebaseErrorCodes[currCode]);
-    }
-  });
-  if (result.length == 0) {
-    return "unknown error";
-  }
-  return result[0];
+  return firebaseErrorCodes[code] ?? "unknown error";
 };

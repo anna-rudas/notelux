@@ -1,4 +1,6 @@
-type Note = {
+import { colors } from "./constants";
+
+export type Note = {
   id: string;
   title: string;
   body: string;
@@ -7,35 +9,27 @@ type Note = {
   userId: string;
 };
 
-type User = {
+export type User = {
   id: string;
   email: string;
   theme?: Theme;
   username: string;
 };
 
-type Theme = "light" | "dark";
+export type Theme = "light" | "dark";
 
-type Color =
-  | "default"
-  | "yellow"
-  | "red"
-  | "green"
-  | "blue"
-  | "purple"
-  | "pink"
-  | "grey";
-
-type InfoMsg = {
+export type InfoMsg = {
   isError: boolean;
   desc: string;
   showMsg: boolean;
   isPersisting: boolean;
 };
 
-type ErrorCode =
+export type ErrorCode =
   | "authinvalidemail"
   | "authinvalidcredential"
   | "authemailalreadyinuse"
   | "authweakpassword"
   | "authtoomanyrequests";
+
+export type Color = keyof typeof colors;

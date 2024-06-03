@@ -1,4 +1,6 @@
-export const colors: Record<Color, string> = {
+import { Color, InfoMsg, Theme } from "./types";
+
+export const colors = {
   default: "#FFFFFF",
   red: "#FAB2AB",
   yellow: "#FFDA44",
@@ -7,7 +9,7 @@ export const colors: Record<Color, string> = {
   purple: "#E2C5FC",
   pink: "#FDCFE8",
   grey: "#E8EAED",
-};
+} as const;
 
 export const colorInputs = Object.keys(colors) as Array<Color>;
 
@@ -31,14 +33,12 @@ export const defaultInfoMsg: InfoMsg = {
   isPersisting: false,
 };
 
-export const firebaseErrorCodes: Record<ErrorCode, string> = {
-  authinvalidemail: "not a valid email address",
-  authinvalidcredential: "wrong email address or password",
-  authemailalreadyinuse: "this email address is already in use",
-  authweakpassword: "password is too weak",
-  authtoomanyrequests: "too many requests",
+export const firebaseErrorCodes: Record<string, string> = {
+  "auth/invalid-email": "not a valid email address",
+  "auth/invalid-credential": "wrong email address or password",
+  "auth/email-already-in-use": "this email address is already in use",
+  "auth/weak-password": "password is too weak",
+  "auth/too-many-requests": "too many requests",
+  "auth/user-not-found": "no user with this email address",
+  "auth/wrong-password": "wrong password",
 };
-
-export const errorCodeInputs = Object.keys(
-  firebaseErrorCodes
-) as Array<ErrorCode>;

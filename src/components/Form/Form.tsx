@@ -7,6 +7,7 @@ import { colors } from "../../constants";
 import * as style from "./Form.module.css";
 import * as shared from "../shared.module.css";
 import { AppContext } from "../../context";
+import { Note } from "../../types";
 
 type FormProps = {
   handleSubmit: () => void;
