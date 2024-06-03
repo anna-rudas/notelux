@@ -3,16 +3,30 @@ import Header from "../components/Header";
 import * as style from "./Routes.module.css";
 import * as shared from "../components/shared.module.css";
 import { Link } from "react-router-dom";
-import { className } from "../helpers";
+import { className, evalErrorCode } from "../helpers";
 import { AppContext } from "../context";
 import { useNavigate } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import AuthForm from "../components/AuthForm";
+import InformationMessage from "../components/InformationMessage";
 
 function SignIn() {
-  const { email, password, isLoading, setIsLoading, user, loadUserFromDb } =
-    useContext(AppContext);
+  const {
+    email,
+    password,
+    isLoading,
+    setIsLoading,
+    user,
+    loadUserFromDb,
+    infoMessage,
+    setInfoMessage,
+  } = useContext(AppContext);
+
   const navigate = useNavigate();
   const auth = getAuth();
 
@@ -21,6 +35,34 @@ function SignIn() {
       navigate("/dashboard");
     }
   }, [user]);
+
+  const sendVerifyEmail = async () => {
+    try {
+      if (auth.currentUser) {
+        await sendEmailVerification(auth.currentUser, {
+          url: "http://localhost:1234/signin",
+        });
+        setInfoMessage({
+          isPersisting: false,
+          showMsg: true,
+          isError: false,
+          desc: "Verification email sent",
+        });
+      }
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        console.error(error.code);
+        setInfoMessage({
+          isPersisting: false,
+          showMsg: true,
+          isError: true,
+          desc: `Failed to send verification email: ${evalErrorCode(
+            error.code
+          )}`,
+        });
+      }
+    }
+  };
 
   const handleSignIn = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -32,13 +74,30 @@ function SignIn() {
         password
       );
       if (signInResult.user.emailVerified) {
+        setInfoMessage({
+          ...infoMessage,
+          showMsg: false,
+        });
         loadUserFromDb(signInResult.user.uid);
+      } else {
+        setInfoMessage({
+          isPersisting: true,
+          showMsg: true,
+          isError: true,
+          desc: "Your email address is not verified",
+        });
       }
       setIsLoading(false);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         console.error(error.code);
         setIsLoading(false);
+        setInfoMessage({
+          isPersisting: false,
+          showMsg: true,
+          isError: true,
+          desc: `Failed to sign in: ${evalErrorCode(error.code)}`,
+        });
       }
     }
   };
@@ -64,6 +123,14 @@ function SignIn() {
           </Link>
         </div>
       </div>
+      {infoMessage.showMsg && (
+        <InformationMessage
+          actionButtonText={infoMessage.isPersisting ? "Resend email" : ""}
+          actionButtonHandle={sendVerifyEmail}
+          description={infoMessage.desc}
+          isError={infoMessage.isError}
+        />
+      )}
     </div>
   );
 }

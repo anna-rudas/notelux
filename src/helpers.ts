@@ -1,3 +1,5 @@
+import { firebaseErrorCodes, errorCodeInputs } from "./constants";
+
 export const className = (...classNames: string[]) => {
   return {
     className: classNames.filter(Boolean).join(" "),
@@ -30,4 +32,18 @@ export const sortNotes: (
   });
 
   return columns;
+};
+
+export const evalErrorCode = (code: string): string => {
+  const simplified = code.split("/").join("").split("-").join("");
+  const result: string[] = [];
+  errorCodeInputs.map((currCode) => {
+    if (currCode == simplified) {
+      result.push(firebaseErrorCodes[currCode]);
+    }
+  });
+  if (result.length == 0) {
+    return "unknown error";
+  }
+  return result[0];
 };

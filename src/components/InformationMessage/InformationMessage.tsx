@@ -1,28 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import SuccessIcon from "../../icons/SuccessIcon";
 import ErrorIcon from "../../icons/ErrorIcon";
 import CloseIcon from "../../icons/CloseIcon";
 import { className } from "../../helpers";
 import * as style from "./InformationMessage.module.css";
 import * as shared from "../shared.module.css";
+import { AppContext } from "../../context";
 
 type InformationMessageProps = {
   isError: boolean;
-  title: string;
   description: string;
-  closeMsg: (value: boolean) => void;
   actionButtonHandle?: () => void;
   actionButtonText?: string;
 };
 
 function InformationMessage({
   isError,
-  title,
   description,
-  closeMsg,
   actionButtonHandle,
   actionButtonText,
 }: InformationMessageProps) {
+  const { setInfoMessage, infoMessage } = useContext(AppContext);
+
   return (
     <div {...className(style.msgContainer)}>
       <div
@@ -39,7 +38,9 @@ function InformationMessage({
           <SuccessIcon {...className(style.icon)} />
         )}
         <div {...className(style.textCon)}>
-          <span {...className(shared.secondaryTitleText)}>{title}</span>
+          <span {...className(shared.secondaryTitleText)}>
+            {isError ? "Error" : "Success"}
+          </span>
           <span {...className(shared.normalText)}>{description}</span>
         </div>
         {actionButtonText ? (
@@ -56,7 +57,7 @@ function InformationMessage({
           </button>
         ) : (
           <button
-            onClick={() => closeMsg(false)}
+            onClick={() => setInfoMessage({ ...infoMessage, showMsg: false })}
             style={
               isError
                 ? { backgroundColor: "var(--error-bg)" }

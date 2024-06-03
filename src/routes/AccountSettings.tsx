@@ -16,10 +16,19 @@ import DeleteUserConfirmation from "../components/DeleteUserConfirmation";
 import { FirebaseError } from "firebase/app";
 import { useNavigate } from "react-router-dom";
 import GeneralInput from "../components/GeneralInput";
+import InformationMessage from "../components/InformationMessage";
 
 function AccountSettings() {
-  const { user, isDropdownOpen, isLoading, password, setUser, setIsLoading } =
-    useContext(AppContext);
+  const {
+    user,
+    isDropdownOpen,
+    isLoading,
+    password,
+    setUser,
+    setIsLoading,
+    infoMessage,
+    setInfoMessage,
+  } = useContext(AppContext);
   const [isDelConfOpen, setIsDelConfOpen] = useState(false);
   const [name, setName] = useState(user?.username);
   const navigate = useNavigate();
@@ -59,6 +68,11 @@ function AccountSettings() {
       setUser({ ...user, username: name });
     }
     setIsLoading(false);
+    setInfoMessage({
+      ...infoMessage,
+      isPersisting: false,
+      showMsg: true,
+    });
   };
 
   return (
@@ -117,6 +131,12 @@ function AccountSettings() {
         <DeleteUserConfirmation
           handleDelete={handleDeleteUser}
           setIsDelConfOpen={setIsDelConfOpen}
+        />
+      )}
+      {infoMessage.showMsg && (
+        <InformationMessage
+          description={infoMessage.desc}
+          isError={infoMessage.isError}
         />
       )}
     </div>

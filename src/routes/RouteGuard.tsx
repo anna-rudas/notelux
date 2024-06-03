@@ -4,18 +4,25 @@ import { Navigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import PageLoading from "./PageLoading";
 import { useLocation } from "react-router-dom";
+import { defaultInfoMsg } from "../constants";
 
 type RouteGuardProps = {
   children: JSX.Element;
 };
 
 function RouteGuard({ children }: RouteGuardProps) {
-  const { user, loadUserFromDb, isPageLoading, setIsPageLoading } =
-    useContext(AppContext);
+  const {
+    user,
+    loadUserFromDb,
+    isPageLoading,
+    setIsPageLoading,
+    setInfoMessage,
+  } = useContext(AppContext);
   const auth = getAuth();
   const location = useLocation();
 
   useEffect(() => {
+    setInfoMessage(defaultInfoMsg);
     const unSubscribe = onAuthStateChanged(auth, (userResult) => {
       if (userResult?.emailVerified) {
         loadUserFromDb(userResult.uid);

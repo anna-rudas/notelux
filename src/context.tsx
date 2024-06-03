@@ -6,7 +6,12 @@ import React, {
   useRef,
   RefObject,
 } from "react";
-import { defaultTheme, notesColKey, usersColKey } from "./constants";
+import {
+  defaultInfoMsg,
+  defaultTheme,
+  notesColKey,
+  usersColKey,
+} from "./constants";
 import {
   collection,
   updateDoc,
@@ -18,6 +23,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { db } from "./firestoreConfig";
+import { FirebaseError } from "firebase/app";
 
 interface AppContextInterface {
   search: string;
@@ -56,6 +62,8 @@ interface AppContextInterface {
   setIsDropdownOpen: (value: boolean) => void;
   dropdownRef: RefObject<HTMLDivElement> | null;
   dropdownButtonRef: RefObject<HTMLButtonElement> | null;
+  infoMessage: InfoMsg;
+  setInfoMessage: (value: InfoMsg) => void;
 }
 
 const defaultContextValue: AppContextInterface = {
@@ -95,6 +103,8 @@ const defaultContextValue: AppContextInterface = {
   setIsDropdownOpen: () => {},
   dropdownRef: null,
   dropdownButtonRef: null,
+  infoMessage: defaultInfoMsg,
+  setInfoMessage: () => {},
 };
 
 export const AppContext =
@@ -119,6 +129,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const dropdownButtonRef = useRef(null);
+  const [infoMessage, setInfoMessage] = useState<InfoMsg>(defaultInfoMsg);
 
   //collection refs
   const notesColRef = collection(db, notesColKey);
@@ -128,26 +139,35 @@ function AppContextProvider({ children }: AppContextProviderProps) {
 
   const loadUserFromDb = async (userId: string): Promise<void> => {
     const q = query(usersColRef, where("id", "==", userId));
-    const querySnapshot = await getDocs(q);
-    const resolvedUser: User[] = [];
-    querySnapshot.docs.map((doc) =>
-      resolvedUser.push({
-        ...doc.data(),
-        id: doc.id,
-        email: doc.data().email,
-        username: doc.data().username,
-      })
-    );
-    if (!Object.hasOwn(resolvedUser[0], "theme")) {
-      setUser({ ...resolvedUser[0], theme: defaultTheme });
-    } else setUser(resolvedUser[0]);
+
+    try {
+      const querySnapshot = await getDocs(q);
+      const resolvedUser: User[] = [];
+      querySnapshot.docs.map((doc) =>
+        resolvedUser.push({
+          ...doc.data(),
+          id: doc.id,
+          email: doc.data().email,
+          username: doc.data().username,
+        })
+      );
+      if (!Object.hasOwn(resolvedUser[0], "theme")) {
+        setUser({ ...resolvedUser[0], theme: defaultTheme });
+      } else setUser(resolvedUser[0]);
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        console.error(error.code);
+      }
+    }
   };
 
   const addUserInDb = async (userToAdd: User): Promise<void> => {
     try {
       await setDoc(doc(db, usersColKey, userToAdd.id), userToAdd);
-    } catch (err) {
-      console.error(err);
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        console.error(error.code);
+      }
     }
   };
 
@@ -155,8 +175,22 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     const userRef = doc(db, usersColKey, userToUpdate.id);
     try {
       await updateDoc(userRef, userToUpdate);
-    } catch (err) {
-      console.error(err);
+      setInfoMessage({
+        ...infoMessage,
+        isPersisting: false,
+        isError: false,
+        desc: "User updated successfully",
+      });
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        console.error(error.code);
+        setInfoMessage({
+          ...infoMessage,
+          isPersisting: false,
+          isError: true,
+          desc: "User update failed",
+        });
+      }
     }
   };
 
@@ -164,8 +198,10 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     const userRef = doc(db, usersColKey, userToDelete.id);
     try {
       await deleteDoc(userRef);
-    } catch (err) {
-      console.error(err);
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        console.error(error.code);
+      }
     }
   };
 
@@ -174,27 +210,53 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const loadNotesFromDb = async (): Promise<void> => {
     if (user) {
       const q = query(notesColRef, where("userId", "==", user.id));
-      const querySnapshot = await getDocs(q);
-      const resolvedNotes: Note[] = [];
-      querySnapshot.docs.map((doc) => {
-        resolvedNotes.push({
-          id: doc.id,
-          title: doc.data().title,
-          color: doc.data().color,
-          body: doc.data().body,
-          date: doc.data().date,
-          userId: doc.data().userId,
+      try {
+        const querySnapshot = await getDocs(q);
+        const resolvedNotes: Note[] = [];
+        querySnapshot.docs.map((doc) => {
+          resolvedNotes.push({
+            id: doc.id,
+            title: doc.data().title,
+            color: doc.data().color,
+            body: doc.data().body,
+            date: doc.data().date,
+            userId: doc.data().userId,
+          });
         });
-      });
-      setNotes(resolvedNotes);
+        setNotes(resolvedNotes);
+      } catch (error: unknown) {
+        if (error instanceof FirebaseError) {
+          console.error(error.code);
+          setInfoMessage({
+            isPersisting: true,
+            showMsg: true,
+            isError: true,
+            desc: "Failed to load notes",
+          });
+        }
+      }
     }
   };
 
   const addNoteInDb = async (noteToAdd: Note): Promise<void> => {
     try {
       await setDoc(doc(db, notesColKey, noteToAdd.id), noteToAdd);
-    } catch (err) {
-      console.error(err);
+      setInfoMessage({
+        isPersisting: false,
+        showMsg: true,
+        isError: false,
+        desc: "Note added",
+      });
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        console.error(error.code);
+        setInfoMessage({
+          isPersisting: false,
+          showMsg: true,
+          isError: true,
+          desc: "Failed to add note",
+        });
+      }
     }
   };
 
@@ -202,8 +264,22 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     const noteRef = doc(db, notesColKey, noteToUpdate.id);
     try {
       await updateDoc(noteRef, noteToUpdate);
-    } catch (err) {
-      console.error(err);
+      setInfoMessage({
+        isPersisting: false,
+        showMsg: true,
+        isError: false,
+        desc: "Note updated",
+      });
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        console.error(error.code);
+        setInfoMessage({
+          showMsg: true,
+          isPersisting: false,
+          isError: true,
+          desc: "Failed to updated note",
+        });
+      }
     }
   };
 
@@ -211,8 +287,21 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     const noteRef = doc(db, notesColKey, noteToDelete.id);
     try {
       await deleteDoc(noteRef);
-    } catch (err) {
-      console.error(err);
+      setInfoMessage({
+        isPersisting: false,
+        showMsg: true,
+        isError: false,
+        desc: "Note deleted successfully",
+      });
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        setInfoMessage({
+          isPersisting: false,
+          showMsg: true,
+          isError: true,
+          desc: "Failed to delete note",
+        });
+      }
     }
   };
 
@@ -242,6 +331,17 @@ function AppContextProvider({ children }: AppContextProviderProps) {
       updateUserInDb(user);
     }
   }, [user]);
+
+  useEffect(() => {
+    if (infoMessage.showMsg && !infoMessage.isPersisting) {
+      setTimeout(() => {
+        setInfoMessage({
+          ...infoMessage,
+          showMsg: false,
+        });
+      }, 5000);
+    }
+  }, [infoMessage]);
 
   return (
     <AppContext.Provider
@@ -282,6 +382,8 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         setIsDropdownOpen,
         dropdownRef,
         dropdownButtonRef,
+        infoMessage,
+        setInfoMessage,
       }}
     >
       {children}

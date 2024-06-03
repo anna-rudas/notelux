@@ -25,3 +25,17 @@ type Color =
   | "purple"
   | "pink"
   | "grey";
+
+type InfoMsg = {
+  isError: boolean;
+  desc: string;
+  showMsg: boolean;
+  isPersisting: boolean;
+};
+
+type ErrorCode =
+  | "authinvalidemail"
+  | "authinvalidcredential"
+  | "authemailalreadyinuse"
+  | "authweakpassword"
+  | "authtoomanyrequests";

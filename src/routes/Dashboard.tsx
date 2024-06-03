@@ -6,9 +6,11 @@ import Notes from "../components/Notes";
 import { defaultTheme } from "../constants";
 import { AppContext } from "../context";
 import AccountDropdown from "../components/AccountDropdown";
+import InformationMessage from "../components/InformationMessage";
 
 function Dashboard() {
-  const { isEditing, user, isDropdownOpen } = useContext(AppContext);
+  const { isEditing, user, isDropdownOpen, infoMessage } =
+    useContext(AppContext);
 
   return (
     <div className="wrapper" data-theme={user?.theme ?? defaultTheme}>
@@ -17,6 +19,12 @@ function Dashboard() {
       <AddNote />
       <Notes />
       {isEditing && <EditNote />}
+      {infoMessage.showMsg && (
+        <InformationMessage
+          description={infoMessage.desc}
+          isError={infoMessage.isError}
+        />
+      )}
     </div>
   );
 }

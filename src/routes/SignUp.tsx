@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import * as style from "./Routes.module.css";
 import * as shared from "../components/shared.module.css";
 import { Link } from "react-router-dom";
-import { className } from "../helpers";
+import { className, evalErrorCode } from "../helpers";
 import { AppContext } from "../context";
 import {
   getAuth,
@@ -13,13 +13,49 @@ import {
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import AuthForm from "../components/AuthForm";
+import InformationMessage from "../components/InformationMessage";
 
 function SignUp() {
-  const { email, password, isLoading, setIsLoading, addUserInDb } =
-    useContext(AppContext);
+  const {
+    email,
+    password,
+    isLoading,
+    setIsLoading,
+    addUserInDb,
+    infoMessage,
+    setInfoMessage,
+  } = useContext(AppContext);
   const [name, setName] = useState("");
 
   const auth = getAuth();
+
+  const sendVerifyEmail = async () => {
+    try {
+      if (auth.currentUser) {
+        await sendEmailVerification(auth.currentUser, {
+          url: "http://localhost:1234/signin",
+        });
+        setInfoMessage({
+          isPersisting: false,
+          showMsg: true,
+          isError: false,
+          desc: "Verify your email address to sign in",
+        });
+      }
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        console.error(error.code);
+        setInfoMessage({
+          ...infoMessage,
+          showMsg: true,
+          isError: true,
+          desc: `Failed to send verification email: ${evalErrorCode(
+            error.code
+          )}`,
+        });
+      }
+    }
+  };
 
   const handleSignUp = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -36,17 +72,7 @@ function SignUp() {
           email: signUpResult.user.email,
           username: name,
         });
-        try {
-          if (auth.currentUser) {
-            await sendEmailVerification(auth.currentUser, {
-              url: "http://localhost:1234/signin",
-            });
-          }
-        } catch (error: unknown) {
-          if (error instanceof FirebaseError) {
-            console.error(error.code);
-          }
-        }
+        await sendVerifyEmail();
         try {
           if (auth.currentUser) {
             await signOut(auth);
@@ -62,6 +88,12 @@ function SignUp() {
       if (error instanceof FirebaseError) {
         console.error(error.code);
         setIsLoading(false);
+        setInfoMessage({
+          isPersisting: false,
+          showMsg: true,
+          isError: true,
+          desc: `Failed to sign up: ${evalErrorCode(error.code)}`,
+        });
       }
     }
   };
@@ -91,6 +123,14 @@ function SignUp() {
           </Link>
         </div>
       </div>
+      {infoMessage.showMsg && (
+        <InformationMessage
+          actionButtonText={infoMessage.isPersisting ? "Resend email" : ""}
+          actionButtonHandle={sendVerifyEmail}
+          description={infoMessage.desc}
+          isError={infoMessage.isError}
+        />
+      )}
     </div>
   );
 }

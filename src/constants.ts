@@ -23,3 +23,22 @@ export const defaultNoteColor: Record<Theme, Color> = {
 };
 
 export const defaultTheme: Theme = "light";
+
+export const defaultInfoMsg: InfoMsg = {
+  isError: true,
+  desc: "Unknown error, please try again later",
+  showMsg: false,
+  isPersisting: false,
+};
+
+export const firebaseErrorCodes: Record<ErrorCode, string> = {
+  authinvalidemail: "not a valid email address",
+  authinvalidcredential: "wrong email address or password",
+  authemailalreadyinuse: "this email address is already in use",
+  authweakpassword: "password is too weak",
+  authtoomanyrequests: "too many requests",
+};
+
+export const errorCodeInputs = Object.keys(
+  firebaseErrorCodes
+) as Array<ErrorCode>;
