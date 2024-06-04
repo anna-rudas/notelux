@@ -8,6 +8,7 @@ import SignUp from "./routes/SignUp";
 import NotFound from "./routes/NotFound";
 import RouteGuard from "./routes/RouteGuard";
 import AccountSettings from "./routes/AccountSettings";
+import ResetPassword from "./routes/ResetPassword";
 
 function App() {
   const { loadNotesFromDb, resetDefault, user } = useContext(AppContext);
@@ -50,6 +51,14 @@ function App() {
       element: (
         <RouteGuard>
           <SignUp />
+        </RouteGuard>
+      ),
+    },
+    {
+      path: "/resetpassword",
+      element: (
+        <RouteGuard>
+          <ResetPassword />
         </RouteGuard>
       ),
     },

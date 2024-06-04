@@ -122,6 +122,17 @@ function SignIn() {
             Sign up
           </Link>
         </div>
+        <div {...className(shared.divider)}></div>
+        <Link
+          to="/resetpassword"
+          {...className(
+            shared.btn,
+            shared.buttonSecondary,
+            isLoading && shared.disabledLink
+          )}
+        >
+          Forgot password?
+        </Link>
       </div>
       {infoMessage.showMsg && (
         <InformationMessage

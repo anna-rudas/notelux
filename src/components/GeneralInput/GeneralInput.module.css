@@ -10,6 +10,7 @@
   height: 50px;
   color: var(--text-secondary);
   background-color: var(--bg);
+  max-width: 300px;
 }
 
 .inputCon input {
