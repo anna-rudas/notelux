@@ -14,6 +14,7 @@ import {
   updateEmail,
   sendEmailVerification,
   signOut,
+  updatePassword,
 } from "firebase/auth";
 import DeleteUserConfirmation from "../components/DeleteUserConfirmation";
 import { FirebaseError } from "firebase/app";
@@ -23,6 +24,7 @@ import GeneralInput from "../components/GeneralInput";
 import InformationMessage from "../components/InformationMessage";
 
 import ChangeEmailConfirmation from "../components/ChangeEmailConfirmation";
+import ChangePasswordConfirmation from "../components/ChangePasswordConfirmation";
 
 function AccountSettings() {
   const {
@@ -40,6 +42,8 @@ function AccountSettings() {
 
   const [isDelConfOpen, setIsDelConfOpen] = useState(false);
   const [isChangeEmailOpen, setIsChangeEmailOpen] = useState(false);
+  const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
   const [name, setName] = useState(user?.username);
   const navigate = useNavigate();
 
@@ -125,7 +129,6 @@ function AccountSettings() {
           credential
         );
         if (reAuthResult && auth.currentUser.email !== email) {
-          console.log(auth.currentUser.email, email);
           try {
             await updateEmail(auth.currentUser, email);
             sendVerifyEmail();
@@ -171,6 +174,58 @@ function AccountSettings() {
     }
   };
 
+  const handleChangePassword = async () => {
+    setIsLoading(true);
+    if (auth.currentUser && auth.currentUser.email) {
+      const currentEmail = auth.currentUser.email;
+      const currentPassword = password;
+      const credential = EmailAuthProvider.credential(
+        currentEmail,
+        currentPassword
+      );
+      try {
+        const reAuthResult = await reauthenticateWithCredential(
+          auth.currentUser,
+          credential
+        );
+        if (reAuthResult) {
+          try {
+            await updatePassword(auth.currentUser, newPassword);
+            setInfoMessage({
+              isPersisting: false,
+              showMsg: true,
+              isError: false,
+              desc: "Password successfully updated",
+            });
+            setIsLoading(false);
+          } catch (error: unknown) {
+            if (error instanceof FirebaseError) {
+              console.error(error.code);
+              setInfoMessage({
+                isPersisting: false,
+                showMsg: true,
+                isError: true,
+                desc: `Failed to update password: ${evalErrorCode(error.code)}`,
+              });
+              setIsLoading(false);
+            }
+          }
+        }
+      } catch (error: unknown) {
+        if (error instanceof FirebaseError) {
+          console.error(error.code);
+          setInfoMessage({
+            isPersisting: false,
+            showMsg: true,
+            isError: true,
+            desc: `Failed to authenticate: ${evalErrorCode(error.code)}`,
+          });
+        }
+        setIsLoading(false);
+      }
+    }
+  };
+
   const handleNameChange = () => {
     setIsLoading(true);
     if (name && user) {
@@ -200,6 +255,20 @@ function AccountSettings() {
             <button
               onClick={() => {
                 setIsChangeEmailOpen(true);
+              }}
+              {...className(shared.btn, shared.buttonSecondary)}
+            >
+              Change
+            </button>
+          </div>
+        </div>
+        <div {...className(style.settingsItem)}>
+          <span {...className(shared.secondaryTitleText)}>Password</span>
+          <div {...className(style.settingsItemCon)}>
+            <span>Set a new password</span>
+            <button
+              onClick={() => {
+                setIsChangePasswordOpen(true);
               }}
               {...className(shared.btn, shared.buttonSecondary)}
             >
@@ -259,6 +328,13 @@ function AccountSettings() {
         <ChangeEmailConfirmation
           handleSubmit={handleChangeEmail}
           setIsModalOpen={setIsChangeEmailOpen}
+        />
+      )}
+      {isChangePasswordOpen && (
+        <ChangePasswordConfirmation
+          handleSubmit={handleChangePassword}
+          setIsModalOpen={setIsChangePasswordOpen}
+          setNewItem={setNewPassword}
         />
       )}
     </div>
