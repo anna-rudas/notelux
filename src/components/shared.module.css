@@ -71,6 +71,11 @@
   color: var(--lightest);
 }
 
+.btnDisabled {
+  cursor: default;
+  pointer-events: none;
+}
+
 @media (hover: hover) {
   .btn:hover {
     cursor: pointer;
@@ -97,6 +102,11 @@
   .buttonDanger:hover {
     background-color: var(--lightest);
     color: var(--text-primary);
+  }
+
+  .btnDisabled:hover {
+    cursor: default;
+    pointer-events: none;
   }
 }
 
@@ -128,6 +138,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 20;
 }
 
 .confModalContainer {
@@ -137,7 +148,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  z-index: 4;
+  z-index: 10;
 }
 
 .confModal {

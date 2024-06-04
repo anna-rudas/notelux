@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ShowEyeIcon from "../../icons/ShowEyeIcon";
 import HideEyeIcon from "../../icons/HideEyeIcon";
 import { className } from "../../helpers";
 import * as style from "./GeneralInput.module.css";
 import * as shared from "../shared.module.css";
+import { AppContext } from "../../context";
 
 type GeneralInputProps = {
   inputValue?: string;
@@ -20,6 +21,7 @@ function GeneralInput({
   isDisabled,
   placeholder,
 }: GeneralInputProps) {
+  const { isLoading } = useContext(AppContext);
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePassVisibility = () => {
@@ -38,7 +40,11 @@ function GeneralInput({
         />
 
         <button
-          {...className(shared.btn, style.buttonPassVisibility)}
+          {...className(
+            shared.btn,
+            style.buttonPassVisibility,
+            isLoading ? shared.btnDisabled : ""
+          )}
           type="button"
           onClick={togglePassVisibility}
         >

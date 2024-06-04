@@ -25,7 +25,7 @@ function InformationMessage({
   return (
     <div {...className(style.msgContainer)}>
       <div
-        {...className(style.msgContent)}
+        {...className(style.msgContent, shared.shadow)}
         style={
           isError
             ? { backgroundColor: "var(--error-bg)" }

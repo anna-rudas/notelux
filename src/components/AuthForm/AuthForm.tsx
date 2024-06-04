@@ -17,11 +17,16 @@ function AuthForm({ handleSubmit, primaryButtonText, setName }: AuthFormProps) {
   return (
     <form onSubmit={handleSubmit} action="#" {...className(style.formCon)}>
       {setName && <GeneralInput setInputValue={setName} placeholder="Name" />}
-      <GeneralInput setInputValue={setEmail} placeholder="Email" />
+      <GeneralInput
+        setInputValue={setEmail}
+        placeholder="Email"
+        isDisabled={isLoading}
+      />
       <GeneralInput
         setInputValue={setPassword}
         placeholder="Password"
         isPassword={true}
+        isDisabled={isLoading}
       />
       <button
         disabled={isLoading}

@@ -1,0 +1,12 @@
+.delUserModal {
+  height: fit-content;
+  width: fit-content;
+  justify-content: space-around;
+  gap: calc(var(--gap) * 4);
+}
+
+.inputsCon {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gap) * 2);
+}

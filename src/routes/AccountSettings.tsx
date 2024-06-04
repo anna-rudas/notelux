@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import { defaultTheme } from "../constants";
 import { AppContext } from "../context";
 import AccountDropdown from "../components/AccountDropdown";
-import { className } from "../helpers";
+import { className, evalErrorCode } from "../helpers";
 import * as style from "./Routes.module.css";
 import * as shared from "../components/shared.module.css";
 import {
@@ -11,12 +11,18 @@ import {
   deleteUser,
   reauthenticateWithCredential,
   EmailAuthProvider,
+  updateEmail,
+  sendEmailVerification,
+  signOut,
 } from "firebase/auth";
 import DeleteUserConfirmation from "../components/DeleteUserConfirmation";
 import { FirebaseError } from "firebase/app";
 import { useNavigate } from "react-router-dom";
 import GeneralInput from "../components/GeneralInput";
+
 import InformationMessage from "../components/InformationMessage";
+
+import ChangeEmailConfirmation from "../components/ChangeEmailConfirmation";
 
 function AccountSettings() {
   const {
@@ -24,12 +30,16 @@ function AccountSettings() {
     isDropdownOpen,
     isLoading,
     password,
-    setUser,
-    setIsLoading,
+
     infoMessage,
     setInfoMessage,
+    email,
+    setUser,
+    setIsLoading,
   } = useContext(AppContext);
+
   const [isDelConfOpen, setIsDelConfOpen] = useState(false);
+  const [isChangeEmailOpen, setIsChangeEmailOpen] = useState(false);
   const [name, setName] = useState(user?.username);
   const navigate = useNavigate();
 
@@ -37,8 +47,8 @@ function AccountSettings() {
 
   const handleDeleteUser = async () => {
     if (auth.currentUser && auth.currentUser.email) {
-      const email = auth.currentUser.email;
-      const credential = EmailAuthProvider.credential(email, password);
+      const currentEmail = auth.currentUser.email;
+      const credential = EmailAuthProvider.credential(currentEmail, password);
       try {
         const reAuthResult = await reauthenticateWithCredential(
           auth.currentUser,
@@ -58,6 +68,105 @@ function AccountSettings() {
         if (error instanceof FirebaseError) {
           console.error(error.code);
         }
+      }
+    }
+  };
+
+  const sendVerifyEmail = async () => {
+    try {
+      if (auth.currentUser) {
+        await sendEmailVerification(auth.currentUser, {
+          url: "http://localhost:1234/signin",
+        });
+        setInfoMessage({
+          isPersisting: false,
+          showMsg: true,
+          isError: false,
+          desc: "Verification email sent. You will be automatically signed out in 3 seconds",
+        });
+      }
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        console.error(error.code);
+        setInfoMessage({
+          ...infoMessage,
+          showMsg: true,
+          isError: true,
+          desc: `Failed to send verification email: ${evalErrorCode(
+            error.code
+          )}`,
+        });
+      }
+      setIsLoading(false);
+    }
+  };
+
+  const signOutUser = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+      navigate(0);
+    } catch (error: unknown) {
+      if (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  const handleChangeEmail = async () => {
+    setIsLoading(true);
+
+    if (auth.currentUser && auth.currentUser.email) {
+      const currentEmail = auth.currentUser.email;
+      const credential = EmailAuthProvider.credential(currentEmail, password);
+      try {
+        const reAuthResult = await reauthenticateWithCredential(
+          auth.currentUser,
+          credential
+        );
+        if (reAuthResult && auth.currentUser.email !== email) {
+          console.log(auth.currentUser.email, email);
+          try {
+            await updateEmail(auth.currentUser, email);
+            sendVerifyEmail();
+            if (user) {
+              setUser({ ...user, email: email });
+            }
+            setTimeout(() => {
+              signOutUser();
+            }, 3000);
+          } catch (error: unknown) {
+            if (error instanceof FirebaseError) {
+              console.error(error.code);
+              setInfoMessage({
+                isPersisting: false,
+                showMsg: true,
+                isError: true,
+                desc: `Failed to update email: ${evalErrorCode(error.code)}`,
+              });
+              setIsLoading(false);
+            }
+          }
+        } else {
+          setInfoMessage({
+            isPersisting: false,
+            showMsg: true,
+            desc: "The new email address can't be the old email address",
+            isError: true,
+          });
+          setIsLoading(false);
+        }
+      } catch (error: unknown) {
+        if (error instanceof FirebaseError) {
+          console.error(error.code);
+          setInfoMessage({
+            isPersisting: false,
+            showMsg: true,
+            isError: true,
+            desc: `Failed to authenticate: ${evalErrorCode(error.code)}`,
+          });
+        }
+        setIsLoading(false);
       }
     }
   };
@@ -88,7 +197,12 @@ function AccountSettings() {
           <span {...className(shared.secondaryTitleText)}>Email address</span>
           <div {...className(style.settingsItemCon)}>
             <span>Your current email address: {user?.email}</span>
-            <button {...className(shared.btn, shared.buttonSecondary)}>
+            <button
+              onClick={() => {
+                setIsChangeEmailOpen(true);
+              }}
+              {...className(shared.btn, shared.buttonSecondary)}
+            >
               Change
             </button>
           </div>
@@ -101,6 +215,7 @@ function AccountSettings() {
               setInputValue={setName}
               placeholder="Name"
               inputValue={name}
+              isDisabled={isLoading}
             />
             <button
               onClick={handleNameChange}
@@ -133,10 +248,17 @@ function AccountSettings() {
           setIsDelConfOpen={setIsDelConfOpen}
         />
       )}
+
       {infoMessage.showMsg && (
         <InformationMessage
           description={infoMessage.desc}
           isError={infoMessage.isError}
+        />
+      )}
+      {isChangeEmailOpen && (
+        <ChangeEmailConfirmation
+          handleSubmit={handleChangeEmail}
+          setIsModalOpen={setIsChangeEmailOpen}
         />
       )}
     </div>
