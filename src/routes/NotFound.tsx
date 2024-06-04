@@ -1,14 +1,13 @@
 import React from "react";
-import Header from "../components/Header";
 import * as shared from "../components/shared.module.css";
 import * as style from "./Routes.module.css";
 import { className } from "../helpers";
 import { Link } from "react-router-dom";
+import PageWrapper from "../components/PageWrapper";
 
 function NotFound() {
   return (
-    <div className="wrapper">
-      <Header loggedInStyle={false} />
+    <PageWrapper isAuthStlye={false}>
       <div {...className(style.contentCon)}>
         <span {...className(shared.titleText)}>Oops!</span>
         <span>Looks like that page doesn&apos;t exist.</span>
@@ -16,7 +15,7 @@ function NotFound() {
           Go back
         </Link>
       </div>
-    </div>
+    </PageWrapper>
   );
 }
 

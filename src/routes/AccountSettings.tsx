@@ -1,8 +1,5 @@
 import React, { useContext, useState } from "react";
-import Header from "../components/Header";
-import { defaultTheme } from "../constants";
 import { AppContext } from "../context";
-import AccountDropdown from "../components/AccountDropdown";
 import { className, evalErrorCode } from "../helpers";
 import * as style from "./Routes.module.css";
 import * as shared from "../components/shared.module.css";
@@ -20,19 +17,16 @@ import DeleteUserConfirmation from "../components/DeleteUserConfirmation";
 import { FirebaseError } from "firebase/app";
 import { useNavigate } from "react-router-dom";
 import GeneralInput from "../components/GeneralInput";
-
-import InformationMessage from "../components/InformationMessage";
-
 import ChangeEmailConfirmation from "../components/ChangeEmailConfirmation";
 import ChangePasswordConfirmation from "../components/ChangePasswordConfirmation";
+import PageWrapper from "../components/PageWrapper";
+import InformationMessage from "../components/InformationMessage";
 
 function AccountSettings() {
   const {
     user,
-    isDropdownOpen,
     isLoading,
     password,
-
     infoMessage,
     setInfoMessage,
     email,
@@ -240,103 +234,106 @@ function AccountSettings() {
   };
 
   return (
-    <div className="wrapper" data-theme={user?.theme ?? defaultTheme}>
-      {isLoading && <div {...className(shared.loadingModal)}></div>}
-      <Header loggedInStyle={true} />
-      {isDropdownOpen && <AccountDropdown />}
-      <div
-        {...className(style.contentCon, shared.normalText, style.settingsCon)}
-      >
-        <span {...className(shared.titleText)}>Account settings</span>
-        <div {...className(style.settingsItem)}>
-          <span {...className(shared.secondaryTitleText)}>Email address</span>
-          <div {...className(style.settingsItemCon)}>
-            <span>Your current email address: {user?.email}</span>
+    <PageWrapper isAuthStlye={true}>
+      <>
+        <div
+          {...className(style.contentCon, shared.normalText, style.settingsCon)}
+        >
+          <span {...className(shared.titleText)}>Account settings</span>
+          <div {...className(style.settingsItem)}>
+            <span {...className(shared.secondaryTitleText)}>Email address</span>
+            <div {...className(style.settingsItemCon)}>
+              <span>Your current email address: {user?.email}</span>
+              <button
+                onClick={() => {
+                  setIsChangeEmailOpen(true);
+                }}
+                {...className(shared.btn, shared.buttonSecondary)}
+              >
+                Change
+              </button>
+            </div>
+          </div>
+          <div {...className(style.settingsItem)}>
+            <span {...className(shared.secondaryTitleText)}>Password</span>
+            <div {...className(style.settingsItemCon)}>
+              <span>Set a new password</span>
+              <button
+                onClick={() => {
+                  setIsChangePasswordOpen(true);
+                }}
+                {...className(shared.btn, shared.buttonSecondary)}
+              >
+                Change
+              </button>
+            </div>
+          </div>
+          <div {...className(style.settingsItem)}>
+            <span {...className(shared.secondaryTitleText)}>Name</span>
+            <span>Set what name to display in the menu</span>
+            <div
+              {...className(style.settingsItemCon, style.settingsItemConName)}
+            >
+              <GeneralInput
+                setInputValue={setName}
+                placeholder="Name"
+                inputValue={name}
+                isDisabled={isLoading}
+              />
+              <button
+                onClick={handleNameChange}
+                {...className(shared.btn, shared.buttonPrimary)}
+              >
+                Save changes
+              </button>
+            </div>
+          </div>
+          <div {...className(shared.divider)} />
+          <div {...className(style.settingsItem)}>
+            <span {...className(shared.secondaryTitleText)}>
+              Delete account
+            </span>
+            <span>
+              If you delete your account you won&apos;t be able to access your
+              notes anymore
+            </span>
             <button
               onClick={() => {
-                setIsChangeEmailOpen(true);
+                setIsDelConfOpen(true);
               }}
-              {...className(shared.btn, shared.buttonSecondary)}
+              {...className(shared.btn, shared.buttonDanger)}
             >
-              Change
+              Delete account
             </button>
           </div>
         </div>
-        <div {...className(style.settingsItem)}>
-          <span {...className(shared.secondaryTitleText)}>Password</span>
-          <div {...className(style.settingsItemCon)}>
-            <span>Set a new password</span>
-            <button
-              onClick={() => {
-                setIsChangePasswordOpen(true);
-              }}
-              {...className(shared.btn, shared.buttonSecondary)}
-            >
-              Change
-            </button>
-          </div>
-        </div>
-        <div {...className(style.settingsItem)}>
-          <span {...className(shared.secondaryTitleText)}>Name</span>
-          <span>Set what name to display in the menu</span>
-          <div {...className(style.settingsItemCon, style.settingsItemConName)}>
-            <GeneralInput
-              setInputValue={setName}
-              placeholder="Name"
-              inputValue={name}
-              isDisabled={isLoading}
-            />
-            <button
-              onClick={handleNameChange}
-              {...className(shared.btn, shared.buttonPrimary)}
-            >
-              Save changes
-            </button>
-          </div>
-        </div>
-        <div {...className(shared.divider)} />
-        <div {...className(style.settingsItem)}>
-          <span {...className(shared.secondaryTitleText)}>Delete account</span>
-          <span>
-            If you delete your account you won&apos;t be able to access your
-            notes anymore
-          </span>
-          <button
-            onClick={() => {
-              setIsDelConfOpen(true);
-            }}
-            {...className(shared.btn, shared.buttonDanger)}
-          >
-            Delete account
-          </button>
-        </div>
-      </div>
-      {isDelConfOpen && (
-        <DeleteUserConfirmation
-          handleSubmit={handleDeleteUser}
-          setIsModalOpen={setIsDelConfOpen}
-        />
-      )}
-      {isChangeEmailOpen && (
-        <ChangeEmailConfirmation
-          handleSubmit={handleChangeEmail}
-          setIsModalOpen={setIsChangeEmailOpen}
-        />
-      )}
-      {isChangePasswordOpen && (
-        <ChangePasswordConfirmation
-          handleSubmit={handleChangePassword}
-          setIsModalOpen={setIsChangePasswordOpen}
-          setNewItem={setNewPassword}
-        />
-      )}
-      {infoMessage.showMsg && (
-        <InformationMessage
-          description={infoMessage.desc}
-          isError={infoMessage.isError}
-        />
-      )}
-    </div>
+        {isDelConfOpen && (
+          <DeleteUserConfirmation
+            handleSubmit={handleDeleteUser}
+            setIsModalOpen={setIsDelConfOpen}
+          />
+        )}
+        {isChangeEmailOpen && (
+          <ChangeEmailConfirmation
+            handleSubmit={handleChangeEmail}
+            setIsModalOpen={setIsChangeEmailOpen}
+          />
+        )}
+        {isChangePasswordOpen && (
+          <ChangePasswordConfirmation
+            handleSubmit={handleChangePassword}
+            setIsModalOpen={setIsChangePasswordOpen}
+            setNewItem={setNewPassword}
+          />
+        )}
+        {infoMessage.showMsg && (
+          <InformationMessage
+            description={infoMessage.desc}
+            isError={infoMessage.isError}
+          />
+        )}
+      </>
+    </PageWrapper>
   );
 }
 

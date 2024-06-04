@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import Header from "../components/Header";
 import * as style from "./Routes.module.css";
 import * as shared from "../components/shared.module.css";
 import { Link } from "react-router-dom";
@@ -14,6 +13,7 @@ import {
 import { FirebaseError } from "firebase/app";
 import AuthForm from "../components/AuthForm";
 import InformationMessage from "../components/InformationMessage";
+import PageWrapper from "../components/PageWrapper";
 
 function SignUp() {
   const {
@@ -99,39 +99,39 @@ function SignUp() {
   };
 
   return (
-    <div className="wrapper">
-      {isLoading && <div {...className(shared.loadingModal)}></div>}
-      <Header loggedInStyle={false} />
-      <div {...className(style.contentCon)}>
-        <span {...className(shared.titleText)}>Sign up</span>
-        <AuthForm
-          handleSubmit={handleSignUp}
-          primaryButtonText="Sign up"
-          setName={setName}
-        />
-        <div {...className(style.redirectCon)}>
-          <span>Already have an account?</span>
-          <Link
-            to="/signin"
-            {...className(
-              shared.btn,
-              shared.buttonSecondary,
-              isLoading && shared.disabledLink
-            )}
-          >
-            Sign in
-          </Link>
+    <PageWrapper isAuthStlye={false}>
+      <>
+        <div {...className(style.contentCon)}>
+          <span {...className(shared.titleText)}>Sign up</span>
+          <AuthForm
+            handleSubmit={handleSignUp}
+            primaryButtonText="Sign up"
+            setName={setName}
+          />
+          <div {...className(style.redirectCon)}>
+            <span>Already have an account?</span>
+            <Link
+              to="/signin"
+              {...className(
+                shared.btn,
+                shared.buttonSecondary,
+                isLoading && shared.disabledLink
+              )}
+            >
+              Sign in
+            </Link>
+          </div>
         </div>
-      </div>
-      {infoMessage.showMsg && (
-        <InformationMessage
-          actionButtonText={infoMessage.isPersisting ? "Resend email" : ""}
-          actionButtonHandle={sendVerifyEmail}
-          description={infoMessage.desc}
-          isError={infoMessage.isError}
-        />
-      )}
-    </div>
+        {infoMessage.showMsg && (
+          <InformationMessage
+            actionButtonText={infoMessage.isPersisting ? "Resend email" : ""}
+            actionButtonHandle={sendVerifyEmail}
+            description={infoMessage.desc}
+            isError={infoMessage.isError}
+          />
+        )}
+      </>
+    </PageWrapper>
   );
 }
 
