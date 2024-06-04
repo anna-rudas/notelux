@@ -313,15 +313,8 @@ function AccountSettings() {
       </div>
       {isDelConfOpen && (
         <DeleteUserConfirmation
-          handleDelete={handleDeleteUser}
-          setIsDelConfOpen={setIsDelConfOpen}
-        />
-      )}
-
-      {infoMessage.showMsg && (
-        <InformationMessage
-          description={infoMessage.desc}
-          isError={infoMessage.isError}
+          handleSubmit={handleDeleteUser}
+          setIsModalOpen={setIsDelConfOpen}
         />
       )}
       {isChangeEmailOpen && (
@@ -335,6 +328,12 @@ function AccountSettings() {
           handleSubmit={handleChangePassword}
           setIsModalOpen={setIsChangePasswordOpen}
           setNewItem={setNewPassword}
+        />
+      )}
+      {infoMessage.showMsg && (
+        <InformationMessage
+          description={infoMessage.desc}
+          isError={infoMessage.isError}
         />
       )}
     </div>

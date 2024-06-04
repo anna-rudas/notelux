@@ -43,8 +43,8 @@ function EditNote() {
       />
       {isDelConfOpen && (
         <DeleteConfirmation
-          handleDelete={handleDelete}
-          setIsDelConfOpen={setIsDelConfOpen}
+          handleSubmit={handleDelete}
+          setIsModalOpen={setIsDelConfOpen}
         />
       )}
     </div>

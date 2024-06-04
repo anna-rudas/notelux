@@ -1,8 +1,0 @@
-.delNoteModal {
-  min-height: 210px;
-  max-height: 210px;
-  min-width: 250px;
-  max-width: 400px;
-  justify-content: space-around;
-  gap: var(--gap);
-}

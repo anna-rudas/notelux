@@ -1,41 +1,22 @@
 import React from "react";
-import * as style from "./DeleteConfirmation.module.css";
-import * as shared from "../shared.module.css";
-import { className } from "../../helpers";
+import ModalContainer from "../ModalContainer";
 
 type DeleteConfirmationProps = {
-  handleDelete: () => void;
-  setIsDelConfOpen: (value: boolean) => void;
+  handleSubmit: () => void;
+  setIsModalOpen: (value: boolean) => void;
 };
 
 function DeleteConfirmation({
-  handleDelete,
-  setIsDelConfOpen,
+  handleSubmit,
+  setIsModalOpen,
 }: DeleteConfirmationProps) {
   return (
-    <div {...className(shared.confModalContainer)}>
-      <div {...className(shared.shadow, shared.confModal, style.delNoteModal)}>
-        <span {...className(shared.secondaryTitleText)}>
-          Are you sure you want to delete this note?
-        </span>
-        <div {...className(shared.confModalBtnsCon)}>
-          <button
-            onClick={handleDelete}
-            {...className(shared.btn, shared.buttonPrimary)}
-          >
-            Delete
-          </button>
-          <button
-            onClick={() => {
-              setIsDelConfOpen(false);
-            }}
-            {...className(shared.btn, shared.buttonSecondary)}
-          >
-            Cancel
-          </button>
-        </div>
-      </div>
-    </div>
+    <ModalContainer
+      title="Are you sure you want to delete this note?"
+      handleSubmit={handleSubmit}
+      setIsModalOpen={setIsModalOpen}
+      primaryButtonText="Delete"
+    ></ModalContainer>
   );
 }
 

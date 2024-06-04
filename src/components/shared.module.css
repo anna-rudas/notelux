@@ -140,36 +140,3 @@
   pointer-events: none;
   z-index: 20;
 }
-
-.confModalContainer {
-  position: fixed;
-  inset: 0;
-  background-color: var(--bg-transparent);
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  z-index: 10;
-}
-
-.confModal {
-  margin: auto;
-  width: 90%;
-  height: 50%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  border-radius: var(--border-radius);
-  padding: calc(var(--padding) * 2);
-  background-color: var(--bg);
-  color: var(--text-secondary);
-  position: fixed;
-  inset: 0;
-}
-
-.confModalBtnsCon {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: calc(var(--gap) * 2);
-}
