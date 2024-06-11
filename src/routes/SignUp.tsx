@@ -37,7 +37,7 @@ function SignUp() {
       }
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
-        console.error(error.code);
+        console.error("Failed to send verification email: ", error.code);
         setInfoMessage({
           ...infoMessage,
           showMsg: true,
@@ -71,14 +71,14 @@ function SignUp() {
           }
         } catch (error: unknown) {
           if (error instanceof FirebaseError) {
-            console.error(error.code);
+            console.error("Failed to sign out user: ", error.code);
           }
         }
       }
       setIsLoading(false);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
-        console.error(error.code);
+        console.error("Failed to sign up user: ", error.code);
         setIsLoading(false);
         setInfoMessage({
           isPersisting: false,

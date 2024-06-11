@@ -147,7 +147,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
       } else setUser(resolvedUser[0]);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
-        console.error(error.code);
+        console.error("Failed to load user: ", error.code);
       }
     }
   };
@@ -157,7 +157,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
       await setDoc(doc(db, usersColKey, userToAdd.id), userToAdd);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
-        console.error(error.code);
+        console.error("Failed to add user: ", error.code);
       }
     }
   };
@@ -174,7 +174,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
       });
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
-        console.error(error.code);
+        console.error("Failed to update user: ", error.code);
         setInfoMessage({
           ...infoMessage,
           isPersisting: false,
@@ -191,7 +191,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
       await deleteDoc(userRef);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
-        console.error(error.code);
+        console.error("Failed to delete user: ", error.code);
       }
     }
   };
@@ -217,7 +217,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         setNotes(resolvedNotes);
       } catch (error: unknown) {
         if (error instanceof FirebaseError) {
-          console.error(error.code);
+          console.error("Failed to load notes: ", error.code);
           setInfoMessage({
             isPersisting: true,
             showMsg: true,
@@ -240,7 +240,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
       });
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
-        console.error(error.code);
+        console.error("Failed to add note: ", error.code);
         setInfoMessage({
           isPersisting: false,
           showMsg: true,
@@ -263,12 +263,12 @@ function AppContextProvider({ children }: AppContextProviderProps) {
       });
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
-        console.error(error.code);
+        console.error("Failed to update note: ", error.code);
         setInfoMessage({
           showMsg: true,
           isPersisting: false,
           isError: true,
-          desc: "Failed to updated note",
+          desc: "Failed to update note",
         });
       }
     }

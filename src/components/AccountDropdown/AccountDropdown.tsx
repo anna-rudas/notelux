@@ -5,6 +5,7 @@ import * as shared from "../shared.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import { AppContext } from "../../context";
+import { FirebaseError } from "firebase/app";
 
 function AccountDropdown() {
   const {
@@ -47,8 +48,8 @@ function AccountDropdown() {
       setUser(null);
       navigate("/signin");
     } catch (error: unknown) {
-      if (error) {
-        console.error(error);
+      if (error instanceof FirebaseError) {
+        console.error("Failed to sign out user: ", error.code);
       }
     }
   };

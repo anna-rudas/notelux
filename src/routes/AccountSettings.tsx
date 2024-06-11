@@ -53,13 +53,13 @@ function AccountSettings() {
             navigate(0);
           } catch (error: unknown) {
             if (error instanceof FirebaseError) {
-              console.error(error.code);
+              console.error("Failed to delete user: ", error.code);
             }
           }
         }
       } catch (error: unknown) {
         if (error instanceof FirebaseError) {
-          console.error(error.code);
+          console.error("Failed to reauthenticate user: ", error.code);
         }
       }
     }
@@ -80,7 +80,7 @@ function AccountSettings() {
       }
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
-        console.error(error.code);
+        console.error("Failed to send verification email: ", error.code);
         setInfoMessage({
           ...infoMessage,
           showMsg: true,
@@ -100,8 +100,8 @@ function AccountSettings() {
       setUser(null);
       navigate(0);
     } catch (error: unknown) {
-      if (error) {
-        console.error(error);
+      if (error instanceof FirebaseError) {
+        console.error("Failed to sign out user: ", error.code);
       }
     }
   };
@@ -132,7 +132,7 @@ function AccountSettings() {
             }, 3000);
           } catch (error: unknown) {
             if (error instanceof FirebaseError) {
-              console.error(error.code);
+              console.error("Failed to update email: ", error.code);
               setInfoMessage({
                 isPersisting: false,
                 showMsg: true,
@@ -153,7 +153,7 @@ function AccountSettings() {
         }
       } catch (error: unknown) {
         if (error instanceof FirebaseError) {
-          console.error(error.code);
+          console.error("Failed to reauthenticate user: ", error.code);
           setInfoMessage({
             isPersisting: false,
             showMsg: true,
@@ -192,7 +192,7 @@ function AccountSettings() {
             setIsChangePasswordOpen(false);
           } catch (error: unknown) {
             if (error instanceof FirebaseError) {
-              console.error(error.code);
+              console.error("Failed to update password: ", error.code);
               setInfoMessage({
                 isPersisting: false,
                 showMsg: true,
@@ -205,7 +205,7 @@ function AccountSettings() {
         }
       } catch (error: unknown) {
         if (error instanceof FirebaseError) {
-          console.error(error.code);
+          console.error("Failed to reauthenticate user: ", error.code);
           setInfoMessage({
             isPersisting: false,
             showMsg: true,

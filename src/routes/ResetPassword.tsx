@@ -30,7 +30,7 @@ function ResetPassword() {
       });
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
-        console.error(error.code);
+        console.error("Failed to send verification email: ", error.code);
         setInfoMessage({
           isPersisting: false,
           showMsg: true,
