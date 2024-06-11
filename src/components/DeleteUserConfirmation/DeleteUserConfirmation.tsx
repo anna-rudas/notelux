@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
-import { AppContext } from "../../context";
+import React from "react";
 import GeneralInput from "../GeneralInput";
 import ModalContainer from "../ModalContainer";
+import { FormikValues } from "formik";
+import { deleteUserSchema } from "../../validationSchemas";
 
 type DeleteConfirmationProps = {
-  handleSubmit: () => void;
+  handleSubmit: (v: FormikValues) => void;
   setIsModalOpen: (value: boolean) => void;
 };
 
@@ -12,25 +13,20 @@ function DeleteUserConfirmation({
   handleSubmit,
   setIsModalOpen,
 }: DeleteConfirmationProps) {
-  const { setEmail, setPassword, user } = useContext(AppContext);
-
   return (
     <ModalContainer
-      title="Please confirm using your password"
+      title="Are you sure you want to delete your account?"
+      subtitle="Please confirm using your password"
       handleSubmit={handleSubmit}
       setIsModalOpen={setIsModalOpen}
       primaryButtonText="Delete account"
+      initialFormValues={{ password: "" }}
+      validationSchema={deleteUserSchema}
     >
       <GeneralInput
-        setInputValue={setEmail}
-        inputValue={user?.email}
-        placeholder="Email"
-        isDisabled={true}
-      />
-      <GeneralInput
-        setInputValue={setPassword}
+        type="password"
+        config={{ name: "password" }}
         placeholder="Password"
-        isPassword={true}
       />
     </ModalContainer>
   );

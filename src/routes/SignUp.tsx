@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import * as style from "./Routes.module.css";
 import * as shared from "../components/shared.module.css";
 import { Link } from "react-router-dom";
@@ -14,18 +14,11 @@ import { FirebaseError } from "firebase/app";
 import AuthForm from "../components/AuthForm";
 import InformationMessage from "../components/InformationMessage";
 import PageWrapper from "../components/PageWrapper";
+import { FormikValues } from "formik";
 
 function SignUp() {
-  const {
-    email,
-    password,
-    isLoading,
-    setIsLoading,
-    addUserInDb,
-    infoMessage,
-    setInfoMessage,
-  } = useContext(AppContext);
-  const [name, setName] = useState("");
+  const { isLoading, setIsLoading, addUserInDb, infoMessage, setInfoMessage } =
+    useContext(AppContext);
 
   const auth = getAuth();
 
@@ -57,22 +50,21 @@ function SignUp() {
     }
   };
 
-  const handleSignUp = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSignUp = async (values: FormikValues) => {
     setIsLoading(true);
     try {
       const signUpResult = await createUserWithEmailAndPassword(
         auth,
-        email,
-        password
+        values.email,
+        values.password
       );
       if (signUpResult && signUpResult.user.email) {
         addUserInDb({
           id: signUpResult.user.uid,
           email: signUpResult.user.email,
-          username: name,
+          username: values.username,
         });
-        await sendVerifyEmail();
+        sendVerifyEmail();
         try {
           if (auth.currentUser) {
             await signOut(auth);
@@ -106,7 +98,7 @@ function SignUp() {
           <AuthForm
             handleSubmit={handleSignUp}
             primaryButtonText="Sign up"
-            setName={setName}
+            isName={true}
           />
           <div {...className(style.redirectCon)}>
             <span>Already have an account?</span>

@@ -21,32 +21,27 @@ import ChangeEmailConfirmation from "../components/ChangeEmailConfirmation";
 import ChangePasswordConfirmation from "../components/ChangePasswordConfirmation";
 import PageWrapper from "../components/PageWrapper";
 import InformationMessage from "../components/InformationMessage";
+import { Formik, Form, FormikValues } from "formik";
+import { settingsSchema } from "../validationSchemas";
 
 function AccountSettings() {
-  const {
-    user,
-    isLoading,
-    password,
-    infoMessage,
-    setInfoMessage,
-    email,
-    setUser,
-    setIsLoading,
-  } = useContext(AppContext);
+  const { user, infoMessage, setInfoMessage, setUser, setIsLoading } =
+    useContext(AppContext);
 
   const [isDelConfOpen, setIsDelConfOpen] = useState(false);
   const [isChangeEmailOpen, setIsChangeEmailOpen] = useState(false);
   const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
-  const [newPassword, setNewPassword] = useState("");
-  const [name, setName] = useState(user?.username);
   const navigate = useNavigate();
 
   const auth = getAuth();
 
-  const handleDeleteUser = async () => {
+  const handleDeleteUser = async (values: FormikValues) => {
     if (auth.currentUser && auth.currentUser.email) {
       const currentEmail = auth.currentUser.email;
-      const credential = EmailAuthProvider.credential(currentEmail, password);
+      const credential = EmailAuthProvider.credential(
+        currentEmail,
+        values.password
+      );
       try {
         const reAuthResult = await reauthenticateWithCredential(
           auth.currentUser,
@@ -111,23 +106,26 @@ function AccountSettings() {
     }
   };
 
-  const handleChangeEmail = async () => {
+  const handleChangeEmail = async (values: FormikValues) => {
     setIsLoading(true);
 
     if (auth.currentUser && auth.currentUser.email) {
       const currentEmail = auth.currentUser.email;
-      const credential = EmailAuthProvider.credential(currentEmail, password);
+      const credential = EmailAuthProvider.credential(
+        currentEmail,
+        values.password
+      );
       try {
         const reAuthResult = await reauthenticateWithCredential(
           auth.currentUser,
           credential
         );
-        if (reAuthResult && auth.currentUser.email !== email) {
+        if (reAuthResult && auth.currentUser.email !== values.newEmail) {
           try {
-            await updateEmail(auth.currentUser, email);
+            await updateEmail(auth.currentUser, values.newEmail);
             sendVerifyEmail();
             if (user) {
-              setUser({ ...user, email: email });
+              setUser({ ...user, email: values.newEmail });
             }
             setTimeout(() => {
               signOutUser();
@@ -168,14 +166,13 @@ function AccountSettings() {
     }
   };
 
-  const handleChangePassword = async () => {
+  const handleChangePassword = async (values: FormikValues) => {
     setIsLoading(true);
     if (auth.currentUser && auth.currentUser.email) {
       const currentEmail = auth.currentUser.email;
-      const currentPassword = password;
       const credential = EmailAuthProvider.credential(
         currentEmail,
-        currentPassword
+        values.oldPassword
       );
       try {
         const reAuthResult = await reauthenticateWithCredential(
@@ -184,7 +181,7 @@ function AccountSettings() {
         );
         if (reAuthResult) {
           try {
-            await updatePassword(auth.currentUser, newPassword);
+            await updatePassword(auth.currentUser, values.newPassword);
             setInfoMessage({
               isPersisting: false,
               showMsg: true,
@@ -192,6 +189,7 @@ function AccountSettings() {
               desc: "Password successfully updated",
             });
             setIsLoading(false);
+            setIsChangePasswordOpen(false);
           } catch (error: unknown) {
             if (error instanceof FirebaseError) {
               console.error(error.code);
@@ -220,10 +218,10 @@ function AccountSettings() {
     }
   };
 
-  const handleNameChange = () => {
+  const handleNameChange = (values: FormikValues) => {
     setIsLoading(true);
-    if (name && user) {
-      setUser({ ...user, username: name });
+    if (user) {
+      setUser({ ...user, username: values.username });
     }
     setIsLoading(false);
     setInfoMessage({
@@ -271,22 +269,30 @@ function AccountSettings() {
           <div {...className(style.settingsItem)}>
             <span {...className(shared.secondaryTitleText)}>Name</span>
             <span>Set what name to display in the menu</span>
-            <div
-              {...className(style.settingsItemCon, style.settingsItemConName)}
+            <Formik
+              initialValues={{ username: user?.username }}
+              validationSchema={settingsSchema}
+              onSubmit={(values, { setSubmitting }) => {
+                handleNameChange(values);
+                setSubmitting(false);
+              }}
             >
-              <GeneralInput
-                setInputValue={setName}
-                placeholder="Name"
-                inputValue={name}
-                isDisabled={isLoading}
-              />
-              <button
-                onClick={handleNameChange}
-                {...className(shared.btn, shared.buttonPrimary)}
+              <Form
+                {...className(style.settingsItemCon, style.settingsItemConName)}
               >
-                Save changes
-              </button>
-            </div>
+                <GeneralInput
+                  type="username"
+                  config={{ name: "username" }}
+                  placeholder="Username"
+                />
+                <button
+                  type="submit"
+                  {...className(shared.btn, shared.buttonPrimary)}
+                >
+                  Save changes
+                </button>
+              </Form>
+            </Formik>
           </div>
           <div {...className(shared.divider)} />
           <div {...className(style.settingsItem)}>
@@ -323,7 +329,6 @@ function AccountSettings() {
           <ChangePasswordConfirmation
             handleSubmit={handleChangePassword}
             setIsModalOpen={setIsChangePasswordOpen}
-            setNewItem={setNewPassword}
           />
         )}
         {infoMessage.showMsg && (

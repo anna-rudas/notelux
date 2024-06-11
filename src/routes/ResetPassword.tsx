@@ -9,23 +9,19 @@ import { FirebaseError } from "firebase/app";
 import { Link } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
 import InformationMessage from "../components/InformationMessage";
+import { Formik, Form, FormikValues } from "formik";
+import { resetPasswordSchema } from "../validationSchemas";
 
 function ResetPassword() {
-  const {
-    email,
-    setEmail,
-    setInfoMessage,
-    isLoading,
-    setIsLoading,
-    infoMessage,
-  } = useContext(AppContext);
+  const { setInfoMessage, isLoading, setIsLoading, infoMessage } =
+    useContext(AppContext);
 
   const auth = getAuth();
 
-  const handleResetPassword = async () => {
+  const handleResetPassword = async (values: FormikValues) => {
     setIsLoading(true);
     try {
-      await sendPasswordResetEmail(auth, email);
+      await sendPasswordResetEmail(auth, values.email);
       setInfoMessage({
         isPersisting: false,
         showMsg: true,
@@ -57,30 +53,47 @@ function ResetPassword() {
             Enter your email address and we will send instructions on how to
             reset your password
           </span>
-          <GeneralInput setInputValue={setEmail} placeholder="Email address" />
-          <div {...className(style.redirectCon)}>
-            <button
-              disabled={isLoading}
-              onClick={handleResetPassword}
-              {...className(
-                shared.btn,
-                shared.buttonPrimary,
-                isLoading ? shared.btnDisabled : ""
-              )}
+          <Formik
+            initialValues={{ email: "" }}
+            validationSchema={resetPasswordSchema}
+            onSubmit={(values, { setSubmitting }) => {
+              handleResetPassword(values);
+              setSubmitting(false);
+            }}
+          >
+            <Form
+              {...className(style.settingsItemCon, style.settingsItemConName)}
             >
-              Reset password
-            </button>
-            <Link
-              to="/signin"
-              {...className(
-                shared.btn,
-                shared.buttonSecondary,
-                isLoading && shared.disabledLink
-              )}
-            >
-              Go back
-            </Link>
-          </div>
+              <GeneralInput
+                type="email"
+                config={{ name: "email" }}
+                placeholder="Email address"
+              />
+              <div {...className(style.redirectCon)}>
+                <button
+                  disabled={isLoading}
+                  type="submit"
+                  {...className(
+                    shared.btn,
+                    shared.buttonPrimary,
+                    isLoading ? shared.btnDisabled : ""
+                  )}
+                >
+                  Reset password
+                </button>
+                <Link
+                  to="/signin"
+                  {...className(
+                    shared.btn,
+                    shared.buttonSecondary,
+                    isLoading && shared.disabledLink
+                  )}
+                >
+                  Go back
+                </Link>
+              </div>
+            </Form>
+          </Formik>
         </div>
         {infoMessage.showMsg && (
           <InformationMessage

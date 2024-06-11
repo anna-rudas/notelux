@@ -1,6 +1,6 @@
 .inputCon {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: var(--gap);
   padding: var(--padding);
@@ -13,11 +13,19 @@
   max-width: 300px;
 }
 
+.textInputHelper {
+  width: 100%;
+  gap: 2px;
+  display: flex;
+  flex-direction: column;
+}
+
 .inputCon input {
   border: none;
   background-color: var(--bg);
   height: 100%;
   color: var(--text-secondary);
+  width: 100%;
 }
 
 .buttonPassVisibility {
@@ -36,4 +44,14 @@
 .inputCon input:focus,
 .inputCon:focus {
   outline: none;
+}
+
+.validationErrorText {
+  padding-left: 13px;
+  font-size: 0.8rem;
+  color: var(--danger);
+}
+
+.validationError {
+  border: 1px solid var(--danger);
 }

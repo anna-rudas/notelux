@@ -14,11 +14,10 @@ import { FirebaseError } from "firebase/app";
 import AuthForm from "../components/AuthForm";
 import InformationMessage from "../components/InformationMessage";
 import PageWrapper from "../components/PageWrapper";
+import { FormikValues } from "formik";
 
 function SignIn() {
   const {
-    email,
-    password,
     isLoading,
     setIsLoading,
     user,
@@ -64,14 +63,13 @@ function SignIn() {
     }
   };
 
-  const handleSignIn = async (event: React.FormEvent) => {
-    event.preventDefault();
+  const handleSignIn = async (values: FormikValues) => {
     setIsLoading(true);
     try {
       const signInResult = await signInWithEmailAndPassword(
         auth,
-        email,
-        password
+        values.email,
+        values.password
       );
       if (signInResult.user.emailVerified) {
         setInfoMessage({

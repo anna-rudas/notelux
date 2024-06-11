@@ -4,6 +4,7 @@ import * as style from "./Notes.module.css";
 import * as shared from "../shared.module.css";
 import { colors } from "../../constants";
 import { AppContext } from "../../context";
+import { Note } from "../../types";
 
 type NoteCardProps = {
   note: Note;

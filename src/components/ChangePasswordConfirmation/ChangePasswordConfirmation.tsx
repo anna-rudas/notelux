@@ -1,20 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
 import GeneralInput from "../GeneralInput";
-import { AppContext } from "../../context";
 import ModalContainer from "../ModalContainer";
+import { changePasswordSchema } from "../../validationSchemas";
+import { FormikValues } from "formik";
 
 type EmailChangeConfirmationProps = {
-  handleSubmit: () => void;
+  handleSubmit: (v: FormikValues) => void;
   setIsModalOpen: (value: boolean) => void;
-  setNewItem: (value: string) => void;
 };
 
 function ChangePasswordConfirmation({
   handleSubmit,
   setIsModalOpen,
-  setNewItem,
 }: EmailChangeConfirmationProps) {
-  const { setPassword, isLoading } = useContext(AppContext);
   return (
     <ModalContainer
       title="Set your new password"
@@ -22,18 +20,18 @@ function ChangePasswordConfirmation({
       handleSubmit={handleSubmit}
       setIsModalOpen={setIsModalOpen}
       primaryButtonText="Change password"
+      initialFormValues={{ newPassword: "", oldPassword: "" }}
+      validationSchema={changePasswordSchema}
     >
       <GeneralInput
-        setInputValue={setNewItem}
+        type="password"
+        config={{ name: "newPassword" }}
         placeholder="New password"
-        isDisabled={isLoading}
-        isPassword={true}
       />
       <GeneralInput
-        isDisabled={isLoading}
-        setInputValue={setPassword}
+        type="password"
+        config={{ name: "oldPassword" }}
         placeholder="Old password"
-        isPassword={true}
       />
     </ModalContainer>
   );

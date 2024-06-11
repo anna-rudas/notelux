@@ -51,10 +51,6 @@ interface AppContextInterface {
   updateUserInDb: (value: User) => Promise<void>;
   deleteUserInDb: (value: User) => Promise<void>;
   setActiveNoteValue: (field: string, value: string) => void;
-  email: string;
-  setEmail: (value: string) => void;
-  password: string;
-  setPassword: (value: string) => void;
   isLoading: boolean;
   setIsLoading: (value: boolean) => void;
   isPageLoading: boolean;
@@ -92,10 +88,6 @@ const defaultContextValue: AppContextInterface = {
   updateUserInDb: async () => {},
   deleteUserInDb: async () => {},
   setActiveNoteValue: () => {},
-  email: "",
-  setEmail: () => {},
-  password: "",
-  setPassword: () => {},
   isLoading: true,
   setIsLoading: () => {},
   isPageLoading: true,
@@ -123,8 +115,6 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [activeNote, setActiveNote] = useState<Note | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isPageLoading, setIsPageLoading] = useState(true);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -371,10 +361,6 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         setActiveNoteValue,
         resetDefault,
         handleEdit,
-        email,
-        setEmail,
-        password,
-        setPassword,
         isLoading,
         setIsLoading,
         isPageLoading,

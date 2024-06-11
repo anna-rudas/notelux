@@ -1,8 +1,10 @@
 import React from "react";
 import ModalContainer from "../ModalContainer";
+import { FormikValues } from "formik";
+import { deleteNoteSchema } from "../../validationSchemas";
 
 type DeleteConfirmationProps = {
-  handleSubmit: () => void;
+  handleSubmit: (v: FormikValues) => void;
   setIsModalOpen: (value: boolean) => void;
 };
 
@@ -16,6 +18,8 @@ function DeleteConfirmation({
       handleSubmit={handleSubmit}
       setIsModalOpen={setIsModalOpen}
       primaryButtonText="Delete"
+      initialFormValues={{}}
+      validationSchema={deleteNoteSchema}
     ></ModalContainer>
   );
 }

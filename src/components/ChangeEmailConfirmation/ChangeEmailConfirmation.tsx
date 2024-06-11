@@ -2,9 +2,11 @@ import React, { useContext } from "react";
 import GeneralInput from "../GeneralInput";
 import { AppContext } from "../../context";
 import ModalContainer from "../ModalContainer";
+import { changeEmailSchema } from "../../validationSchemas";
+import { FormikValues } from "formik";
 
 type EmailChangeConfirmationProps = {
-  handleSubmit: () => void;
+  handleSubmit: (v: FormikValues) => void;
   setIsModalOpen: (value: boolean) => void;
 };
 
@@ -12,7 +14,7 @@ function ChangeEmailConfirmation({
   handleSubmit,
   setIsModalOpen,
 }: EmailChangeConfirmationProps) {
-  const { setEmail, setPassword, user, isLoading } = useContext(AppContext);
+  const { user } = useContext(AppContext);
 
   return (
     <ModalContainer
@@ -21,17 +23,18 @@ function ChangeEmailConfirmation({
       handleSubmit={handleSubmit}
       setIsModalOpen={setIsModalOpen}
       primaryButtonText="Change email"
+      initialFormValues={{ newEmail: "", password: "" }}
+      validationSchema={changeEmailSchema}
     >
       <GeneralInput
-        setInputValue={setEmail}
-        placeholder="New email"
-        isDisabled={isLoading}
+        type="email"
+        config={{ name: "newEmail" }}
+        placeholder="New email address"
       />
       <GeneralInput
-        isDisabled={isLoading}
-        setInputValue={setPassword}
+        type="password"
+        config={{ name: "password" }}
         placeholder="Password"
-        isPassword={true}
       />
     </ModalContainer>
   );
