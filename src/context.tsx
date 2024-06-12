@@ -61,6 +61,8 @@ interface AppContextInterface {
   dropdownButtonRef: RefObject<HTMLButtonElement> | null;
   infoMessage: InfoMsg;
   setInfoMessage: (value: InfoMsg) => void;
+  error: Error | null;
+  setError: (value: Error | null) => void;
 }
 
 const defaultContextValue: AppContextInterface = {
@@ -98,6 +100,8 @@ const defaultContextValue: AppContextInterface = {
   dropdownButtonRef: null,
   infoMessage: defaultInfoMsg,
   setInfoMessage: () => {},
+  error: null,
+  setError: () => {},
 };
 
 export const AppContext =
@@ -121,6 +125,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const dropdownRef = useRef(null);
   const dropdownButtonRef = useRef(null);
   const [infoMessage, setInfoMessage] = useState<InfoMsg>(defaultInfoMsg);
+  const [error, setError] = useState<Error | null>(null);
 
   //collection refs
   const notesColRef = collection(db, notesColKey);
@@ -130,21 +135,24 @@ function AppContextProvider({ children }: AppContextProviderProps) {
 
   const loadUserFromDb = async (userId: string): Promise<void> => {
     const q = query(usersColRef, where("id", "==", userId));
-
     try {
       const querySnapshot = await getDocs(q);
       const resolvedUser: User[] = [];
-      querySnapshot.docs.map((doc) =>
-        resolvedUser.push({
-          ...doc.data(),
-          id: doc.id,
-          email: doc.data().email,
-          username: doc.data().username,
-        })
-      );
-      if (!Object.hasOwn(resolvedUser[0], "theme")) {
-        setUser({ ...resolvedUser[0], theme: defaultTheme });
-      } else setUser(resolvedUser[0]);
+      if (querySnapshot.docs.length === 0) {
+        setError(new Error("Failed to load user from database"));
+      } else {
+        querySnapshot.docs.map((doc) =>
+          resolvedUser.push({
+            ...doc.data(),
+            id: doc.id,
+            email: doc.data().email,
+            username: doc.data().username,
+          })
+        );
+        if (!Object.hasOwn(resolvedUser[0], "theme")) {
+          setUser({ ...resolvedUser[0], theme: defaultTheme });
+        } else setUser(resolvedUser[0]);
+      }
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         console.error("Failed to load user: ", error.code);
@@ -371,6 +379,8 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         dropdownButtonRef,
         infoMessage,
         setInfoMessage,
+        error,
+        setError,
       }}
     >
       {children}

@@ -9,6 +9,8 @@ import NotFound from "./routes/NotFound";
 import RouteGuard from "./routes/RouteGuard";
 import AccountSettings from "./routes/AccountSettings";
 import ResetPassword from "./routes/ResetPassword";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorPage from "./routes/ErrorPage";
 
 function App() {
   const { loadNotesFromDb, resetDefault, user } = useContext(AppContext);
@@ -17,49 +19,61 @@ function App() {
     {
       path: "/",
       element: (
-        <RouteGuard>
-          <Dashboard />
-        </RouteGuard>
+        <ErrorBoundary onError={logError} FallbackComponent={ErrorPage}>
+          <RouteGuard>
+            <Dashboard />
+          </RouteGuard>
+        </ErrorBoundary>
       ),
     },
     {
       path: "/dashboard",
       element: (
-        <RouteGuard>
-          <Dashboard />
-        </RouteGuard>
+        <ErrorBoundary onError={logError} FallbackComponent={ErrorPage}>
+          <RouteGuard>
+            <Dashboard />
+          </RouteGuard>
+        </ErrorBoundary>
       ),
     },
     {
       path: "/settings",
       element: (
-        <RouteGuard>
-          <AccountSettings />
-        </RouteGuard>
+        <ErrorBoundary onError={logError} FallbackComponent={ErrorPage}>
+          <RouteGuard>
+            <AccountSettings />
+          </RouteGuard>
+        </ErrorBoundary>
       ),
     },
     {
       path: "/signin",
       element: (
-        <RouteGuard>
-          <SignIn />
-        </RouteGuard>
+        <ErrorBoundary onError={logError} FallbackComponent={ErrorPage}>
+          <RouteGuard>
+            <SignIn />
+          </RouteGuard>
+        </ErrorBoundary>
       ),
     },
     {
       path: "/signup",
       element: (
-        <RouteGuard>
-          <SignUp />
-        </RouteGuard>
+        <ErrorBoundary onError={logError} FallbackComponent={ErrorPage}>
+          <RouteGuard>
+            <SignUp />
+          </RouteGuard>
+        </ErrorBoundary>
       ),
     },
     {
       path: "/resetpassword",
       element: (
-        <RouteGuard>
-          <ResetPassword />
-        </RouteGuard>
+        <ErrorBoundary onError={logError} FallbackComponent={ErrorPage}>
+          <RouteGuard>
+            <ResetPassword />
+          </RouteGuard>
+        </ErrorBoundary>
       ),
     },
     { path: "/*", element: <NotFound /> },
@@ -86,11 +100,17 @@ function App() {
   return <RouterProvider router={router}></RouterProvider>;
 }
 
+const logError = (error: Error) => {
+  console.error("Unexpected error: ", error);
+};
+
 function AppWithProvider() {
   return (
-    <AppContextProvider>
-      <App />
-    </AppContextProvider>
+    <ErrorBoundary onError={logError} FallbackComponent={ErrorPage}>
+      <AppContextProvider>
+        <App />
+      </AppContextProvider>
+    </ErrorBoundary>
   );
 }
 

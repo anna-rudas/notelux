@@ -1,10 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { AppContext } from "../context";
 import { Navigate } from "react-router-dom";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import PageLoading from "./PageLoading";
 import { useLocation } from "react-router-dom";
 import { defaultInfoMsg } from "../constants";
+import { FirebaseError } from "firebase/app";
+import ErrorPage from "./ErrorPage";
 
 type RouteGuardProps = {
   children: JSX.Element;
@@ -17,9 +19,20 @@ function RouteGuard({ children }: RouteGuardProps) {
     isPageLoading,
     setIsPageLoading,
     setInfoMessage,
+    error,
   } = useContext(AppContext);
   const auth = getAuth();
   const location = useLocation();
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        console.error("Failed to sign out user: ", error.code);
+      }
+    }
+  };
 
   useEffect(() => {
     setInfoMessage(defaultInfoMsg);
@@ -40,6 +53,16 @@ function RouteGuard({ children }: RouteGuardProps) {
       setIsPageLoading(false);
     }
   }, [user]);
+
+  useEffect(() => {
+    if (error) {
+      handleSignOut();
+    }
+  }, [error]);
+
+  if (error) {
+    return <ErrorPage></ErrorPage>;
+  }
 
   if (!isPageLoading) {
     if (!user) {
