@@ -34,14 +34,21 @@ function ModalContainer({
         <span {...className(shared.secondaryTitleText, style.modalText)}>
           {title}
         </span>
-        <span {...className(shared.normalText, style.modalText)}>
+        <span
+          {...className(
+            shared.normalText,
+            style.modalText,
+            subtitle ? "" : shared.hide
+          )}
+        >
           {subtitle}
         </span>
         <Formik
           initialValues={initialFormValues}
           validationSchema={validationSchema}
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={(values, { setSubmitting, resetForm }) => {
             handleSubmit(values);
+            resetForm();
             setSubmitting(false);
           }}
         >

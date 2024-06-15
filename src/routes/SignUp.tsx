@@ -15,6 +15,7 @@ import AuthForm from "../components/AuthForm";
 import InformationMessage from "../components/InformationMessage";
 import PageWrapper from "../components/PageWrapper";
 import { FormikValues } from "formik";
+import { defaultTheme } from "../constants";
 
 function SignUp() {
   const { isLoading, setIsLoading, addUserInDb, infoMessage, setInfoMessage } =
@@ -62,6 +63,7 @@ function SignUp() {
         addUserInDb({
           id: signUpResult.user.uid,
           email: signUpResult.user.email,
+          theme: defaultTheme,
           username: values.username,
         });
         sendVerifyEmail();

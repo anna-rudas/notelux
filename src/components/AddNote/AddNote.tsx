@@ -19,13 +19,13 @@ function AddNote() {
     setIsDropdownOpen,
   } = useContext(AppContext);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (activeNote) {
-      addNoteInDb({
+      await addNoteInDb({
         ...activeNote,
         date: new Date(),
       });
-      loadNotesFromDb();
+      await loadNotesFromDb();
       resetDefault();
     }
   };
@@ -39,6 +39,7 @@ function AddNote() {
         color: defaultNoteColor[user?.theme ? user.theme : defaultTheme],
         date: new Date(),
         userId: user.id,
+        coUsers: [user.id],
       });
       setIsDropdownOpen(false);
       setIsAddNoteOpen(true);
@@ -54,7 +55,7 @@ function AddNote() {
           {...className(style.addNoteInput)}
           onFocus={handleOpeningAddNote}
         />
-      )}{" "}
+      )}
       {isAddNoteOpen && activeNote !== null && (
         <Form
           handleSubmit={handleSubmit}

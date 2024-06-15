@@ -11,7 +11,7 @@ import MoonIcon from "../../icons/MoonIcon";
 import { AppContext } from "../../context";
 import { defaultTheme } from "../../constants";
 import { Link } from "react-router-dom";
-import PersonIcon from "../../icons/PersonIcon";
+import UserIcon from "../../icons/UserIcon";
 
 type HeaderProps = {
   loggedInStyle: boolean;
@@ -105,7 +105,7 @@ function Header({ loggedInStyle }: HeaderProps) {
             }}
             {...className(shared.btn, style.buttonAccount)}
           >
-            <PersonIcon {...className(style.accountIcon)} />
+            <UserIcon {...className(style.accountIcon)} />
           </button>
         </div>
       )}

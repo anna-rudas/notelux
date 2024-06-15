@@ -6,12 +6,7 @@ import React, {
   useRef,
   RefObject,
 } from "react";
-import {
-  defaultInfoMsg,
-  defaultTheme,
-  notesColKey,
-  usersColKey,
-} from "./constants";
+import { defaultInfoMsg, notesColKey, usersColKey } from "./constants";
 import {
   collection,
   updateDoc,
@@ -37,6 +32,7 @@ interface AppContextInterface {
   setNotes: (value: Array<Note>) => void;
   activeNote: Note | null;
   setActiveNote: (value: Note | null) => void;
+  activeNoteCollaborators: string[] | null;
   user: User | null;
   setUser: (value: User | null) => void;
   isEditing: boolean;
@@ -48,7 +44,6 @@ interface AppContextInterface {
   deleteNoteInDb: (value: Note) => Promise<void>;
   loadUserFromDb: (value: string) => Promise<void>;
   addUserInDb: (value: User) => Promise<void>;
-  updateUserInDb: (value: User) => Promise<void>;
   deleteUserInDb: (value: User) => Promise<void>;
   setActiveNoteValue: (field: string, value: string) => void;
   isLoading: boolean;
@@ -63,6 +58,8 @@ interface AppContextInterface {
   setInfoMessage: (value: InfoMsg) => void;
   error: Error | null;
   setError: (value: Error | null) => void;
+  setCollaborators: (owner: string, coowners: string[]) => Promise<void>;
+  getUserIdByEmail: (value: string) => Promise<string>;
 }
 
 const defaultContextValue: AppContextInterface = {
@@ -76,6 +73,7 @@ const defaultContextValue: AppContextInterface = {
   setNotes: () => {},
   activeNote: null,
   setActiveNote: () => {},
+  activeNoteCollaborators: null,
   user: null,
   setUser: async () => {},
   isEditing: false,
@@ -87,7 +85,6 @@ const defaultContextValue: AppContextInterface = {
   deleteNoteInDb: async () => {},
   loadUserFromDb: async () => {},
   addUserInDb: async () => {},
-  updateUserInDb: async () => {},
   deleteUserInDb: async () => {},
   setActiveNoteValue: () => {},
   isLoading: true,
@@ -102,6 +99,8 @@ const defaultContextValue: AppContextInterface = {
   setInfoMessage: () => {},
   error: null,
   setError: () => {},
+  setCollaborators: async () => {},
+  getUserIdByEmail: async () => "",
 };
 
 export const AppContext =
@@ -118,6 +117,9 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const [notes, setNotes] = useState<Note[]>([]);
   const [user, setUser] = useState<User | null>(null);
   const [activeNote, setActiveNote] = useState<Note | null>(null);
+  const [activeNoteCollaborators, setActiveNoteCollaborators] = useState<
+    string[] | null
+  >(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isPageLoading, setIsPageLoading] = useState(true);
@@ -143,15 +145,13 @@ function AppContextProvider({ children }: AppContextProviderProps) {
       } else {
         querySnapshot.docs.map((doc) =>
           resolvedUser.push({
-            ...doc.data(),
             id: doc.id,
             email: doc.data().email,
+            theme: doc.data().theme,
             username: doc.data().username,
           })
         );
-        if (!Object.hasOwn(resolvedUser[0], "theme")) {
-          setUser({ ...resolvedUser[0], theme: defaultTheme });
-        } else setUser(resolvedUser[0]);
+        setUser(resolvedUser[0]);
       }
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
@@ -204,11 +204,85 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     }
   };
 
+  const getUserEmailById = async (userId: string): Promise<string> => {
+    const q = query(usersColRef, where("id", "==", userId));
+    try {
+      const querySnapshot = await getDocs(q);
+      const resolvedUser: User[] = [];
+      querySnapshot.docs.map((doc) => {
+        resolvedUser.push({
+          id: doc.id,
+          email: doc.data().email,
+          theme: doc.data().theme,
+          username: doc.data().username,
+        });
+      });
+      return resolvedUser[0].email;
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        console.error("Failed to load user by email: ", error.code);
+      }
+      return "";
+    }
+  };
+
+  const getUserIdByEmail = async (userEmail: string): Promise<string> => {
+    console.log("in here");
+    const q = query(usersColRef, where("email", "==", userEmail));
+    try {
+      const querySnapshot = await getDocs(q);
+      const resolvedUser: User[] = [];
+      console.log(querySnapshot.docs);
+      if (querySnapshot.docs.length === 0) {
+        setInfoMessage({
+          showMsg: true,
+          isPersisting: false,
+          isError: true,
+          desc: "No user with this email address",
+        });
+      }
+      querySnapshot.docs.map((doc) => {
+        resolvedUser.push({
+          id: doc.id,
+          email: doc.data().email,
+          theme: doc.data().theme,
+          username: doc.data().username,
+        });
+      });
+      return resolvedUser[0].id;
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        console.error("Failed to load user by email: ", error.code);
+      }
+      return "";
+    }
+  };
+
+  const setCollaborators = async (
+    ownerId: string,
+    coUserIds: string[]
+  ): Promise<void> => {
+    const ownerEmail = await getUserEmailById(ownerId);
+    const collaborators = await Promise.all(
+      coUserIds.map(async (currentUserId) => {
+        const temp = await getUserEmailById(currentUserId);
+        return temp;
+      })
+    );
+    const temp = collaborators.map((curr) => {
+      if (curr === ownerEmail) {
+        return `${ownerEmail} (owner)`;
+      }
+      return curr;
+    });
+    setActiveNoteCollaborators(temp);
+  };
+
   //notes
 
   const loadNotesFromDb = async (): Promise<void> => {
     if (user) {
-      const q = query(notesColRef, where("userId", "==", user.id));
+      const q = query(notesColRef, where("coUsers", "array-contains", user.id));
       try {
         const querySnapshot = await getDocs(q);
         const resolvedNotes: Note[] = [];
@@ -220,6 +294,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
             body: doc.data().body,
             date: doc.data().date,
             userId: doc.data().userId,
+            coUsers: doc.data().coUsers,
           });
         });
         setNotes(resolvedNotes);
@@ -317,9 +392,11 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     setIsEditing(true);
     setIsAddNoteOpen(false);
     setActiveNote(note);
+    setCollaborators(note.userId, note.coUsers);
   };
 
   const resetDefault = () => {
+    setActiveNoteCollaborators(null);
     setActiveNote(null);
     setIsAddNoteOpen(false);
     setIsEditing(false);
@@ -360,12 +437,12 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         deleteNoteInDb,
         loadUserFromDb,
         addUserInDb,
-        updateUserInDb,
         deleteUserInDb,
         user,
         setUser,
         activeNote,
         setActiveNote,
+        activeNoteCollaborators,
         setActiveNoteValue,
         resetDefault,
         handleEdit,
@@ -381,6 +458,8 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         setInfoMessage,
         error,
         setError,
+        setCollaborators,
+        getUserIdByEmail,
       }}
     >
       {children}

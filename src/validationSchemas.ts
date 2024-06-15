@@ -54,3 +54,9 @@ export const deleteUserSchema = Yup.object({
 });
 
 export const deleteNoteSchema = Yup.object({});
+
+export const shareNoteSchema = Yup.object({
+  newUserEmail: Yup.string()
+    .email("Not a valid email address")
+    .required("This field is required"),
+});

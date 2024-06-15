@@ -7,12 +7,13 @@ export type Note = {
   color: Color;
   date: Date;
   userId: string;
+  coUsers: string[];
 };
 
 export type User = {
   id: string;
   email: string;
-  theme?: Theme;
+  theme: Theme;
   username: string;
 };
 

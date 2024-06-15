@@ -35,7 +35,7 @@
 .inputsCon {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--gap) * 2);
+  gap: calc(var(--gap) * 3);
 }
 
 .modalText {

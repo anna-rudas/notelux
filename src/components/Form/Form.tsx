@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, FormEvent } from "react";
 import { className } from "../../helpers";
 import TrashIcon from "../../icons/TrashIcon";
 import PaletteIcon from "../../icons/PaletteIcon";
@@ -8,11 +8,13 @@ import * as style from "./Form.module.css";
 import * as shared from "../shared.module.css";
 import { AppContext } from "../../context";
 import { Note } from "../../types";
+import ShareIcon from "../../icons/ShareIcon";
 
 type FormProps = {
   handleSubmit: () => void;
   handleCancel: () => void;
   setIsDelConfOpen?: (value: boolean) => void;
+  setIsShareNoteOpen?: (value: boolean) => void;
   noteFormStyle: string;
   noteBodyStyle: string;
 };
@@ -21,16 +23,22 @@ function Form({
   handleSubmit,
   handleCancel,
   setIsDelConfOpen,
+  setIsShareNoteOpen,
   noteFormStyle,
   noteBodyStyle,
 }: FormProps) {
   const { activeNote, isEditing, setActiveNoteValue } = useContext(AppContext);
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
 
+  const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    handleSubmit();
+  };
+
   return (
     <form
       {...className(noteFormStyle, style.noteForm, shared.shadow)}
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmitForm}
       style={{ backgroundColor: colors[(activeNote as Note).color] }}
     >
       <input
@@ -53,18 +61,32 @@ function Form({
       <div {...className(style.noteSet)}>
         <div {...className(style.btnsCon)}>
           {isEditing && (
-            <button
-              {...className(style.btnIcon)}
-              onClick={() => {
-                if (setIsDelConfOpen) {
-                  setIsDelConfOpen(true);
-                }
-              }}
-              type="button"
-              title="Delete"
-            >
-              <TrashIcon {...className(style.trashIcon)} />
-            </button>
+            <>
+              <button
+                {...className(style.btnIcon)}
+                onClick={() => {
+                  if (setIsDelConfOpen) {
+                    setIsDelConfOpen(true);
+                  }
+                }}
+                type="button"
+                title="Delete"
+              >
+                <TrashIcon {...className(style.trashIcon)} />
+              </button>
+              <button
+                onClick={() => {
+                  if (setIsShareNoteOpen) {
+                    setIsShareNoteOpen(true);
+                  }
+                }}
+                title="Share"
+                type="button"
+                {...className(style.btnIcon)}
+              >
+                <ShareIcon {...className(style.shareIcon)} />
+              </button>
+            </>
           )}
           <div {...className(style.paletteCon)}>
             <button

@@ -1,0 +1,57 @@
+.addUserIcon {
+  width: 30px;
+  height: 30px;
+  fill: var(--text-secondary);
+  margin-top: 10px;
+}
+
+.addUserIcon path {
+  fill: var(--text-secondary);
+}
+
+.userIconCon {
+  border-radius: 50%;
+  border: 2px solid var(--text-secondary);
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userIcon {
+  width: 23px;
+  height: 23px;
+  fill: var(--text-secondary);
+}
+
+.userIcon path {
+  fill: var(--text-secondary);
+}
+
+.addUserCon {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+.collabCon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: fit-content;
+  gap: 5px;
+}
+
+.collabItem {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}

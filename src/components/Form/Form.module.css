@@ -68,6 +68,16 @@
   padding: 0.5px;
 }
 
+.shareIcon {
+  width: 35px;
+  height: 35px;
+  padding: 0.5px;
+}
+
+.shareIcon path {
+  stroke: var(--text-primary);
+}
+
 .paletteCon {
   display: flex;
   justify-content: center;

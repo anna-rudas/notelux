@@ -81,7 +81,7 @@
 }
 
 .buttonAccount {
-  padding: 5px;
+  padding: 8px;
   border: 2px solid var(--text-secondary);
   background-color: var(--bg);
   display: flex;
@@ -92,12 +92,16 @@
 }
 
 .accountIcon {
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   fill: var(--text-secondary);
 }
 
-.buttonAccount:hover .accountIcon {
+.accountIcon path {
+  fill: var(--text-secondary);
+}
+
+.buttonAccount:hover .accountIcon path {
   fill: var(--bg);
 }
 
