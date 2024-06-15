@@ -20,12 +20,19 @@ function InformationMessage({
   actionButtonHandle,
   actionButtonText,
 }: InformationMessageProps) {
-  const { setInfoMessage, infoMessage } = useContext(AppContext);
+  const { setInfoMessage, infoMessage, msgTimeoutId } = useContext(AppContext);
+
+  const handleCloseMsg = () => {
+    setInfoMessage({ ...infoMessage, showMsg: false });
+    if (msgTimeoutId) {
+      clearTimeout(msgTimeoutId);
+    }
+  };
 
   return (
     <div {...className(style.msgContainer)}>
       <div
-        {...className(style.msgContent, shared.shadow)}
+        {...className(style.msgContent)}
         style={
           isError
             ? { backgroundColor: "var(--error-bg)" }
@@ -57,7 +64,7 @@ function InformationMessage({
           </button>
         ) : (
           <button
-            onClick={() => setInfoMessage({ ...infoMessage, showMsg: false })}
+            onClick={handleCloseMsg}
             style={
               isError
                 ? { backgroundColor: "var(--error-bg)" }

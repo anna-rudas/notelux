@@ -36,14 +36,14 @@
 }
 
 .noteCard {
-  border: none;
+  border: 2px solid var(--text-primary);
   background-color: var(--bg);
   color: var(--text-primary);
   display: flex;
   flex-direction: column;
   gap: calc(var(--gap) * 2);
   height: fit-content;
-  border-radius: var(--border-radius);
+  border-radius: calc(var(--border-radius) * 2);
   padding: var(--padding);
   cursor: pointer;
   text-align: left;

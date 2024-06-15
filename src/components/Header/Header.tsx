@@ -45,7 +45,7 @@ function Header({ loggedInStyle }: HeaderProps) {
   };
 
   return (
-    <div {...className(style.header, shared.shadow)}>
+    <div {...className(style.header)}>
       <div {...className(style.logoCon)}>
         <Link
           {...className(style.linkCon, isLoading && shared.disabledLink)}
@@ -56,7 +56,7 @@ function Header({ loggedInStyle }: HeaderProps) {
         </Link>
       </div>
       {loggedInStyle && (
-        <div {...className(shared.generalInput, style.searchInputCon)}>
+        <div {...className(style.searchInputCon)}>
           <SearchIcon {...className(style.searchIcon)} />
           <input
             {...className(style.searchInput)}

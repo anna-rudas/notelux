@@ -18,23 +18,6 @@
   max-width: 500px;
 }
 
-.generalInput {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: calc(var(--gap) * 2);
-  padding: var(--padding);
-  border: 2px solid var(--border);
-  border-radius: calc(var(--border-radius) * 5);
-  height: fit-content;
-  background-color: var(--bg);
-  color: var(--text-secondary);
-}
-
-.generalInput:focus {
-  outline: none;
-}
-
 /* buttons */
 
 .btn {

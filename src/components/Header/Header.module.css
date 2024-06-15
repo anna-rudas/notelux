@@ -5,6 +5,7 @@
   background-color: var(--bg);
   gap: var(--gap);
   align-items: center;
+  border-bottom: 2px solid var(--text-secondary);
 }
 
 .logoCon {
@@ -35,6 +36,20 @@
   min-height: 15px;
 }
 
+.searchInputCon {
+  margin: 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: calc(var(--gap) * 2);
+  padding: var(--padding);
+  border: 2px solid var(--text-secondary);
+  border-radius: calc(var(--border-radius) * 5);
+  height: fit-content;
+  background-color: var(--bg);
+  color: var(--text-secondary);
+}
+
 .searchInput {
   width: 100%;
   height: 20px;
@@ -45,11 +60,11 @@
   background-color: var(--bg);
 }
 
-.searchInputCon {
-  margin: 0 10px;
+.searchInput:focus {
+  outline: none;
 }
 
-.searchInput:focus {
+.generalInput:focus {
   outline: none;
 }
 

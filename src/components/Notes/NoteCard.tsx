@@ -16,7 +16,7 @@ function NoteCard({ note }: NoteCardProps) {
   const { title, body, color } = note;
   return (
     <button
-      {...className(style.noteCard, shared.shadow)}
+      {...className(style.noteCard)}
       onClick={() => handleEdit(note)}
       style={{ backgroundColor: colors[color] }}
     >

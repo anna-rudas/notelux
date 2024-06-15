@@ -60,6 +60,7 @@ interface AppContextInterface {
   setError: (value: Error | null) => void;
   setCollaborators: (owner: string, coowners: string[]) => Promise<void>;
   getUserIdByEmail: (value: string) => Promise<string>;
+  msgTimeoutId: NodeJS.Timeout | null;
 }
 
 const defaultContextValue: AppContextInterface = {
@@ -101,6 +102,7 @@ const defaultContextValue: AppContextInterface = {
   setError: () => {},
   setCollaborators: async () => {},
   getUserIdByEmail: async () => "",
+  msgTimeoutId: null,
 };
 
 export const AppContext =
@@ -128,6 +130,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const dropdownButtonRef = useRef(null);
   const [infoMessage, setInfoMessage] = useState<InfoMsg>(defaultInfoMsg);
   const [error, setError] = useState<Error | null>(null);
+  const [msgTimeoutId, setMsgTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
   //collection refs
   const notesColRef = collection(db, notesColKey);
@@ -410,12 +413,13 @@ function AppContextProvider({ children }: AppContextProviderProps) {
 
   useEffect(() => {
     if (infoMessage.showMsg && !infoMessage.isPersisting) {
-      setTimeout(() => {
+      const timeoutId = setTimeout(() => {
         setInfoMessage({
           ...infoMessage,
           showMsg: false,
         });
       }, 5000);
+      setMsgTimeoutId(timeoutId);
     }
   }, [infoMessage]);
 
@@ -460,6 +464,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         setError,
         setCollaborators,
         getUserIdByEmail,
+        msgTimeoutId,
       }}
     >
       {children}

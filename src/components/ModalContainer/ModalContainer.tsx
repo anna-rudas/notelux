@@ -61,6 +61,7 @@ function ModalContainer({
                 {...className(
                   shared.btn,
                   shared.buttonPrimary,
+                  style.btn,
                   isLoading ? shared.btnDisabled : ""
                 )}
               >
@@ -75,6 +76,7 @@ function ModalContainer({
                 {...className(
                   shared.btn,
                   shared.buttonSecondary,
+                  style.btn,
                   isLoading ? shared.btnDisabled : ""
                 )}
               >
