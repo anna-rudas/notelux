@@ -6,11 +6,21 @@
   justify-content: center;
 }
 
-.notesCon {
+.notesContainer {
   padding: calc(var(--padding) * 2);
   display: flex;
   justify-content: center;
   width: 100%;
+}
+
+.notesContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+  justify-content: center;
+  align-items: center;
+  gap: calc(var(--gap) * 4);
 }
 
 .noteGridCon {
@@ -75,7 +85,7 @@
     grid-template-columns: repeat(2, 48%);
   }
 
-  .notesCon {
+  .notesContainer {
     padding: var(--padding);
   }
 }

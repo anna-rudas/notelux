@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { className, sortNotes } from "../../helpers";
 import * as style from "./Notes.module.css";
+import * as shared from "../shared.module.css";
 import NoteCard from "./NoteCard";
 import { AppContext } from "../../context";
 
@@ -35,27 +36,34 @@ function Notes() {
   const sortedNotes = sortNotes(filteredNotes, numberOfColumns);
 
   return (
-    <div
-      {...className(
-        filteredNotes.length > 0 ? style.notesCon : style.notesConEmpty
-      )}
-    >
+    <div {...className(style.notesContainer)}>
       {filteredNotes.length > 0 ? (
-        <div {...className(isGrid ? style.noteGridCon : style.noteListCon)}>
-          {sortedNotes.map((currentColumn, index) => {
-            return (
-              <div key={index} {...className(style.column)}>
-                {currentColumn.map((currentNote) => {
-                  return <NoteCard note={currentNote} key={currentNote.id} />;
-                })}
-              </div>
-            );
-          })}
+        <div {...className(style.notesContent)}>
+          {search !== "" && (
+            <span {...className(shared.secondaryTitleText)}>
+              Search results:
+            </span>
+          )}
+          <div {...className(isGrid ? style.noteGridCon : style.noteListCon)}>
+            {sortedNotes.map((currentColumn, index) => {
+              return (
+                <div key={index} {...className(style.column)}>
+                  {currentColumn.map((currentNote) => {
+                    return <NoteCard note={currentNote} key={currentNote.id} />;
+                  })}
+                </div>
+              );
+            })}
+          </div>
         </div>
       ) : search !== "" ? (
-        <span>No notes match your search</span>
+        <span {...className(shared.secondaryTitleText)}>
+          No notes match your search
+        </span>
       ) : (
-        <span>You have no notes saved</span>
+        <span {...className(shared.secondaryTitleText)}>
+          You have no notes saved
+        </span>
       )}
     </div>
   );
