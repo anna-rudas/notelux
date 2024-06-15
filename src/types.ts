@@ -5,7 +5,7 @@ export type Note = {
   title: string;
   body: string;
   color: Color;
-  date: Date;
+  date: string;
   userId: string;
   coUsers: string[];
 };

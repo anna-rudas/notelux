@@ -25,7 +25,7 @@ function EditNote() {
 
   const handleSubmit = async () => {
     if (activeNote) {
-      await updateNoteInDb({ ...activeNote, date: new Date() });
+      await updateNoteInDb({ ...activeNote, date: new Date().toISOString() });
       await loadNotesFromDb();
       resetDefault();
     }

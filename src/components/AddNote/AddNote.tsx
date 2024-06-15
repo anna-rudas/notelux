@@ -23,7 +23,7 @@ function AddNote() {
     if (activeNote) {
       await addNoteInDb({
         ...activeNote,
-        date: new Date(),
+        date: new Date().toISOString(),
       });
       await loadNotesFromDb();
       resetDefault();
@@ -37,7 +37,7 @@ function AddNote() {
         title: "",
         body: "",
         color: defaultNoteColor[user?.theme ? user.theme : defaultTheme],
-        date: new Date(),
+        date: new Date().toISOString(),
         userId: user.id,
         coUsers: [user.id],
       });
