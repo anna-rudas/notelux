@@ -2,7 +2,7 @@
   width: 30px;
   height: 30px;
   fill: var(--text-secondary);
-  margin-top: 10px;
+  margin-top: var(--margin);
 }
 
 .addUserIcon path {
@@ -35,23 +35,28 @@
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
-  gap: 10px;
+  gap: calc(var(--gap) * 2);
   width: 100%;
 }
 
 .collabCon {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   width: 100%;
   height: fit-content;
-  gap: 5px;
+  gap: var(--gap);
+  max-height: 250px;
+  overflow-y: scroll;
+  border: 2px solid var(--text-secondary);
+  border-radius: calc(var(--border-radius) * 2);
+  padding: var(--padding);
 }
 
 .collabItem {
   display: flex;
-  gap: 10px;
+  gap: calc(var(--gap) * 2);
   justify-content: center;
   align-items: center;
 }

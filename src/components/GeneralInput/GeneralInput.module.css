@@ -56,5 +56,5 @@
 }
 
 .validationError {
-  border: 1px solid var(--danger);
+  border: 2px solid var(--danger);
 }

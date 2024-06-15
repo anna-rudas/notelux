@@ -33,7 +33,7 @@
   justify-content: center;
   flex-direction: row-reverse;
   gap: calc(var(--gap) * 2);
-  margin-top: 20px;
+  margin-top: calc(var(--margin) * 2);
 }
 
 .btn {
