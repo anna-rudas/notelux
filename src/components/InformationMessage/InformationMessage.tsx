@@ -20,13 +20,10 @@ function InformationMessage({
   actionButtonHandle,
   actionButtonText,
 }: InformationMessageProps) {
-  const { setInfoMessage, infoMessage, msgTimeoutId } = useContext(AppContext);
+  const { setInfoMessage, infoMessage } = useContext(AppContext);
 
   const handleCloseMsg = () => {
     setInfoMessage({ ...infoMessage, showMsg: false });
-    if (msgTimeoutId) {
-      clearTimeout(msgTimeoutId);
-    }
   };
 
   return (

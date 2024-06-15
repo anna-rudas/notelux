@@ -58,9 +58,8 @@ interface AppContextInterface {
   setInfoMessage: (value: InfoMsg) => void;
   error: Error | null;
   setError: (value: Error | null) => void;
-  setCollaborators: (owner: string, coowners: string[]) => Promise<void>;
+  setCollaborators: (owner: string, coOwners: string[]) => Promise<void>;
   getUserIdByEmail: (value: string) => Promise<string>;
-  msgTimeoutId: NodeJS.Timeout | null;
 }
 
 const defaultContextValue: AppContextInterface = {
@@ -102,7 +101,6 @@ const defaultContextValue: AppContextInterface = {
   setError: () => {},
   setCollaborators: async () => {},
   getUserIdByEmail: async () => "",
-  msgTimeoutId: null,
 };
 
 export const AppContext =
@@ -177,12 +175,6 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     const userRef = doc(db, usersColKey, userToUpdate.id);
     try {
       await updateDoc(userRef, userToUpdate);
-      setInfoMessage({
-        ...infoMessage,
-        isPersisting: false,
-        isError: false,
-        desc: "User updated successfully",
-      });
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         console.error("Failed to update user: ", error.code);
@@ -403,15 +395,20 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     setActiveNote(null);
     setIsAddNoteOpen(false);
     setIsEditing(false);
+    setIsDropdownOpen(false);
   };
 
   useEffect(() => {
     if (user) {
+      console.log("update user running");
       updateUserInDb(user);
     }
   }, [user]);
 
   useEffect(() => {
+    if (msgTimeoutId) {
+      clearTimeout(msgTimeoutId);
+    }
     if (infoMessage.showMsg && !infoMessage.isPersisting) {
       const timeoutId = setTimeout(() => {
         setInfoMessage({
@@ -464,7 +461,6 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         setError,
         setCollaborators,
         getUserIdByEmail,
-        msgTimeoutId,
       }}
     >
       {children}

@@ -8,16 +8,16 @@ import { defaultTheme } from "../../constants";
 
 type ModalContainerProps = {
   children?: JSX.Element;
-  isAuthStlye: boolean;
+  isAuthStyle: boolean;
 };
 
-function PageWrapper({ children, isAuthStlye }: ModalContainerProps) {
+function PageWrapper({ children, isAuthStyle }: ModalContainerProps) {
   const { isLoading, isDropdownOpen, user } = useContext(AppContext);
   return (
     <div className="wrapper" data-theme={user?.theme ?? defaultTheme}>
       {isLoading && <div {...className(shared.loadingModal)}></div>}
-      <Header loggedInStyle={isAuthStlye} />
-      {isDropdownOpen && isAuthStlye && <AccountDropdown />}
+      <Header loggedInStyle={isAuthStyle} />
+      {isDropdownOpen && isAuthStyle && <AccountDropdown />}
       <>{children}</>
     </div>
   );

@@ -60,13 +60,13 @@ function SignUp() {
         values.password
       );
       if (signUpResult && signUpResult.user.email) {
-        addUserInDb({
+        await addUserInDb({
           id: signUpResult.user.uid,
           email: signUpResult.user.email,
           theme: defaultTheme,
           username: values.username,
         });
-        sendVerifyEmail();
+        await sendVerifyEmail();
         try {
           if (auth.currentUser) {
             await signOut(auth);
@@ -77,11 +77,9 @@ function SignUp() {
           }
         }
       }
-      setIsLoading(false);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         console.error("Failed to sign up user: ", error.code);
-        setIsLoading(false);
         setInfoMessage({
           isPersisting: false,
           showMsg: true,
@@ -89,11 +87,13 @@ function SignUp() {
           desc: `Failed to sign up: ${evalErrorCode(error.code)}`,
         });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <PageWrapper isAuthStlye={false}>
+    <PageWrapper isAuthStyle={false}>
       <>
         <div {...className(style.contentCon)}>
           <span {...className(shared.titleText)}>Sign up</span>

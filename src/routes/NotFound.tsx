@@ -7,7 +7,7 @@ import PageWrapper from "../components/PageWrapper";
 
 function NotFound() {
   return (
-    <PageWrapper isAuthStlye={false}>
+    <PageWrapper isAuthStyle={false}>
       <div {...className(style.contentCon)}>
         <span {...className(shared.titleText)}>Oops!</span>
         <span>Looks like that page doesn&apos;t exist.</span>

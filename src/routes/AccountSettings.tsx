@@ -123,7 +123,7 @@ function AccountSettings() {
         if (reAuthResult && auth.currentUser.email !== values.newEmail) {
           try {
             await updateEmail(auth.currentUser, values.newEmail);
-            sendVerifyEmail();
+            await sendVerifyEmail();
             if (user) {
               setUser({ ...user, email: values.newEmail });
             }
@@ -161,7 +161,6 @@ function AccountSettings() {
             desc: `Failed to authenticate: ${evalErrorCode(error.code)}`,
           });
         }
-        setIsLoading(false);
       }
     }
   };
@@ -188,7 +187,6 @@ function AccountSettings() {
               isError: false,
               desc: "Password successfully updated",
             });
-            setIsLoading(false);
             setIsChangePasswordOpen(false);
           } catch (error: unknown) {
             if (error instanceof FirebaseError) {
@@ -199,7 +197,6 @@ function AccountSettings() {
                 isError: true,
                 desc: `Failed to update password: ${evalErrorCode(error.code)}`,
               });
-              setIsLoading(false);
             }
           }
         }
@@ -213,6 +210,7 @@ function AccountSettings() {
             desc: `Failed to authenticate: ${evalErrorCode(error.code)}`,
           });
         }
+      } finally {
         setIsLoading(false);
       }
     }
@@ -225,14 +223,15 @@ function AccountSettings() {
     }
     setIsLoading(false);
     setInfoMessage({
-      ...infoMessage,
-      isPersisting: false,
       showMsg: true,
+      isPersisting: false,
+      isError: false,
+      desc: "Username updated successfully",
     });
   };
 
   return (
-    <PageWrapper isAuthStlye={true}>
+    <PageWrapper isAuthStyle={true}>
       <>
         <div
           {...className(style.contentCon, shared.normalText, style.settingsCon)}

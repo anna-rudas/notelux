@@ -76,7 +76,7 @@ function SignIn() {
           ...infoMessage,
           showMsg: false,
         });
-        loadUserFromDb(signInResult.user.uid);
+        await loadUserFromDb(signInResult.user.uid);
       } else {
         setInfoMessage({
           isPersisting: true,
@@ -101,7 +101,7 @@ function SignIn() {
   };
 
   return (
-    <PageWrapper isAuthStlye={false}>
+    <PageWrapper isAuthStyle={false}>
       <>
         <div {...className(style.contentCon)}>
           <span {...className(shared.titleText)}>Sign in</span>

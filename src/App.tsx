@@ -82,6 +82,7 @@ function App() {
   useEffect(() => {
     //init
     loadNotesFromDb();
+    resetDefault();
   }, [user]);
 
   useEffect(() => {
