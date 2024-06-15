@@ -27,7 +27,8 @@ function Form({
   noteFormStyle,
   noteBodyStyle,
 }: FormProps) {
-  const { activeNote, isEditing, setActiveNoteValue } = useContext(AppContext);
+  const { activeNote, isEditing, setActiveNoteValue, isLoading } =
+    useContext(AppContext);
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
@@ -63,6 +64,7 @@ function Form({
           {isEditing && (
             <>
               <button
+                disabled={isLoading}
                 {...className(style.btnIcon)}
                 onClick={() => {
                   if (setIsDelConfOpen) {
@@ -75,6 +77,7 @@ function Form({
                 <TrashIcon {...className(style.trashIcon)} />
               </button>
               <button
+                disabled={isLoading}
                 onClick={() => {
                   if (setIsShareNoteOpen) {
                     setIsShareNoteOpen(true);
@@ -90,6 +93,7 @@ function Form({
           )}
           <div {...className(style.paletteCon)}>
             <button
+              disabled={isLoading}
               {...className(style.btnIcon)}
               type="button"
               onClick={() => {
@@ -105,6 +109,7 @@ function Form({
         </div>
         <div {...className(style.btnsCon)}>
           <button
+            disabled={isLoading}
             {...className(shared.btn, shared.buttonNotePrimary)}
             style={{ color: colors[(activeNote as Note).color] }}
             type="submit"
@@ -112,6 +117,7 @@ function Form({
             Save
           </button>
           <button
+            disabled={isLoading}
             {...className(shared.btn, shared.buttonNoteSecondary)}
             style={{ backgroundColor: colors[(activeNote as Note).color] }}
             type="button"

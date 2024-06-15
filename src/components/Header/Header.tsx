@@ -70,6 +70,7 @@ function Header({ loggedInStyle }: HeaderProps) {
       {loggedInStyle && (
         <div {...className(style.setCon)}>
           <button
+            disabled={isLoading}
             {...className(style.iconBtn)}
             onClick={toggleGrid}
             title={isGrid ? "Grid view" : "List view"}
@@ -81,6 +82,7 @@ function Header({ loggedInStyle }: HeaderProps) {
             )}
           </button>
           <button
+            disabled={isLoading}
             {...className(style.iconBtn)}
             onClick={toggleTheme}
             title={
@@ -96,6 +98,7 @@ function Header({ loggedInStyle }: HeaderProps) {
             )}
           </button>
           <button
+            disabled={isLoading}
             ref={dropdownButtonRef}
             id="account-btn"
             onClick={() => {

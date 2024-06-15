@@ -25,8 +25,14 @@ import { Formik, Form, FormikValues } from "formik";
 import { settingsSchema } from "../validationSchemas";
 
 function AccountSettings() {
-  const { user, infoMessage, setInfoMessage, setUser, setIsLoading } =
-    useContext(AppContext);
+  const {
+    user,
+    infoMessage,
+    setInfoMessage,
+    setUser,
+    setIsLoading,
+    isLoading,
+  } = useContext(AppContext);
 
   const [isDelConfOpen, setIsDelConfOpen] = useState(false);
   const [isChangeEmailOpen, setIsChangeEmailOpen] = useState(false);
@@ -242,6 +248,7 @@ function AccountSettings() {
             <div {...className(style.settingsItemCon)}>
               <span>Your current email address: {user?.email}</span>
               <button
+                disabled={isLoading}
                 onClick={() => {
                   setIsChangeEmailOpen(true);
                 }}
@@ -256,6 +263,7 @@ function AccountSettings() {
             <div {...className(style.settingsItemCon)}>
               <span>Set a new password</span>
               <button
+                disabled={isLoading}
                 onClick={() => {
                   setIsChangePasswordOpen(true);
                 }}
@@ -285,6 +293,7 @@ function AccountSettings() {
                   placeholder="Username"
                 />
                 <button
+                  disabled={isLoading}
                   type="submit"
                   {...className(shared.btn, shared.buttonPrimary)}
                 >
@@ -303,6 +312,7 @@ function AccountSettings() {
               notes anymore
             </span>
             <button
+              disabled={isLoading}
               onClick={() => {
                 setIsDelConfOpen(true);
               }}

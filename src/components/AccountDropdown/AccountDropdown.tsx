@@ -15,6 +15,7 @@ function AccountDropdown() {
     isDropdownOpen,
     dropdownRef,
     dropdownButtonRef,
+    isLoading,
   } = useContext(AppContext);
   const auth = getAuth();
   const navigate = useNavigate();
@@ -70,6 +71,7 @@ function AccountDropdown() {
         </Link>
         <div {...className(shared.divider)} />
         <button
+          disabled={isLoading}
           onClick={() => {
             handleSignOut();
           }}

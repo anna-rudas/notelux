@@ -11,11 +11,12 @@ type NoteCardProps = {
 };
 
 function NoteCard({ note }: NoteCardProps) {
-  const { handleEdit } = useContext(AppContext);
+  const { handleEdit, isLoading } = useContext(AppContext);
 
   const { title, body, color } = note;
   return (
     <button
+      disabled={isLoading}
       {...className(style.noteCard)}
       onClick={() => handleEdit(note)}
       style={{ backgroundColor: colors[color] }}

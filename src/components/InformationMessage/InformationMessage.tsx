@@ -20,7 +20,7 @@ function InformationMessage({
   actionButtonHandle,
   actionButtonText,
 }: InformationMessageProps) {
-  const { setInfoMessage, infoMessage } = useContext(AppContext);
+  const { setInfoMessage, infoMessage, isLoading } = useContext(AppContext);
 
   const handleCloseMsg = () => {
     setInfoMessage({ ...infoMessage, showMsg: false });
@@ -49,6 +49,7 @@ function InformationMessage({
         </div>
         {actionButtonText ? (
           <button
+            disabled={isLoading}
             style={
               isError
                 ? { backgroundColor: "var(--error-bg)" }
@@ -61,6 +62,7 @@ function InformationMessage({
           </button>
         ) : (
           <button
+            disabled={isLoading}
             onClick={handleCloseMsg}
             style={
               isError
