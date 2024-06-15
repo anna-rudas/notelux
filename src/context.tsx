@@ -222,12 +222,10 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   };
 
   const getUserIdByEmail = async (userEmail: string): Promise<string> => {
-    console.log("in here");
     const q = query(usersColRef, where("email", "==", userEmail));
     try {
       const querySnapshot = await getDocs(q);
       const resolvedUser: User[] = [];
-      console.log(querySnapshot.docs);
       if (querySnapshot.docs.length === 0) {
         setInfoMessage({
           showMsg: true,
@@ -400,7 +398,6 @@ function AppContextProvider({ children }: AppContextProviderProps) {
 
   useEffect(() => {
     if (user) {
-      console.log("update user running");
       updateUserInDb(user);
     }
   }, [user]);

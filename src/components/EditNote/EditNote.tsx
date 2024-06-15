@@ -31,10 +31,10 @@ function EditNote() {
     }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (activeNote) {
-      deleteNoteInDb(activeNote);
-      loadNotesFromDb();
+      await deleteNoteInDb(activeNote);
+      await loadNotesFromDb();
       resetDefault();
       setIsDelConfOpen(false);
     }
