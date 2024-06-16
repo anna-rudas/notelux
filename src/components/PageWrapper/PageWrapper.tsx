@@ -5,14 +5,20 @@ import { AppContext } from "../../context";
 import * as shared from "../shared.module.css";
 import { className } from "../../helpers";
 import LoadingIcon from "../../icons/LoadingIcon";
+import InformationMessage from "../../components/InformationMessage";
 
 type ModalContainerProps = {
   children?: JSX.Element;
   isAuthStyle: boolean;
+  infoMsgAction?: () => void;
 };
 
-function PageWrapper({ children, isAuthStyle }: ModalContainerProps) {
-  const { isLoading, isDropdownOpen, user, noUserTheme } =
+function PageWrapper({
+  children,
+  isAuthStyle,
+  infoMsgAction,
+}: ModalContainerProps) {
+  const { isLoading, isDropdownOpen, user, noUserTheme, infoMessage } =
     useContext(AppContext);
   return (
     <div className="wrapper" data-theme={user ? user.theme : noUserTheme}>
@@ -28,6 +34,14 @@ function PageWrapper({ children, isAuthStyle }: ModalContainerProps) {
       <Header loggedInStyle={isAuthStyle} />
       {isDropdownOpen && isAuthStyle && <AccountDropdown />}
       <>{children}</>
+      {infoMessage.showMsg && (
+        <InformationMessage
+          actionButtonText={infoMessage.actionButtonText}
+          actionButtonHandle={infoMsgAction}
+          description={infoMessage.desc}
+          isError={infoMessage.isError}
+        />
+      )}
     </div>
   );
 }

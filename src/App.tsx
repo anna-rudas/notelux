@@ -13,8 +13,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorPage from "./routes/ErrorPage";
 
 function App() {
-  const { loadNotesFromDb, resetDefault, user, getNoUserTheme } =
-    useContext(AppContext);
+  const { resetDefault } = useContext(AppContext);
 
   const router = createBrowserRouter([
     {
@@ -79,13 +78,6 @@ function App() {
     },
     { path: "/*", element: <NotFound /> },
   ]);
-
-  useEffect(() => {
-    //init
-    loadNotesFromDb();
-    resetDefault();
-    getNoUserTheme();
-  }, [user]);
 
   useEffect(() => {
     const close = (e: KeyboardEvent) => {

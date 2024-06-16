@@ -23,6 +23,7 @@ export type InfoMsg = {
   isError: boolean;
   desc: string;
   showMsg: boolean;
+  actionButtonText: string;
   isPersisting: boolean;
 };
 

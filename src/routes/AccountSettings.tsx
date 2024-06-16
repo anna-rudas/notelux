@@ -20,7 +20,6 @@ import GeneralInput from "../components/GeneralInput";
 import ChangeEmailConfirmation from "../components/ChangeEmailConfirmation";
 import ChangePasswordConfirmation from "../components/ChangePasswordConfirmation";
 import PageWrapper from "../components/PageWrapper";
-import InformationMessage from "../components/InformationMessage";
 import { Formik, Form, FormikValues } from "formik";
 import { settingsSchema } from "../validationSchemas";
 
@@ -78,6 +77,7 @@ function AccountSettings() {
           url: "http://localhost:1234/signin",
         });
         setInfoMessage({
+          actionButtonText: "",
           isPersisting: false,
           showMsg: true,
           isError: false,
@@ -140,6 +140,7 @@ function AccountSettings() {
             if (error instanceof FirebaseError) {
               console.error("Failed to update email: ", error.code);
               setInfoMessage({
+                actionButtonText: "",
                 isPersisting: false,
                 showMsg: true,
                 isError: true,
@@ -150,6 +151,7 @@ function AccountSettings() {
           }
         } else {
           setInfoMessage({
+            actionButtonText: "",
             isPersisting: false,
             showMsg: true,
             desc: "The new email address can't be the old email address",
@@ -161,6 +163,7 @@ function AccountSettings() {
         if (error instanceof FirebaseError) {
           console.error("Failed to reauthenticate user: ", error.code);
           setInfoMessage({
+            actionButtonText: "",
             isPersisting: false,
             showMsg: true,
             isError: true,
@@ -188,6 +191,7 @@ function AccountSettings() {
           try {
             await updatePassword(auth.currentUser, values.newPassword);
             setInfoMessage({
+              actionButtonText: "",
               isPersisting: false,
               showMsg: true,
               isError: false,
@@ -198,6 +202,7 @@ function AccountSettings() {
             if (error instanceof FirebaseError) {
               console.error("Failed to update password: ", error.code);
               setInfoMessage({
+                actionButtonText: "",
                 isPersisting: false,
                 showMsg: true,
                 isError: true,
@@ -210,6 +215,7 @@ function AccountSettings() {
         if (error instanceof FirebaseError) {
           console.error("Failed to reauthenticate user: ", error.code);
           setInfoMessage({
+            actionButtonText: "",
             isPersisting: false,
             showMsg: true,
             isError: true,
@@ -230,6 +236,7 @@ function AccountSettings() {
     setIsLoading(false);
     setInfoMessage({
       showMsg: true,
+      actionButtonText: "",
       isPersisting: false,
       isError: false,
       desc: "Username updated successfully",
@@ -339,12 +346,6 @@ function AccountSettings() {
           <ChangePasswordConfirmation
             handleSubmit={handleChangePassword}
             setIsModalOpen={setIsChangePasswordOpen}
-          />
-        )}
-        {infoMessage.showMsg && (
-          <InformationMessage
-            description={infoMessage.desc}
-            isError={infoMessage.isError}
           />
         )}
       </>

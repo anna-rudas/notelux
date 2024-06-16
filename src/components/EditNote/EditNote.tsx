@@ -49,6 +49,7 @@ function EditNote() {
     if (activeNote && newUserId && activeNote.coUsers.indexOf(newUserId) >= 0) {
       setInfoMessage({
         showMsg: true,
+        actionButtonText: "",
         isPersisting: false,
         isError: true,
         desc: "User already added",

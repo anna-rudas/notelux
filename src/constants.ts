@@ -32,6 +32,7 @@ export const defaultInfoMsg: InfoMsg = {
   isError: true,
   desc: "Unknown error, please try again later",
   showMsg: false,
+  actionButtonText: "",
   isPersisting: false,
 };
 

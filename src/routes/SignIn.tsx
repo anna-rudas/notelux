@@ -12,7 +12,6 @@ import {
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import AuthForm from "../components/AuthForm";
-import InformationMessage from "../components/InformationMessage";
 import PageWrapper from "../components/PageWrapper";
 import { FormikValues } from "formik";
 
@@ -42,6 +41,7 @@ function SignIn() {
           url: "http://localhost:1234/signin",
         });
         setInfoMessage({
+          actionButtonText: "",
           isPersisting: false,
           showMsg: true,
           isError: false,
@@ -52,6 +52,7 @@ function SignIn() {
       if (error instanceof FirebaseError) {
         console.error("Failed to send verification email: ", error.code);
         setInfoMessage({
+          actionButtonText: "",
           isPersisting: false,
           showMsg: true,
           isError: true,
@@ -80,6 +81,7 @@ function SignIn() {
       } else {
         setInfoMessage({
           isPersisting: true,
+          actionButtonText: "Resend email",
           showMsg: true,
           isError: true,
           desc: "Your email address is not verified",
@@ -89,6 +91,7 @@ function SignIn() {
       if (error instanceof FirebaseError) {
         console.error("Failed to sign in user: ", error.code);
         setInfoMessage({
+          actionButtonText: "",
           isPersisting: false,
           showMsg: true,
           isError: true,
@@ -101,7 +104,7 @@ function SignIn() {
   };
 
   return (
-    <PageWrapper isAuthStyle={false}>
+    <PageWrapper isAuthStyle={false} infoMsgAction={sendVerifyEmail}>
       <>
         <div {...className(style.contentCon)}>
           <span {...className(shared.titleText)}>Sign in</span>
@@ -133,14 +136,6 @@ function SignIn() {
             Forgot password?
           </Link>
         </div>
-        {infoMessage.showMsg && (
-          <InformationMessage
-            actionButtonText={infoMessage.isPersisting ? "Resend email" : ""}
-            actionButtonHandle={sendVerifyEmail}
-            description={infoMessage.desc}
-            isError={infoMessage.isError}
-          />
-        )}
       </>
     </PageWrapper>
   );

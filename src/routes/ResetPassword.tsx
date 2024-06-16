@@ -8,13 +8,11 @@ import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { Link } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
-import InformationMessage from "../components/InformationMessage";
 import { Formik, Form, FormikValues } from "formik";
 import { resetPasswordSchema } from "../validationSchemas";
 
 function ResetPassword() {
-  const { setInfoMessage, isLoading, setIsLoading, infoMessage } =
-    useContext(AppContext);
+  const { setInfoMessage, isLoading, setIsLoading } = useContext(AppContext);
 
   const auth = getAuth();
 
@@ -23,6 +21,7 @@ function ResetPassword() {
     try {
       await sendPasswordResetEmail(auth, values.email);
       setInfoMessage({
+        actionButtonText: "",
         isPersisting: false,
         showMsg: true,
         isError: false,
@@ -32,6 +31,7 @@ function ResetPassword() {
       if (error instanceof FirebaseError) {
         console.error("Failed to send verification email: ", error.code);
         setInfoMessage({
+          actionButtonText: "",
           isPersisting: false,
           showMsg: true,
           isError: true,
@@ -96,12 +96,6 @@ function ResetPassword() {
             </Form>
           </Formik>
         </div>
-        {infoMessage.showMsg && (
-          <InformationMessage
-            description={infoMessage.desc}
-            isError={infoMessage.isError}
-          />
-        )}
       </>
     </PageWrapper>
   );

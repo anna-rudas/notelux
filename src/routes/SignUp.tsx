@@ -12,7 +12,6 @@ import {
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import AuthForm from "../components/AuthForm";
-import InformationMessage from "../components/InformationMessage";
 import PageWrapper from "../components/PageWrapper";
 import { FormikValues } from "formik";
 import { defaultTheme } from "../constants";
@@ -30,6 +29,7 @@ function SignUp() {
           url: "http://localhost:1234/signin",
         });
         setInfoMessage({
+          actionButtonText: "",
           isPersisting: false,
           showMsg: true,
           isError: false,
@@ -81,6 +81,7 @@ function SignUp() {
       if (error instanceof FirebaseError) {
         console.error("Failed to sign up user: ", error.code);
         setInfoMessage({
+          actionButtonText: "",
           isPersisting: false,
           showMsg: true,
           isError: true,
@@ -118,14 +119,6 @@ function SignUp() {
             </Link>
           </div>
         </div>
-        {infoMessage.showMsg && (
-          <InformationMessage
-            actionButtonText={infoMessage.isPersisting ? "Resend email" : ""}
-            actionButtonHandle={sendVerifyEmail}
-            description={infoMessage.desc}
-            isError={infoMessage.isError}
-          />
-        )}
       </>
     </PageWrapper>
   );

@@ -4,10 +4,9 @@ import EditNote from "../components/EditNote";
 import Notes from "../components/Notes";
 import { AppContext } from "../context";
 import PageWrapper from "../components/PageWrapper";
-import InformationMessage from "../components/InformationMessage";
 
 function Dashboard() {
-  const { isEditing, infoMessage } = useContext(AppContext);
+  const { isEditing } = useContext(AppContext);
 
   return (
     <PageWrapper isAuthStyle={true}>
@@ -15,12 +14,6 @@ function Dashboard() {
         <AddNote />
         <Notes />
         {isEditing && <EditNote />}
-        {infoMessage.showMsg && (
-          <InformationMessage
-            description={infoMessage.desc}
-            isError={infoMessage.isError}
-          />
-        )}
       </>
     </PageWrapper>
   );

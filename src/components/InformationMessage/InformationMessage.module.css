@@ -22,19 +22,6 @@
   align-items: center;
 }
 
-.msgContainer {
-  left: 0;
-  right: 0;
-  margin: auto;
-  bottom: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  padding: 0 var(--padding) 0 var(--padding);
-  z-index: 30;
-}
-
 .msgContent {
   display: flex;
   align-items: center;
@@ -45,6 +32,9 @@
   gap: calc(var(--gap) * 2);
   width: 100%;
   max-width: 500px;
+  position: fixed;
+  bottom: 20px;
+  z-index: 30;
 }
 
 .textCon {

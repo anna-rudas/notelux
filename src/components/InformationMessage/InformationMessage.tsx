@@ -27,54 +27,52 @@ function InformationMessage({
   };
 
   return (
-    <div {...className(style.msgContainer)}>
-      <div
-        {...className(style.msgContent)}
-        style={
-          isError
-            ? { backgroundColor: "var(--error-bg)" }
-            : { backgroundColor: "var(--success-bg)" }
-        }
-      >
-        {isError ? (
-          <ErrorIcon {...className(style.icon)} />
-        ) : (
-          <SuccessIcon {...className(style.icon)} />
-        )}
-        <div {...className(style.textCon)}>
-          <span {...className(shared.secondaryTitleText)}>
-            {isError ? "Error" : "Success"}
-          </span>
-          <span {...className(shared.normalText)}>{description}</span>
-        </div>
-        {actionButtonText ? (
-          <button
-            disabled={isLoading}
-            style={
-              isError
-                ? { backgroundColor: "var(--error-bg)" }
-                : { backgroundColor: "var(--success-bg)" }
-            }
-            {...className(shared.btn, shared.buttonSecondary)}
-            onClick={actionButtonHandle}
-          >
-            {actionButtonText}
-          </button>
-        ) : (
-          <button
-            disabled={isLoading}
-            onClick={handleCloseMsg}
-            style={
-              isError
-                ? { backgroundColor: "var(--error-bg)" }
-                : { backgroundColor: "var(--success-bg)" }
-            }
-            {...className(shared.btn, style.buttonClose)}
-          >
-            <CloseIcon {...className(style.closeIcon)} />
-          </button>
-        )}
+    <div
+      {...className(style.msgContent)}
+      style={
+        isError
+          ? { backgroundColor: "var(--error-bg)" }
+          : { backgroundColor: "var(--success-bg)" }
+      }
+    >
+      {isError ? (
+        <ErrorIcon {...className(style.icon)} />
+      ) : (
+        <SuccessIcon {...className(style.icon)} />
+      )}
+      <div {...className(style.textCon)}>
+        <span {...className(shared.secondaryTitleText)}>
+          {isError ? "Error" : "Success"}
+        </span>
+        <span {...className(shared.normalText)}>{description}</span>
       </div>
+      {actionButtonText ? (
+        <button
+          disabled={isLoading}
+          style={
+            isError
+              ? { backgroundColor: "var(--error-bg)" }
+              : { backgroundColor: "var(--success-bg)" }
+          }
+          {...className(shared.btn, shared.buttonSecondary)}
+          onClick={actionButtonHandle}
+        >
+          {actionButtonText}
+        </button>
+      ) : (
+        <button
+          disabled={isLoading}
+          onClick={handleCloseMsg}
+          style={
+            isError
+              ? { backgroundColor: "var(--error-bg)" }
+              : { backgroundColor: "var(--success-bg)" }
+          }
+          {...className(shared.btn, style.buttonClose)}
+        >
+          <CloseIcon {...className(style.closeIcon)} />
+        </button>
+      )}
     </div>
   );
 }

@@ -194,6 +194,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         console.error("Failed to update user: ", error.code);
         setInfoMessage({
           ...infoMessage,
+          actionButtonText: "",
           isPersisting: false,
           isError: true,
           desc: "User update failed",
@@ -243,6 +244,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
       if (querySnapshot.docs.length === 0) {
         setInfoMessage({
           showMsg: true,
+          actionButtonText: "",
           isPersisting: false,
           isError: true,
           desc: "No user with this email address",
@@ -311,6 +313,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
           console.error("Failed to load notes: ", error.code);
           setInfoMessage({
             isPersisting: true,
+            actionButtonText: "",
             showMsg: true,
             isError: true,
             desc: "Failed to load notes",
@@ -326,6 +329,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     try {
       await setDoc(doc(db, notesColKey, noteToAdd.id), noteToAdd);
       setInfoMessage({
+        actionButtonText: "",
         isPersisting: false,
         showMsg: true,
         isError: false,
@@ -335,6 +339,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
       if (error instanceof FirebaseError) {
         console.error("Failed to add note: ", error.code);
         setInfoMessage({
+          actionButtonText: "",
           isPersisting: false,
           showMsg: true,
           isError: true,
@@ -349,6 +354,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     try {
       await updateDoc(noteRef, noteToUpdate);
       setInfoMessage({
+        actionButtonText: "",
         isPersisting: false,
         showMsg: true,
         isError: false,
@@ -359,6 +365,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         console.error("Failed to update note: ", error.code);
         setInfoMessage({
           showMsg: true,
+          actionButtonText: "",
           isPersisting: false,
           isError: true,
           desc: "Failed to update note",
@@ -372,6 +379,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     try {
       await deleteDoc(noteRef);
       setInfoMessage({
+        actionButtonText: "",
         isPersisting: false,
         showMsg: true,
         isError: false,
@@ -380,6 +388,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         setInfoMessage({
+          actionButtonText: "",
           isPersisting: false,
           showMsg: true,
           isError: true,
@@ -429,6 +438,9 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     if (user) {
       updateUserInDb(user);
       saveNoUserTheme(user);
+      loadNotesFromDb();
+      resetDefault();
+      getNoUserTheme();
     }
   }, [user]);
 
