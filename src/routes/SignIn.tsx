@@ -107,7 +107,9 @@ function SignIn() {
           <span {...className(shared.titleText)}>Sign in</span>
           <AuthForm handleSubmit={handleSignIn} primaryButtonText="Sign in" />
           <div {...className(style.redirectCon)}>
-            <span>Don&apos;t have an account yet?</span>
+            <span {...className(shared.normalText)}>
+              Don&apos;t have an account yet?
+            </span>
             <Link
               to="/signup"
               {...className(

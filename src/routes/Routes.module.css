@@ -36,6 +36,7 @@
   gap: var(--gap);
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .loadingContainer {

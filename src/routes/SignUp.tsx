@@ -103,7 +103,9 @@ function SignUp() {
             isName={true}
           />
           <div {...className(style.redirectCon)}>
-            <span>Already have an account?</span>
+            <span {...className(shared.normalText)}>
+              Already have an account?
+            </span>
             <Link
               to="/signin"
               {...className(

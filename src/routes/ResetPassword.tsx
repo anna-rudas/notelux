@@ -49,7 +49,7 @@ function ResetPassword() {
       <>
         <div {...className(style.contentCon)}>
           <span {...className(shared.titleText)}>Reset your password</span>
-          <span>
+          <span {...className(shared.normalText)}>
             Enter your email address and we will send instructions on how to
             reset your password
           </span>
@@ -70,6 +70,16 @@ function ResetPassword() {
                 placeholder="Email address"
               />
               <div {...className(style.redirectCon)}>
+                <Link
+                  to="/signin"
+                  {...className(
+                    shared.btn,
+                    shared.buttonSecondary,
+                    isLoading && shared.disabledLink
+                  )}
+                >
+                  Go back
+                </Link>
                 <button
                   disabled={isLoading}
                   type="submit"
@@ -81,16 +91,6 @@ function ResetPassword() {
                 >
                   Reset password
                 </button>
-                <Link
-                  to="/signin"
-                  {...className(
-                    shared.btn,
-                    shared.buttonSecondary,
-                    isLoading && shared.disabledLink
-                  )}
-                >
-                  Go back
-                </Link>
               </div>
             </Form>
           </Formik>

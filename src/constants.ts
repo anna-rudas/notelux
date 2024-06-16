@@ -17,7 +17,7 @@ export const notesColKey = "notes";
 
 export const usersColKey = "users";
 
-export const themeKey = "savedTheme";
+export const themeKey = "savedNoteluxTheme";
 
 export const defaultNoteColor: Record<Theme, Color> = {
   light: "default",

@@ -6,7 +6,13 @@ import React, {
   useRef,
   RefObject,
 } from "react";
-import { defaultInfoMsg, notesColKey, usersColKey } from "./constants";
+import {
+  defaultInfoMsg,
+  notesColKey,
+  usersColKey,
+  themeKey,
+  defaultTheme,
+} from "./constants";
 import {
   collection,
   updateDoc,
@@ -60,6 +66,8 @@ interface AppContextInterface {
   setError: (value: Error | null) => void;
   setCollaborators: (owner: string, coOwners: string[]) => Promise<void>;
   getUserIdByEmail: (value: string) => Promise<string>;
+  getNoUserTheme: () => void;
+  noUserTheme: string;
 }
 
 const defaultContextValue: AppContextInterface = {
@@ -101,6 +109,8 @@ const defaultContextValue: AppContextInterface = {
   setError: () => {},
   setCollaborators: async () => {},
   getUserIdByEmail: async () => "",
+  getNoUserTheme: () => {},
+  noUserTheme: defaultTheme,
 };
 
 export const AppContext =
@@ -129,6 +139,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const [infoMessage, setInfoMessage] = useState<InfoMsg>(defaultInfoMsg);
   const [error, setError] = useState<Error | null>(null);
   const [msgTimeoutId, setMsgTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const [noUserTheme, setNoUserTheme] = useState(defaultTheme);
 
   //collection refs
   const notesColRef = collection(db, notesColKey);
@@ -381,6 +392,18 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     }
   };
 
+  const getNoUserTheme = () => {
+    const theme = JSON.parse(localStorage.getItem(themeKey) || "{}");
+    if (Object.keys(theme).length === 0) {
+      setNoUserTheme(defaultTheme);
+    } else setNoUserTheme(theme);
+  };
+
+  const saveNoUserTheme = (user: User) => {
+    localStorage.setItem(themeKey, JSON.stringify(user.theme));
+    setNoUserTheme(user.theme);
+  };
+
   const handleEdit = (note: Note) => {
     setIsEditing(true);
     setIsAddNoteOpen(false);
@@ -399,6 +422,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   useEffect(() => {
     if (user) {
       updateUserInDb(user);
+      saveNoUserTheme(user);
     }
   }, [user]);
 
@@ -458,6 +482,8 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         setError,
         setCollaborators,
         getUserIdByEmail,
+        getNoUserTheme,
+        noUserTheme,
       }}
     >
       {children}

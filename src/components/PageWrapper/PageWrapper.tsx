@@ -4,7 +4,6 @@ import AccountDropdown from "../AccountDropdown";
 import { AppContext } from "../../context";
 import * as shared from "../shared.module.css";
 import { className } from "../../helpers";
-import { defaultTheme } from "../../constants";
 import LoadingIcon from "../../icons/LoadingIcon";
 
 type ModalContainerProps = {
@@ -13,9 +12,10 @@ type ModalContainerProps = {
 };
 
 function PageWrapper({ children, isAuthStyle }: ModalContainerProps) {
-  const { isLoading, isDropdownOpen, user } = useContext(AppContext);
+  const { isLoading, isDropdownOpen, user, noUserTheme } =
+    useContext(AppContext);
   return (
-    <div className="wrapper" data-theme={user?.theme ?? defaultTheme}>
+    <div className="wrapper" data-theme={user ? user.theme : noUserTheme}>
       {isLoading && (
         <div {...className(shared.loadingModal)}>
           <div {...className(shared.loadingIconContainer)}>
