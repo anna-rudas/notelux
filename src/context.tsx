@@ -68,6 +68,7 @@ interface AppContextInterface {
   getUserIdByEmail: (value: string) => Promise<string>;
   getNoUserTheme: () => void;
   noUserTheme: string;
+  areNotesLoading: boolean;
 }
 
 const defaultContextValue: AppContextInterface = {
@@ -111,6 +112,7 @@ const defaultContextValue: AppContextInterface = {
   getUserIdByEmail: async () => "",
   getNoUserTheme: () => {},
   noUserTheme: defaultTheme,
+  areNotesLoading: true,
 };
 
 export const AppContext =
@@ -140,6 +142,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const [error, setError] = useState<Error | null>(null);
   const [msgTimeoutId, setMsgTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const [noUserTheme, setNoUserTheme] = useState(defaultTheme);
+  const [areNotesLoading, setAreNotesLoading] = useState(true);
 
   //collection refs
   const notesColRef = collection(db, notesColKey);
@@ -286,6 +289,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
 
   const loadNotesFromDb = async (): Promise<void> => {
     if (user) {
+      setAreNotesLoading(true);
       const q = query(notesColRef, where("coUsers", "array-contains", user.id));
       try {
         const querySnapshot = await getDocs(q);
@@ -312,6 +316,8 @@ function AppContextProvider({ children }: AppContextProviderProps) {
             desc: "Failed to load notes",
           });
         }
+      } finally {
+        setAreNotesLoading(false);
       }
     }
   };
@@ -484,6 +490,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         getUserIdByEmail,
         getNoUserTheme,
         noUserTheme,
+        areNotesLoading,
       }}
     >
       {children}

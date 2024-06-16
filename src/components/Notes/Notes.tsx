@@ -4,9 +4,10 @@ import * as style from "./Notes.module.css";
 import * as shared from "../shared.module.css";
 import NoteCard from "./NoteCard";
 import { AppContext } from "../../context";
+import LoadingIcon from "../../icons/LoadingIcon";
 
 function Notes() {
-  const { notes, search, isGrid } = useContext(AppContext);
+  const { notes, search, isGrid, areNotesLoading } = useContext(AppContext);
 
   const [matches, setMatches] = useState(
     window.matchMedia("(max-width: 600px)").matches
@@ -34,6 +35,16 @@ function Notes() {
     });
 
   const sortedNotes = sortNotes(filteredNotes, numberOfColumns);
+
+  if (areNotesLoading) {
+    return (
+      <div {...className(style.notesContainer)}>
+        <LoadingIcon
+          {...className(shared.loadingIcon, shared.loadingAnimation)}
+        ></LoadingIcon>
+      </div>
+    );
+  }
 
   return (
     <div {...className(style.notesContainer)}>
