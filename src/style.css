@@ -6,7 +6,7 @@
   --text-secondary: #38312e;
   --bg: #fff;
   --lightest: #fff;
-  --danger: #e60000;
+  --danger: #f34030;
   --bg-transparent: rgba(95, 95, 97, 0.5);
   --border: #ececec;
   --padding: 10px;
@@ -22,6 +22,7 @@
   --text-secondary: #fff;
   --error-bg: #38312e;
   --success-bg: #38312e;
+  --danger: #f55b4d;
 }
 
 * {
