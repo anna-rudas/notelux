@@ -66,17 +66,18 @@
   font-size: 1.2rem;
   font-weight: 500;
   overflow: hidden;
-  text-overflow: ellipsis;
+  word-wrap: break-word;
   width: 100%;
 }
 
 .noteBody {
+  height: fit-content;
   min-height: 50px;
+  max-height: 120px;
   font-size: 1rem;
   font-weight: 400;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  word-wrap: break-word;
   width: 100%;
 }
 

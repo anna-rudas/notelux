@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
 import { className } from "../../helpers";
 import * as style from "./Notes.module.css";
-import * as shared from "../shared.module.css";
-import { colors } from "../../constants";
+import { colors, maxNoteCharToShow } from "../../constants";
 import { AppContext } from "../../context";
 import { Note } from "../../types";
 
@@ -13,6 +12,15 @@ type NoteCardProps = {
 function NoteCard({ note }: NoteCardProps) {
   const { handleEdit, isLoading } = useContext(AppContext);
 
+  const readyText = (text: string) => {
+    if (text.length > maxNoteCharToShow) {
+      const shortenedText = text.substring(0, maxNoteCharToShow);
+      const textWithEllipses = shortenedText.concat("...");
+      return textWithEllipses;
+    }
+    return text;
+  };
+
   const { title, body, color } = note;
   return (
     <button
@@ -21,8 +29,8 @@ function NoteCard({ note }: NoteCardProps) {
       onClick={() => handleEdit(note)}
       style={{ backgroundColor: colors[color] }}
     >
-      {title && <span {...className(style.noteTitle)}>{title}</span>}
-      <span {...className(style.noteBody)}>{body}</span>
+      {title && <span {...className(style.noteTitle)}>{readyText(title)}</span>}
+      <span {...className(style.noteBody)}>{readyText(body)}</span>
     </button>
   );
 }

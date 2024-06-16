@@ -30,7 +30,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
+  position: fixed;
   padding: 0 var(--padding) 0 var(--padding);
   z-index: 30;
 }

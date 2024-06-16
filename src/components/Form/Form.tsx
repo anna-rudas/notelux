@@ -38,13 +38,13 @@ function Form({
 
   return (
     <form
-      {...className(noteFormStyle, style.noteForm, shared.shadow)}
+      {...className(noteFormStyle, style.noteForm)}
       onSubmit={handleSubmitForm}
       style={{ backgroundColor: colors[(activeNote as Note).color] }}
     >
       <input
         {...className(style.noteTitle)}
-        maxLength={200}
+        maxLength={1000}
         type="text"
         placeholder="Title"
         value={(activeNote as Note).title}
@@ -55,6 +55,7 @@ function Form({
       <textarea
         {...className(noteBodyStyle, style.noteBody)}
         placeholder="Take a note"
+        maxLength={20000}
         value={(activeNote as Note).body}
         onChange={(event) => setActiveNoteValue("body", event.target.value)}
         style={{ backgroundColor: colors[(activeNote as Note).color] }}
