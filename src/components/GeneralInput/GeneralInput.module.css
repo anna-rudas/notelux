@@ -10,6 +10,7 @@
   height: 50px;
   color: var(--text-secondary);
   background-color: var(--bg);
+  position: relative;
 }
 
 .textInputHelper {
@@ -44,17 +45,36 @@
   stroke: var(--text-secondary);
 }
 
+.iconErrorStyle {
+  stroke: var(--danger);
+}
+
 .inputCon input:focus,
 .inputCon:focus {
   outline: none;
 }
 
 .validationErrorText {
-  padding-left: 13px;
-  font-size: 0.8rem;
-  color: var(--danger);
+  padding-left: 27px;
+  color: var(--danger) !important;
 }
 
 .validationError {
   border: 2px solid var(--danger);
+}
+
+.labelText {
+  background-color: var(--bg);
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  padding: 0 5px;
+}
+
+.hideLabelText {
+  display: none;
+}
+
+.labelErrorStyle {
+  color: var(--danger);
 }

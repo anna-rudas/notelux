@@ -29,7 +29,7 @@ function AuthForm({ handleSubmit, primaryButtonText, isName }: AuthFormProps) {
         setSubmitting(false);
       }}
     >
-      <Form {...className(style.formCon)}>
+      <Form noValidate {...className(style.formCon)}>
         {isName && (
           <GeneralInput
             type="text"

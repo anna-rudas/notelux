@@ -52,7 +52,7 @@ function ModalContainer({
             setSubmitting(false);
           }}
         >
-          <Form {...className(style.inputsCon)}>
+          <Form noValidate {...className(style.inputsCon)}>
             <div {...className(style.inputsCon)}>{children}</div>
             <div {...className(style.confModalBtnsCon)}>
               <button

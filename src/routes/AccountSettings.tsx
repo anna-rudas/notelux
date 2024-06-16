@@ -285,6 +285,7 @@ function AccountSettings() {
               }}
             >
               <Form
+                noValidate
                 {...className(style.settingsItemCon, style.settingsItemConName)}
               >
                 <GeneralInput

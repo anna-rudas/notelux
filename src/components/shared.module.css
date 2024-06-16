@@ -110,11 +110,18 @@
 .normalText {
   color: var(--text-secondary);
   font-weight: 300;
+  font-size: 1rem;
 }
 
 .secondaryTitleText {
   font-weight: 600;
   font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.smallText {
+  font-weight: 400;
+  font-size: 0.8rem;
   color: var(--text-secondary);
 }
 

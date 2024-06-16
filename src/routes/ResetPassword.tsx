@@ -62,6 +62,7 @@ function ResetPassword() {
             }}
           >
             <Form
+              noValidate
               {...className(style.settingsItemCon, style.settingsItemConName)}
             >
               <GeneralInput
