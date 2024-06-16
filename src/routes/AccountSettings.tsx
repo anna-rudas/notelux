@@ -41,6 +41,7 @@ function AccountSettings() {
   const auth = getAuth();
 
   const handleDeleteUser = async (values: FormikValues) => {
+    setIsLoading(true);
     if (auth.currentUser && auth.currentUser.email) {
       const currentEmail = auth.currentUser.email;
       const credential = EmailAuthProvider.credential(
@@ -55,7 +56,16 @@ function AccountSettings() {
         if (reAuthResult) {
           try {
             await deleteUser(auth.currentUser);
-            navigate(0);
+            setInfoMessage({
+              actionButtonText: "",
+              isPersisting: false,
+              showMsg: true,
+              isError: false,
+              desc: "User deletion successful. You will be automatically signed out",
+            });
+            setTimeout(() => {
+              navigate(0);
+            }, 5000);
           } catch (error: unknown) {
             if (error instanceof FirebaseError) {
               console.error("Failed to delete user: ", error.code);
@@ -65,7 +75,15 @@ function AccountSettings() {
       } catch (error: unknown) {
         if (error instanceof FirebaseError) {
           console.error("Failed to reauthenticate user: ", error.code);
+          setInfoMessage({
+            actionButtonText: "",
+            isPersisting: false,
+            showMsg: true,
+            isError: true,
+            desc: `Failed to delete user: ${evalErrorCode(error.code)}`,
+          });
         }
+        setIsLoading(false);
       }
     }
   };
@@ -81,7 +99,7 @@ function AccountSettings() {
           isPersisting: false,
           showMsg: true,
           isError: false,
-          desc: "Verification email sent. You will be automatically signed out in 3 seconds",
+          desc: "Verification email sent. You will be automatically signed out",
         });
       }
     } catch (error: unknown) {
@@ -135,7 +153,7 @@ function AccountSettings() {
             }
             setTimeout(() => {
               signOutUser();
-            }, 3000);
+            }, 5000);
           } catch (error: unknown) {
             if (error instanceof FirebaseError) {
               console.error("Failed to update email: ", error.code);
@@ -169,6 +187,7 @@ function AccountSettings() {
             isError: true,
             desc: `Failed to authenticate: ${evalErrorCode(error.code)}`,
           });
+          setIsLoading(false);
         }
       }
     }
