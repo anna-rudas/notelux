@@ -10,7 +10,7 @@ function PageLoading() {
       <div {...className(style.loadingContainer)}>
         <span {...className(shared.titleText)}>Loading...</span>
         <LoadingIcon
-          {...className(style.loadingIcon, style.loadingAnimation)}
+          {...className(shared.loadingIcon, shared.loadingAnimation)}
         />
       </div>
     </div>

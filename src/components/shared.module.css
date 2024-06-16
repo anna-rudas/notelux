@@ -126,4 +126,41 @@
   inset: 0;
   pointer-events: none;
   z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loadingIconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--bg);
+  background-color: var(--bg);
+  border-radius: 100%;
+}
+
+.loadingIcon {
+  fill: var(--text-secondary);
+  width: 40px;
+  height: 40px;
+}
+
+.loadingAnimation {
+  animation-name: loading-animation;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 1s;
+}
+
+@keyframes loading-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
