@@ -28,6 +28,7 @@ import {
 import { db } from "./firestoreConfig";
 import { FirebaseError } from "firebase/app";
 import { InfoMsg, Note, User } from "./types";
+import { evalErrorCode } from "./helpers";
 
 interface AppContextInterface {
   search: string;
@@ -46,7 +47,6 @@ interface AppContextInterface {
   isEditing: boolean;
   resetDefault: () => void;
   handleEdit: (id: Note) => void;
-  loadNotesFromDb: () => Promise<void>;
   addNoteInDb: (value: Note) => Promise<void>;
   updateNoteInDb: (value: Note) => Promise<void>;
   deleteNoteInDb: (value: Note) => Promise<void>;
@@ -91,7 +91,6 @@ const defaultContextValue: AppContextInterface = {
   isEditing: false,
   resetDefault: () => {},
   handleEdit: () => {},
-  loadNotesFromDb: async () => {},
   addNoteInDb: async () => {},
   updateNoteInDb: async () => {},
   deleteNoteInDb: async () => {},
@@ -295,42 +294,6 @@ function AppContextProvider({ children }: AppContextProviderProps) {
 
   //notes
 
-  const loadNotesFromDb = async (): Promise<void> => {
-    if (user) {
-      setAreNotesLoading(true);
-      const q = query(notesColRef, where("coUsers", "array-contains", user.id));
-      try {
-        const querySnapshot = await getDocs(q);
-        const resolvedNotes: Note[] = [];
-        querySnapshot.docs.forEach((doc) => {
-          resolvedNotes.push({
-            id: doc.id,
-            title: doc.data().title,
-            color: doc.data().color,
-            body: doc.data().body,
-            date: doc.data().date,
-            userId: doc.data().userId,
-            coUsers: doc.data().coUsers,
-          });
-        });
-        setNotes(resolvedNotes);
-      } catch (error: unknown) {
-        if (error instanceof FirebaseError) {
-          console.error("Failed to load notes: ", error.code);
-          setInfoMessage({
-            isPersisting: true,
-            actionButtonText: "",
-            showMsg: true,
-            isError: true,
-            desc: "Failed to load notes",
-          });
-        }
-      } finally {
-        setAreNotesLoading(false);
-      }
-    }
-  };
-
   const addNoteInDb = async (noteToAdd: Note): Promise<void> => {
     try {
       await setDoc(doc(db, notesColKey, noteToAdd.id), noteToAdd);
@@ -444,7 +407,6 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     if (user) {
       updateUserInDb(user);
       saveNoUserTheme(user);
-      loadNotesFromDb();
       resetDefault();
       getNoUserTheme();
     }
@@ -453,19 +415,72 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   useEffect(() => {
     if (userId) {
       const userRef = doc(db, usersColKey, userId);
-      const unSubscribe = onSnapshot(userRef, (doc) => {
-        const userResult = doc.data();
-        if (userResult) {
-          setUser({
-            email: userResult.email,
-            id: userResult.id,
-            username: userResult.username,
-            theme: userResult.theme,
-          });
-          setIsLoading(false);
+      const unSubscribe = onSnapshot(
+        userRef,
+        (doc) => {
+          const userResult = doc.data();
+          if (userResult) {
+            setUser({
+              email: userResult.email,
+              id: userResult.id,
+              username: userResult.username,
+              theme: userResult.theme,
+            });
+            setIsLoading(false);
+          }
+        },
+        (error: unknown) => {
+          console.error(error);
+          if (error instanceof FirebaseError) {
+            setInfoMessage({
+              isError: true,
+              isPersisting: true,
+              actionButtonText: "",
+              desc: `Failed to load user id: ${evalErrorCode(error.code)}`,
+              showMsg: true,
+            });
+          }
         }
-      });
+      );
 
+      return unSubscribe;
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    if (userId) {
+      const q = query(notesColRef, where("coUsers", "array-contains", userId));
+      const unSubscribe = onSnapshot(
+        q,
+        (querySnapshot) => {
+          const resolvedNotes: Note[] = [];
+          querySnapshot.forEach((doc) => {
+            resolvedNotes.push({
+              id: doc.id,
+              title: doc.data().title,
+              color: doc.data().color,
+              body: doc.data().body,
+              date: doc.data().date,
+              userId: doc.data().userId,
+              coUsers: doc.data().coUsers,
+            });
+          });
+          setNotes(resolvedNotes);
+          setAreNotesLoading(false);
+        },
+        (error: unknown) => {
+          console.error(error);
+          if (error instanceof FirebaseError) {
+            setInfoMessage({
+              isError: true,
+              isPersisting: true,
+              actionButtonText: "",
+              desc: `Failed to load notes: ${evalErrorCode(error.code)}`,
+              showMsg: true,
+            });
+          }
+        }
+      );
       return unSubscribe;
     }
   }, [userId]);
@@ -497,7 +512,6 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         notes,
         setNotes,
         isEditing,
-        loadNotesFromDb,
         addNoteInDb,
         updateNoteInDb,
         deleteNoteInDb,

@@ -12,7 +12,6 @@ function EditNote() {
     activeNote,
     resetDefault,
     updateNoteInDb,
-    loadNotesFromDb,
     deleteNoteInDb,
     setIsLoading,
     getUserIdByEmail,
@@ -26,7 +25,6 @@ function EditNote() {
   const handleSubmit = async () => {
     if (activeNote) {
       await updateNoteInDb({ ...activeNote, date: new Date().toISOString() });
-      await loadNotesFromDb();
       resetDefault();
     }
   };
@@ -34,7 +32,6 @@ function EditNote() {
   const handleDelete = async () => {
     if (activeNote) {
       await deleteNoteInDb(activeNote);
-      await loadNotesFromDb();
       resetDefault();
       setIsDelConfOpen(false);
     }
@@ -64,7 +61,6 @@ function EditNote() {
         });
         await setCollaborators(activeNote.userId, newCoUsers);
         setActiveNote({ ...activeNote, coUsers: newCoUsers });
-        await loadNotesFromDb();
       }
     }
 

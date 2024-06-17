@@ -14,7 +14,6 @@ function AddNote() {
     setActiveNote,
     resetDefault,
     addNoteInDb,
-    loadNotesFromDb,
     user,
     setIsDropdownOpen,
   } = useContext(AppContext);
@@ -25,7 +24,6 @@ function AddNote() {
         ...activeNote,
         date: new Date().toISOString(),
       });
-      await loadNotesFromDb();
       resetDefault();
     }
   };
