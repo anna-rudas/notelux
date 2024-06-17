@@ -22,6 +22,7 @@ import {
   deleteDoc,
   doc,
   setDoc,
+  getDoc,
 } from "firebase/firestore";
 import { db } from "./firestoreConfig";
 import { FirebaseError } from "firebase/app";
@@ -176,11 +177,16 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   };
 
   const addUserInDb = async (userToAdd: User): Promise<void> => {
-    try {
-      await setDoc(doc(db, usersColKey, userToAdd.id), userToAdd);
-    } catch (error: unknown) {
-      if (error instanceof FirebaseError) {
-        console.error("Failed to add user: ", error.code);
+    const userRef = doc(db, usersColKey, userToAdd.id);
+
+    const docSnapshot = await getDoc(userRef);
+    if (!docSnapshot.exists()) {
+      try {
+        await setDoc(userRef, userToAdd);
+      } catch (error: unknown) {
+        if (error instanceof FirebaseError) {
+          console.error("Failed to add user: ", error.code);
+        }
       }
     }
   };
