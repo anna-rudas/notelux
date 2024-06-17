@@ -50,7 +50,7 @@ interface AppContextInterface {
   deleteNoteInDb: (value: Note) => Promise<void>;
   loadUserFromDb: (value: string) => Promise<void>;
   addUserInDb: (value: User) => Promise<void>;
-  deleteUserInDb: (value: User) => Promise<void>;
+  deleteUserDataInDb: (value: string) => Promise<void>;
   setActiveNoteValue: (field: string, value: string) => void;
   isLoading: boolean;
   setIsLoading: (value: boolean) => void;
@@ -94,7 +94,7 @@ const defaultContextValue: AppContextInterface = {
   deleteNoteInDb: async () => {},
   loadUserFromDb: async () => {},
   addUserInDb: async () => {},
-  deleteUserInDb: async () => {},
+  deleteUserDataInDb: async () => {},
   setActiveNoteValue: () => {},
   isLoading: true,
   setIsLoading: () => {},
@@ -203,13 +203,34 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     }
   };
 
-  const deleteUserInDb = async (userToDelete: User): Promise<void> => {
-    const userRef = doc(db, usersColKey, userToDelete.id);
+  const deleteUserDataInDb = async (userId: string): Promise<void> => {
+    const userRef = doc(db, usersColKey, userId);
+    //delete user doc
     try {
       await deleteDoc(userRef);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         console.error("Failed to delete user: ", error.code);
+      }
+    }
+    //delete users notes
+    const q = query(notesColRef, where("userId", "==", userId));
+    try {
+      const querySnapshot = await getDocs(q);
+      try {
+        await Promise.all(
+          querySnapshot.docs.map(async (doc) => {
+            await deleteDoc(doc.ref);
+          })
+        );
+      } catch (error: unknown) {
+        if (error instanceof FirebaseError) {
+          console.error("Failed to delete notes: ", error.code);
+        }
+      }
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        console.error("Failed to query notes: ", error.code);
       }
     }
   };
@@ -219,7 +240,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     try {
       const querySnapshot = await getDocs(q);
       const resolvedUser: User[] = [];
-      querySnapshot.docs.map((doc) => {
+      querySnapshot.docs.forEach((doc) => {
         resolvedUser.push({
           id: doc.id,
           email: doc.data().email,
@@ -250,7 +271,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
           desc: "No user with this email address",
         });
       }
-      querySnapshot.docs.map((doc) => {
+      querySnapshot.docs.forEach((doc) => {
         resolvedUser.push({
           id: doc.id,
           email: doc.data().email,
@@ -296,7 +317,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
       try {
         const querySnapshot = await getDocs(q);
         const resolvedNotes: Note[] = [];
-        querySnapshot.docs.map((doc) => {
+        querySnapshot.docs.forEach((doc) => {
           resolvedNotes.push({
             id: doc.id,
             title: doc.data().title,
@@ -477,7 +498,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         deleteNoteInDb,
         loadUserFromDb,
         addUserInDb,
-        deleteUserInDb,
+        deleteUserDataInDb,
         user,
         setUser,
         activeNote,

@@ -31,6 +31,7 @@ function AccountSettings() {
     setUser,
     setIsLoading,
     isLoading,
+    deleteUserDataInDb,
   } = useContext(AppContext);
 
   const [isDelConfOpen, setIsDelConfOpen] = useState(false);
@@ -55,6 +56,9 @@ function AccountSettings() {
         );
         if (reAuthResult) {
           try {
+            //delete data
+            await deleteUserDataInDb(auth.currentUser.uid);
+            //delete user
             await deleteUser(auth.currentUser);
             setInfoMessage({
               actionButtonText: "",
@@ -63,6 +67,7 @@ function AccountSettings() {
               isError: false,
               desc: "User deletion successful. You will be automatically signed out",
             });
+
             setTimeout(() => {
               navigate(0);
             }, 5000);
