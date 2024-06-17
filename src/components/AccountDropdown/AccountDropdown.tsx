@@ -16,6 +16,7 @@ function AccountDropdown() {
     dropdownRef,
     dropdownButtonRef,
     isLoading,
+    setUserId,
   } = useContext(AppContext);
   const auth = getAuth();
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ function AccountDropdown() {
     try {
       await signOut(auth);
       setUser(null);
+      setUserId(null);
       navigate("/signin");
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {

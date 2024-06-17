@@ -86,6 +86,7 @@ function SignIn() {
           isError: true,
           desc: "Your email address is not verified",
         });
+        setIsLoading(false);
       }
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
@@ -98,7 +99,6 @@ function SignIn() {
           desc: `Failed to sign in: ${evalErrorCode(error.code)}`,
         });
       }
-    } finally {
       setIsLoading(false);
     }
   };

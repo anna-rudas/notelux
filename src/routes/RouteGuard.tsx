@@ -20,6 +20,7 @@ function RouteGuard({ children }: RouteGuardProps) {
     setInfoMessage,
     setUserId,
     error,
+    setUser,
   } = useContext(AppContext);
   const auth = getAuth();
   const location = useLocation();
@@ -55,6 +56,8 @@ function RouteGuard({ children }: RouteGuardProps) {
   useEffect(() => {
     if (error) {
       handleSignOut();
+      setUserId(null);
+      setUser(null);
     }
   }, [error]);
 

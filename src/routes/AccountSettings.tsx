@@ -32,6 +32,7 @@ function AccountSettings() {
     setIsLoading,
     isLoading,
     deleteUserDataInDb,
+    setUserId,
   } = useContext(AppContext);
 
   const [isDelConfOpen, setIsDelConfOpen] = useState(false);
@@ -127,6 +128,7 @@ function AccountSettings() {
     try {
       await signOut(auth);
       setUser(null);
+      setUserId(null);
       navigate(0);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {

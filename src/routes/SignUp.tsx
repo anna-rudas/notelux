@@ -17,8 +17,15 @@ import { FormikValues } from "formik";
 import { defaultTheme } from "../constants";
 
 function SignUp() {
-  const { isLoading, setIsLoading, addUserInDb, infoMessage, setInfoMessage } =
-    useContext(AppContext);
+  const {
+    isLoading,
+    setIsLoading,
+    addUserInDb,
+    infoMessage,
+    setInfoMessage,
+    setUser,
+    setUserId,
+  } = useContext(AppContext);
 
   const auth = getAuth();
 
@@ -70,6 +77,8 @@ function SignUp() {
         try {
           if (auth.currentUser) {
             await signOut(auth);
+            setUser(null);
+            setUserId(null);
           }
         } catch (error: unknown) {
           if (error instanceof FirebaseError) {

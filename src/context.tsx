@@ -462,6 +462,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
             username: userResult.username,
             theme: userResult.theme,
           });
+          setIsLoading(false);
         }
       });
 
