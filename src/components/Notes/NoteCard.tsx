@@ -10,7 +10,7 @@ type NoteCardProps = {
 };
 
 function NoteCard({ note }: NoteCardProps) {
-  const { handleEdit, isLoading } = useContext(AppContext);
+  const { handleEdit, isLoading, user } = useContext(AppContext);
 
   const readyText = (text: string) => {
     if (text.length > maxNoteCharToShow) {
@@ -27,7 +27,7 @@ function NoteCard({ note }: NoteCardProps) {
       disabled={isLoading}
       {...className(style.noteCard)}
       onClick={() => handleEdit(note)}
-      style={{ backgroundColor: colors[color] }}
+      style={user?.theme === "light" ? { backgroundColor: colors[color] } : {}}
     >
       {title && <span {...className(style.noteTitle)}>{readyText(title)}</span>}
       <span {...className(style.noteBody)}>{readyText(body)}</span>

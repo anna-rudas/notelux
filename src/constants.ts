@@ -22,8 +22,8 @@ export const themeKey = "savedNoteluxTheme";
 export const maxNoteCharToShow = 150;
 
 export const defaultNoteColor: Record<Theme, Color> = {
-  light: "default",
-  dark: "yellow",
+  light: "yellow",
+  dark: "default",
 };
 
 export const defaultTheme: Theme = "light";

@@ -46,9 +46,9 @@
 }
 
 .noteCard {
-  border: 2px solid var(--text-primary);
+  border: 1.5px solid var(--text-secondary);
   background-color: var(--bg);
-  color: var(--text-primary);
+  color: var(--text-secondary);
   display: flex;
   flex-direction: column;
   gap: calc(var(--gap) * 2);

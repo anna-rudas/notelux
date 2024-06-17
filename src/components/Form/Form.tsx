@@ -27,7 +27,7 @@ function Form({
   noteFormStyle,
   noteBodyStyle,
 }: FormProps) {
-  const { activeNote, isEditing, setActiveNoteValue, isLoading } =
+  const { activeNote, isEditing, setActiveNoteValue, isLoading, user } =
     useContext(AppContext);
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
 
@@ -40,7 +40,11 @@ function Form({
     <form
       {...className(noteFormStyle, style.noteForm)}
       onSubmit={handleSubmitForm}
-      style={{ backgroundColor: colors[(activeNote as Note).color] }}
+      style={
+        user?.theme === "light"
+          ? { backgroundColor: colors[(activeNote as Note).color] }
+          : { border: `1.5px solid var(--text-secondary)` }
+      }
     >
       <input
         {...className(style.noteTitle)}
@@ -49,7 +53,6 @@ function Form({
         placeholder="Title"
         value={(activeNote as Note).title}
         onChange={(event) => setActiveNoteValue("title", event.target.value)}
-        style={{ backgroundColor: colors[(activeNote as Note).color] }}
         autoFocus
       />
       <textarea
@@ -58,7 +61,6 @@ function Form({
         maxLength={20000}
         value={(activeNote as Note).body}
         onChange={(event) => setActiveNoteValue("body", event.target.value)}
-        style={{ backgroundColor: colors[(activeNote as Note).color] }}
       ></textarea>
       <div {...className(style.noteSet)}>
         <div {...className(style.btnsCon)}>
@@ -111,16 +113,24 @@ function Form({
         <div {...className(style.btnsCon)}>
           <button
             disabled={isLoading}
-            {...className(shared.btn, shared.buttonNotePrimary)}
-            style={{ color: colors[(activeNote as Note).color] }}
+            {...className(shared.btn, style.buttonNotePrimary)}
+            style={
+              user?.theme === "light"
+                ? { color: colors[(activeNote as Note).color] }
+                : {}
+            }
             type="submit"
           >
             Save
           </button>
           <button
             disabled={isLoading}
-            {...className(shared.btn, shared.buttonNoteSecondary)}
-            style={{ backgroundColor: colors[(activeNote as Note).color] }}
+            {...className(shared.btn, style.buttonNoteSecondary)}
+            style={
+              user?.theme === "light"
+                ? { backgroundColor: colors[(activeNote as Note).color] }
+                : { backgroundColor: "var(--bg)" }
+            }
             type="button"
             onClick={handleCancel}
           >

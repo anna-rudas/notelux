@@ -30,16 +30,6 @@
   width: fit-content;
 }
 
-.buttonNotePrimary {
-  border: 1.5px solid var(--text-primary);
-  background-color: var(--text-primary);
-}
-
-.buttonNoteSecondary {
-  border: 1.5px solid transparent !important;
-  color: var(--text-primary);
-}
-
 .buttonPrimary {
   border: 1.5px solid var(--text-secondary);
   background-color: var(--text-secondary);
