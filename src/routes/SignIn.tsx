@@ -20,9 +20,9 @@ function SignIn() {
     isLoading,
     setIsLoading,
     user,
-    loadUserFromDb,
     infoMessage,
     setInfoMessage,
+    setUserId,
   } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -77,7 +77,7 @@ function SignIn() {
           ...infoMessage,
           showMsg: false,
         });
-        await loadUserFromDb(signInResult.user.uid);
+        setUserId(signInResult.user.uid);
       } else {
         setInfoMessage({
           isPersisting: true,

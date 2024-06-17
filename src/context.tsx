@@ -23,6 +23,7 @@ import {
   doc,
   setDoc,
   getDoc,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "./firestoreConfig";
 import { FirebaseError } from "firebase/app";
@@ -49,7 +50,6 @@ interface AppContextInterface {
   addNoteInDb: (value: Note) => Promise<void>;
   updateNoteInDb: (value: Note) => Promise<void>;
   deleteNoteInDb: (value: Note) => Promise<void>;
-  loadUserFromDb: (value: string) => Promise<void>;
   addUserInDb: (value: User) => Promise<void>;
   deleteUserDataInDb: (value: string) => Promise<void>;
   setActiveNoteValue: (field: string, value: string) => void;
@@ -70,6 +70,8 @@ interface AppContextInterface {
   getNoUserTheme: () => void;
   noUserTheme: string;
   areNotesLoading: boolean;
+  userId: string | null;
+  setUserId: (value: string | null) => void;
 }
 
 const defaultContextValue: AppContextInterface = {
@@ -93,7 +95,6 @@ const defaultContextValue: AppContextInterface = {
   addNoteInDb: async () => {},
   updateNoteInDb: async () => {},
   deleteNoteInDb: async () => {},
-  loadUserFromDb: async () => {},
   addUserInDb: async () => {},
   deleteUserDataInDb: async () => {},
   setActiveNoteValue: () => {},
@@ -114,6 +115,8 @@ const defaultContextValue: AppContextInterface = {
   getNoUserTheme: () => {},
   noUserTheme: defaultTheme,
   areNotesLoading: true,
+  userId: null,
+  setUserId: async () => {},
 };
 
 export const AppContext =
@@ -144,37 +147,13 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const [msgTimeoutId, setMsgTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const [noUserTheme, setNoUserTheme] = useState(defaultTheme);
   const [areNotesLoading, setAreNotesLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
 
   //collection refs
   const notesColRef = collection(db, notesColKey);
   const usersColRef = collection(db, usersColKey);
 
   //users
-
-  const loadUserFromDb = async (userId: string): Promise<void> => {
-    const q = query(usersColRef, where("id", "==", userId));
-    try {
-      const querySnapshot = await getDocs(q);
-      const resolvedUser: User[] = [];
-      if (querySnapshot.docs.length === 0) {
-        setError(new Error("Failed to load user from database"));
-      } else {
-        querySnapshot.docs.map((doc) =>
-          resolvedUser.push({
-            id: doc.id,
-            email: doc.data().email,
-            theme: doc.data().theme,
-            username: doc.data().username,
-          })
-        );
-        setUser(resolvedUser[0]);
-      }
-    } catch (error: unknown) {
-      if (error instanceof FirebaseError) {
-        console.error("Failed to load user: ", error.code);
-      }
-    }
-  };
 
   const addUserInDb = async (userToAdd: User): Promise<void> => {
     const userRef = doc(db, usersColKey, userToAdd.id);
@@ -472,6 +451,25 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   }, [user]);
 
   useEffect(() => {
+    if (userId) {
+      const userRef = doc(db, usersColKey, userId);
+      const unSubscribe = onSnapshot(userRef, (doc) => {
+        const userResult = doc.data();
+        if (userResult) {
+          setUser({
+            email: userResult.email,
+            id: userResult.id,
+            username: userResult.username,
+            theme: userResult.theme,
+          });
+        }
+      });
+
+      return unSubscribe;
+    }
+  }, [userId]);
+
+  useEffect(() => {
     if (msgTimeoutId) {
       clearTimeout(msgTimeoutId);
     }
@@ -502,7 +500,6 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         addNoteInDb,
         updateNoteInDb,
         deleteNoteInDb,
-        loadUserFromDb,
         addUserInDb,
         deleteUserDataInDb,
         user,
@@ -530,6 +527,8 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         getNoUserTheme,
         noUserTheme,
         areNotesLoading,
+        userId,
+        setUserId,
       }}
     >
       {children}

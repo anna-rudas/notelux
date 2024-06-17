@@ -15,10 +15,10 @@ type RouteGuardProps = {
 function RouteGuard({ children }: RouteGuardProps) {
   const {
     user,
-    loadUserFromDb,
     isPageLoading,
     setIsPageLoading,
     setInfoMessage,
+    setUserId,
     error,
   } = useContext(AppContext);
   const auth = getAuth();
@@ -38,14 +38,12 @@ function RouteGuard({ children }: RouteGuardProps) {
     setInfoMessage(defaultInfoMsg);
     const unSubscribe = onAuthStateChanged(auth, (userResult) => {
       if (userResult?.emailVerified) {
-        loadUserFromDb(userResult.uid);
+        setUserId(userResult.uid);
       } else {
         setIsPageLoading(false);
       }
     });
-    return () => {
-      unSubscribe();
-    };
+    return unSubscribe;
   }, []);
 
   useEffect(() => {
