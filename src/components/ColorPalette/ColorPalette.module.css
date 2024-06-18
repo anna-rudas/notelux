@@ -3,16 +3,17 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: var(--gap);
+  gap: 2px;
   position: absolute;
   bottom: 43px;
   left: 0px;
-  padding: var(--padding);
+  padding: 5px var(--padding);
   width: 33px;
   background-color: var(--text-primary);
   border-radius: var(--border-radius);
   animation-name: slowDisplay;
   animation-duration: 0.5s;
+  border: 1.5px solid var(--text-secondary);
 }
 
 @keyframes slowDisplay {
@@ -44,9 +45,9 @@
 .colorRec {
   border-style: solid;
   border-color: var(--text-primary);
-  border-width: 3px;
-  width: 22px;
-  height: 22px;
+  border-width: 4px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   transition: all 0.1s ease-in-out;
 }

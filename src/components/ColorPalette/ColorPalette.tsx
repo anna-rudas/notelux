@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { className } from "../../helpers";
 import * as style from "./ColorPalette.module.css";
-import * as shared from "../shared.module.css";
 import { colorInputs } from "../../constants";
 import { colors } from "../../constants";
 import { AppContext } from "../../context";
@@ -9,7 +8,7 @@ import { AppContext } from "../../context";
 function ChangeBackground() {
   const { activeNote, setActiveNoteValue } = useContext(AppContext);
   return (
-    <div {...className(style.colorsCon, shared.shadow)}>
+    <div {...className(style.colorsCon)}>
       {colorInputs.map((currentInput) => {
         return (
           <label key={currentInput} {...className(style.radioCon)}>

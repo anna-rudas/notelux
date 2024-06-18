@@ -90,3 +90,10 @@
     padding: var(--padding);
   }
 }
+
+@media (hover: hover) {
+  .noteCard:hover {
+    box-shadow: 3px 3px 0px 0px var(--text-secondary);
+    transition: 0.1s ease-in-out;
+  }
+}

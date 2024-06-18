@@ -38,7 +38,7 @@ function Form({
 
   return (
     <form
-      {...className(noteFormStyle, style.noteForm)}
+      {...className(noteFormStyle, style.noteForm, shared.shadow)}
       onSubmit={handleSubmitForm}
       style={
         user?.theme === "light"
