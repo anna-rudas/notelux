@@ -270,7 +270,7 @@ function AccountSettings() {
   };
 
   return (
-    <PageWrapper isAuthStyle={true}>
+    <PageWrapper>
       <>
         <div
           {...className(style.contentCon, shared.normalText, style.settingsCon)}

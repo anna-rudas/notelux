@@ -14,10 +14,11 @@ import { Link } from "react-router-dom";
 import UserIcon from "../../icons/UserIcon";
 
 type HeaderProps = {
-  loggedInStyle: boolean;
+  isLandingPage?: boolean;
+  isErrorStyle?: boolean;
 };
 
-function Header({ loggedInStyle }: HeaderProps) {
+function Header({ isLandingPage, isErrorStyle }: HeaderProps) {
   const {
     search,
     setSearch,
@@ -48,72 +49,88 @@ function Header({ loggedInStyle }: HeaderProps) {
   };
 
   return (
-    <div {...className(style.header)}>
+    <div
+      {...className(
+        isLandingPage ? style.landingPageHeader : style.generalHeader,
+        style.header
+      )}
+    >
       <div {...className(style.logoCon)}>
         <Link
           {...className(style.linkCon, isLoading && shared.disabledLink)}
-          to="/"
+          to={user ? "/dashboard" : "/"}
         >
           <NoteLuxLogo {...className(style.notesIcon)} />
           <span {...className(style.name, shared.titleText)}>NoteLux</span>
         </Link>
       </div>
-      {loggedInStyle && (
-        <div {...className(style.searchInputCon)}>
-          <SearchIcon {...className(style.searchIcon)} />
-          <input
-            {...className(style.searchInput)}
-            type="search"
-            placeholder="Search"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-          />
+      {isLandingPage && (
+        <div {...className(style.navBtnsContainer)}>
+          <Link to="/signup" {...className(shared.btn, shared.buttonSecondary)}>
+            Create a new account
+          </Link>
+          <Link to="/signin" {...className(shared.btn, shared.buttonPrimary)}>
+            Sign in
+          </Link>
         </div>
       )}
-      {loggedInStyle && (
-        <div {...className(style.setCon)}>
-          <button
-            disabled={isLoading}
-            {...className(style.iconBtn)}
-            onClick={toggleLayout}
-            title={user?.layout === "grid" ? "Grid view" : "List view"}
-          >
-            {user?.layout === "grid" ? (
-              <GridIcon {...className(style.viewIcon)} />
-            ) : (
-              <ListIcon {...className(style.viewIcon)} />
-            )}
-          </button>
-          <button
-            disabled={isLoading}
-            {...className(style.iconBtn)}
-            onClick={toggleTheme}
-            title={
-              (user?.theme ?? defaultTheme) === "light"
-                ? "Light mode"
-                : "Dark mode"
-            }
-          >
-            {(user?.theme ?? defaultTheme) === "light" ? (
-              <SunIcon {...className(style.viewIcon)} />
-            ) : (
-              <MoonIcon {...className(style.viewIcon)} />
-            )}
-          </button>
-          <button
-            disabled={isLoading}
-            ref={dropdownButtonRef}
-            id="account-btn"
-            onClick={() => {
-              setTimeout(() => {
-                setIsDropdownOpen(!isDropdownOpen);
-              });
-            }}
-            {...className(shared.btn, style.buttonAccount)}
-          >
-            <UserIcon {...className(style.accountIcon)} />
-          </button>
-        </div>
+      {user && !isErrorStyle && !isLandingPage && (
+        <>
+          <div {...className(style.searchInputCon)}>
+            <SearchIcon {...className(style.searchIcon)} />
+            <input
+              {...className(style.searchInput)}
+              type="search"
+              placeholder="Search"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+            />
+          </div>
+
+          <div {...className(style.setCon)}>
+            <button
+              disabled={isLoading}
+              {...className(style.iconBtn)}
+              onClick={toggleLayout}
+              title={user?.layout === "grid" ? "Grid view" : "List view"}
+            >
+              {user?.layout === "grid" ? (
+                <GridIcon {...className(style.viewIcon)} />
+              ) : (
+                <ListIcon {...className(style.viewIcon)} />
+              )}
+            </button>
+            <button
+              disabled={isLoading}
+              {...className(style.iconBtn)}
+              onClick={toggleTheme}
+              title={
+                (user?.theme ?? defaultTheme) === "light"
+                  ? "Light mode"
+                  : "Dark mode"
+              }
+            >
+              {(user?.theme ?? defaultTheme) === "light" ? (
+                <SunIcon {...className(style.viewIcon)} />
+              ) : (
+                <MoonIcon {...className(style.viewIcon)} />
+              )}
+            </button>
+            <button
+              disabled={isLoading}
+              ref={dropdownButtonRef}
+              id="account-btn"
+              onClick={() => {
+                setTimeout(() => {
+                  setIsDropdownOpen(!isDropdownOpen);
+                });
+              }}
+              {...className(shared.btn, style.buttonAccount)}
+            >
+              <UserIcon {...className(style.accountIcon)} />
+            </button>
+          </div>
+        </>
       )}
     </div>
   );

@@ -11,6 +11,7 @@ import AccountSettings from "./routes/AccountSettings";
 import ResetPassword from "./routes/ResetPassword";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorPage from "./routes/ErrorPage";
+import LandingPage from "./routes/LandingPage";
 
 function App() {
   const { resetDefault } = useContext(AppContext);
@@ -21,7 +22,7 @@ function App() {
       element: (
         <ErrorBoundary onError={logError} FallbackComponent={ErrorPage}>
           <RouteGuard>
-            <Dashboard />
+            <LandingPage />
           </RouteGuard>
         </ErrorBoundary>
       ),

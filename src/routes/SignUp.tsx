@@ -104,7 +104,7 @@ function SignUp() {
   };
 
   return (
-    <PageWrapper isAuthStyle={false}>
+    <PageWrapper>
       <>
         <div {...className(style.contentCon)}>
           <span {...className(shared.titleText)}>Sign up</span>

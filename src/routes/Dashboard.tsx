@@ -9,7 +9,7 @@ function Dashboard() {
   const { isEditing } = useContext(AppContext);
 
   return (
-    <PageWrapper isAuthStyle={true}>
+    <PageWrapper>
       <>
         <AddNote />
         <Notes />

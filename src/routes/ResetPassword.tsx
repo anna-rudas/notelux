@@ -45,7 +45,7 @@ function ResetPassword() {
     }
   };
   return (
-    <PageWrapper isAuthStyle={false}>
+    <PageWrapper>
       <>
         <div {...className(style.contentCon)}>
           <span {...className(shared.titleText)}>Reset your password</span>

@@ -7,11 +7,11 @@ import PageWrapper from "../components/PageWrapper";
 
 function NotFound() {
   return (
-    <PageWrapper isAuthStyle={false}>
+    <PageWrapper>
       <div {...className(style.contentCon)}>
         <span {...className(shared.titleText)}>Oops!</span>
         <span>Looks like that page doesn&apos;t exist.</span>
-        <Link to="/" {...className(shared.btn, shared.buttonPrimary)}>
+        <Link to="/dashboard" {...className(shared.btn, shared.buttonPrimary)}>
           Go back
         </Link>
       </div>

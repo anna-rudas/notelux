@@ -49,6 +49,7 @@ function AccountDropdown() {
       await signOut(auth);
       setUser(null);
       setUserId(null);
+      setIsDropdownOpen(false);
       navigate("/signin");
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {

@@ -1,12 +1,36 @@
 .header {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
   padding: calc(var(--padding) * 2);
   background-color: var(--bg);
   gap: var(--gap);
   align-items: center;
   border-bottom: 1.5px solid var(--text-secondary);
   width: 100%;
+  height: fit-content;
+  max-height: 95px;
+}
+
+.generalHeader {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.landingPageHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navBtnsContainer {
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  gap: calc(var(--gap) * 2);
+  justify-content: center;
+  align-items: center;
+}
+
+.navBtnsContainer a {
+  min-width: 100px;
+  width: fit-content;
 }
 
 .logoCon {
