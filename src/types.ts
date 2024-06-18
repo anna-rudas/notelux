@@ -14,10 +14,13 @@ export type User = {
   id: string;
   email: string;
   theme: Theme;
+  layout: Layout;
   username: string;
 };
 
 export type Theme = "light" | "dark";
+
+export type Layout = "grid" | "list";
 
 export type InfoMsg = {
   isError: boolean;

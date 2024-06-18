@@ -33,8 +33,6 @@ import { evalErrorCode } from "./helpers";
 interface AppContextInterface {
   search: string;
   setSearch: (value: string) => void;
-  isGrid: boolean;
-  setIsGrid: (value: boolean) => void;
   isAddNoteOpen: boolean;
   setIsAddNoteOpen: (value: boolean) => void;
   notes: Array<Note>;
@@ -77,8 +75,6 @@ interface AppContextInterface {
 const defaultContextValue: AppContextInterface = {
   search: "",
   setSearch: () => {},
-  isGrid: true,
-  setIsGrid: () => {},
   isAddNoteOpen: false,
   setIsAddNoteOpen: () => {},
   notes: [],
@@ -127,7 +123,6 @@ type AppContextProviderProps = {
 
 function AppContextProvider({ children }: AppContextProviderProps) {
   const [search, setSearch] = useState("");
-  const [isGrid, setIsGrid] = useState(true);
   const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
   const [notes, setNotes] = useState<Note[]>([]);
   const [user, setUser] = useState<User | null>(null);
@@ -230,6 +225,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
           email: doc.data().email,
           theme: doc.data().theme,
           username: doc.data().username,
+          layout: doc.data().layout,
         });
       });
       return resolvedUser[0].email;
@@ -261,6 +257,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
           email: doc.data().email,
           theme: doc.data().theme,
           username: doc.data().username,
+          layout: doc.data().layout,
         });
       });
       return resolvedUser[0].id;
@@ -425,6 +422,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
               id: userResult.id,
               username: userResult.username,
               theme: userResult.theme,
+              layout: userResult.layout,
             });
             setIsLoading(false);
           }
@@ -505,8 +503,6 @@ function AppContextProvider({ children }: AppContextProviderProps) {
       value={{
         search,
         setSearch,
-        isGrid,
-        setIsGrid,
         isAddNoteOpen,
         setIsAddNoteOpen,
         notes,

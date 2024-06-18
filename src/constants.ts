@@ -1,4 +1,4 @@
-import { Color, InfoMsg, Theme } from "./types";
+import { Color, InfoMsg, Theme, Layout } from "./types";
 
 export const colors = {
   default: "#FFFFFF",
@@ -27,6 +27,8 @@ export const defaultNoteColor: Record<Theme, Color> = {
 };
 
 export const defaultTheme: Theme = "light";
+
+export const defaultLayout: Layout = "grid";
 
 export const defaultInfoMsg: InfoMsg = {
   isError: true,

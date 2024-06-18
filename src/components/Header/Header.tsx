@@ -21,8 +21,6 @@ function Header({ loggedInStyle }: HeaderProps) {
   const {
     search,
     setSearch,
-    isGrid,
-    setIsGrid,
     user,
     setUser,
     isLoading,
@@ -31,15 +29,20 @@ function Header({ loggedInStyle }: HeaderProps) {
     dropdownButtonRef,
   } = useContext(AppContext);
 
-  const toggleGrid = () => {
-    setIsGrid(!isGrid);
-  };
-
   const toggleTheme = () => {
     if (user) {
       setUser({
         ...user,
         theme: user.theme === "light" ? "dark" : "light",
+      });
+    }
+  };
+
+  const toggleLayout = () => {
+    if (user) {
+      setUser({
+        ...user,
+        layout: user.layout === "grid" ? "list" : "grid",
       });
     }
   };
@@ -72,10 +75,10 @@ function Header({ loggedInStyle }: HeaderProps) {
           <button
             disabled={isLoading}
             {...className(style.iconBtn)}
-            onClick={toggleGrid}
-            title={isGrid ? "Grid view" : "List view"}
+            onClick={toggleLayout}
+            title={user?.layout === "grid" ? "Grid view" : "List view"}
           >
-            {isGrid ? (
+            {user?.layout === "grid" ? (
               <GridIcon {...className(style.viewIcon)} />
             ) : (
               <ListIcon {...className(style.viewIcon)} />

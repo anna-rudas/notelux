@@ -7,7 +7,7 @@ import { AppContext } from "../../context";
 import LoadingIcon from "../../icons/LoadingIcon";
 
 function Notes() {
-  const { notes, search, isGrid, areNotesLoading } = useContext(AppContext);
+  const { notes, search, user, areNotesLoading } = useContext(AppContext);
 
   const [matches, setMatches] = useState(
     window.matchMedia("(max-width: 600px)").matches
@@ -25,7 +25,7 @@ function Notes() {
     };
   }, []);
 
-  const numberOfColumns = !isGrid ? 1 : matches ? 2 : 4;
+  const numberOfColumns = user?.layout === "list" ? 1 : matches ? 2 : 4;
 
   const filteredNotes =
     notes &&
@@ -55,7 +55,11 @@ function Notes() {
               Search results:
             </span>
           )}
-          <div {...className(isGrid ? style.noteGridCon : style.noteListCon)}>
+          <div
+            {...className(
+              user?.layout === "grid" ? style.noteGridCon : style.noteListCon
+            )}
+          >
             {sortedNotes.map((currentColumn, index) => {
               return (
                 <div key={index} {...className(style.column)}>

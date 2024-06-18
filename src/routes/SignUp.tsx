@@ -14,7 +14,7 @@ import { FirebaseError } from "firebase/app";
 import AuthForm from "../components/AuthForm";
 import PageWrapper from "../components/PageWrapper";
 import { FormikValues } from "formik";
-import { defaultTheme } from "../constants";
+import { defaultLayout, defaultTheme } from "../constants";
 
 function SignUp() {
   const {
@@ -72,6 +72,7 @@ function SignUp() {
           email: signUpResult.user.email,
           theme: defaultTheme,
           username: values.username,
+          layout: defaultLayout,
         });
         await sendVerifyEmail();
         try {
