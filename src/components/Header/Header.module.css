@@ -7,6 +7,9 @@
   width: 100%;
   height: fit-content;
   max-height: 95px;
+  min-height: 85px;
+  background-color: var(--bg);
+  z-index: 3;
 }
 
 .generalHeader {
@@ -127,10 +130,6 @@
   display: flex;
 }
 
-.buttonAccount:hover {
-  background-color: var(--text-secondary);
-}
-
 .accountIcon {
   width: 30px;
   height: 30px;
@@ -141,8 +140,14 @@
   fill: var(--text-secondary);
 }
 
-.buttonAccount:hover .accountIcon path {
-  fill: var(--bg);
+@media (hover: hover) {
+  .buttonAccount:hover .accountIcon path {
+    fill: var(--bg);
+  }
+
+  .buttonAccount:hover {
+    background-color: var(--text-secondary);
+  }
 }
 
 @media (max-width: 600px) {

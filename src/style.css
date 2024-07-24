@@ -15,6 +15,9 @@
   --border-radius: 5px;
   --error-bg: #fab2ab;
   --success-bg: #ccff90;
+  --highlight-1: #ffeda3;
+  --highlight-2: #dbffb3;
+  --highlight-3: #cbdcfb;
 }
 
 [data-theme="dark"] {
@@ -22,7 +25,7 @@
   --text-secondary: #fff;
   --error-bg: #38312e;
   --success-bg: #38312e;
-  --danger: #f55b4d;
+  --danger: #f67165;
 }
 
 * {

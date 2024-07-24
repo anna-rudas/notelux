@@ -48,7 +48,6 @@
 .noteCard {
   border: 2px solid var(--text-secondary);
   background-color: var(--bg);
-  color: var(--text-secondary);
   display: flex;
   flex-direction: column;
   gap: calc(var(--gap) * 2);
@@ -63,8 +62,6 @@
 
 .noteTitle {
   min-height: 50px;
-  font-size: 1.2rem;
-  font-weight: 500;
   overflow: hidden;
   word-wrap: break-word;
   width: 100%;
@@ -74,8 +71,6 @@
   height: fit-content;
   min-height: 50px;
   max-height: 120px;
-  font-size: 1rem;
-  font-weight: 400;
   overflow: hidden;
   word-wrap: break-word;
   width: 100%;

@@ -4,6 +4,7 @@ import * as style from "./Notes.module.css";
 import { colors, maxNoteCharToShow } from "../../constants";
 import { AppContext } from "../../context";
 import { Note } from "../../types";
+import * as shared from "../../components/shared.module.css";
 
 type NoteCardProps = {
   note: Note;
@@ -29,8 +30,14 @@ function NoteCard({ note }: NoteCardProps) {
       onClick={() => handleEdit(note)}
       style={user?.theme === "light" ? { backgroundColor: colors[color] } : {}}
     >
-      {title && <span {...className(style.noteTitle)}>{readyText(title)}</span>}
-      <span {...className(style.noteBody)}>{readyText(body)}</span>
+      {title && (
+        <span {...className(style.noteTitle, shared.noteTitleText)}>
+          {readyText(title)}
+        </span>
+      )}
+      <span {...className(style.noteBody, shared.noteBodyText)}>
+        {readyText(body)}
+      </span>
     </button>
   );
 }

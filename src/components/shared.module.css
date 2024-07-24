@@ -36,7 +36,7 @@
 .buttonPrimary {
   border: 1.5px solid var(--text-secondary);
   background-color: var(--text-secondary);
-  color: var(--bg);
+  color: var(--bg) !important;
 }
 
 .buttonSecondary {
@@ -72,7 +72,7 @@
 
   .buttonPrimary:hover {
     background-color: var(--bg);
-    color: var(--text-secondary);
+    color: var(--text-secondary) !important;
   }
 
   .buttonSecondary:hover {
@@ -92,6 +92,24 @@
 
 /* text styles */
 
+.welcomeTextPrimary {
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+  font-size: 4rem;
+  color: var(--text-secondary);
+  letter-spacing: 2px;
+}
+
+.welcomeTextSecondary {
+  font-weight: 500;
+  font-size: 1.7rem;
+  color: var(--text-secondary);
+}
+
+.oneWordOneLine {
+  word-spacing: 1000px;
+}
+
 .titleText {
   font-family: "Oswald", sans-serif;
   font-weight: 600;
@@ -100,16 +118,28 @@
   white-space: nowrap;
 }
 
-.normalText {
-  color: var(--text-secondary);
-  font-weight: 300;
-  font-size: 1rem;
-}
-
 .secondaryTitleText {
   font-weight: 600;
   font-size: 1rem;
   color: var(--text-secondary);
+}
+
+.noteTitleText {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.noteBodyText {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+.normalText {
+  color: var(--text-secondary);
+  font-weight: 300;
+  font-size: 1rem;
 }
 
 .smallText {
@@ -162,5 +192,14 @@
 
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-height: 700px) {
+  .welcomeTextPrimary {
+    font-size: 3rem;
+  }
+  .welcomeTextSecondary {
+    font-size: 1.5rem;
   }
 }
