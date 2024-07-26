@@ -18,6 +18,7 @@
   --highlight-1: #ffeda3;
   --highlight-2: #dbffb3;
   --highlight-3: #cbdcfb;
+  --scroll-btn: #e2c5fc;
 }
 
 [data-theme="dark"] {
@@ -32,6 +33,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth !important;
 }
 
 html,

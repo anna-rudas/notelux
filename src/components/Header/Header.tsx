@@ -12,6 +12,7 @@ import { AppContext } from "../../context";
 import { defaultTheme } from "../../constants";
 import { Link } from "react-router-dom";
 import UserIcon from "../../icons/UserIcon";
+import SignInIcon from "../../icons/SignInIcon";
 
 type HeaderProps = {
   isLandingPage?: boolean;
@@ -69,8 +70,12 @@ function Header({ isLandingPage, isErrorStyle }: HeaderProps) {
           <Link to="/signup" {...className(shared.btn, shared.buttonSecondary)}>
             Create a new account
           </Link>
-          <Link to="/signin" {...className(shared.btn, shared.buttonPrimary)}>
-            Sign in
+          <Link
+            to="/signin"
+            {...className(shared.btn, shared.buttonPrimary, style.signInBtn)}
+          >
+            <span>Sign in</span>
+            <SignInIcon {...className(style.signInIcon)} />
           </Link>
         </div>
       )}

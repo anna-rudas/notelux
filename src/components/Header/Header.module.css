@@ -140,6 +140,19 @@
   fill: var(--text-secondary);
 }
 
+.signInIcon {
+  display: none;
+  width: 35px;
+  height: auto;
+  fill: var(--text-primary);
+  stroke: var(--bg);
+  transform: rotate(180deg);
+}
+
+.signInBtn span {
+  display: auto;
+}
+
 @media (hover: hover) {
   .buttonAccount:hover .accountIcon path {
     fill: var(--bg);
@@ -147,6 +160,11 @@
 
   .buttonAccount:hover {
     background-color: var(--text-secondary);
+  }
+
+  .signInBtn:hover .signInIcon {
+    fill: var(--bg);
+    stroke: var(--text-primary);
   }
 }
 
@@ -166,5 +184,20 @@
 
   .setCon {
     gap: calc(var(--gap) * 2);
+  }
+}
+
+@media (max-width: 350px) {
+  .signInIcon {
+    display: block;
+  }
+
+  .signInBtn {
+    min-width: 0 !important;
+    padding: 5px;
+  }
+
+  .signInBtn span {
+    display: none;
   }
 }
