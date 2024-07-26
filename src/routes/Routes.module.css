@@ -49,6 +49,29 @@
   height: 100%;
 }
 
+.landingPageWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.landingPageFooter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 15px;
+}
+
+.landingPageFooter a {
+  margin-left: 5px;
+  text-decoration: underline;
+  color: var(--text-secondary);
+}
+
 .landingPageCon {
   display: flex;
   height: 100%;
@@ -225,6 +248,15 @@
   .landingPageCon {
     flex-direction: column;
     gap: calc(var(--gap) * 10);
+  }
+
+  .landingPageWrapper {
+    gap: calc(var(--gap) * 10);
+    height: auto;
+  }
+
+  .landingPageFooter {
+    border-top: 1px solid var(--text-secondary);
   }
 
   .landingPageSummary {
