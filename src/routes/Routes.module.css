@@ -92,7 +92,7 @@
   padding: calc(var(--padding) * 5) calc(var(--padding) * 10);
   z-index: 20;
   position: relative;
-  padding-right: 20px;
+  padding-right: calc(var(--padding) * 4);
   animation-name: fadeInFromLeft;
   animation-duration: 500ms;
   animation-timing-function: ease-in-out;
@@ -239,6 +239,11 @@
   border: 1px solid var(--text-secondary);
   box-shadow: 3px 3px 0px 0px var(--text-secondary);
   transform: rotate(-10deg);
+  animation-name: bounceAnimation;
+  animation-duration: 1000ms;
+  animation-timing-function: ease;
+  animation-iteration-count: 1;
+  animation-direction: normal;
 }
 
 .scrollToHero {
@@ -289,6 +294,23 @@
   }
   100% {
     padding-right: calc(var(--padding) * 10);
+  }
+}
+
+@keyframes bounceAnimation {
+  0% {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: rotate(-10deg) scale(1);
   }
 }
 
