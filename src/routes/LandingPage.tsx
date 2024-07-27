@@ -14,11 +14,23 @@ function LandingPage() {
         <div {...className(style.landingPageCon)}>
           <div {...className(style.landingPageSummary)}>
             <div {...className(style.textContent)}>
-              <span
-                {...className(shared.welcomeTextPrimary, shared.oneWordOneLine)}
+              <div
+                {...className(
+                  shared.welcomeTextPrimary,
+                  shared.oneWordOneLine,
+                  style.titleTextContent
+                )}
               >
-                Organize your <mark>thoughts</mark>
-              </span>
+                <div {...className(style.titleText)}>
+                  <span>Organize</span>
+                </div>
+                <div {...className(style.titleText)}>
+                  <span>your</span>
+                </div>
+                <div {...className(style.titleText)}>
+                  <span>thoughts</span>
+                </div>
+              </div>
               <span {...className(shared.welcomeTextSecondary)}>
                 With <mark>Notelux</mark> it&apos;s easy
               </span>
