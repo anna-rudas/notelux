@@ -70,6 +70,10 @@ interface AppContextInterface {
   areNotesLoading: boolean;
   userId: string | null;
   setUserId: (value: string | null) => void;
+  isMoreNoteOptionsOpen: boolean;
+  setIsMoreNoteOptionsOpen: (value: boolean) => void;
+  moreNoteOptionsRef: RefObject<HTMLDivElement> | null;
+  moreNoteOptionsButtonRef: RefObject<HTMLButtonElement> | null;
 }
 
 const defaultContextValue: AppContextInterface = {
@@ -112,6 +116,10 @@ const defaultContextValue: AppContextInterface = {
   areNotesLoading: true,
   userId: null,
   setUserId: async () => {},
+  isMoreNoteOptionsOpen: false,
+  setIsMoreNoteOptionsOpen: () => {},
+  moreNoteOptionsRef: null,
+  moreNoteOptionsButtonRef: null,
 };
 
 export const AppContext =
@@ -142,6 +150,9 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const [noUserTheme, setNoUserTheme] = useState(defaultTheme);
   const [areNotesLoading, setAreNotesLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
+  const [isMoreNoteOptionsOpen, setIsMoreNoteOptionsOpen] = useState(false);
+  const moreNoteOptionsRef = useRef(null);
+  const moreNoteOptionsButtonRef = useRef(null);
 
   //collection refs
   const notesColRef = collection(db, notesColKey);
@@ -540,6 +551,10 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         areNotesLoading,
         userId,
         setUserId,
+        isMoreNoteOptionsOpen,
+        setIsMoreNoteOptionsOpen,
+        moreNoteOptionsRef,
+        moreNoteOptionsButtonRef,
       }}
     >
       {children}

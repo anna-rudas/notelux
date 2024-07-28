@@ -1,6 +1,5 @@
 import React, { useState, useContext, FormEvent } from "react";
 import { className } from "../../helpers";
-import TrashIcon from "../../icons/TrashIcon";
 import PaletteIcon from "../../icons/PaletteIcon";
 import ColorPalette from "../ColorPalette";
 import { colors } from "../../constants";
@@ -9,6 +8,8 @@ import * as shared from "../shared.module.css";
 import { AppContext } from "../../context";
 import { Note } from "../../types";
 import ShareIcon from "../../icons/ShareIcon";
+import MoreOptionsIcon from "../../icons/MoreOptionsIcon";
+import MoreNoteOptions from "../MoreNoteOptions";
 
 type FormProps = {
   handleSubmit: () => void;
@@ -27,8 +28,16 @@ function Form({
   noteFormStyle,
   noteBodyStyle,
 }: FormProps) {
-  const { activeNote, isEditing, setActiveNoteValue, isLoading, user } =
-    useContext(AppContext);
+  const {
+    activeNote,
+    isEditing,
+    setActiveNoteValue,
+    isLoading,
+    user,
+    isMoreNoteOptionsOpen,
+    setIsMoreNoteOptionsOpen,
+    moreNoteOptionsButtonRef,
+  } = useContext(AppContext);
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
@@ -67,17 +76,16 @@ function Form({
           {isEditing && (
             <>
               <button
+                ref={moreNoteOptionsButtonRef}
+                onClick={() => {
+                  setIsMoreNoteOptionsOpen(!isMoreNoteOptionsOpen);
+                }}
                 disabled={isLoading}
                 {...className(style.btnIcon)}
-                onClick={() => {
-                  if (setIsDelConfOpen) {
-                    setIsDelConfOpen(true);
-                  }
-                }}
                 type="button"
-                title="Delete"
+                title="More options"
               >
-                <TrashIcon {...className(style.trashIcon)} />
+                <MoreOptionsIcon {...className(style.moreOptionsIcon)} />
               </button>
               <button
                 disabled={isLoading}
@@ -137,6 +145,12 @@ function Form({
             Cancel
           </button>
         </div>
+        {isMoreNoteOptionsOpen && (
+          <MoreNoteOptions
+            setIsDelConfOpen={setIsDelConfOpen}
+            backgroundColor={colors[(activeNote as Note).color]}
+          />
+        )}
       </div>
     </form>
   );
