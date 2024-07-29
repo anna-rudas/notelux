@@ -67,21 +67,11 @@
   align-items: center;
 }
 
-.shareIcon {
-  width: 35px;
-  height: 35px;
-  padding: 0.5px;
-}
-
 .moreOptionsIcon {
   width: 30px;
   height: 30px;
   padding: 0.5px;
   fill: var(--text-secondary);
-}
-
-.shareIcon path {
-  stroke: var(--text-secondary);
 }
 
 .paletteCon {

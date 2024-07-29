@@ -7,7 +7,6 @@ import * as style from "./Form.module.css";
 import * as shared from "../shared.module.css";
 import { AppContext } from "../../context";
 import { Note } from "../../types";
-import ShareIcon from "../../icons/ShareIcon";
 import MoreOptionsIcon from "../../icons/MoreOptionsIcon";
 import MoreNoteOptions from "../MoreNoteOptions";
 
@@ -87,19 +86,6 @@ function Form({
               >
                 <MoreOptionsIcon {...className(style.moreOptionsIcon)} />
               </button>
-              <button
-                disabled={isLoading}
-                onClick={() => {
-                  if (setIsShareNoteOpen) {
-                    setIsShareNoteOpen(true);
-                  }
-                }}
-                title="Share"
-                type="button"
-                {...className(style.btnIcon)}
-              >
-                <ShareIcon {...className(style.shareIcon)} />
-              </button>
             </>
           )}
           <div {...className(style.paletteCon)}>
@@ -148,6 +134,7 @@ function Form({
         {isMoreNoteOptionsOpen && (
           <MoreNoteOptions
             setIsDelConfOpen={setIsDelConfOpen}
+            setIsShareNoteOpen={setIsShareNoteOpen}
             backgroundColor={colors[(activeNote as Note).color]}
           />
         )}

@@ -4,15 +4,18 @@ import * as shared from "../shared.module.css";
 import { className } from "../../helpers";
 import { AppContext } from "../../context";
 import TrashIcon from "../../icons/TrashIcon";
+import ShareIcon from "../../icons/ShareIcon";
 
 type MoreNoteOptionsProps = {
   backgroundColor: string;
   setIsDelConfOpen?: (value: boolean) => void;
+  setIsShareNoteOpen?: (value: boolean) => void;
 };
 
 function MoreNoteOptions({
   backgroundColor,
   setIsDelConfOpen,
+  setIsShareNoteOpen,
 }: MoreNoteOptionsProps) {
   const {
     moreNoteOptionsRef,
@@ -54,6 +57,19 @@ function MoreNoteOptions({
       ref={moreNoteOptionsRef}
       {...className(style.moreOptionsCon, shared.shadow)}
     >
+      <button
+        disabled={isLoading}
+        {...className(style.moreOptionsItem)}
+        onClick={() => {
+          if (setIsShareNoteOpen) {
+            setIsShareNoteOpen(true);
+          }
+        }}
+        type="button"
+      >
+        <ShareIcon {...className(style.shareIcon)} />
+        <span {...className(shared.normalText)}>Share note</span>
+      </button>
       <button
         disabled={isLoading}
         {...className(style.moreOptionsItem)}

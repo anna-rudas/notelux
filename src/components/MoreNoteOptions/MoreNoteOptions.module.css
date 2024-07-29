@@ -4,12 +4,12 @@
   position: absolute;
   padding: var(--padding) calc(var(--padding) * 2);
   bottom: 45px;
-  left: 90px;
+  left: 45px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: var(--gap);
+  gap: calc(var(--gap) * 2);
   max-width: 220px;
   min-width: 100px;
   width: fit-content;
@@ -33,4 +33,14 @@
   height: 30px;
   fill: var(--text-secondary);
   padding: 0.5px;
+}
+
+.shareIcon {
+  width: 30px;
+  height: 30px;
+  padding: 0.5px;
+}
+
+.shareIcon path {
+  stroke: var(--text-secondary);
 }
