@@ -6,13 +6,7 @@ import React, {
   useRef,
   RefObject,
 } from "react";
-import {
-  defaultInfoMsg,
-  notesColKey,
-  usersColKey,
-  themeKey,
-  defaultTheme,
-} from "./constants";
+import { defaultInfoMsg, notesColKey, usersColKey } from "./constants";
 import {
   collection,
   updateDoc,
@@ -65,8 +59,6 @@ interface AppContextInterface {
   setError: (value: Error | null) => void;
   setCollaborators: (owner: string, coOwners: string[]) => Promise<void>;
   getUserIdByEmail: (value: string) => Promise<string>;
-  getNoUserTheme: () => void;
-  noUserTheme: string;
   areNotesLoading: boolean;
   userId: string | null;
   setUserId: (value: string | null) => void;
@@ -111,8 +103,6 @@ const defaultContextValue: AppContextInterface = {
   setError: () => {},
   setCollaborators: async () => {},
   getUserIdByEmail: async () => "",
-  getNoUserTheme: () => {},
-  noUserTheme: defaultTheme,
   areNotesLoading: true,
   userId: null,
   setUserId: async () => {},
@@ -147,7 +137,6 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const [infoMessage, setInfoMessage] = useState<InfoMsg>(defaultInfoMsg);
   const [error, setError] = useState<Error | null>(null);
   const [msgTimeoutId, setMsgTimeoutId] = useState<NodeJS.Timeout | null>(null);
-  const [noUserTheme, setNoUserTheme] = useState(defaultTheme);
   const [areNotesLoading, setAreNotesLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
   const [isMoreNoteOptionsOpen, setIsMoreNoteOptionsOpen] = useState(false);
@@ -384,18 +373,6 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     }
   };
 
-  const getNoUserTheme = () => {
-    const theme = JSON.parse(localStorage.getItem(themeKey) || "{}");
-    if (Object.keys(theme).length === 0) {
-      setNoUserTheme(defaultTheme);
-    } else setNoUserTheme(theme);
-  };
-
-  const saveNoUserTheme = (user: User) => {
-    localStorage.setItem(themeKey, JSON.stringify(user.theme));
-    setNoUserTheme(user.theme);
-  };
-
   const handleEdit = (note: Note) => {
     setIsEditing(true);
     setIsAddNoteOpen(false);
@@ -414,9 +391,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   useEffect(() => {
     if (user) {
       updateUserInDb(user);
-      saveNoUserTheme(user);
       resetDefault();
-      getNoUserTheme();
     }
   }, [user]);
 
@@ -546,8 +521,6 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         setError,
         setCollaborators,
         getUserIdByEmail,
-        getNoUserTheme,
-        noUserTheme,
         areNotesLoading,
         userId,
         setUserId,

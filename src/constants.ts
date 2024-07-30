@@ -17,8 +17,6 @@ export const notesColKey = "notes";
 
 export const usersColKey = "users";
 
-export const themeKey = "savedNoteluxTheme";
-
 export const maxNoteCharToShow = 150;
 
 export const defaultNoteColor: Record<Theme, Color> = {
