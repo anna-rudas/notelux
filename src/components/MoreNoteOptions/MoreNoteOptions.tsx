@@ -59,7 +59,10 @@ function MoreNoteOptions({
     >
       <button
         disabled={isLoading}
-        {...className(style.moreOptionsItem)}
+        {...className(
+          style.moreOptionsItem,
+          isLoading ? shared.btnDisabled : ""
+        )}
         onClick={() => {
           if (setIsShareNoteOpen) {
             setIsShareNoteOpen(true);
@@ -72,7 +75,10 @@ function MoreNoteOptions({
       </button>
       <button
         disabled={isLoading}
-        {...className(style.moreOptionsItem)}
+        {...className(
+          style.moreOptionsItem,
+          isLoading ? shared.btnDisabled : ""
+        )}
         onClick={() => {
           if (setIsDelConfOpen) {
             setIsDelConfOpen(true);

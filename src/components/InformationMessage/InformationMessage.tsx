@@ -54,7 +54,11 @@ function InformationMessage({
               ? { backgroundColor: "var(--error-bg)" }
               : { backgroundColor: "var(--success-bg)" }
           }
-          {...className(shared.btn, shared.buttonSecondary)}
+          {...className(
+            shared.btn,
+            shared.buttonSecondary,
+            isLoading ? shared.btnDisabled : ""
+          )}
           onClick={actionButtonHandle}
         >
           {actionButtonText}
@@ -68,7 +72,11 @@ function InformationMessage({
               ? { backgroundColor: "var(--error-bg)" }
               : { backgroundColor: "var(--success-bg)" }
           }
-          {...className(shared.btn, style.buttonClose)}
+          {...className(
+            shared.btn,
+            style.buttonClose,
+            isLoading ? shared.btnDisabled : ""
+          )}
         >
           <CloseIcon {...className(style.closeIcon)} />
         </button>

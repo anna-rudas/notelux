@@ -105,7 +105,10 @@ function Header({ isLandingPage, isErrorStyle }: HeaderProps) {
             {isDashboardPage && (
               <button
                 disabled={isLoading}
-                {...className(style.iconBtn)}
+                {...className(
+                  style.iconBtn,
+                  isLoading ? shared.btnDisabled : ""
+                )}
                 onClick={toggleLayout}
                 title={user?.layout === "grid" ? "Grid view" : "List view"}
               >
@@ -118,7 +121,7 @@ function Header({ isLandingPage, isErrorStyle }: HeaderProps) {
             )}
             <button
               disabled={isLoading}
-              {...className(style.iconBtn)}
+              {...className(style.iconBtn, isLoading ? shared.btnDisabled : "")}
               onClick={toggleTheme}
               title={
                 (user?.theme ?? defaultTheme) === "light"
@@ -141,7 +144,11 @@ function Header({ isLandingPage, isErrorStyle }: HeaderProps) {
                   setIsDropdownOpen(!isDropdownOpen);
                 });
               }}
-              {...className(shared.btn, style.buttonAccount)}
+              {...className(
+                shared.btn,
+                style.buttonAccount,
+                isLoading ? shared.btnDisabled : ""
+              )}
             >
               <UserIcon {...className(style.accountIcon)} />
             </button>

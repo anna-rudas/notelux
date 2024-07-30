@@ -78,7 +78,11 @@ function AccountDropdown() {
           onClick={() => {
             handleSignOut();
           }}
-          {...className(shared.btn, style.dropdownItem)}
+          {...className(
+            shared.btn,
+            style.dropdownItem,
+            isLoading ? shared.btnDisabled : ""
+          )}
         >
           Sign out
         </button>

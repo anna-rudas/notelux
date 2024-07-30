@@ -285,7 +285,11 @@ function AccountSettings() {
                 onClick={() => {
                   setIsChangeEmailOpen(true);
                 }}
-                {...className(shared.btn, shared.buttonSecondary)}
+                {...className(
+                  shared.btn,
+                  shared.buttonSecondary,
+                  isLoading ? shared.btnDisabled : ""
+                )}
               >
                 Change
               </button>
@@ -300,7 +304,11 @@ function AccountSettings() {
                 onClick={() => {
                   setIsChangePasswordOpen(true);
                 }}
-                {...className(shared.btn, shared.buttonSecondary)}
+                {...className(
+                  shared.btn,
+                  shared.buttonSecondary,
+                  isLoading ? shared.btnDisabled : ""
+                )}
               >
                 Change
               </button>
@@ -329,7 +337,11 @@ function AccountSettings() {
                 <button
                   disabled={isLoading}
                   type="submit"
-                  {...className(shared.btn, shared.buttonPrimary)}
+                  {...className(
+                    shared.btn,
+                    shared.buttonPrimary,
+                    isLoading ? shared.btnDisabled : ""
+                  )}
                 >
                   Save changes
                 </button>
@@ -350,7 +362,11 @@ function AccountSettings() {
               onClick={() => {
                 setIsDelConfOpen(true);
               }}
-              {...className(shared.btn, shared.buttonDanger)}
+              {...className(
+                shared.btn,
+                shared.buttonDanger,
+                isLoading ? shared.btnDisabled : ""
+              )}
             >
               Delete account
             </button>

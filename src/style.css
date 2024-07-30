@@ -19,6 +19,7 @@
   --highlight-2: #dbffb3;
   --highlight-3: #cbdcfb;
   --scroll-btn: #e2c5fc;
+  --placeholder-text: #7a7575;
 }
 
 [data-theme="dark"] {
@@ -27,6 +28,7 @@
   --error-bg: #38312e;
   --success-bg: #38312e;
   --danger: #f67165;
+  --placeholder-text: #9e9b9a;
 }
 
 * {
@@ -62,4 +64,9 @@ body {
 
 a {
   text-decoration: none;
+}
+
+::placeholder {
+  color: var(--placeholder-text);
+  opacity: 1;
 }

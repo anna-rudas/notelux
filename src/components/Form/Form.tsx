@@ -80,7 +80,10 @@ function Form({
                   setIsMoreNoteOptionsOpen(!isMoreNoteOptionsOpen);
                 }}
                 disabled={isLoading}
-                {...className(style.btnIcon)}
+                {...className(
+                  style.btnIcon,
+                  isLoading ? shared.btnDisabled : ""
+                )}
                 type="button"
                 title="More options"
               >
@@ -91,7 +94,7 @@ function Form({
           <div {...className(style.paletteCon)}>
             <button
               disabled={isLoading}
-              {...className(style.btnIcon)}
+              {...className(style.btnIcon, isLoading ? shared.btnDisabled : "")}
               type="button"
               onClick={() => {
                 setIsPaletteOpen(!isPaletteOpen);
@@ -107,7 +110,11 @@ function Form({
         <div {...className(style.btnsCon)}>
           <button
             disabled={isLoading}
-            {...className(shared.btn, style.buttonNotePrimary)}
+            {...className(
+              shared.btn,
+              style.buttonNotePrimary,
+              isLoading ? shared.btnDisabled : ""
+            )}
             style={
               user?.theme === "light"
                 ? { color: colors[(activeNote as Note).color] }
@@ -119,7 +126,11 @@ function Form({
           </button>
           <button
             disabled={isLoading}
-            {...className(shared.btn, style.buttonNoteSecondary)}
+            {...className(
+              shared.btn,
+              style.buttonNoteSecondary,
+              isLoading ? shared.btnDisabled : ""
+            )}
             style={
               user?.theme === "light"
                 ? { backgroundColor: colors[(activeNote as Note).color] }
