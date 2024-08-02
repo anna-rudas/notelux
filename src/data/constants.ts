@@ -1,4 +1,4 @@
-import { Color, InfoMsg, Theme, Layout } from "./types";
+import { Color, InfoMsg, Theme, Layout } from "../types/types";
 
 export const colors = {
   default: "#FFFFFF",

@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import * as style from "./ModalContainer.module.css";
-import * as shared from "../shared.module.css";
-import { className } from "../../helpers";
-import { AppContext } from "../../context";
+import * as shared from "../../assets/styles/shared.module.css";
+import { className } from "../../utilities/helpers";
+import { AppContext } from "../../context/context";
 import { Formik, Form, FormikValues } from "formik";
 
 type ModalContainerProps = {

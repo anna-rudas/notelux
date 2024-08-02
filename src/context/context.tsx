@@ -6,7 +6,7 @@ import React, {
   useRef,
   RefObject,
 } from "react";
-import { defaultInfoMsg, notesColKey, usersColKey } from "./constants";
+import { defaultInfoMsg, notesColKey, usersColKey } from "../data/constants";
 import {
   collection,
   updateDoc,
@@ -19,10 +19,10 @@ import {
   getDoc,
   onSnapshot,
 } from "firebase/firestore";
-import { db } from "./firestoreConfig";
+import { db } from "../firestore/firestoreConfig";
 import { FirebaseError } from "firebase/app";
-import { InfoMsg, Note, User } from "./types";
-import { evalErrorCode } from "./helpers";
+import { InfoMsg, Note, User } from "../types/types";
+import { evalErrorCode } from "../utilities/helpers";
 
 interface AppContextInterface {
   search: string;

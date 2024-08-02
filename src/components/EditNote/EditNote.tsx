@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
-import { className } from "../../helpers";
+import { className } from "../../utilities/helpers";
 import * as style from "./EditNote.module.css";
 import Form from "../Form";
 import DeleteConfirmation from "../DeleteConfirmation";
-import { AppContext } from "../../context";
+import { AppContext } from "../../context/context";
 import ShareNoteModal from "../ShareNoteModal";
 import { FormikValues } from "formik";
 

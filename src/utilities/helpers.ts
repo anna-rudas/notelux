@@ -1,5 +1,5 @@
-import { firebaseErrorCodes } from "./constants";
-import { Note } from "./types";
+import { firebaseErrorCodes } from "../data/constants";
+import { Note } from "../types/types";
 
 export const className = (...classNames: string[]) => {
   return {

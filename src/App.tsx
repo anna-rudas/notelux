@@ -1,17 +1,17 @@
 import React, { useContext, useEffect } from "react";
 import { createRoot } from "react-dom/client";
-import AppContextProvider, { AppContext } from "./context";
+import AppContextProvider, { AppContext } from "./context/context";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Dashboard from "./routes/Dashboard";
-import SignIn from "./routes/SignIn";
-import SignUp from "./routes/SignUp";
-import NotFound from "./routes/NotFound";
-import RouteGuard from "./routes/RouteGuard";
-import AccountSettings from "./routes/AccountSettings";
-import ResetPassword from "./routes/ResetPassword";
+import Dashboard from "./pages/Dashboard";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import NotFound from "./pages/NotFound";
+import RouteGuard from "./pages/RouteGuard";
+import AccountSettings from "./pages/AccountSettings";
+import ResetPassword from "./pages/ResetPassword";
 import { ErrorBoundary } from "react-error-boundary";
-import ErrorPage from "./routes/ErrorPage";
-import LandingPage from "./routes/LandingPage";
+import ErrorPage from "./pages/ErrorPage";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   const { resetDefault } = useContext(AppContext);

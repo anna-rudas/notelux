@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from "react";
-import { className, sortNotes } from "../../helpers";
+import { className, sortNotes } from "../../utilities/helpers";
 import * as style from "./Notes.module.css";
-import * as shared from "../shared.module.css";
+import * as shared from "../../assets/styles/shared.module.css";
 import NoteCard from "./NoteCard";
-import { AppContext } from "../../context";
-import LoadingIcon from "../../icons/LoadingIcon";
+import { AppContext } from "../../context/context";
+import LoadingIcon from "../../assets/icons/LoadingIcon";
 
 function Notes() {
   const { notes, search, user, areNotesLoading } = useContext(AppContext);

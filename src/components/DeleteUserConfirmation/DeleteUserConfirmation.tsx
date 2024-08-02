@@ -2,7 +2,7 @@ import React from "react";
 import GeneralInput from "../GeneralInput";
 import ModalContainer from "../ModalContainer";
 import { FormikValues } from "formik";
-import { deleteUserSchema } from "../../validationSchemas";
+import { deleteUserSchema } from "../../utilities/validationSchemas";
 
 type DeleteConfirmationProps = {
   handleSubmit: (v: FormikValues) => void;

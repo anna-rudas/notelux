@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
-import { AppContext } from "../context";
-import { className, evalErrorCode } from "../helpers";
+import { AppContext } from "../context/context";
+import { className, evalErrorCode } from "../utilities/helpers";
 import * as style from "./Routes.module.css";
-import * as shared from "../components/shared.module.css";
+import * as shared from "../assets/styles/shared.module.css";
 import {
   getAuth,
   deleteUser,
@@ -21,7 +21,7 @@ import ChangeEmailConfirmation from "../components/ChangeEmailConfirmation";
 import ChangePasswordConfirmation from "../components/ChangePasswordConfirmation";
 import PageWrapper from "../components/PageWrapper";
 import { Formik, Form, FormikValues } from "formik";
-import { settingsSchema } from "../validationSchemas";
+import { settingsSchema } from "../utilities/validationSchemas";
 
 function AccountSettings() {
   const {

@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
 import GeneralInput from "../components/GeneralInput";
-import { AppContext } from "../context";
-import { className, evalErrorCode } from "../helpers";
+import { AppContext } from "../context/context";
+import { className, evalErrorCode } from "../utilities/helpers";
 import * as style from "./Routes.module.css";
-import * as shared from "../components/shared.module.css";
+import * as shared from "../assets/styles/shared.module.css";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { Link } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
 import { Formik, Form, FormikValues } from "formik";
-import { resetPasswordSchema } from "../validationSchemas";
+import { resetPasswordSchema } from "../utilities/validationSchemas";
 
 function ResetPassword() {
   const { setInfoMessage, isLoading, setIsLoading } = useContext(AppContext);

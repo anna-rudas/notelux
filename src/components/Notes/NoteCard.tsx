@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { className } from "../../helpers";
+import { className } from "../../utilities/helpers";
 import * as style from "./Notes.module.css";
-import { colors, maxNoteCharToShow } from "../../constants";
-import { AppContext } from "../../context";
-import { Note } from "../../types";
-import * as shared from "../../components/shared.module.css";
+import { colors, maxNoteCharToShow } from "../../data/constants";
+import { AppContext } from "../../context/context";
+import { Note } from "../../types/types";
+import * as shared from "../../assets/styles/shared.module.css";
 
 type NoteCardProps = {
   note: Note;

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import * as style from "./MoreNoteOptions.module.css";
-import * as shared from "../shared.module.css";
-import { className } from "../../helpers";
-import { AppContext } from "../../context";
-import TrashIcon from "../../icons/TrashIcon";
-import ShareIcon from "../../icons/ShareIcon";
+import * as shared from "../../assets/styles/shared.module.css";
+import { className } from "../../utilities/helpers";
+import { AppContext } from "../../context/context";
+import TrashIcon from "../../assets/icons/TrashIcon";
+import ShareIcon from "../../assets/icons/ShareIcon";
 
 type MoreNoteOptionsProps = {
   backgroundColor: string;

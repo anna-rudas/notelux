@@ -1,7 +1,7 @@
 import React from "react";
-import * as shared from "../components/shared.module.css";
+import * as shared from "../assets/styles/shared.module.css";
 import * as style from "./Routes.module.css";
-import { className } from "../helpers";
+import { className } from "../utilities/helpers";
 import { Link } from "react-router-dom";
 import PageWrapper from "../components/PageWrapper";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import GeneralInput from "../GeneralInput";
 import ModalContainer from "../ModalContainer";
-import { changePasswordSchema } from "../../validationSchemas";
+import { changePasswordSchema } from "../../utilities/validationSchemas";
 import { FormikValues } from "formik";
 
 type EmailChangeConfirmationProps = {

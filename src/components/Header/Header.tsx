@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
-import { className } from "../../helpers";
+import { className } from "../../utilities/helpers";
 import * as style from "./Header.module.css";
-import * as shared from "../shared.module.css";
-import NoteLuxLogo from "../../icons/NoteLuxLogo";
-import SearchIcon from "../../icons/SearchIcon";
-import GridIcon from "../../icons/GridIcon";
-import ListIcon from "../../icons/ListIcon";
-import SunIcon from "../../icons/SunIcon";
-import MoonIcon from "../../icons/MoonIcon";
-import { AppContext } from "../../context";
-import { defaultTheme } from "../../constants";
+import * as shared from "../../assets/styles/shared.module.css";
+import NoteLuxLogo from "../../assets/icons/NoteLuxLogo";
+import SearchIcon from "../../assets/icons/SearchIcon";
+import GridIcon from "../../assets/icons/GridIcon";
+import ListIcon from "../../assets/icons/ListIcon";
+import SunIcon from "../../assets/icons/SunIcon";
+import MoonIcon from "../../assets/icons/MoonIcon";
+import { AppContext } from "../../context/context";
+import { defaultTheme } from "../../data/constants";
 import { Link } from "react-router-dom";
-import UserIcon from "../../icons/UserIcon";
-import SignInIcon from "../../icons/SignInIcon";
+import UserIcon from "../../assets/icons/UserIcon";
+import SignInIcon from "../../assets/icons/SignInIcon";
 import { useLocation } from "react-router-dom";
 
 type HeaderProps = {

@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { className } from "../../helpers";
+import { className } from "../../utilities/helpers";
 import * as style from "./AuthForm.module.css";
-import * as shared from "../../components/shared.module.css";
-import { AppContext } from "../../context";
+import * as shared from "../../assets/styles/shared.module.css";
+import { AppContext } from "../../context/context";
 import GeneralInput from "../GeneralInput";
 import { Formik, Form, FormikValues } from "formik";
-import { signInSchema, signUpSchema } from "../../validationSchemas";
+import { signInSchema, signUpSchema } from "../../utilities/validationSchemas";
 
 type AuthFormProps = {
   handleSubmit: (v: FormikValues) => void;

@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import SuccessIcon from "../../icons/SuccessIcon";
-import ErrorIcon from "../../icons/ErrorIcon";
-import CloseIcon from "../../icons/CloseIcon";
-import { className } from "../../helpers";
+import SuccessIcon from "../../assets/icons/SuccessIcon";
+import ErrorIcon from "../../assets/icons/ErrorIcon";
+import CloseIcon from "../../assets/icons/CloseIcon";
+import { className } from "../../utilities/helpers";
 import * as style from "./InformationMessage.module.css";
-import * as shared from "../shared.module.css";
-import { AppContext } from "../../context";
+import * as shared from "../../assets/styles/shared.module.css";
+import { AppContext } from "../../context/context";
 
 type InformationMessageProps = {
   isError: boolean;

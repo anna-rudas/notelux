@@ -1,33 +1,38 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import * as style from "./Routes.module.css";
-import * as shared from "../components/shared.module.css";
+import * as shared from "../assets/styles/shared.module.css";
 import { Link } from "react-router-dom";
-import { className, evalErrorCode } from "../helpers";
-import { AppContext } from "../context";
+import { className, evalErrorCode } from "../utilities/helpers";
+import { AppContext } from "../context/context";
+import { useNavigate } from "react-router-dom";
 import {
   getAuth,
-  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   sendEmailVerification,
-  signOut,
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import AuthForm from "../components/AuthForm";
 import PageWrapper from "../components/PageWrapper";
 import { FormikValues } from "formik";
-import { defaultLayout, defaultTheme } from "../constants";
 
-function SignUp() {
+function SignIn() {
   const {
     isLoading,
     setIsLoading,
-    addUserInDb,
+    user,
     infoMessage,
     setInfoMessage,
-    setUser,
     setUserId,
   } = useContext(AppContext);
 
+  const navigate = useNavigate();
   const auth = getAuth();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/dashboard");
+    }
+  }, [user]);
 
   const sendVerifyEmail = async () => {
     try {
@@ -40,14 +45,15 @@ function SignUp() {
           isPersisting: false,
           showMsg: true,
           isError: false,
-          desc: "Verify your email address to sign in",
+          desc: "Verification email sent",
         });
       }
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         console.error("Failed to send verification email: ", error.code);
         setInfoMessage({
-          ...infoMessage,
+          actionButtonText: "",
+          isPersisting: false,
           showMsg: true,
           isError: true,
           desc: `Failed to send verification email: ${evalErrorCode(
@@ -58,80 +64,81 @@ function SignUp() {
     }
   };
 
-  const handleSignUp = async (values: FormikValues) => {
+  const handleSignIn = async (values: FormikValues) => {
     setIsLoading(true);
     try {
-      const signUpResult = await createUserWithEmailAndPassword(
+      const signInResult = await signInWithEmailAndPassword(
         auth,
         values.email,
         values.password
       );
-      if (signUpResult && signUpResult.user.email) {
-        await addUserInDb({
-          id: signUpResult.user.uid,
-          email: signUpResult.user.email,
-          theme: defaultTheme,
-          username: values.username,
-          layout: defaultLayout,
+      if (signInResult.user.emailVerified) {
+        setInfoMessage({
+          ...infoMessage,
+          showMsg: false,
         });
-        await sendVerifyEmail();
-        try {
-          if (auth.currentUser) {
-            await signOut(auth);
-            setUser(null);
-            setUserId(null);
-          }
-        } catch (error: unknown) {
-          if (error instanceof FirebaseError) {
-            console.error("Failed to sign out user: ", error.code);
-          }
-        }
+        setUserId(signInResult.user.uid);
+      } else {
+        setInfoMessage({
+          isPersisting: true,
+          actionButtonText: "Resend email",
+          showMsg: true,
+          isError: true,
+          desc: "Your email address is not verified",
+        });
+        setIsLoading(false);
       }
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
-        console.error("Failed to sign up user: ", error.code);
+        console.error("Failed to sign in user: ", error.code);
         setInfoMessage({
           actionButtonText: "",
           isPersisting: false,
           showMsg: true,
           isError: true,
-          desc: `Failed to sign up: ${evalErrorCode(error.code)}`,
+          desc: `Failed to sign in: ${evalErrorCode(error.code)}`,
         });
       }
-    } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <PageWrapper>
+    <PageWrapper infoMsgAction={sendVerifyEmail}>
       <>
         <div {...className(style.contentCon)}>
-          <span {...className(shared.titleText)}>Sign up</span>
-          <AuthForm
-            handleSubmit={handleSignUp}
-            primaryButtonText="Sign up"
-            isName={true}
-          />
+          <span {...className(shared.titleText)}>Sign in</span>
+          <AuthForm handleSubmit={handleSignIn} primaryButtonText="Sign in" />
           <div {...className(style.redirectCon)}>
             <span {...className(shared.normalText)}>
-              Already have an account?
+              Don&apos;t have an account yet?
             </span>
             <Link
-              to="/signin"
+              to="/signup"
               {...className(
                 shared.btn,
                 shared.buttonSecondary,
                 isLoading && shared.disabledLink
               )}
             >
-              Sign in
+              Sign up
             </Link>
           </div>
+          <div {...className(shared.divider)}></div>
+          <Link
+            to="/resetpassword"
+            {...className(
+              shared.btn,
+              shared.buttonSecondary,
+              isLoading && shared.disabledLink
+            )}
+          >
+            Forgot password?
+          </Link>
         </div>
       </>
     </PageWrapper>
   );
 }
 
-export default SignUp;
+export default SignIn;

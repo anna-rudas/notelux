@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
-import { className } from "../../helpers";
+import { className } from "../../utilities/helpers";
 import * as style from "./AddNote.module.css";
 import Form from "../Form";
-import { AppContext } from "../../context";
+import { AppContext } from "../../context/context";
 import { v4 as uuidv4 } from "uuid";
-import { defaultNoteColor, defaultTheme } from "../../constants";
+import { defaultNoteColor, defaultTheme } from "../../data/constants";
 
 function AddNote() {
   const {

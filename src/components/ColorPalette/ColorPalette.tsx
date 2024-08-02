@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { className } from "../../helpers";
+import { className } from "../../utilities/helpers";
 import * as style from "./ColorPalette.module.css";
-import { colorInputs } from "../../constants";
-import { colors } from "../../constants";
-import { AppContext } from "../../context";
+import { colorInputs } from "../../data/constants";
+import { colors } from "../../data/constants";
+import { AppContext } from "../../context/context";
 
 function ChangeBackground() {
   const { activeNote, setActiveNoteValue } = useContext(AppContext);

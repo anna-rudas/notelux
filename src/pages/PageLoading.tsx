@@ -1,8 +1,8 @@
 import React from "react";
-import { className } from "../helpers";
-import * as shared from "../components/shared.module.css";
+import { className } from "../utilities/helpers";
+import * as shared from "../assets/styles/shared.module.css";
 import * as style from "./Routes.module.css";
-import LoadingIcon from "../icons/LoadingIcon";
+import LoadingIcon from "../assets/icons/LoadingIcon";
 
 function PageLoading() {
   return (

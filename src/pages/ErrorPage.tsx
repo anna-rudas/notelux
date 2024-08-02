@@ -1,8 +1,8 @@
 import React from "react";
 import PageWrapper from "../components/PageWrapper";
-import { className } from "../helpers";
+import { className } from "../utilities/helpers";
 import * as style from "./Routes.module.css";
-import * as shared from "../components/shared.module.css";
+import * as shared from "../assets/styles/shared.module.css";
 
 function ErrorPage() {
   return (

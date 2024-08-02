@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import GeneralInput from "../GeneralInput";
 import ModalContainer from "../ModalContainer";
-import { shareNoteSchema } from "../../validationSchemas";
+import { shareNoteSchema } from "../../utilities/validationSchemas";
 import { FormikValues } from "formik";
-import AddUserIcon from "../../icons/AddUserIcon";
-import UserIcon from "../../icons/UserIcon";
+import AddUserIcon from "../../assets/icons/AddUserIcon";
+import UserIcon from "../../assets/icons/UserIcon";
 import * as style from "./ShareNoteModal.module.css";
-import { className } from "../../helpers";
-import { AppContext } from "../../context";
+import { className } from "../../utilities/helpers";
+import { AppContext } from "../../context/context";
 
 type EmailChangeConfirmationProps = {
   handleSubmit: (v: FormikValues) => void;

@@ -1,13 +1,13 @@
 import React, { useState, useContext, FormEvent } from "react";
-import { className } from "../../helpers";
-import PaletteIcon from "../../icons/PaletteIcon";
+import { className } from "../../utilities/helpers";
+import PaletteIcon from "../../assets/icons/PaletteIcon";
 import ColorPalette from "../ColorPalette";
-import { colors } from "../../constants";
+import { colors } from "../../data/constants";
 import * as style from "./Form.module.css";
-import * as shared from "../shared.module.css";
-import { AppContext } from "../../context";
-import { Note } from "../../types";
-import MoreOptionsIcon from "../../icons/MoreOptionsIcon";
+import * as shared from "../../assets/styles/shared.module.css";
+import { AppContext } from "../../context/context";
+import { Note } from "../../types/types";
+import MoreOptionsIcon from "../../assets/icons/MoreOptionsIcon";
 import MoreNoteOptions from "../MoreNoteOptions";
 
 type FormProps = {

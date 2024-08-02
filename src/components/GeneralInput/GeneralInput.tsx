@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
-import ShowEyeIcon from "../../icons/ShowEyeIcon";
-import HideEyeIcon from "../../icons/HideEyeIcon";
-import { className } from "../../helpers";
+import ShowEyeIcon from "../../assets/icons/ShowEyeIcon";
+import HideEyeIcon from "../../assets/icons/HideEyeIcon";
+import { className } from "../../utilities/helpers";
 import * as style from "./GeneralInput.module.css";
-import * as shared from "../shared.module.css";
-import { AppContext } from "../../context";
+import * as shared from "../../assets/styles/shared.module.css";
+import { AppContext } from "../../context/context";
 import { useField, FieldHookConfig } from "formik";
 
 type GeneralInputProps<T> = {

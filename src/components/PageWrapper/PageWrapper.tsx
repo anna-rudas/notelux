@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import Header from "../Header";
 import AccountDropdown from "../AccountDropdown";
-import { AppContext } from "../../context";
-import * as shared from "../shared.module.css";
-import { className } from "../../helpers";
-import { defaultTheme } from "../../constants";
-import LoadingIcon from "../../icons/LoadingIcon";
+import { AppContext } from "../../context/context";
+import * as shared from "../../assets/styles/shared.module.css";
+import { className } from "../../utilities/helpers";
+import { defaultTheme } from "../../data/constants";
+import LoadingIcon from "../../assets/icons/LoadingIcon";
 import InformationMessage from "../../components/InformationMessage";
 
 type ModalContainerProps = {
