@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import * as style from "./Routes.module.css";
-import * as shared from "../assets/styles/shared.module.css";
+import * as sharedPages from "../../assets/styles/sharedPages.module.css";
+import * as shared from "../../assets/styles/shared.module.css";
 import { Link } from "react-router-dom";
-import { className, evalErrorCode } from "../utilities/helpers";
-import { AppContext } from "../context/context";
+import { className, evalErrorCode } from "../../utilities/helpers";
+import { AppContext } from "../../context/context";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -11,10 +11,10 @@ import {
   signOut,
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-import AuthForm from "../components/AuthForm";
-import PageWrapper from "../components/PageWrapper";
+import AuthForm from "../../components/AuthForm";
+import PageWrapper from "../../components/PageWrapper";
 import { FormikValues } from "formik";
-import { defaultLayout, defaultTheme } from "../data/constants";
+import { defaultLayout, defaultTheme } from "../../data/constants";
 
 function SignUp() {
   const {
@@ -106,14 +106,14 @@ function SignUp() {
   return (
     <PageWrapper>
       <>
-        <div {...className(style.contentCon)}>
+        <div {...className(sharedPages.contentCon)}>
           <span {...className(shared.titleText)}>Sign up</span>
           <AuthForm
             handleSubmit={handleSignUp}
             primaryButtonText="Sign up"
             isName={true}
           />
-          <div {...className(style.redirectCon)}>
+          <div {...className(sharedPages.redirectCon)}>
             <span {...className(shared.normalText)}>
               Already have an account?
             </span>

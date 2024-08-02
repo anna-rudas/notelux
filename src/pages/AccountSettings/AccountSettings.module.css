@@ -1,0 +1,4 @@
+.settingsCon {
+  align-items: flex-start;
+  padding: calc(var(--padding) * 3);
+}

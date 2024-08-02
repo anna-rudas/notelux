@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
-import { AppContext } from "../context/context";
-import { className, evalErrorCode } from "../utilities/helpers";
-import * as style from "./Routes.module.css";
-import * as shared from "../assets/styles/shared.module.css";
+import { AppContext } from "../../context/context";
+import { className, evalErrorCode } from "../../utilities/helpers";
+import * as style from "./AccountSettings.module.css";
+import * as shared from "../../assets/styles/shared.module.css";
+import * as sharedPages from "../../assets/styles/sharedPages.module.css";
 import {
   getAuth,
   deleteUser,
@@ -13,15 +14,15 @@ import {
   signOut,
   updatePassword,
 } from "firebase/auth";
-import DeleteUserConfirmation from "../components/DeleteUserConfirmation";
+import DeleteUserConfirmation from "../../components/DeleteUserConfirmation";
 import { FirebaseError } from "firebase/app";
 import { useNavigate } from "react-router-dom";
-import GeneralInput from "../components/GeneralInput";
-import ChangeEmailConfirmation from "../components/ChangeEmailConfirmation";
-import ChangePasswordConfirmation from "../components/ChangePasswordConfirmation";
-import PageWrapper from "../components/PageWrapper";
+import GeneralInput from "../../components/GeneralInput";
+import ChangeEmailConfirmation from "../../components/ChangeEmailConfirmation";
+import ChangePasswordConfirmation from "../../components/ChangePasswordConfirmation";
+import PageWrapper from "../../components/PageWrapper";
 import { Formik, Form, FormikValues } from "formik";
-import { settingsSchema } from "../utilities/validationSchemas";
+import { settingsSchema } from "../../utilities/validationSchemas";
 
 function AccountSettings() {
   const {
@@ -273,12 +274,16 @@ function AccountSettings() {
     <PageWrapper>
       <>
         <div
-          {...className(style.contentCon, shared.normalText, style.settingsCon)}
+          {...className(
+            sharedPages.contentCon,
+            shared.normalText,
+            style.settingsCon
+          )}
         >
           <span {...className(shared.titleText)}>Account settings</span>
-          <div {...className(style.settingsItem)}>
+          <div {...className(sharedPages.settingsItem)}>
             <span {...className(shared.secondaryTitleText)}>Email address</span>
-            <div {...className(style.settingsItemCon)}>
+            <div {...className(sharedPages.settingsItemCon)}>
               <span>Your current email address: {user?.email}</span>
               <button
                 disabled={isLoading}
@@ -295,9 +300,9 @@ function AccountSettings() {
               </button>
             </div>
           </div>
-          <div {...className(style.settingsItem)}>
+          <div {...className(sharedPages.settingsItem)}>
             <span {...className(shared.secondaryTitleText)}>Password</span>
-            <div {...className(style.settingsItemCon)}>
+            <div {...className(sharedPages.settingsItemCon)}>
               <span>Set a new password</span>
               <button
                 disabled={isLoading}
@@ -314,7 +319,7 @@ function AccountSettings() {
               </button>
             </div>
           </div>
-          <div {...className(style.settingsItem)}>
+          <div {...className(sharedPages.settingsItem)}>
             <span {...className(shared.secondaryTitleText)}>Name</span>
             <span>Set what name to display in the menu</span>
             <Formik
@@ -327,7 +332,10 @@ function AccountSettings() {
             >
               <Form
                 noValidate
-                {...className(style.settingsItemCon, style.settingsItemConName)}
+                {...className(
+                  sharedPages.settingsItemCon,
+                  sharedPages.settingsItemConName
+                )}
               >
                 <GeneralInput
                   type="username"
@@ -349,7 +357,7 @@ function AccountSettings() {
             </Formik>
           </div>
           <div {...className(shared.divider)} />
-          <div {...className(style.settingsItem)}>
+          <div {...className(sharedPages.settingsItem)}>
             <span {...className(shared.secondaryTitleText)}>
               Delete account
             </span>

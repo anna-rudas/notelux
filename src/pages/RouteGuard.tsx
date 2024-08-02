@@ -2,11 +2,11 @@ import React, { useContext, useEffect } from "react";
 import { AppContext } from "../context/context";
 import { Navigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import PageLoading from "./PageLoading";
+import PageLoading from "../components/PageLoading/PageLoading";
 import { useLocation } from "react-router-dom";
 import { defaultInfoMsg } from "../data/constants";
 import { FirebaseError } from "firebase/app";
-import ErrorPage from "./ErrorPage";
+import ErrorPage from "./ErrorPage/ErrorPage";
 
 type RouteGuardProps = {
   children: JSX.Element;

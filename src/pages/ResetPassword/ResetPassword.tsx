@@ -1,15 +1,15 @@
 import React, { useContext } from "react";
-import GeneralInput from "../components/GeneralInput";
-import { AppContext } from "../context/context";
-import { className, evalErrorCode } from "../utilities/helpers";
-import * as style from "./Routes.module.css";
-import * as shared from "../assets/styles/shared.module.css";
+import GeneralInput from "../../components/GeneralInput";
+import { AppContext } from "../../context/context";
+import { className, evalErrorCode } from "../../utilities/helpers";
+import * as sharedPages from "../../assets/styles/sharedPages.module.css";
+import * as shared from "../../assets/styles/shared.module.css";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { Link } from "react-router-dom";
-import PageWrapper from "../components/PageWrapper";
+import PageWrapper from "../../components/PageWrapper";
 import { Formik, Form, FormikValues } from "formik";
-import { resetPasswordSchema } from "../utilities/validationSchemas";
+import { resetPasswordSchema } from "../../utilities/validationSchemas";
 
 function ResetPassword() {
   const { setInfoMessage, isLoading, setIsLoading } = useContext(AppContext);
@@ -47,7 +47,7 @@ function ResetPassword() {
   return (
     <PageWrapper>
       <>
-        <div {...className(style.contentCon)}>
+        <div {...className(sharedPages.contentCon)}>
           <span {...className(shared.titleText)}>Reset your password</span>
           <span {...className(shared.normalText)}>
             Enter your email address and we will send instructions on how to
@@ -63,14 +63,17 @@ function ResetPassword() {
           >
             <Form
               noValidate
-              {...className(style.settingsItemCon, style.settingsItemConName)}
+              {...className(
+                sharedPages.settingsItemCon,
+                sharedPages.settingsItemConName
+              )}
             >
               <GeneralInput
                 type="email"
                 config={{ name: "email" }}
                 placeholder="Email address"
               />
-              <div {...className(style.redirectCon)}>
+              <div {...className(sharedPages.redirectCon)}>
                 <Link
                   to="/signin"
                   {...className(

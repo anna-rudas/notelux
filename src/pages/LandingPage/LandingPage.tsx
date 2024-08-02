@@ -1,11 +1,11 @@
 import React from "react";
-import PageWrapper from "../components/PageWrapper";
-import { className } from "../utilities/helpers";
-import * as style from "./Routes.module.css";
-import * as shared from "../assets/styles/shared.module.css";
+import PageWrapper from "../../components/PageWrapper";
+import { className } from "../../utilities/helpers";
+import * as style from "./LandingPage.module.css";
+import * as shared from "../../assets/styles/shared.module.css";
 import { Link } from "react-router-dom";
-import BlobImage from "../assets/images/landingpage_blob";
-import ArrowIcon from "../assets/icons/ArrowIcon";
+import BlobImage from "../../assets/images/landingpage_blob";
+import ArrowIcon from "../../assets/icons/ArrowIcon";
 
 function LandingPage() {
   return (
@@ -49,7 +49,7 @@ function LandingPage() {
 
             <a href="#pageHero" {...className(style.scrollToHero)}>
               <span {...className(shared.normalText)}>Discover Notelux</span>
-              <ArrowIcon {...className(style.icon)} />
+              <ArrowIcon {...className(style.arrowIcon)} />
             </a>
           </div>
           <div id="pageHero" {...className(style.landingPageHero)}>
@@ -73,7 +73,7 @@ function LandingPage() {
               <div {...className(style.row, style.bottomRow)}>
                 <div {...className(style.heroItem, style.phone)}>
                   <img
-                    src={require("../assets/images/phone_screenshot_placeholder.png")}
+                    src={require("../../assets/images/phone_screenshot_placeholder.png")}
                     alt="Example image of the app on a phone device"
                   />
                   <BlobImage {...className(style.blobImage)} />

@@ -1,53 +1,4 @@
-.contentCon {
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--gap) * 6);
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 50px;
-  width: 100%;
-}
-
-.settingsCon {
-  align-items: flex-start;
-  padding: calc(var(--padding) * 3);
-}
-
-.settingsItem {
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--gap) * 2);
-}
-
-.settingsItemCon {
-  display: flex;
-  gap: calc(var(--gap) * 2);
-  align-items: center;
-}
-
-.settingsItemConName {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.redirectCon {
-  display: flex;
-  flex-direction: row;
-  gap: var(--gap);
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.loadingContainer {
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--gap) * 4);
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
+/* general */
 
 .landingPageWrapper {
   display: flex;
@@ -56,20 +7,6 @@
   height: 100%;
   align-items: center;
   justify-content: center;
-}
-
-.landingPageFooter {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  padding: 15px;
-}
-
-.landingPageFooter a {
-  margin-left: 5px;
-  text-decoration: underline;
-  color: var(--text-secondary);
 }
 
 .landingPageCon {
@@ -81,6 +18,13 @@
   z-index: 1;
   max-width: 1200px;
 }
+
+.actionBtn {
+  padding: 15px 30px;
+  border-radius: calc(var(--border-radius) * 4);
+}
+
+/* summary */
 
 .landingPageSummary {
   display: flex;
@@ -98,6 +42,10 @@
   animation-timing-function: ease-in-out;
   animation-iteration-count: 1;
   animation-direction: normal;
+}
+
+.landingPageSummary span:first-of-type mark {
+  background-color: var(--highlight-3);
 }
 
 .textContent {
@@ -119,24 +67,6 @@
   flex-direction: column;
 }
 
-.titleText {
-  padding: 0;
-  width: fit-content;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.titleText span {
-  padding: 0;
-  width: 0%;
-  height: 100%;
-}
-
-.landingPageSummary span:first-of-type mark {
-  background-color: var(--highlight-3);
-}
-
 .titleTextContent div:nth-of-type(1) span {
   background-color: var(--highlight-1);
   animation-name: highlightAnimation;
@@ -155,10 +85,45 @@
   animation-iteration-count: infinite;
 }
 
-.actionBtn {
-  padding: 15px 30px;
-  border-radius: calc(var(--border-radius) * 4);
+.titleText {
+  padding: 0;
+  width: fit-content;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
+
+.titleText span {
+  padding: 0;
+  width: 0%;
+  height: 100%;
+}
+
+.scrollToHero {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--scroll-btn);
+  border: none;
+  color: var(--text-secondary);
+  z-index: 2;
+  gap: calc(var(--gap) * 4);
+  padding: calc(var(--padding) * 2);
+  width: 100%;
+  border-radius: calc(var(--border-radius) * 20);
+  animation-name: fadeInAnimation;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+}
+
+.arrowIcon {
+  width: 30px;
+  height: auto;
+}
+
+/* hero */
 
 .landingPageHero {
   padding: calc(var(--padding) * 2);
@@ -187,15 +152,6 @@
   animation-timing-function: ease-in-out;
   animation-iteration-count: 1;
   animation-direction: normal;
-}
-
-.heroCTA {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 2;
-  gap: calc(var(--gap) * 4);
 }
 
 .row {
@@ -279,29 +235,32 @@
   animation-direction: normal;
 }
 
-.scrollToHero {
+.heroCTA {
   display: none;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--scroll-btn);
-  border: none;
-  color: var(--text-secondary);
   z-index: 2;
   gap: calc(var(--gap) * 4);
-  padding: calc(var(--padding) * 2);
-  width: 100%;
-  border-radius: calc(var(--border-radius) * 20);
-  animation-name: fadeInAnimation;
-  animation-duration: 500ms;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: 1;
-  animation-direction: normal;
 }
 
-.icon {
-  width: 30px;
-  height: auto;
+/* footer */
+
+.landingPageFooter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 15px;
 }
+
+.landingPageFooter a {
+  margin-left: 5px;
+  text-decoration: underline;
+  color: var(--text-secondary);
+}
+
+/* animations */
 
 @keyframes highlightAnimation {
   0% {
@@ -365,11 +324,8 @@
   }
 }
 
-@media (hover: hover) {
-  .scrollToHero:hover {
-    cursor: pointer;
-  }
-}
+/* media */
+
 @media (max-width: 1000px) {
   .landingPageCon {
     flex-direction: column;
@@ -415,6 +371,12 @@
 
   .heroCTA {
     display: flex;
+  }
+}
+
+@media (hover: hover) {
+  .scrollToHero:hover {
+    cursor: pointer;
   }
 }
 
@@ -493,7 +455,7 @@
     padding: 10px;
   }
 
-  .icon {
+  .arrowIcon {
     width: 25px;
   }
 }

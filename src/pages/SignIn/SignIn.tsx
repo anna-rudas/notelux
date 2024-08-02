@@ -1,9 +1,9 @@
 import React, { useContext, useEffect } from "react";
-import * as style from "./Routes.module.css";
-import * as shared from "../assets/styles/shared.module.css";
+import * as sharedPages from "../../assets/styles/sharedPages.module.css";
+import * as shared from "../../assets/styles/shared.module.css";
 import { Link } from "react-router-dom";
-import { className, evalErrorCode } from "../utilities/helpers";
-import { AppContext } from "../context/context";
+import { className, evalErrorCode } from "../../utilities/helpers";
+import { AppContext } from "../../context/context";
 import { useNavigate } from "react-router-dom";
 import {
   getAuth,
@@ -11,8 +11,8 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-import AuthForm from "../components/AuthForm";
-import PageWrapper from "../components/PageWrapper";
+import AuthForm from "../../components/AuthForm";
+import PageWrapper from "../../components/PageWrapper";
 import { FormikValues } from "formik";
 
 function SignIn() {
@@ -106,10 +106,10 @@ function SignIn() {
   return (
     <PageWrapper infoMsgAction={sendVerifyEmail}>
       <>
-        <div {...className(style.contentCon)}>
+        <div {...className(sharedPages.contentCon)}>
           <span {...className(shared.titleText)}>Sign in</span>
           <AuthForm handleSubmit={handleSignIn} primaryButtonText="Sign in" />
-          <div {...className(style.redirectCon)}>
+          <div {...className(sharedPages.redirectCon)}>
             <span {...className(shared.normalText)}>
               Don&apos;t have an account yet?
             </span>
