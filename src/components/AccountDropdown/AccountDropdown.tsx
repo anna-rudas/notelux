@@ -4,7 +4,7 @@ import * as style from "./AccountDropdown.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
-import { AppContext } from "../../context/context";
+import { AppContext } from "../../context/AppContext";
 import { FirebaseError } from "firebase/app";
 
 function AccountDropdown() {

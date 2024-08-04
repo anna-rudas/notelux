@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { AppContext } from "../context/context";
+import React, { useContext, useEffect, useState } from "react";
+import { AppContext } from "../context/AppContext";
 import { Navigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import PageLoading from "../components/PageLoading/PageLoading";
@@ -13,17 +13,11 @@ type RouteGuardProps = {
 };
 
 function RouteGuard({ children }: RouteGuardProps) {
-  const {
-    user,
-    isPageLoading,
-    setIsPageLoading,
-    setInfoMessage,
-    setUserId,
-    error,
-    setUser,
-  } = useContext(AppContext);
+  const { user, setInfoMessage, setUserId, setUser, error } =
+    useContext(AppContext);
   const auth = getAuth();
   const location = useLocation();
+  const [isPageLoading, setIsPageLoading] = useState(true);
 
   const handleSignOut = async () => {
     try {

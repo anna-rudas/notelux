@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { AppContext } from "../../context/context";
+import { AppContext } from "../../context/AppContext";
 import { className, evalErrorCode } from "../../utilities/helpers";
 import * as style from "./AccountSettings.module.css";
 import * as shared from "../../assets/styles/shared.module.css";

@@ -3,22 +3,21 @@ import { className } from "../../utilities/helpers";
 import * as style from "./EditNote.module.css";
 import Form from "../Form";
 import DeleteConfirmation from "../DeleteConfirmation";
-import { AppContext } from "../../context/context";
+import { AppContext } from "../../context/AppContext";
 import ShareNoteModal from "../ShareNoteModal";
 import { FormikValues } from "formik";
+import { DashboardContext } from "../../context/DashboardContext";
 
 function EditNote() {
   const {
-    activeNote,
-    resetDefault,
     updateNoteInDb,
     deleteNoteInDb,
     setIsLoading,
     getUserIdByEmail,
-    setCollaborators,
-    setActiveNote,
     setInfoMessage,
   } = useContext(AppContext);
+  const { activeNote, setActiveNote, resetDefault } =
+    useContext(DashboardContext);
   const [isDelConfOpen, setIsDelConfOpen] = useState(false);
   const [isShareNoteOpen, setIsShareNoteOpen] = useState(false);
 
@@ -59,7 +58,6 @@ function EditNote() {
           ...activeNote,
           coUsers: newCoUsers,
         });
-        await setCollaborators(activeNote.userId, newCoUsers);
         setActiveNote({ ...activeNote, coUsers: newCoUsers });
       }
     }

@@ -3,11 +3,13 @@ import { className, sortNotes } from "../../utilities/helpers";
 import * as style from "./Notes.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
 import NoteCard from "./NoteCard";
-import { AppContext } from "../../context/context";
+import { AppContext } from "../../context/AppContext";
+import { DashboardContext } from "../../context/DashboardContext";
 import LoadingIcon from "../../assets/icons/LoadingIcon";
 
 function Notes() {
-  const { notes, search, user, areNotesLoading } = useContext(AppContext);
+  const { search, user } = useContext(AppContext);
+  const { notes, areNotesLoading } = useContext(DashboardContext);
 
   const [matches, setMatches] = useState(
     window.matchMedia("(max-width: 600px)").matches

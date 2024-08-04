@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import GeneralInput from "../GeneralInput";
-import { AppContext } from "../../context/context";
+import { AppContext } from "../../context/AppContext";
 import ModalContainer from "../ModalContainer";
 import { changeEmailSchema } from "../../utilities/validationSchemas";
 import { FormikValues } from "formik";

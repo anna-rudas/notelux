@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import GeneralInput from "../../components/GeneralInput";
-import { AppContext } from "../../context/context";
+import { AppContext } from "../../context/AppContext";
 import { className, evalErrorCode } from "../../utilities/helpers";
 import * as sharedPages from "../../assets/styles/sharedPages.module.css";
 import * as shared from "../../assets/styles/shared.module.css";

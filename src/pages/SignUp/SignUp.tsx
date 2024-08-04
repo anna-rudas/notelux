@@ -3,7 +3,7 @@ import * as sharedPages from "../../assets/styles/sharedPages.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
 import { Link } from "react-router-dom";
 import { className, evalErrorCode } from "../../utilities/helpers";
-import { AppContext } from "../../context/context";
+import { AppContext } from "../../context/AppContext";
 import {
   getAuth,
   createUserWithEmailAndPassword,

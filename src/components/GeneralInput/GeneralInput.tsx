@@ -4,7 +4,7 @@ import HideEyeIcon from "../../assets/icons/HideEyeIcon";
 import { className } from "../../utilities/helpers";
 import * as style from "./GeneralInput.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
-import { AppContext } from "../../context/context";
+import { AppContext } from "../../context/AppContext";
 import { useField, FieldHookConfig } from "formik";
 
 type GeneralInputProps<T> = {

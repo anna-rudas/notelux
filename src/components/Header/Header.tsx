@@ -8,7 +8,7 @@ import GridIcon from "../../assets/icons/GridIcon";
 import ListIcon from "../../assets/icons/ListIcon";
 import SunIcon from "../../assets/icons/SunIcon";
 import MoonIcon from "../../assets/icons/MoonIcon";
-import { AppContext } from "../../context/context";
+import { AppContext } from "../../context/AppContext";
 import { defaultTheme } from "../../data/constants";
 import { Link } from "react-router-dom";
 import UserIcon from "../../assets/icons/UserIcon";

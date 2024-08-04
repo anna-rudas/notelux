@@ -2,21 +2,20 @@ import React, { useContext } from "react";
 import { className } from "../../utilities/helpers";
 import * as style from "./AddNote.module.css";
 import Form from "../Form";
-import { AppContext } from "../../context/context";
+import { AppContext } from "../../context/AppContext";
+import { DashboardContext } from "../../context/DashboardContext";
 import { v4 as uuidv4 } from "uuid";
 import { defaultNoteColor, defaultTheme } from "../../data/constants";
 
 function AddNote() {
+  const { addNoteInDb, user, setIsDropdownOpen } = useContext(AppContext);
   const {
-    isAddNoteOpen,
-    setIsAddNoteOpen,
     activeNote,
     setActiveNote,
+    isAddNoteOpen,
+    setIsAddNoteOpen,
     resetDefault,
-    addNoteInDb,
-    user,
-    setIsDropdownOpen,
-  } = useContext(AppContext);
+  } = useContext(DashboardContext);
 
   const handleSubmit = async () => {
     if (activeNote) {

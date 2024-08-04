@@ -5,10 +5,11 @@ import ColorPalette from "../ColorPalette";
 import { colors } from "../../data/constants";
 import * as style from "./Form.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
-import { AppContext } from "../../context/context";
+import { AppContext } from "../../context/AppContext";
 import { Note } from "../../types/types";
 import MoreOptionsIcon from "../../assets/icons/MoreOptionsIcon";
 import MoreNoteOptions from "../MoreNoteOptions";
+import { DashboardContext } from "../../context/DashboardContext";
 
 type FormProps = {
   handleSubmit: () => void;
@@ -27,16 +28,17 @@ function Form({
   noteFormStyle,
   noteBodyStyle,
 }: FormProps) {
+  const { isLoading, user } = useContext(AppContext);
+
   const {
+    setActiveNoteValue,
     activeNote,
     isEditing,
-    setActiveNoteValue,
-    isLoading,
-    user,
     isMoreNoteOptionsOpen,
     setIsMoreNoteOptionsOpen,
     moreNoteOptionsButtonRef,
-  } = useContext(AppContext);
+  } = useContext(DashboardContext);
+
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {

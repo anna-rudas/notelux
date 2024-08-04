@@ -3,10 +3,10 @@ import { className } from "../../utilities/helpers";
 import * as style from "./ColorPalette.module.css";
 import { colorInputs } from "../../data/constants";
 import { colors } from "../../data/constants";
-import { AppContext } from "../../context/context";
+import { DashboardContext } from "../../context/DashboardContext";
 
 function ChangeBackground() {
-  const { activeNote, setActiveNoteValue } = useContext(AppContext);
+  const { activeNote, setActiveNoteValue } = useContext(DashboardContext);
   return (
     <div {...className(style.colorsCon)}>
       {colorInputs.map((currentInput) => {

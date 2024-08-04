@@ -2,9 +2,10 @@ import React, { useContext, useEffect } from "react";
 import * as style from "./MoreNoteOptions.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
 import { className } from "../../utilities/helpers";
-import { AppContext } from "../../context/context";
+import { AppContext } from "../../context/AppContext";
 import TrashIcon from "../../assets/icons/TrashIcon";
 import ShareIcon from "../../assets/icons/ShareIcon";
+import { DashboardContext } from "../../context/DashboardContext";
 
 type MoreNoteOptionsProps = {
   backgroundColor: string;
@@ -17,14 +18,14 @@ function MoreNoteOptions({
   setIsDelConfOpen,
   setIsShareNoteOpen,
 }: MoreNoteOptionsProps) {
+  const { isLoading, user } = useContext(AppContext);
+
   const {
     moreNoteOptionsRef,
     isMoreNoteOptionsOpen,
     moreNoteOptionsButtonRef,
     setIsMoreNoteOptionsOpen,
-    isLoading,
-    user,
-  } = useContext(AppContext);
+  } = useContext(DashboardContext);
 
   const handleClickOutside = (event: MouseEvent) => {
     if (moreNoteOptionsRef && moreNoteOptionsButtonRef) {

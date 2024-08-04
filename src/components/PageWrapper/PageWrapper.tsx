@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import Header from "../Header";
 import AccountDropdown from "../AccountDropdown";
-import { AppContext } from "../../context/context";
+import { AppContext } from "../../context/AppContext";
 import * as shared from "../../assets/styles/shared.module.css";
 import { className } from "../../utilities/helpers";
 import { defaultTheme } from "../../data/constants";

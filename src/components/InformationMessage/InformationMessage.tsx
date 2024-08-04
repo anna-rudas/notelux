@@ -5,7 +5,7 @@ import CloseIcon from "../../assets/icons/CloseIcon";
 import { className } from "../../utilities/helpers";
 import * as style from "./InformationMessage.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
-import { AppContext } from "../../context/context";
+import { AppContext } from "../../context/AppContext";
 
 type InformationMessageProps = {
   isError: boolean;

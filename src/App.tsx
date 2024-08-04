@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { createRoot } from "react-dom/client";
-import AppContextProvider, { AppContext } from "./context/context";
+import AppContextProvider, { AppContext } from "./context/AppContext";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import SignIn from "./pages/SignIn/SignIn";
@@ -12,9 +12,17 @@ import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
+import DashboardContextProvider from "./context/DashboardContext";
 
 function App() {
-  const { resetDefault } = useContext(AppContext);
+  const { updateUserInDb, user } = useContext(AppContext);
+
+  useEffect(() => {
+    if (user) {
+      updateUserInDb(user);
+      // resetDefault();
+    }
+  }, [user]);
 
   const router = createBrowserRouter([
     {
@@ -30,11 +38,13 @@ function App() {
     {
       path: "/dashboard",
       element: (
-        <ErrorBoundary onError={logError} FallbackComponent={ErrorPage}>
-          <RouteGuard>
-            <Dashboard />
-          </RouteGuard>
-        </ErrorBoundary>
+        <DashboardContextProvider>
+          <ErrorBoundary onError={logError} FallbackComponent={ErrorPage}>
+            <RouteGuard>
+              <Dashboard />
+            </RouteGuard>
+          </ErrorBoundary>
+        </DashboardContextProvider>
       ),
     },
     {
@@ -83,7 +93,7 @@ function App() {
   useEffect(() => {
     const close = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        resetDefault();
+        // resetDefault();
       }
     };
 
@@ -91,7 +101,7 @@ function App() {
     return () => {
       window.removeEventListener("keydown", close);
     };
-  }, [resetDefault]);
+  }, []);
 
   return <RouterProvider router={router}></RouterProvider>;
 }
