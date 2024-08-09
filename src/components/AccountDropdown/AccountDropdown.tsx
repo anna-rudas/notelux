@@ -68,6 +68,9 @@ function AccountDropdown() {
         Hello, {user?.username !== "" ? user?.username : "guest"}!
       </span>
       <div {...className(style.dropdownItemCon)}>
+        <Link to="/dashboard" {...className(style.dropdownItem)}>
+          Dashboard
+        </Link>
         <Link to="/settings" {...className(style.dropdownItem)}>
           Account settings
         </Link>
