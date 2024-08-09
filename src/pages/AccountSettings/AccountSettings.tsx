@@ -4,16 +4,6 @@ import { className, evalErrorCode } from "../../utilities/helpers";
 import * as style from "./AccountSettings.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
 import * as sharedPages from "../../assets/styles/sharedPages.module.css";
-import {
-  getAuth,
-  deleteUser,
-  reauthenticateWithCredential,
-  EmailAuthProvider,
-  updateEmail,
-  sendEmailVerification,
-  signOut,
-  updatePassword,
-} from "firebase/auth";
 import DeleteUserConfirmation from "../../components/DeleteUserConfirmation";
 import { FirebaseError } from "firebase/app";
 import { useNavigate } from "react-router-dom";
@@ -23,71 +13,72 @@ import ChangePasswordConfirmation from "../../components/ChangePasswordConfirmat
 import PageWrapper from "../../components/PageWrapper";
 import { Formik, Form, FormikValues } from "formik";
 import { settingsSchema } from "../../utilities/validationSchemas";
+import { deleteUserDataInDb } from "../../firestore/userService";
+import {
+  reauthenticateUser,
+  deleteUserAccount,
+  changeUserPassword,
+  changeUserEmail,
+  sendVerificationEmail,
+  signOutUser,
+} from "../../firestore/authService";
 
 function AccountSettings() {
-  const {
-    user,
-    infoMessage,
-    setInfoMessage,
-    setUser,
-    setIsLoading,
-    isLoading,
-    deleteUserDataInDb,
-    setUserId,
-  } = useContext(AppContext);
+  const { user, setInfoMessage, setUser, setIsLoading, isLoading, setUserId } =
+    useContext(AppContext);
 
   const [isDelConfOpen, setIsDelConfOpen] = useState(false);
   const [isChangeEmailOpen, setIsChangeEmailOpen] = useState(false);
   const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
   const navigate = useNavigate();
 
-  const auth = getAuth();
-
   const handleDeleteUser = async (values: FormikValues) => {
     setIsLoading(true);
-    if (auth.currentUser && auth.currentUser.email) {
-      const currentEmail = auth.currentUser.email;
-      const credential = EmailAuthProvider.credential(
-        currentEmail,
-        values.password
-      );
+    if (user) {
       try {
-        const reAuthResult = await reauthenticateWithCredential(
-          auth.currentUser,
-          credential
+        const reauthResult = await reauthenticateUser(
+          user.email,
+          values.password
         );
-        if (reAuthResult) {
+        if (reauthResult) {
           try {
-            //delete data
-            await deleteUserDataInDb(auth.currentUser.uid);
-            //delete user
-            await deleteUser(auth.currentUser);
+            //delete user data
+            await deleteUserDataInDb(user.id);
+            //delete user account
+            await deleteUserAccount();
             setInfoMessage({
               actionButtonText: "",
-              isPersisting: false,
+              isPersisting: true,
               showMsg: true,
               isError: false,
               desc: "User deletion successful. You will be automatically signed out",
             });
-
             setTimeout(() => {
               navigate(0);
             }, 5000);
-          } catch (error: unknown) {
+          } catch (error) {
+            console.error("Failed to delete user: ", error);
             if (error instanceof FirebaseError) {
-              console.error("Failed to delete user: ", error.code);
+              setInfoMessage({
+                actionButtonText: "",
+                isPersisting: false,
+                showMsg: true,
+                isError: true,
+                desc: `Failed to delete user: ${evalErrorCode(error.code)}`,
+              });
             }
+            setIsLoading(false);
           }
         }
       } catch (error: unknown) {
+        console.error("Failed to reauthenticate user: ", error);
         if (error instanceof FirebaseError) {
-          console.error("Failed to reauthenticate user: ", error.code);
           setInfoMessage({
             actionButtonText: "",
             isPersisting: false,
             showMsg: true,
             isError: true,
-            desc: `Failed to delete user: ${evalErrorCode(error.code)}`,
+            desc: `Failed to authenticate: ${evalErrorCode(error.code)}`,
           });
         }
         setIsLoading(false);
@@ -95,76 +86,51 @@ function AccountSettings() {
     }
   };
 
-  const sendVerifyEmail = async () => {
-    try {
-      if (auth.currentUser) {
-        await sendEmailVerification(auth.currentUser, {
-          url: "http://localhost:1234/signin",
-        });
-        setInfoMessage({
-          actionButtonText: "",
-          isPersisting: false,
-          showMsg: true,
-          isError: false,
-          desc: "Verification email sent. You will be automatically signed out",
-        });
-      }
-    } catch (error: unknown) {
-      if (error instanceof FirebaseError) {
-        console.error("Failed to send verification email: ", error.code);
-        setInfoMessage({
-          ...infoMessage,
-          showMsg: true,
-          isError: true,
-          desc: `Failed to send verification email: ${evalErrorCode(
-            error.code
-          )}`,
-        });
-      }
-      setIsLoading(false);
-    }
-  };
-
-  const signOutUser = async () => {
-    try {
-      await signOut(auth);
-      setUser(null);
-      setUserId(null);
-      navigate(0);
-    } catch (error: unknown) {
-      if (error instanceof FirebaseError) {
-        console.error("Failed to sign out user: ", error.code);
-      }
-    }
-  };
-
   const handleChangeEmail = async (values: FormikValues) => {
     setIsLoading(true);
-
-    if (auth.currentUser && auth.currentUser.email) {
-      const currentEmail = auth.currentUser.email;
-      const credential = EmailAuthProvider.credential(
-        currentEmail,
-        values.password
-      );
+    if (user) {
       try {
-        const reAuthResult = await reauthenticateWithCredential(
-          auth.currentUser,
-          credential
+        const reauthResult = await reauthenticateUser(
+          user.email,
+          values.password
         );
-        if (reAuthResult && auth.currentUser.email !== values.newEmail) {
+        if (reauthResult && user.email !== values.newEmail) {
           try {
-            await updateEmail(auth.currentUser, values.newEmail);
-            await sendVerifyEmail();
-            if (user) {
+            await changeUserEmail(values.newEmail);
+            try {
+              await sendVerificationEmail();
               setUser({ ...user, email: values.newEmail });
+              setInfoMessage({
+                actionButtonText: "",
+                isPersisting: true,
+                showMsg: true,
+                isError: false,
+                desc: "Verification email sent. You will be automatically signed out",
+              });
+              setTimeout(async () => {
+                await signOutUser();
+                setUser(null);
+                setUserId(null);
+                navigate(0);
+              }, 5000);
+            } catch (error: unknown) {
+              console.error("Failed to send verification email: ", error);
+              if (error instanceof FirebaseError) {
+                setInfoMessage({
+                  actionButtonText: "",
+                  isPersisting: false,
+                  showMsg: true,
+                  isError: true,
+                  desc: `Failed to send verification email: ${evalErrorCode(
+                    error.code
+                  )}`,
+                });
+              }
+              setIsLoading(false);
             }
-            setTimeout(() => {
-              signOutUser();
-            }, 5000);
           } catch (error: unknown) {
+            console.error("Failed to update email: ", error);
             if (error instanceof FirebaseError) {
-              console.error("Failed to update email: ", error.code);
               setInfoMessage({
                 actionButtonText: "",
                 isPersisting: false,
@@ -186,8 +152,8 @@ function AccountSettings() {
           setIsLoading(false);
         }
       } catch (error: unknown) {
+        console.error("Failed to reauthenticate user: ", error);
         if (error instanceof FirebaseError) {
-          console.error("Failed to reauthenticate user: ", error.code);
           setInfoMessage({
             actionButtonText: "",
             isPersisting: false,
@@ -203,20 +169,15 @@ function AccountSettings() {
 
   const handleChangePassword = async (values: FormikValues) => {
     setIsLoading(true);
-    if (auth.currentUser && auth.currentUser.email) {
-      const currentEmail = auth.currentUser.email;
-      const credential = EmailAuthProvider.credential(
-        currentEmail,
-        values.oldPassword
-      );
+    if (user) {
       try {
-        const reAuthResult = await reauthenticateWithCredential(
-          auth.currentUser,
-          credential
+        const reauthResult = await reauthenticateUser(
+          user.email,
+          values.oldPassword
         );
-        if (reAuthResult) {
+        if (reauthResult) {
           try {
-            await updatePassword(auth.currentUser, values.newPassword);
+            await changeUserPassword(values.newPassword);
             setInfoMessage({
               actionButtonText: "",
               isPersisting: false,
@@ -226,8 +187,8 @@ function AccountSettings() {
             });
             setIsChangePasswordOpen(false);
           } catch (error: unknown) {
+            console.error("Failed to update password: ", error);
             if (error instanceof FirebaseError) {
-              console.error("Failed to update password: ", error.code);
               setInfoMessage({
                 actionButtonText: "",
                 isPersisting: false,
@@ -239,8 +200,8 @@ function AccountSettings() {
           }
         }
       } catch (error: unknown) {
+        console.error("Failed to reauthenticate user: ", error);
         if (error instanceof FirebaseError) {
-          console.error("Failed to reauthenticate user: ", error.code);
           setInfoMessage({
             actionButtonText: "",
             isPersisting: false,
@@ -255,12 +216,11 @@ function AccountSettings() {
     }
   };
 
-  const handleNameChange = (values: FormikValues) => {
+  const handleChangeUsername = (values: FormikValues) => {
     setIsLoading(true);
     if (user) {
       setUser({ ...user, username: values.username });
     }
-    setIsLoading(false);
     setInfoMessage({
       showMsg: true,
       actionButtonText: "",
@@ -268,6 +228,7 @@ function AccountSettings() {
       isError: false,
       desc: "Username updated successfully",
     });
+    setIsLoading(false);
   };
 
   return (
@@ -326,7 +287,7 @@ function AccountSettings() {
               initialValues={{ username: user?.username }}
               validationSchema={settingsSchema}
               onSubmit={(values, { setSubmitting }) => {
-                handleNameChange(values);
+                handleChangeUsername(values);
                 setSubmitting(false);
               }}
             >

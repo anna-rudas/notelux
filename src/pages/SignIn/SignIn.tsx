@@ -5,15 +5,15 @@ import { Link } from "react-router-dom";
 import { className, evalErrorCode } from "../../utilities/helpers";
 import { AppContext } from "../../context/AppContext";
 import { useNavigate } from "react-router-dom";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  sendEmailVerification,
-} from "firebase/auth";
 import { FirebaseError } from "firebase/app";
 import AuthForm from "../../components/AuthForm";
 import PageWrapper from "../../components/PageWrapper";
 import { FormikValues } from "formik";
+import {
+  signInUser,
+  isUserEmailVerified,
+  sendVerificationEmail,
+} from "../../firestore/authService";
 
 function SignIn() {
   const {
@@ -26,7 +26,6 @@ function SignIn() {
   } = useContext(AppContext);
 
   const navigate = useNavigate();
-  const auth = getAuth();
 
   useEffect(() => {
     if (user) {
@@ -34,23 +33,19 @@ function SignIn() {
     }
   }, [user]);
 
-  const sendVerifyEmail = async () => {
+  const handleSendVerifyEmail = async () => {
     try {
-      if (auth.currentUser) {
-        await sendEmailVerification(auth.currentUser, {
-          url: "http://localhost:1234/signin",
-        });
-        setInfoMessage({
-          actionButtonText: "",
-          isPersisting: false,
-          showMsg: true,
-          isError: false,
-          desc: "Verification email sent",
-        });
-      }
+      await sendVerificationEmail();
+      setInfoMessage({
+        actionButtonText: "",
+        isPersisting: false,
+        showMsg: true,
+        isError: false,
+        desc: "Verification email sent",
+      });
     } catch (error: unknown) {
+      console.error("Failed to send verification email: ", error);
       if (error instanceof FirebaseError) {
-        console.error("Failed to send verification email: ", error.code);
         setInfoMessage({
           actionButtonText: "",
           isPersisting: false,
@@ -67,12 +62,8 @@ function SignIn() {
   const handleSignIn = async (values: FormikValues) => {
     setIsLoading(true);
     try {
-      const signInResult = await signInWithEmailAndPassword(
-        auth,
-        values.email,
-        values.password
-      );
-      if (signInResult.user.emailVerified) {
+      const signInResult = await signInUser(values.email, values.password);
+      if (isUserEmailVerified(signInResult)) {
         setInfoMessage({
           ...infoMessage,
           showMsg: false,
@@ -89,8 +80,8 @@ function SignIn() {
         setIsLoading(false);
       }
     } catch (error: unknown) {
+      console.error("Failed to sign in user: ", error);
       if (error instanceof FirebaseError) {
-        console.error("Failed to sign in user: ", error.code);
         setInfoMessage({
           actionButtonText: "",
           isPersisting: false,
@@ -104,7 +95,7 @@ function SignIn() {
   };
 
   return (
-    <PageWrapper infoMsgAction={sendVerifyEmail}>
+    <PageWrapper infoMsgAction={handleSendVerifyEmail}>
       <>
         <div {...className(sharedPages.contentCon)}>
           <span {...className(shared.titleText)}>Sign in</span>

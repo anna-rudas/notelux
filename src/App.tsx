@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { createRoot } from "react-dom/client";
-import AppContextProvider, { AppContext } from "./context/AppContext";
+import AppContextProvider from "./context/AppContext";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import SignIn from "./pages/SignIn/SignIn";
@@ -15,15 +15,6 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import DashboardContextProvider from "./context/DashboardContext";
 
 function App() {
-  const { updateUserInDb, user } = useContext(AppContext);
-
-  useEffect(() => {
-    if (user) {
-      updateUserInDb(user);
-      // resetDefault();
-    }
-  }, [user]);
-
   const router = createBrowserRouter([
     {
       path: "/",
@@ -89,19 +80,6 @@ function App() {
     },
     { path: "/*", element: <NotFound /> },
   ]);
-
-  useEffect(() => {
-    const close = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        // resetDefault();
-      }
-    };
-
-    window.addEventListener("keydown", close);
-    return () => {
-      window.removeEventListener("keydown", close);
-    };
-  }, []);
 
   return <RouterProvider router={router}></RouterProvider>;
 }

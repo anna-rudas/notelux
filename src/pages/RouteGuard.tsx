@@ -1,19 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import { Navigate } from "react-router-dom";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import PageLoading from "../components/PageLoading/PageLoading";
 import { useLocation } from "react-router-dom";
 import { defaultInfoMsg } from "../data/constants";
 import { FirebaseError } from "firebase/app";
 import ErrorPage from "./ErrorPage/ErrorPage";
+import { signOutUser } from "../firestore/authService";
 
 type RouteGuardProps = {
   children: JSX.Element;
 };
 
 function RouteGuard({ children }: RouteGuardProps) {
-  const { user, setInfoMessage, setUserId, setUser, error } =
+  const { user, setInfoMessage, setUserId, setUser, error, setIsDropdownOpen } =
     useContext(AppContext);
   const auth = getAuth();
   const location = useLocation();
@@ -21,7 +22,9 @@ function RouteGuard({ children }: RouteGuardProps) {
 
   const handleSignOut = async () => {
     try {
-      await signOut(auth);
+      await signOutUser();
+      setUserId(null);
+      setUser(null);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         console.error("Failed to sign out user: ", error.code);
@@ -31,6 +34,7 @@ function RouteGuard({ children }: RouteGuardProps) {
 
   useEffect(() => {
     setInfoMessage(defaultInfoMsg);
+    setIsDropdownOpen(false);
     const unSubscribe = onAuthStateChanged(auth, (userResult) => {
       if (userResult?.emailVerified) {
         setUserId(userResult.uid);
@@ -50,8 +54,6 @@ function RouteGuard({ children }: RouteGuardProps) {
   useEffect(() => {
     if (error) {
       handleSignOut();
-      setUserId(null);
-      setUser(null);
     }
   }, [error]);
 

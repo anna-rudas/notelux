@@ -27,7 +27,7 @@ interface DashboardContextInterface {
   moreNoteOptionsButtonRef: RefObject<HTMLButtonElement> | null;
   isAddNoteOpen: boolean;
   setIsAddNoteOpen: (value: boolean) => void;
-  resetDefault: () => void;
+  resetDefaultNoteState: () => void;
   notes: Array<Note>;
   setNotes: (value: Array<Note>) => void;
   areNotesLoading: boolean;
@@ -46,7 +46,7 @@ const defaultContextValue: DashboardContextInterface = {
   moreNoteOptionsButtonRef: null,
   isAddNoteOpen: false,
   setIsAddNoteOpen: () => {},
-  resetDefault: () => {},
+  resetDefaultNoteState: () => {},
   notes: [],
   setNotes: () => {},
   areNotesLoading: true,
@@ -83,11 +83,10 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
     }
   };
 
-  const resetDefault = () => {
+  const resetDefaultNoteState = () => {
     setActiveNote(null);
     setIsAddNoteOpen(false);
     setIsEditing(false);
-    // setIsDropdownOpen(false);
   };
 
   useEffect(() => {
@@ -142,7 +141,7 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
         setActiveNoteValue,
         isAddNoteOpen,
         setIsAddNoteOpen,
-        resetDefault,
+        resetDefaultNoteState,
         notes,
         setNotes,
         areNotesLoading,

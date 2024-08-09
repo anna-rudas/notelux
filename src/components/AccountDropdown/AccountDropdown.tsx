@@ -3,9 +3,9 @@ import { className } from "../../utilities/helpers";
 import * as style from "./AccountDropdown.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { getAuth, signOut } from "firebase/auth";
 import { AppContext } from "../../context/AppContext";
 import { FirebaseError } from "firebase/app";
+import { signOutUser } from "../../firestore/authService";
 
 function AccountDropdown() {
   const {
@@ -18,7 +18,6 @@ function AccountDropdown() {
     isLoading,
     setUserId,
   } = useContext(AppContext);
-  const auth = getAuth();
   const navigate = useNavigate();
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -44,9 +43,9 @@ function AccountDropdown() {
     };
   }, [isDropdownOpen]);
 
-  const handleSignOut = async () => {
+  const handleSignOutUser = async () => {
     try {
-      await signOut(auth);
+      await signOutUser();
       setUser(null);
       setUserId(null);
       setIsDropdownOpen(false);
@@ -76,7 +75,7 @@ function AccountDropdown() {
         <button
           disabled={isLoading}
           onClick={() => {
-            handleSignOut();
+            handleSignOutUser();
           }}
           {...className(
             shared.btn,
