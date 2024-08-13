@@ -14,8 +14,14 @@ type RouteGuardProps = {
 };
 
 function RouteGuard({ children }: RouteGuardProps) {
-  const { user, setInfoMessage, setUserId, setUser, error, setIsDropdownOpen } =
-    useContext(AppContext);
+  const {
+    user,
+    setInfoMessage,
+    setAuthenticatedUserId,
+    setUser,
+    error,
+    setIsDropdownOpen,
+  } = useContext(AppContext);
   const auth = getAuth();
   const location = useLocation();
   const [isPageLoading, setIsPageLoading] = useState(true);
@@ -23,7 +29,7 @@ function RouteGuard({ children }: RouteGuardProps) {
   const handleSignOut = async () => {
     try {
       await signOutUser();
-      setUserId(null);
+      setAuthenticatedUserId(null);
       setUser(null);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
@@ -37,7 +43,7 @@ function RouteGuard({ children }: RouteGuardProps) {
     setIsDropdownOpen(false);
     const unSubscribe = onAuthStateChanged(auth, (userResult) => {
       if (userResult?.emailVerified) {
-        setUserId(userResult.uid);
+        setAuthenticatedUserId(userResult.uid);
       } else {
         setIsPageLoading(false);
       }

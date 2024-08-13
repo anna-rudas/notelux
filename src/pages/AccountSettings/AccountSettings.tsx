@@ -24,8 +24,14 @@ import {
 } from "../../firestore/authService";
 
 function AccountSettings() {
-  const { user, setInfoMessage, setUser, setIsLoading, isLoading, setUserId } =
-    useContext(AppContext);
+  const {
+    user,
+    setInfoMessage,
+    setUser,
+    setIsLoading,
+    isLoading,
+    setAuthenticatedUserId,
+  } = useContext(AppContext);
 
   const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
     useState(false);
@@ -112,7 +118,7 @@ function AccountSettings() {
               setTimeout(async () => {
                 await signOutUser();
                 setUser(null);
-                setUserId(null);
+                setAuthenticatedUserId(null);
                 navigate(0);
               }, 5000);
             } catch (error: unknown) {

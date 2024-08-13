@@ -22,7 +22,7 @@ function SignIn() {
     user,
     infoMessage,
     setInfoMessage,
-    setUserId,
+    setAuthenticatedUserId,
   } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -71,7 +71,7 @@ function SignIn() {
           ...infoMessage,
           showMsg: false,
         });
-        setUserId(signInResult.user.uid);
+        setAuthenticatedUserId(signInResult.user.uid);
       } else {
         setInfoMessage({
           isPersisting: true,

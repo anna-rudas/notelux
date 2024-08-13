@@ -17,8 +17,13 @@ import {
 import { addUserInDb } from "../../firestore/userService";
 
 function SignUp() {
-  const { isLoading, setIsLoading, setInfoMessage, setUser, setUserId } =
-    useContext(AppContext);
+  const {
+    isLoading,
+    setIsLoading,
+    setInfoMessage,
+    setUser,
+    setAuthenticatedUserId,
+  } = useContext(AppContext);
 
   const handleSignUp = async (values: FormikValues) => {
     setIsLoading(true);
@@ -45,7 +50,7 @@ function SignUp() {
             try {
               await signOutUser();
               setUser(null);
-              setUserId(null);
+              setAuthenticatedUserId(null);
             } catch (error: unknown) {
               console.error("Failed to sign out user: ", error);
             }

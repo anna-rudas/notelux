@@ -72,7 +72,7 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
 
   const notesColRef = collection(db, notesColKey);
 
-  const { userId, setInfoMessage } = useContext(AppContext);
+  const { authenticatedUserId, setInfoMessage } = useContext(AppContext);
 
   const setActiveNoteValue = (field: string, value: string) => {
     if (activeNote) {
@@ -90,8 +90,11 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
   };
 
   useEffect(() => {
-    if (userId) {
-      const q = query(notesColRef, where("coUsers", "array-contains", userId));
+    if (authenticatedUserId) {
+      const q = query(
+        notesColRef,
+        where("coUsers", "array-contains", authenticatedUserId)
+      );
       const unSubscribe = onSnapshot(
         q,
         (querySnapshot) => {
@@ -125,7 +128,7 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
       );
       return unSubscribe;
     }
-  }, [userId]);
+  }, [authenticatedUserId]);
 
   return (
     <DashboardContext.Provider

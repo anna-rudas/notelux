@@ -18,7 +18,7 @@ function AccountDropdown() {
     dropdownButtonRef,
     isLoading,
     setIsLoading,
-    setUserId,
+    setAuthenticatedUserId,
     setInfoMessage,
   } = useContext(AppContext);
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ function AccountDropdown() {
     try {
       await signOutUser();
       setUser(null);
-      setUserId(null);
+      setAuthenticatedUserId(null);
       setIsDropdownOpen(false);
       navigate("/signin");
     } catch (error: unknown) {

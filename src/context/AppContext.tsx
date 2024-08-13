@@ -27,8 +27,8 @@ interface AppContextInterface {
   dropdownButtonRef: RefObject<HTMLButtonElement> | null;
   infoMessage: InfoMsg;
   setInfoMessage: (value: InfoMsg) => void;
-  userId: string | null;
-  setUserId: (value: string | null) => void;
+  authenticatedUserId: string | null;
+  setAuthenticatedUserId: (value: string | null) => void;
   error: Error | null;
   setError: (value: Error | null) => void;
 }
@@ -46,8 +46,8 @@ const defaultContextValue: AppContextInterface = {
   dropdownButtonRef: null,
   infoMessage: defaultInfoMsg,
   setInfoMessage: () => {},
-  userId: null,
-  setUserId: async () => {},
+  authenticatedUserId: null,
+  setAuthenticatedUserId: async () => {},
   error: null,
   setError: () => {},
 };
@@ -68,12 +68,14 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const dropdownButtonRef = useRef(null);
   const [infoMessage, setInfoMessage] = useState<InfoMsg>(defaultInfoMsg);
   const [msgTimeoutId, setMsgTimeoutId] = useState<NodeJS.Timeout | null>(null);
-  const [userId, setUserId] = useState<string | null>(null);
+  const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(
+    null
+  );
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    if (userId) {
-      const userRef = doc(db, usersColKey, userId);
+    if (authenticatedUserId) {
+      const userRef = doc(db, usersColKey, authenticatedUserId);
       const unSubscribe = onSnapshot(
         userRef,
         (doc) => {
@@ -105,7 +107,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
 
       return unSubscribe;
     }
-  }, [userId]);
+  }, [authenticatedUserId]);
 
   useEffect(() => {
     if (msgTimeoutId) {
@@ -143,8 +145,8 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         dropdownButtonRef,
         infoMessage,
         setInfoMessage,
-        userId,
-        setUserId,
+        authenticatedUserId,
+        setAuthenticatedUserId,
         error,
         setError,
       }}
