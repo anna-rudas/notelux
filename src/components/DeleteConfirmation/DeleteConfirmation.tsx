@@ -5,18 +5,18 @@ import { deleteNoteSchema } from "../../utilities/validationSchemas";
 
 type DeleteConfirmationProps = {
   handleSubmit: (v: FormikValues) => void;
-  setIsModalOpen: (value: boolean) => void;
+  handleCancel: () => void;
 };
 
 function DeleteConfirmation({
   handleSubmit,
-  setIsModalOpen,
+  handleCancel,
 }: DeleteConfirmationProps) {
   return (
     <ModalContainer
       title="Are you sure you want to delete this note?"
       handleSubmit={handleSubmit}
-      setIsModalOpen={setIsModalOpen}
+      handleCancel={handleCancel}
       primaryButtonText="Delete"
       initialFormValues={{}}
       validationSchema={deleteNoteSchema}

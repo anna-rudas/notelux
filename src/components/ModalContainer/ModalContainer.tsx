@@ -6,7 +6,7 @@ import { AppContext } from "../../context/AppContext";
 import { Formik, Form, FormikValues } from "formik";
 
 type ModalContainerProps = {
-  setIsModalOpen: (value: boolean) => void;
+  handleCancel: () => void;
   title: string;
   subtitle?: string;
   primaryButtonText: string;
@@ -19,7 +19,7 @@ type ModalContainerProps = {
 function ModalContainer({
   children,
   handleSubmit,
-  setIsModalOpen,
+  handleCancel,
   title,
   subtitle,
   primaryButtonText,
@@ -71,7 +71,7 @@ function ModalContainer({
                 type="button"
                 disabled={isLoading}
                 onClick={() => {
-                  setIsModalOpen(false);
+                  handleCancel();
                 }}
                 {...className(
                   shared.btn,

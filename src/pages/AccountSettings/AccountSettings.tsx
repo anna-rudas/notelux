@@ -27,9 +27,11 @@ function AccountSettings() {
   const { user, setInfoMessage, setUser, setIsLoading, isLoading, setUserId } =
     useContext(AppContext);
 
-  const [isDelConfOpen, setIsDelConfOpen] = useState(false);
-  const [isChangeEmailOpen, setIsChangeEmailOpen] = useState(false);
-  const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false);
+  const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
+    useState(false);
+  const [isChangeEmailModalOpen, setIsChangeEmailModalOpen] = useState(false);
+  const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] =
+    useState(false);
   const navigate = useNavigate();
 
   const handleDeleteUser = async (values: FormikValues) => {
@@ -185,7 +187,6 @@ function AccountSettings() {
               isError: false,
               desc: "Password successfully updated",
             });
-            setIsChangePasswordOpen(false);
           } catch (error: unknown) {
             console.error("Failed to update password: ", error);
             if (error instanceof FirebaseError) {
@@ -249,7 +250,7 @@ function AccountSettings() {
               <button
                 disabled={isLoading}
                 onClick={() => {
-                  setIsChangeEmailOpen(true);
+                  setIsChangeEmailModalOpen(true);
                 }}
                 {...className(
                   shared.btn,
@@ -268,7 +269,7 @@ function AccountSettings() {
               <button
                 disabled={isLoading}
                 onClick={() => {
-                  setIsChangePasswordOpen(true);
+                  setIsChangePasswordModalOpen(true);
                 }}
                 {...className(
                   shared.btn,
@@ -329,7 +330,7 @@ function AccountSettings() {
             <button
               disabled={isLoading}
               onClick={() => {
-                setIsDelConfOpen(true);
+                setIsDeleteConfirmationModalOpen(true);
               }}
               {...className(
                 shared.btn,
@@ -341,22 +342,22 @@ function AccountSettings() {
             </button>
           </div>
         </div>
-        {isDelConfOpen && (
+        {isDeleteConfirmationModalOpen && (
           <DeleteUserConfirmation
             handleSubmit={handleDeleteUser}
-            setIsModalOpen={setIsDelConfOpen}
+            handleCancel={() => setIsDeleteConfirmationModalOpen(false)}
           />
         )}
-        {isChangeEmailOpen && (
+        {isChangeEmailModalOpen && (
           <ChangeEmailConfirmation
             handleSubmit={handleChangeEmail}
-            setIsModalOpen={setIsChangeEmailOpen}
+            handleCancel={() => setIsChangeEmailModalOpen(false)}
           />
         )}
-        {isChangePasswordOpen && (
+        {isChangePasswordModalOpen && (
           <ChangePasswordConfirmation
             handleSubmit={handleChangePassword}
-            setIsModalOpen={setIsChangePasswordOpen}
+            handleCancel={() => setIsChangePasswordModalOpen(false)}
           />
         )}
       </>

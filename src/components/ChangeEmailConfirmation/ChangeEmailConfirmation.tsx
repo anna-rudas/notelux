@@ -7,12 +7,12 @@ import { FormikValues } from "formik";
 
 type EmailChangeConfirmationProps = {
   handleSubmit: (v: FormikValues) => void;
-  setIsModalOpen: (value: boolean) => void;
+  handleCancel: () => void;
 };
 
 function ChangeEmailConfirmation({
   handleSubmit,
-  setIsModalOpen,
+  handleCancel,
 }: EmailChangeConfirmationProps) {
   const { user } = useContext(AppContext);
 
@@ -21,7 +21,7 @@ function ChangeEmailConfirmation({
       title="Set your new email and confirm using your password"
       subtitle={`Your current email: ${user?.email}`}
       handleSubmit={handleSubmit}
-      setIsModalOpen={setIsModalOpen}
+      handleCancel={handleCancel}
       primaryButtonText="Change email"
       initialFormValues={{ newEmail: "", password: "" }}
       validationSchema={changeEmailSchema}

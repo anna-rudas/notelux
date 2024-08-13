@@ -164,13 +164,13 @@ function EditNote() {
       {isDelConfOpen && (
         <DeleteConfirmation
           handleSubmit={handleDeleteNoteSubmit}
-          setIsModalOpen={setIsDelConfOpen}
+          handleCancel={() => setIsDelConfOpen(false)}
         />
       )}
       {isShareNoteOpen && (
         <ShareNoteModal
           handleSubmit={handleShareNoteSubmit}
-          setIsModalOpen={setIsShareNoteOpen}
+          handleCancel={() => setIsShareNoteOpen(false)}
         />
       )}
     </div>

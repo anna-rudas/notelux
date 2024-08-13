@@ -6,19 +6,19 @@ import { FormikValues } from "formik";
 
 type EmailChangeConfirmationProps = {
   handleSubmit: (v: FormikValues) => void;
-  setIsModalOpen: (value: boolean) => void;
+  handleCancel: () => void;
 };
 
 function ChangePasswordConfirmation({
   handleSubmit,
-  setIsModalOpen,
+  handleCancel,
 }: EmailChangeConfirmationProps) {
   return (
     <ModalContainer
       title="Set your new password"
       subtitle="Confirm using your old password"
       handleSubmit={handleSubmit}
-      setIsModalOpen={setIsModalOpen}
+      handleCancel={handleCancel}
       primaryButtonText="Change password"
       initialFormValues={{ newPassword: "", oldPassword: "" }}
       validationSchema={changePasswordSchema}

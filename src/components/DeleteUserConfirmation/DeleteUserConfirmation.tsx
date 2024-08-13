@@ -6,19 +6,19 @@ import { deleteUserSchema } from "../../utilities/validationSchemas";
 
 type DeleteConfirmationProps = {
   handleSubmit: (v: FormikValues) => void;
-  setIsModalOpen: (value: boolean) => void;
+  handleCancel: () => void;
 };
 
 function DeleteUserConfirmation({
   handleSubmit,
-  setIsModalOpen,
+  handleCancel,
 }: DeleteConfirmationProps) {
   return (
     <ModalContainer
       title="Are you sure you want to delete your account?"
       subtitle="Please confirm using your password"
       handleSubmit={handleSubmit}
-      setIsModalOpen={setIsModalOpen}
+      handleCancel={handleCancel}
       primaryButtonText="Delete account"
       initialFormValues={{ password: "" }}
       validationSchema={deleteUserSchema}

@@ -12,12 +12,12 @@ import { getUserEmailFromId } from "../../firestore/userService";
 
 type EmailChangeConfirmationProps = {
   handleSubmit: (v: FormikValues) => void;
-  setIsModalOpen: (value: boolean) => void;
+  handleCancel: () => void;
 };
 
 function ShareNoteModal({
   handleSubmit,
-  setIsModalOpen,
+  handleCancel,
 }: EmailChangeConfirmationProps) {
   const [activeNoteCollaborators, setActiveNoteCollaborators] = useState<
     string[] | null
@@ -51,7 +51,7 @@ function ShareNoteModal({
       });
       setActiveNoteCollaborators(temp);
     } catch (error) {
-      console.error("Error setting collaborators for note");
+      console.error("Error setting collaborators for note: ", error);
     }
   };
 
@@ -59,7 +59,7 @@ function ShareNoteModal({
     <ModalContainer
       title="Add a collaborator to this note"
       handleSubmit={handleSubmit}
-      setIsModalOpen={setIsModalOpen}
+      handleCancel={handleCancel}
       primaryButtonText="Add user"
       initialFormValues={{ newUserEmail: "" }}
       validationSchema={shareNoteSchema}
