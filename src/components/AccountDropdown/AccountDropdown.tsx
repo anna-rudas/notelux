@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import { FirebaseError } from "firebase/app";
 import { signOutUser } from "../../firestore/authService";
+import { evalErrorCode } from "../../utilities/helpers";
 
 function AccountDropdown() {
   const {
@@ -16,7 +17,9 @@ function AccountDropdown() {
     dropdownRef,
     dropdownButtonRef,
     isLoading,
+    setIsLoading,
     setUserId,
+    setInfoMessage,
   } = useContext(AppContext);
   const navigate = useNavigate();
 
@@ -44,6 +47,7 @@ function AccountDropdown() {
   }, [isDropdownOpen]);
 
   const handleSignOutUser = async () => {
+    setIsLoading(true);
     try {
       await signOutUser();
       setUser(null);
@@ -51,9 +55,18 @@ function AccountDropdown() {
       setIsDropdownOpen(false);
       navigate("/signin");
     } catch (error: unknown) {
+      console.error("Failed to sign out user: ", error);
       if (error instanceof FirebaseError) {
-        console.error("Failed to sign out user: ", error.code);
+        setInfoMessage({
+          actionButtonText: "",
+          isPersisting: false,
+          showMsg: true,
+          isError: true,
+          desc: `Failed to sign out: ${evalErrorCode(error.code)}`,
+        });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 

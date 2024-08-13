@@ -34,6 +34,7 @@ function SignIn() {
   }, [user]);
 
   const handleSendVerifyEmail = async () => {
+    setIsLoading(true);
     try {
       await sendVerificationEmail();
       setInfoMessage({
@@ -56,6 +57,8 @@ function SignIn() {
           )}`,
         });
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
