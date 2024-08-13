@@ -10,7 +10,8 @@ import { addNoteInDb } from "../../firestore/noteService";
 import { FirebaseError } from "firebase/app";
 
 function AddNote() {
-  const { user, setIsDropdownOpen, setInfoMessage } = useContext(AppContext);
+  const { user, setIsDropdownOpen, setInfoMessage, setIsLoading } =
+    useContext(AppContext);
   const {
     activeNote,
     setActiveNote,
@@ -21,6 +22,7 @@ function AddNote() {
 
   const handleSubmit = async () => {
     if (activeNote) {
+      setIsLoading(true);
       try {
         await addNoteInDb({
           ...activeNote,
@@ -45,6 +47,8 @@ function AddNote() {
             desc: `Failed to save note: ${evalErrorCode(error.code)}`,
           });
         }
+      } finally {
+        setIsLoading(false);
       }
     }
   };
