@@ -1,4 +1,4 @@
-.header {
+.generalHeader {
   padding: calc(var(--padding) * 2);
   background-color: var(--bg);
   gap: var(--gap);
@@ -11,12 +11,12 @@
   z-index: 3;
 }
 
-.generalHeader {
+.gridHeader {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
 
-.landingPageHeader {
+.flexHeader {
   display: flex;
   justify-content: space-between;
 }
@@ -88,7 +88,7 @@
 }
 
 @media (max-width: 600px) {
-  .header {
+  .generalHeader {
     grid-template-columns: 1fr 7fr 1fr;
   }
 

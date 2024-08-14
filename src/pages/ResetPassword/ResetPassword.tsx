@@ -42,7 +42,7 @@ function ResetPassword() {
   };
 
   return (
-    <PageWrapper>
+    <PageWrapper useUnauthenticatedStyle={true}>
       <>
         <div {...className(sharedPages.contentCon)}>
           <span {...className(shared.titleText)}>Reset your password</span>

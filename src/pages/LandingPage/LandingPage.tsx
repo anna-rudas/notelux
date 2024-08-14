@@ -9,7 +9,7 @@ import ArrowIcon from "../../assets/icons/ArrowIcon";
 
 function LandingPage() {
   return (
-    <PageWrapper isLandingPage={true}>
+    <PageWrapper useUnauthenticatedStyle={true} useLandingPageStyle={true}>
       <div {...className(style.landingPageWrapper)}>
         <div {...className(style.landingPageCon)}>
           <div {...className(style.landingPageSummary)}>

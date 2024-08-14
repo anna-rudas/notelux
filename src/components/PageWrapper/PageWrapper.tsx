@@ -10,15 +10,15 @@ import InformationMessage from "../../components/InformationMessage";
 
 type ModalContainerProps = {
   children?: JSX.Element;
-  isLandingPage?: boolean;
-  isErrorStyle?: boolean;
+  useLandingPageStyle?: boolean;
+  useUnauthenticatedStyle?: boolean;
   infoMsgAction?: () => void;
 };
 
 function PageWrapper({
   children,
-  isLandingPage,
-  isErrorStyle,
+  useLandingPageStyle,
+  useUnauthenticatedStyle,
   infoMsgAction,
 }: ModalContainerProps) {
   const { isLoading, isDropdownOpen, user, infoMessage } =
@@ -34,7 +34,10 @@ function PageWrapper({
           </div>
         </div>
       )}
-      <Header isLandingPage={isLandingPage} isErrorStyle={isErrorStyle} />
+      <Header
+        useLandingPageStyle={useLandingPageStyle}
+        useUnauthenticatedStyle={useUnauthenticatedStyle}
+      />
       {isDropdownOpen && <AccountDropdown />}
       <>{children}</>
       {infoMessage.showMsg && (

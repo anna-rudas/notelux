@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { className } from "../../utilities/helpers";
 import * as style from "./Header.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
-
 import { AppContext } from "../../context/AppContext";
 import { Link } from "react-router-dom";
 import UserIcon from "../../assets/icons/UserIcon";
@@ -14,48 +13,53 @@ import LayoutToggle from "../LayoutToggle";
 import SearchInput from "../SearchInput";
 
 type HeaderProps = {
-  isLandingPage?: boolean;
-  isErrorStyle?: boolean;
+  useLandingPageStyle?: boolean;
+  useUnauthenticatedStyle?: boolean;
 };
 
-function Header({ isLandingPage, isErrorStyle }: HeaderProps) {
-  const {
-    user,
-    isLoading,
-    setIsDropdownOpen,
-    isDropdownOpen,
-    dropdownButtonRef,
-  } = useContext(AppContext);
+function Header({ useLandingPageStyle, useUnauthenticatedStyle }: HeaderProps) {
+  const { isLoading, setIsDropdownOpen, isDropdownOpen, dropdownButtonRef } =
+    useContext(AppContext);
 
   const location = useLocation();
   const { pathname } = location;
   const isDashboardPage = pathname === "/dashboard";
 
-  return (
-    <div
-      {...className(
-        isLandingPage || !isDashboardPage
-          ? style.landingPageHeader
-          : style.generalHeader,
-        style.header
-      )}
-    >
-      <AppLogo />
-      {isLandingPage && (
-        <div {...className(style.navBtnsContainer)}>
-          <Link to="/signup" {...className(shared.btn, shared.buttonSecondary)}>
-            Create a new account
-          </Link>
-          <Link
-            to="/signin"
-            {...className(shared.btn, shared.buttonPrimary, style.signInBtn)}
-          >
-            <span>Sign in</span>
-            <SignInIcon {...className(style.signInIcon)} />
-          </Link>
-        </div>
-      )}
-      {user && !isErrorStyle && !isLandingPage && (
+  if (useUnauthenticatedStyle) {
+    return (
+      <div {...className(style.flexHeader, style.generalHeader)}>
+        <AppLogo />
+        {useLandingPageStyle && (
+          <div {...className(style.navBtnsContainer)}>
+            <Link
+              to="/signup"
+              {...className(shared.btn, shared.buttonSecondary)}
+            >
+              Create a new account
+            </Link>
+            <Link
+              to="/signin"
+              {...className(shared.btn, shared.buttonPrimary, style.signInBtn)}
+            >
+              <span>Sign in</span>
+              <SignInIcon {...className(style.signInIcon)} />
+            </Link>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  {
+    return (
+      <div
+        {...className(
+          style.gridHeader,
+          style.generalHeader,
+          !isDashboardPage && style.flexHeader
+        )}
+      >
+        <AppLogo />
         <>
           {isDashboardPage && <SearchInput />}
 
@@ -81,9 +85,9 @@ function Header({ isLandingPage, isErrorStyle }: HeaderProps) {
             </button>
           </div>
         </>
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 export default Header;

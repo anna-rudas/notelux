@@ -89,7 +89,7 @@ function SignUp() {
   };
 
   return (
-    <PageWrapper>
+    <PageWrapper useUnauthenticatedStyle={true}>
       <>
         <div {...className(sharedPages.contentCon)}>
           <span {...className(shared.titleText)}>Sign up</span>

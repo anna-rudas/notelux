@@ -6,7 +6,7 @@ import * as shared from "../../assets/styles/shared.module.css";
 
 function ErrorPage() {
   return (
-    <PageWrapper isErrorStyle={true}>
+    <PageWrapper useUnauthenticatedStyle={true}>
       <>
         <div {...className(sharedPages.contentCon)}>
           <span {...className(shared.titleText)}>Sorry</span>

@@ -98,7 +98,10 @@ function SignIn() {
   };
 
   return (
-    <PageWrapper infoMsgAction={handleSendVerifyEmail}>
+    <PageWrapper
+      infoMsgAction={handleSendVerifyEmail}
+      useUnauthenticatedStyle={true}
+    >
       <>
         <div {...className(sharedPages.contentCon)}>
           <span {...className(shared.titleText)}>Sign in</span>
