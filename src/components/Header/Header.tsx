@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { className } from "../../utilities/helpers";
 import * as style from "./Header.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
-import SearchIcon from "../../assets/icons/SearchIcon";
 
 import { AppContext } from "../../context/AppContext";
 import { Link } from "react-router-dom";
@@ -12,6 +11,7 @@ import { useLocation } from "react-router-dom";
 import AppLogo from "../AppLogo";
 import ThemeToggle from "../ThemeToggle";
 import LayoutToggle from "../LayoutToggle";
+import SearchInput from "../SearchInput";
 
 type HeaderProps = {
   isLandingPage?: boolean;
@@ -20,8 +20,6 @@ type HeaderProps = {
 
 function Header({ isLandingPage, isErrorStyle }: HeaderProps) {
   const {
-    search,
-    setSearch,
     user,
     isLoading,
     setIsDropdownOpen,
@@ -59,18 +57,7 @@ function Header({ isLandingPage, isErrorStyle }: HeaderProps) {
       )}
       {user && !isErrorStyle && !isLandingPage && (
         <>
-          {isDashboardPage && (
-            <div {...className(style.searchInputCon)}>
-              <SearchIcon {...className(style.searchIcon)} />
-              <input
-                {...className(style.searchInput)}
-                type="search"
-                placeholder="Search"
-                value={search}
-                onChange={(event) => setSearch(event.target.value)}
-              />
-            </div>
-          )}
+          {isDashboardPage && <SearchInput />}
 
           <div {...className(style.setCon)}>
             {isDashboardPage && <LayoutToggle />}
