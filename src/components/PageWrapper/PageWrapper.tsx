@@ -2,11 +2,9 @@ import React, { useContext } from "react";
 import Header from "../Header";
 import AccountDropdown from "../AccountDropdown";
 import { AppContext } from "../../context/AppContext";
-import * as shared from "../../assets/styles/shared.module.css";
-import { className } from "../../utilities/helpers";
 import { defaultTheme } from "../../data/constants";
-import LoadingIcon from "../../assets/icons/LoadingIcon";
 import ToastMessage from "../../components/ToastMessage";
+import ActionLoading from "../ActionLoading";
 
 type ModalContainerProps = {
   children?: JSX.Element;
@@ -25,15 +23,7 @@ function PageWrapper({
     useContext(AppContext);
   return (
     <div className="wrapper" data-theme={user?.theme ?? defaultTheme}>
-      {isLoading && (
-        <div {...className(shared.loadingModal)}>
-          <div {...className(shared.loadingIconContainer)}>
-            <LoadingIcon
-              {...className(shared.loadingIcon, shared.loadingAnimation)}
-            />
-          </div>
-        </div>
-      )}
+      {isLoading && <ActionLoading />}
       <Header
         useLandingPageStyle={useLandingPageStyle}
         useUnauthenticatedStyle={useUnauthenticatedStyle}

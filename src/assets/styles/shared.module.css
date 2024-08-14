@@ -161,17 +161,6 @@
   justify-content: center;
 }
 
-.loadingIconContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: 1px solid var(--bg);
-  background-color: var(--bg);
-  border-radius: 100%;
-}
-
 .loadingIcon {
   fill: var(--text-secondary);
   width: 40px;
