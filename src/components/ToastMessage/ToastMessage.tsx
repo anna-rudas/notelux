@@ -3,27 +3,28 @@ import SuccessIcon from "../../assets/icons/SuccessIcon";
 import ErrorIcon from "../../assets/icons/ErrorIcon";
 import CloseIcon from "../../assets/icons/CloseIcon";
 import { className } from "../../utilities/helpers";
-import * as style from "./InformationMessage.module.css";
+import * as style from "./ToastMessage.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
 import { AppContext } from "../../context/AppContext";
 
-type InformationMessageProps = {
+type ToastMessageProps = {
   isError: boolean;
   description: string;
   actionButtonHandle?: () => void;
   actionButtonText?: string;
 };
 
-function InformationMessage({
+function ToastMessage({
   isError,
   description,
   actionButtonHandle,
   actionButtonText,
-}: InformationMessageProps) {
-  const { setInfoMessage, infoMessage, isLoading } = useContext(AppContext);
+}: ToastMessageProps) {
+  const { setToastMessageContent, toastMessageContent, isLoading } =
+    useContext(AppContext);
 
   const handleCloseMsg = () => {
-    setInfoMessage({ ...infoMessage, showMsg: false });
+    setToastMessageContent({ ...toastMessageContent, showMessage: false });
   };
 
   return (
@@ -85,4 +86,4 @@ function InformationMessage({
   );
 }
 
-export default InformationMessage;
+export default ToastMessage;

@@ -6,11 +6,11 @@ import React, {
   useRef,
   RefObject,
 } from "react";
-import { defaultInfoMsg, usersColKey } from "../data/constants";
+import { defaultToastMessage, usersColKey } from "../data/constants";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firestore/firestoreConfig";
 import { FirebaseError } from "firebase/app";
-import { InfoMsg, User } from "../types/types";
+import { ToastMessage, User } from "../types/types";
 import { evalErrorCode } from "../utilities/helpers";
 import { updateUserInDb } from "../firestore/userService";
 
@@ -25,8 +25,8 @@ interface AppContextInterface {
   setIsDropdownOpen: (value: boolean) => void;
   dropdownRef: RefObject<HTMLDivElement> | null;
   dropdownButtonRef: RefObject<HTMLButtonElement> | null;
-  infoMessage: InfoMsg;
-  setInfoMessage: (value: InfoMsg) => void;
+  toastMessageContent: ToastMessage;
+  setToastMessageContent: (value: ToastMessage) => void;
   authenticatedUserId: string | null;
   setAuthenticatedUserId: (value: string | null) => void;
   error: Error | null;
@@ -44,8 +44,8 @@ const defaultContextValue: AppContextInterface = {
   setIsDropdownOpen: () => {},
   dropdownRef: null,
   dropdownButtonRef: null,
-  infoMessage: defaultInfoMsg,
-  setInfoMessage: () => {},
+  toastMessageContent: defaultToastMessage,
+  setToastMessageContent: () => {},
   authenticatedUserId: null,
   setAuthenticatedUserId: async () => {},
   error: null,
@@ -66,7 +66,8 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const dropdownButtonRef = useRef(null);
-  const [infoMessage, setInfoMessage] = useState<InfoMsg>(defaultInfoMsg);
+  const [toastMessageContent, setToastMessageContent] =
+    useState<ToastMessage>(defaultToastMessage);
   const [msgTimeoutId, setMsgTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(
     null
@@ -94,12 +95,14 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         (error: unknown) => {
           console.error(error);
           if (error instanceof FirebaseError) {
-            setInfoMessage({
+            setToastMessageContent({
               isError: true,
               isPersisting: true,
               actionButtonText: "",
-              desc: `Failed to load user id: ${evalErrorCode(error.code)}`,
-              showMsg: true,
+              description: `Failed to load user id: ${evalErrorCode(
+                error.code
+              )}`,
+              showMessage: true,
             });
           }
         }
@@ -113,16 +116,16 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     if (msgTimeoutId) {
       clearTimeout(msgTimeoutId);
     }
-    if (infoMessage.showMsg && !infoMessage.isPersisting) {
+    if (toastMessageContent.showMessage && !toastMessageContent.isPersisting) {
       const timeoutId = setTimeout(() => {
-        setInfoMessage({
-          ...infoMessage,
-          showMsg: false,
+        setToastMessageContent({
+          ...toastMessageContent,
+          showMessage: false,
         });
       }, 5000);
       setMsgTimeoutId(timeoutId);
     }
-  }, [infoMessage]);
+  }, [toastMessageContent]);
 
   useEffect(() => {
     if (user) {
@@ -143,8 +146,8 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         setIsDropdownOpen,
         dropdownRef,
         dropdownButtonRef,
-        infoMessage,
-        setInfoMessage,
+        toastMessageContent,
+        setToastMessageContent,
         authenticatedUserId,
         setAuthenticatedUserId,
         error,

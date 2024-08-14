@@ -12,28 +12,29 @@ import { resetPasswordSchema } from "../../utilities/validationSchemas";
 import { resetUserPassword } from "../../firestore/authService";
 
 function ResetPassword() {
-  const { setInfoMessage, isLoading, setIsLoading } = useContext(AppContext);
+  const { setToastMessageContent, isLoading, setIsLoading } =
+    useContext(AppContext);
 
   const handleResetPassword = async (values: FormikValues) => {
     setIsLoading(true);
     try {
       await resetUserPassword(values.email);
-      setInfoMessage({
+      setToastMessageContent({
         actionButtonText: "",
         isPersisting: false,
-        showMsg: true,
+        showMessage: true,
         isError: false,
-        desc: "Email sent! Check your inbox",
+        description: "Email sent! Check your inbox",
       });
     } catch (error: unknown) {
       console.error("Failed to send email: ", error);
       if (error instanceof FirebaseError) {
-        setInfoMessage({
+        setToastMessageContent({
           actionButtonText: "",
           isPersisting: false,
-          showMsg: true,
+          showMessage: true,
           isError: true,
-          desc: `Failed to send email: ${evalErrorCode(error.code)}`,
+          description: `Failed to send email: ${evalErrorCode(error.code)}`,
         });
       }
     } finally {

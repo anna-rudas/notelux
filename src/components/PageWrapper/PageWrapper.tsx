@@ -6,22 +6,22 @@ import * as shared from "../../assets/styles/shared.module.css";
 import { className } from "../../utilities/helpers";
 import { defaultTheme } from "../../data/constants";
 import LoadingIcon from "../../assets/icons/LoadingIcon";
-import InformationMessage from "../../components/InformationMessage";
+import ToastMessage from "../../components/ToastMessage";
 
 type ModalContainerProps = {
   children?: JSX.Element;
   useLandingPageStyle?: boolean;
   useUnauthenticatedStyle?: boolean;
-  infoMsgAction?: () => void;
+  toastMessageAction?: () => void;
 };
 
 function PageWrapper({
   children,
   useLandingPageStyle,
   useUnauthenticatedStyle,
-  infoMsgAction,
+  toastMessageAction,
 }: ModalContainerProps) {
-  const { isLoading, isDropdownOpen, user, infoMessage } =
+  const { isLoading, isDropdownOpen, user, toastMessageContent } =
     useContext(AppContext);
   return (
     <div className="wrapper" data-theme={user?.theme ?? defaultTheme}>
@@ -40,12 +40,12 @@ function PageWrapper({
       />
       {isDropdownOpen && <AccountDropdown />}
       <>{children}</>
-      {infoMessage.showMsg && (
-        <InformationMessage
-          actionButtonText={infoMessage.actionButtonText}
-          actionButtonHandle={infoMsgAction}
-          description={infoMessage.desc}
-          isError={infoMessage.isError}
+      {toastMessageContent.showMessage && (
+        <ToastMessage
+          actionButtonText={toastMessageContent.actionButtonText}
+          actionButtonHandle={toastMessageAction}
+          description={toastMessageContent.description}
+          isError={toastMessageContent.isError}
         />
       )}
     </div>

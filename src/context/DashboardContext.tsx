@@ -72,7 +72,8 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
 
   const notesColRef = collection(db, notesColKey);
 
-  const { authenticatedUserId, setInfoMessage } = useContext(AppContext);
+  const { authenticatedUserId, setToastMessageContent } =
+    useContext(AppContext);
 
   const setActiveNoteValue = (field: string, value: string) => {
     if (activeNote) {
@@ -116,12 +117,12 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
         (error: unknown) => {
           console.error(error);
           if (error instanceof FirebaseError) {
-            setInfoMessage({
+            setToastMessageContent({
               isError: true,
               isPersisting: true,
               actionButtonText: "",
-              desc: `Failed to load notes: ${evalErrorCode(error.code)}`,
-              showMsg: true,
+              description: `Failed to load notes: ${evalErrorCode(error.code)}`,
+              showMessage: true,
             });
           }
         }

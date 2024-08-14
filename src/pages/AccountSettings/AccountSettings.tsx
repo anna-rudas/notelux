@@ -26,7 +26,7 @@ import {
 function AccountSettings() {
   const {
     user,
-    setInfoMessage,
+    setToastMessageContent,
     setUser,
     setIsLoading,
     isLoading,
@@ -54,12 +54,13 @@ function AccountSettings() {
             await deleteUserDataInDb(user.id);
             //delete user account
             await deleteUserAccount();
-            setInfoMessage({
+            setToastMessageContent({
               actionButtonText: "",
               isPersisting: true,
-              showMsg: true,
+              showMessage: true,
               isError: false,
-              desc: "User deletion successful. You will be automatically signed out",
+              description:
+                "User deletion successful. You will be automatically signed out",
             });
             setTimeout(() => {
               navigate(0);
@@ -67,12 +68,14 @@ function AccountSettings() {
           } catch (error) {
             console.error("Failed to delete user: ", error);
             if (error instanceof FirebaseError) {
-              setInfoMessage({
+              setToastMessageContent({
                 actionButtonText: "",
                 isPersisting: false,
-                showMsg: true,
+                showMessage: true,
                 isError: true,
-                desc: `Failed to delete user: ${evalErrorCode(error.code)}`,
+                description: `Failed to delete user: ${evalErrorCode(
+                  error.code
+                )}`,
               });
             }
             setIsLoading(false);
@@ -81,12 +84,12 @@ function AccountSettings() {
       } catch (error: unknown) {
         console.error("Failed to reauthenticate user: ", error);
         if (error instanceof FirebaseError) {
-          setInfoMessage({
+          setToastMessageContent({
             actionButtonText: "",
             isPersisting: false,
-            showMsg: true,
+            showMessage: true,
             isError: true,
-            desc: `Failed to authenticate: ${evalErrorCode(error.code)}`,
+            description: `Failed to authenticate: ${evalErrorCode(error.code)}`,
           });
         }
         setIsLoading(false);
@@ -108,12 +111,13 @@ function AccountSettings() {
             try {
               await sendVerificationEmail();
               setUser({ ...user, email: values.newEmail });
-              setInfoMessage({
+              setToastMessageContent({
                 actionButtonText: "",
                 isPersisting: true,
-                showMsg: true,
+                showMessage: true,
                 isError: false,
-                desc: "Verification email sent. You will be automatically signed out",
+                description:
+                  "Verification email sent. You will be automatically signed out",
               });
               setTimeout(async () => {
                 await signOutUser();
@@ -124,12 +128,12 @@ function AccountSettings() {
             } catch (error: unknown) {
               console.error("Failed to send verification email: ", error);
               if (error instanceof FirebaseError) {
-                setInfoMessage({
+                setToastMessageContent({
                   actionButtonText: "",
                   isPersisting: false,
-                  showMsg: true,
+                  showMessage: true,
                   isError: true,
-                  desc: `Failed to send verification email: ${evalErrorCode(
+                  description: `Failed to send verification email: ${evalErrorCode(
                     error.code
                   )}`,
                 });
@@ -139,22 +143,24 @@ function AccountSettings() {
           } catch (error: unknown) {
             console.error("Failed to update email: ", error);
             if (error instanceof FirebaseError) {
-              setInfoMessage({
+              setToastMessageContent({
                 actionButtonText: "",
                 isPersisting: false,
-                showMsg: true,
+                showMessage: true,
                 isError: true,
-                desc: `Failed to update email: ${evalErrorCode(error.code)}`,
+                description: `Failed to update email: ${evalErrorCode(
+                  error.code
+                )}`,
               });
               setIsLoading(false);
             }
           }
         } else {
-          setInfoMessage({
+          setToastMessageContent({
             actionButtonText: "",
             isPersisting: false,
-            showMsg: true,
-            desc: "The new email address can't be the old email address",
+            showMessage: true,
+            description: "The new email address can't be the old email address",
             isError: true,
           });
           setIsLoading(false);
@@ -162,12 +168,12 @@ function AccountSettings() {
       } catch (error: unknown) {
         console.error("Failed to reauthenticate user: ", error);
         if (error instanceof FirebaseError) {
-          setInfoMessage({
+          setToastMessageContent({
             actionButtonText: "",
             isPersisting: false,
-            showMsg: true,
+            showMessage: true,
             isError: true,
-            desc: `Failed to authenticate: ${evalErrorCode(error.code)}`,
+            description: `Failed to authenticate: ${evalErrorCode(error.code)}`,
           });
           setIsLoading(false);
         }
@@ -186,22 +192,24 @@ function AccountSettings() {
         if (reauthResult) {
           try {
             await changeUserPassword(values.newPassword);
-            setInfoMessage({
+            setToastMessageContent({
               actionButtonText: "",
               isPersisting: false,
-              showMsg: true,
+              showMessage: true,
               isError: false,
-              desc: "Password successfully updated",
+              description: "Password successfully updated",
             });
           } catch (error: unknown) {
             console.error("Failed to update password: ", error);
             if (error instanceof FirebaseError) {
-              setInfoMessage({
+              setToastMessageContent({
                 actionButtonText: "",
                 isPersisting: false,
-                showMsg: true,
+                showMessage: true,
                 isError: true,
-                desc: `Failed to update password: ${evalErrorCode(error.code)}`,
+                description: `Failed to update password: ${evalErrorCode(
+                  error.code
+                )}`,
               });
             }
           }
@@ -209,12 +217,12 @@ function AccountSettings() {
       } catch (error: unknown) {
         console.error("Failed to reauthenticate user: ", error);
         if (error instanceof FirebaseError) {
-          setInfoMessage({
+          setToastMessageContent({
             actionButtonText: "",
             isPersisting: false,
-            showMsg: true,
+            showMessage: true,
             isError: true,
-            desc: `Failed to authenticate: ${evalErrorCode(error.code)}`,
+            description: `Failed to authenticate: ${evalErrorCode(error.code)}`,
           });
         }
       } finally {
@@ -228,12 +236,12 @@ function AccountSettings() {
     if (user) {
       setUser({ ...user, username: values.username });
     }
-    setInfoMessage({
-      showMsg: true,
+    setToastMessageContent({
+      showMessage: true,
       actionButtonText: "",
       isPersisting: false,
       isError: false,
-      desc: "Username updated successfully",
+      description: "Username updated successfully",
     });
     setIsLoading(false);
   };

@@ -1,4 +1,4 @@
-import { Color, InfoMsg, Theme, Layout } from "../types/types";
+import { Color, ToastMessage, Theme, Layout } from "../types/types";
 
 export const colors = {
   default: "#FFFFFF",
@@ -28,10 +28,10 @@ export const defaultTheme: Theme = "light";
 
 export const defaultLayout: Layout = "grid";
 
-export const defaultInfoMsg: InfoMsg = {
+export const defaultToastMessage: ToastMessage = {
   isError: true,
-  desc: "Unknown error, please try again later",
-  showMsg: false,
+  description: "Unknown error, please try again later",
+  showMessage: false,
   actionButtonText: "",
   isPersisting: false,
 };

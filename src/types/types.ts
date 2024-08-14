@@ -22,10 +22,10 @@ export type Theme = "light" | "dark";
 
 export type Layout = "grid" | "list";
 
-export type InfoMsg = {
+export type ToastMessage = {
   isError: boolean;
-  desc: string;
-  showMsg: boolean;
+  description: string;
+  showMessage: boolean;
   actionButtonText: string;
   isPersisting: boolean;
 };

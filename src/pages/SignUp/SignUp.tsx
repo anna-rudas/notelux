@@ -20,7 +20,7 @@ function SignUp() {
   const {
     isLoading,
     setIsLoading,
-    setInfoMessage,
+    setToastMessageContent,
     setUser,
     setAuthenticatedUserId,
   } = useContext(AppContext);
@@ -40,12 +40,12 @@ function SignUp() {
           });
           try {
             await sendVerificationEmail();
-            setInfoMessage({
+            setToastMessageContent({
               actionButtonText: "",
               isPersisting: false,
-              showMsg: true,
+              showMessage: true,
               isError: false,
-              desc: "Verify your email address to sign in",
+              description: "Verify your email address to sign in",
             });
             try {
               await signOutUser();
@@ -57,12 +57,12 @@ function SignUp() {
           } catch (error: unknown) {
             console.error("Failed to send verification email: ", error);
             if (error instanceof FirebaseError) {
-              setInfoMessage({
+              setToastMessageContent({
                 actionButtonText: "",
                 isPersisting: false,
-                showMsg: true,
+                showMessage: true,
                 isError: true,
-                desc: `Failed to send verification email: ${evalErrorCode(
+                description: `Failed to send verification email: ${evalErrorCode(
                   error.code
                 )}`,
               });
@@ -75,12 +75,12 @@ function SignUp() {
     } catch (error: unknown) {
       console.error("Failed to sign up user: ", error);
       if (error instanceof FirebaseError) {
-        setInfoMessage({
+        setToastMessageContent({
           actionButtonText: "",
           isPersisting: false,
-          showMsg: true,
+          showMessage: true,
           isError: true,
-          desc: `Failed to sign up: ${evalErrorCode(error.code)}`,
+          description: `Failed to sign up: ${evalErrorCode(error.code)}`,
         });
       }
     } finally {

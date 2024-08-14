@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import PageLoading from "../components/PageLoading/PageLoading";
 import { useLocation } from "react-router-dom";
-import { defaultInfoMsg } from "../data/constants";
+import { defaultToastMessage } from "../data/constants";
 import { FirebaseError } from "firebase/app";
 import ErrorPage from "./ErrorPage/ErrorPage";
 import { signOutUser } from "../firestore/authService";
@@ -16,7 +16,7 @@ type RouteGuardProps = {
 function RouteGuard({ children }: RouteGuardProps) {
   const {
     user,
-    setInfoMessage,
+    setToastMessageContent,
     setAuthenticatedUserId,
     setUser,
     error,
@@ -39,7 +39,7 @@ function RouteGuard({ children }: RouteGuardProps) {
   };
 
   useEffect(() => {
-    setInfoMessage(defaultInfoMsg);
+    setToastMessageContent(defaultToastMessage);
     setIsDropdownOpen(false);
     const unSubscribe = onAuthStateChanged(auth, (userResult) => {
       if (userResult?.emailVerified) {

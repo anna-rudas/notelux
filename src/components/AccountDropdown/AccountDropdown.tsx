@@ -19,7 +19,7 @@ function AccountDropdown() {
     isLoading,
     setIsLoading,
     setAuthenticatedUserId,
-    setInfoMessage,
+    setToastMessageContent,
   } = useContext(AppContext);
   const navigate = useNavigate();
 
@@ -57,12 +57,12 @@ function AccountDropdown() {
     } catch (error: unknown) {
       console.error("Failed to sign out user: ", error);
       if (error instanceof FirebaseError) {
-        setInfoMessage({
+        setToastMessageContent({
           actionButtonText: "",
           isPersisting: false,
-          showMsg: true,
+          showMessage: true,
           isError: true,
-          desc: `Failed to sign out: ${evalErrorCode(error.code)}`,
+          description: `Failed to sign out: ${evalErrorCode(error.code)}`,
         });
       }
     } finally {

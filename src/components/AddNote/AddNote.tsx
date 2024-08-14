@@ -10,7 +10,7 @@ import { addNoteInDb } from "../../firestore/noteService";
 import { FirebaseError } from "firebase/app";
 
 function AddNote() {
-  const { user, setIsDropdownOpen, setInfoMessage, setIsLoading } =
+  const { user, setIsDropdownOpen, setToastMessageContent, setIsLoading } =
     useContext(AppContext);
   const {
     activeNote,
@@ -28,23 +28,23 @@ function AddNote() {
           ...activeNote,
           date: new Date().toISOString(),
         });
-        setInfoMessage({
+        setToastMessageContent({
           actionButtonText: "",
           isPersisting: false,
-          showMsg: true,
+          showMessage: true,
           isError: false,
-          desc: "Note added successfully",
+          description: "Note added successfully",
         });
         resetDefaultNoteState();
       } catch (error: unknown) {
         console.error("Failed to save note in database: ", error);
         if (error instanceof FirebaseError) {
-          setInfoMessage({
+          setToastMessageContent({
             actionButtonText: "",
             isPersisting: false,
-            showMsg: true,
+            showMessage: true,
             isError: true,
-            desc: `Failed to save note: ${evalErrorCode(error.code)}`,
+            description: `Failed to save note: ${evalErrorCode(error.code)}`,
           });
         }
       } finally {

@@ -20,8 +20,8 @@ function SignIn() {
     isLoading,
     setIsLoading,
     user,
-    infoMessage,
-    setInfoMessage,
+    toastMessageContent,
+    setToastMessageContent,
     setAuthenticatedUserId,
   } = useContext(AppContext);
 
@@ -37,22 +37,22 @@ function SignIn() {
     setIsLoading(true);
     try {
       await sendVerificationEmail();
-      setInfoMessage({
+      setToastMessageContent({
         actionButtonText: "",
         isPersisting: false,
-        showMsg: true,
+        showMessage: true,
         isError: false,
-        desc: "Verification email sent",
+        description: "Verification email sent",
       });
     } catch (error: unknown) {
       console.error("Failed to send verification email: ", error);
       if (error instanceof FirebaseError) {
-        setInfoMessage({
+        setToastMessageContent({
           actionButtonText: "",
           isPersisting: false,
-          showMsg: true,
+          showMessage: true,
           isError: true,
-          desc: `Failed to send verification email: ${evalErrorCode(
+          description: `Failed to send verification email: ${evalErrorCode(
             error.code
           )}`,
         });
@@ -67,30 +67,30 @@ function SignIn() {
     try {
       const signInResult = await signInUser(values.email, values.password);
       if (isUserEmailVerified(signInResult)) {
-        setInfoMessage({
-          ...infoMessage,
-          showMsg: false,
+        setToastMessageContent({
+          ...toastMessageContent,
+          showMessage: false,
         });
         setAuthenticatedUserId(signInResult.user.uid);
       } else {
-        setInfoMessage({
+        setToastMessageContent({
           isPersisting: true,
           actionButtonText: "Resend email",
-          showMsg: true,
+          showMessage: true,
           isError: true,
-          desc: "Your email address is not verified",
+          description: "Your email address is not verified",
         });
         setIsLoading(false);
       }
     } catch (error: unknown) {
       console.error("Failed to sign in user: ", error);
       if (error instanceof FirebaseError) {
-        setInfoMessage({
+        setToastMessageContent({
           actionButtonText: "",
           isPersisting: false,
-          showMsg: true,
+          showMessage: true,
           isError: true,
-          desc: `Failed to sign in: ${evalErrorCode(error.code)}`,
+          description: `Failed to sign in: ${evalErrorCode(error.code)}`,
         });
       }
       setIsLoading(false);
@@ -99,7 +99,7 @@ function SignIn() {
 
   return (
     <PageWrapper
-      infoMsgAction={handleSendVerifyEmail}
+      toastMessageAction={handleSendVerifyEmail}
       useUnauthenticatedStyle={true}
     >
       <>

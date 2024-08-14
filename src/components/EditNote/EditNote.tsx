@@ -12,7 +12,7 @@ import { getUserIdFromEmail } from "../../firestore/userService";
 import { FirebaseError } from "firebase/app";
 
 function EditNote() {
-  const { setIsLoading, setInfoMessage } = useContext(AppContext);
+  const { setIsLoading, setToastMessageContent } = useContext(AppContext);
   const { activeNote, setActiveNote, resetDefaultNoteState } =
     useContext(DashboardContext);
   const [isDelConfOpen, setIsDelConfOpen] = useState(false);
@@ -22,23 +22,23 @@ function EditNote() {
     if (activeNote) {
       try {
         await updateNoteInDb({ ...activeNote, date: new Date().toISOString() });
-        setInfoMessage({
+        setToastMessageContent({
           actionButtonText: "",
           isPersisting: false,
-          showMsg: true,
+          showMessage: true,
           isError: false,
-          desc: "Note updated successfully",
+          description: "Note updated successfully",
         });
         resetDefaultNoteState();
       } catch (error: unknown) {
         console.error("Failed to update note in database: ", error);
         if (error instanceof FirebaseError) {
-          setInfoMessage({
+          setToastMessageContent({
             actionButtonText: "",
             isPersisting: false,
-            showMsg: true,
+            showMessage: true,
             isError: true,
-            desc: `Failed to update note: ${evalErrorCode(error.code)}`,
+            description: `Failed to update note: ${evalErrorCode(error.code)}`,
           });
         }
       }
@@ -49,24 +49,24 @@ function EditNote() {
     if (activeNote) {
       try {
         await deleteNoteInDb(activeNote);
-        setInfoMessage({
+        setToastMessageContent({
           actionButtonText: "",
           isPersisting: false,
-          showMsg: true,
+          showMessage: true,
           isError: false,
-          desc: "Note deleted successfully",
+          description: "Note deleted successfully",
         });
         resetDefaultNoteState();
         setIsDelConfOpen(false);
       } catch (error: unknown) {
         console.error("Failed to delete note in database: ", error);
         if (error instanceof FirebaseError) {
-          setInfoMessage({
+          setToastMessageContent({
             actionButtonText: "",
             isPersisting: false,
-            showMsg: true,
+            showMessage: true,
             isError: true,
-            desc: `Failed to delete note: ${evalErrorCode(error.code)}`,
+            description: `Failed to delete note: ${evalErrorCode(error.code)}`,
           });
         }
       }
@@ -80,24 +80,24 @@ function EditNote() {
       //get user id
       const newUserId = await getUserIdFromEmail(values.newUserEmail);
       if (!newUserId) {
-        setInfoMessage({
-          showMsg: true,
+        setToastMessageContent({
+          showMessage: true,
           actionButtonText: "",
           isPersisting: false,
           isError: true,
-          desc: "There is no user with this email address",
+          description: "There is no user with this email address",
         });
       } else if (
         activeNote &&
         newUserId &&
         activeNote.coUsers.indexOf(newUserId) >= 0
       ) {
-        setInfoMessage({
-          showMsg: true,
+        setToastMessageContent({
+          showMessage: true,
           actionButtonText: "",
           isPersisting: false,
           isError: true,
-          desc: "User already added",
+          description: "User already added",
         });
       } else {
         //set note
@@ -114,22 +114,22 @@ function EditNote() {
               coUsers: newCoUsers,
               date: new Date().toISOString(),
             });
-            setInfoMessage({
-              showMsg: true,
+            setToastMessageContent({
+              showMessage: true,
               actionButtonText: "",
               isPersisting: false,
               isError: false,
-              desc: "New user added",
+              description: "New user added",
             });
           } catch (error: unknown) {
             console.error("Failed to add collaborator: ", error);
             if (error instanceof FirebaseError) {
-              setInfoMessage({
+              setToastMessageContent({
                 actionButtonText: "",
                 isPersisting: false,
-                showMsg: true,
+                showMessage: true,
                 isError: true,
-                desc: `Failed to add user: ${evalErrorCode(error.code)}`,
+                description: `Failed to add user: ${evalErrorCode(error.code)}`,
               });
             }
           }
@@ -138,12 +138,12 @@ function EditNote() {
     } catch (error: unknown) {
       console.error("Failed to find user: ", error);
       if (error instanceof FirebaseError) {
-        setInfoMessage({
+        setToastMessageContent({
           actionButtonText: "",
           isPersisting: false,
-          showMsg: true,
+          showMessage: true,
           isError: true,
-          desc: "Failed to find user:",
+          description: "Failed to find user:",
         });
       }
     } finally {
