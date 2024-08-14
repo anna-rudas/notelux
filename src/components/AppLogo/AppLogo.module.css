@@ -1,0 +1,30 @@
+.logoCon {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.linkCon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap);
+  color: var(--text-primary);
+  width: fit-content;
+}
+
+.notesIcon {
+  width: 40px;
+  height: 40px;
+}
+
+@media (max-width: 600px) {
+  .name {
+    display: none;
+  }
+
+  .notesIcon {
+    width: 35px;
+    height: 35px;
+  }
+}

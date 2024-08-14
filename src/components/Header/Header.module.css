@@ -5,9 +5,8 @@
   align-items: center;
   border-bottom: 1.5px solid var(--text-secondary);
   width: 100%;
-  height: fit-content;
+  height: auto;
   max-height: 95px;
-  min-height: 85px;
   background-color: var(--bg);
   z-index: 3;
 }
@@ -34,26 +33,6 @@
 .navBtnsContainer a {
   min-width: 100px;
   width: fit-content;
-}
-
-.logoCon {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.linkCon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--gap);
-  color: var(--text-primary);
-  width: fit-content;
-}
-
-.notesIcon {
-  width: 40px;
-  height: 40px;
 }
 
 .searchIcon {
@@ -171,15 +150,6 @@
 @media (max-width: 600px) {
   .header {
     grid-template-columns: 1fr 7fr 1fr;
-  }
-
-  .name {
-    display: none;
-  }
-
-  .notesIcon {
-    width: 35px;
-    height: 35px;
   }
 
   .setCon {

@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { className } from "../../utilities/helpers";
 import * as style from "./Header.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
-import NoteLuxLogo from "../../assets/icons/NoteLuxLogo";
 import SearchIcon from "../../assets/icons/SearchIcon";
 import GridIcon from "../../assets/icons/GridIcon";
 import ListIcon from "../../assets/icons/ListIcon";
@@ -14,6 +13,7 @@ import { Link } from "react-router-dom";
 import UserIcon from "../../assets/icons/UserIcon";
 import SignInIcon from "../../assets/icons/SignInIcon";
 import { useLocation } from "react-router-dom";
+import AppLogo from "../AppLogo";
 
 type HeaderProps = {
   isLandingPage?: boolean;
@@ -63,15 +63,7 @@ function Header({ isLandingPage, isErrorStyle }: HeaderProps) {
         style.header
       )}
     >
-      <div {...className(style.logoCon)}>
-        <Link
-          {...className(style.linkCon, isLoading && shared.disabledLink)}
-          to={user ? "/dashboard" : "/"}
-        >
-          <NoteLuxLogo {...className(style.notesIcon)} />
-          <span {...className(style.name, shared.titleText)}>NoteLux</span>
-        </Link>
-      </div>
+      <AppLogo />
       {isLandingPage && (
         <div {...className(style.navBtnsContainer)}>
           <Link to="/signup" {...className(shared.btn, shared.buttonSecondary)}>
