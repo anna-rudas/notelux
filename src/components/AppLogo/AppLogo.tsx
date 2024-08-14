@@ -6,7 +6,7 @@ import * as style from "./AppLogo.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
 import { AppContext } from "../../context/AppContext";
 
-export default function AppLogo() {
+function AppLogo() {
   const { user, isLoading } = useContext(AppContext);
   return (
     <div {...className(style.logoCon)}>
@@ -20,3 +20,4 @@ export default function AppLogo() {
     </div>
   );
 }
+export default AppLogo;

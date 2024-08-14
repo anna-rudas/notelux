@@ -1,0 +1,19 @@
+.iconBtn {
+  border: none;
+  background-color: transparent;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.iconBtn:hover {
+  cursor: pointer;
+}
+
+.icon {
+  fill: var(--text-secondary);
+  width: 25px;
+  height: 25px;
+}

@@ -3,17 +3,15 @@ import { className } from "../../utilities/helpers";
 import * as style from "./Header.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
 import SearchIcon from "../../assets/icons/SearchIcon";
-import GridIcon from "../../assets/icons/GridIcon";
-import ListIcon from "../../assets/icons/ListIcon";
-import SunIcon from "../../assets/icons/SunIcon";
-import MoonIcon from "../../assets/icons/MoonIcon";
+
 import { AppContext } from "../../context/AppContext";
-import { defaultTheme } from "../../data/constants";
 import { Link } from "react-router-dom";
 import UserIcon from "../../assets/icons/UserIcon";
 import SignInIcon from "../../assets/icons/SignInIcon";
 import { useLocation } from "react-router-dom";
 import AppLogo from "../AppLogo";
+import ThemeToggle from "../ThemeToggle";
+import LayoutToggle from "../LayoutToggle";
 
 type HeaderProps = {
   isLandingPage?: boolean;
@@ -25,7 +23,6 @@ function Header({ isLandingPage, isErrorStyle }: HeaderProps) {
     search,
     setSearch,
     user,
-    setUser,
     isLoading,
     setIsDropdownOpen,
     isDropdownOpen,
@@ -35,24 +32,6 @@ function Header({ isLandingPage, isErrorStyle }: HeaderProps) {
   const location = useLocation();
   const { pathname } = location;
   const isDashboardPage = pathname === "/dashboard";
-
-  const toggleTheme = () => {
-    if (user) {
-      setUser({
-        ...user,
-        theme: user.theme === "light" ? "dark" : "light",
-      });
-    }
-  };
-
-  const toggleLayout = () => {
-    if (user) {
-      setUser({
-        ...user,
-        layout: user.layout === "grid" ? "list" : "grid",
-      });
-    }
-  };
 
   return (
     <div
@@ -94,39 +73,8 @@ function Header({ isLandingPage, isErrorStyle }: HeaderProps) {
           )}
 
           <div {...className(style.setCon)}>
-            {isDashboardPage && (
-              <button
-                disabled={isLoading}
-                {...className(
-                  style.iconBtn,
-                  isLoading ? shared.btnDisabled : ""
-                )}
-                onClick={toggleLayout}
-                title={user?.layout === "grid" ? "Grid view" : "List view"}
-              >
-                {user?.layout === "grid" ? (
-                  <GridIcon {...className(style.viewIcon)} />
-                ) : (
-                  <ListIcon {...className(style.viewIcon)} />
-                )}
-              </button>
-            )}
-            <button
-              disabled={isLoading}
-              {...className(style.iconBtn, isLoading ? shared.btnDisabled : "")}
-              onClick={toggleTheme}
-              title={
-                (user?.theme ?? defaultTheme) === "light"
-                  ? "Light mode"
-                  : "Dark mode"
-              }
-            >
-              {(user?.theme ?? defaultTheme) === "light" ? (
-                <SunIcon {...className(style.viewIcon)} />
-              ) : (
-                <MoonIcon {...className(style.viewIcon)} />
-              )}
-            </button>
+            {isDashboardPage && <LayoutToggle />}
+            <ThemeToggle />
             <button
               disabled={isLoading}
               ref={dropdownButtonRef}

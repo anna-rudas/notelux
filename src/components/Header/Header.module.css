@@ -82,26 +82,6 @@
   gap: calc(var(--gap) * 4);
 }
 
-.iconBtn {
-  border: none;
-  background-color: transparent;
-  height: 30px;
-  width: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.iconBtn:hover {
-  cursor: pointer;
-}
-
-.viewIcon {
-  fill: var(--text-secondary);
-  width: 25px;
-  height: 25px;
-}
-
 .buttonAccount {
   padding: 8px;
   border: 2px solid var(--text-secondary);
