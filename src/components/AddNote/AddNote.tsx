@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { className, evalErrorCode } from "../../utilities/helpers";
 import * as style from "./AddNote.module.css";
-import Form from "../Form";
+import NoteForm from "../NoteForm";
 import { AppContext } from "../../context/AppContext";
 import { DashboardContext } from "../../context/DashboardContext";
 import { v4 as uuidv4 } from "uuid";
@@ -80,7 +80,7 @@ function AddNote() {
         />
       )}
       {isAddNoteOpen && activeNote !== null && (
-        <Form
+        <NoteForm
           handleSubmit={handleSubmit}
           handleCancel={resetDefaultNoteState}
           noteFormStyle={style.addNoteForm}

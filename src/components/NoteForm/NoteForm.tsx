@@ -3,7 +3,7 @@ import { className } from "../../utilities/helpers";
 import PaletteIcon from "../../assets/icons/PaletteIcon";
 import ColorPalette from "../ColorPalette";
 import { colors } from "../../data/constants";
-import * as style from "./Form.module.css";
+import * as style from "./NoteForm.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
 import { AppContext } from "../../context/AppContext";
 import { Note } from "../../types/types";
@@ -11,7 +11,7 @@ import MoreOptionsIcon from "../../assets/icons/MoreOptionsIcon";
 import MoreNoteOptions from "../MoreNoteOptions";
 import { DashboardContext } from "../../context/DashboardContext";
 
-type FormProps = {
+type NoteFormProps = {
   handleSubmit: () => void;
   handleCancel: () => void;
   setIsDelConfOpen?: (value: boolean) => void;
@@ -20,14 +20,14 @@ type FormProps = {
   noteBodyStyle: string;
 };
 
-function Form({
+function NoteForm({
   handleSubmit,
   handleCancel,
   setIsDelConfOpen,
   setIsShareNoteOpen,
   noteFormStyle,
   noteBodyStyle,
-}: FormProps) {
+}: NoteFormProps) {
   const { isLoading, user } = useContext(AppContext);
 
   const {
@@ -156,4 +156,4 @@ function Form({
   );
 }
 
-export default Form;
+export default NoteForm;

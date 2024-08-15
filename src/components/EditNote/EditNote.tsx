@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { className, evalErrorCode } from "../../utilities/helpers";
 import * as style from "./EditNote.module.css";
-import Form from "../Form";
+import NoteForm from "../NoteForm";
 import DeleteConfirmation from "../DeleteConfirmation";
 import { AppContext } from "../../context/AppContext";
 import ShareNoteModal from "../ShareNoteModal";
@@ -153,7 +153,7 @@ function EditNote() {
 
   return (
     <div {...className(style.editNoteCon)}>
-      <Form
+      <NoteForm
         handleSubmit={handleEditNoteSubmit}
         handleCancel={resetDefaultNoteState}
         setIsDelConfOpen={setIsDelConfOpen}
