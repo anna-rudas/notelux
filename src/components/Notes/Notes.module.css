@@ -45,37 +45,6 @@
   gap: calc(var(--gap) * 3);
 }
 
-.noteCard {
-  border: 2px solid var(--text-secondary);
-  background-color: var(--bg);
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--gap) * 2);
-  height: fit-content;
-  border-radius: calc(var(--border-radius) * 2);
-  padding: var(--padding);
-  cursor: pointer;
-  text-align: left;
-  overflow: hidden;
-  line-height: 20px;
-}
-
-.noteTitle {
-  min-height: 50px;
-  overflow: hidden;
-  word-wrap: break-word;
-  width: 100%;
-}
-
-.noteBody {
-  height: fit-content;
-  min-height: 50px;
-  max-height: 120px;
-  overflow: hidden;
-  word-wrap: break-word;
-  width: 100%;
-}
-
 @media (max-width: 600px) {
   .noteGridCon {
     grid-template-columns: repeat(2, 48%);
@@ -83,12 +52,5 @@
 
   .notesContainer {
     padding: var(--padding);
-  }
-}
-
-@media (hover: hover) {
-  .noteCard:hover {
-    box-shadow: 3px 3px 0px 0px var(--text-secondary);
-    transition: 0.1s ease-in-out;
   }
 }

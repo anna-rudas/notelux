@@ -1,4 +1,4 @@
-import { firebaseErrorCodes } from "../data/constants";
+import { firebaseErrorCodes, maxNoteCharToShow } from "../data/constants";
 import { Note } from "../types/types";
 
 export const className = (...classNames: string[]) => {
@@ -7,7 +7,15 @@ export const className = (...classNames: string[]) => {
   };
 };
 
-export const sortNotes: (
+export const filterNotesBySearch = (notes: Note[], searchTerm: string) => {
+  const searchRegex = new RegExp(searchTerm, "i");
+
+  return notes.filter(function (current) {
+    return searchRegex.test(current.title) || searchRegex.test(current.body);
+  });
+};
+
+export const sortNotesIntoColumns: (
   notes: Array<Note>,
   numberOfColumns: number
 ) => Array<Array<Note>> = (notes, numberOfColumns) => {
@@ -37,4 +45,13 @@ export const sortNotes: (
 
 export const evalErrorCode = (code: string): string => {
   return firebaseErrorCodes[code] ?? "unknown error";
+};
+
+export const readyNoteTextPreview = (text: string) => {
+  if (text.length > maxNoteCharToShow) {
+    const shortenedText = text.substring(0, maxNoteCharToShow);
+    const textWithEllipses = shortenedText.concat("...");
+    return textWithEllipses;
+  }
+  return text;
 };

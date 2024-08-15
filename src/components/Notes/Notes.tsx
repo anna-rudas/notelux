@@ -1,49 +1,57 @@
 import React, { useEffect, useState, useContext } from "react";
-import { className, sortNotes } from "../../utilities/helpers";
+import {
+  className,
+  filterNotesBySearch,
+  sortNotesIntoColumns,
+} from "../../utilities/helpers";
 import * as style from "./Notes.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
-import NoteCard from "./NoteCard";
+import NoteCard from "../NoteCard";
 import { AppContext } from "../../context/AppContext";
 import { DashboardContext } from "../../context/DashboardContext";
 import LoadingIcon from "../../assets/icons/LoadingIcon";
+import { Note } from "../../types/types";
 
 function Notes() {
   const { search, user } = useContext(AppContext);
   const { notes, areNotesLoading } = useContext(DashboardContext);
 
-  const [matches, setMatches] = useState(
+  const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
+  const [sortedNotes, setSortedNotes] = useState<Note[][]>([]);
+  const [isSmallScreen, setIsSmallScreen] = useState(
     window.matchMedia("(max-width: 600px)").matches
   );
 
   useEffect(() => {
     window
       .matchMedia("(max-width: 600px)")
-      .addEventListener("change", (event) => setMatches(event.matches));
+      .addEventListener("change", (event) => setIsSmallScreen(event.matches));
 
     return () => {
       window
         .matchMedia("(max-width: 600px)")
-        .removeEventListener("change", (event) => setMatches(event.matches));
+        .removeEventListener("change", (event) =>
+          setIsSmallScreen(event.matches)
+        );
     };
   }, []);
 
-  const numberOfColumns = user?.layout === "list" ? 1 : matches ? 2 : 4;
+  useEffect(() => {
+    const numberOfColumns = user?.layout === "list" ? 1 : isSmallScreen ? 2 : 4;
 
-  const filteredNotes =
-    notes &&
-    notes.filter(function (current) {
-      const searchRegex = new RegExp(search, "i");
-      return searchRegex.test(current.title) || searchRegex.test(current.body);
-    });
+    const temp1 = filterNotesBySearch(notes, search);
+    setFilteredNotes(temp1);
 
-  const sortedNotes = sortNotes(filteredNotes, numberOfColumns);
+    const temp2 = sortNotesIntoColumns(temp1, numberOfColumns);
+    setSortedNotes(temp2);
+  }, [notes, search, isSmallScreen]);
 
   if (areNotesLoading) {
     return (
       <div {...className(style.notesContainer)}>
         <LoadingIcon
           {...className(shared.loadingIcon, shared.loadingAnimation)}
-        ></LoadingIcon>
+        />
       </div>
     );
   }
