@@ -15,6 +15,7 @@ import {
   signOutUser,
 } from "../../firestore/authService";
 import { addUserInDb } from "../../firestore/userService";
+import { useErrorBoundary } from "react-error-boundary";
 
 function SignUp() {
   const {
@@ -24,6 +25,8 @@ function SignUp() {
     setUser,
     setAuthenticatedUserId,
   } = useContext(AppContext);
+
+  const { showBoundary } = useErrorBoundary();
 
   const handleSignUp = async (values: FormikValues) => {
     setIsLoading(true);
@@ -70,6 +73,7 @@ function SignUp() {
           }
         } catch (error: unknown) {
           console.error("Failed to add user: ", error);
+          showBoundary(error);
         }
       }
     } catch (error: unknown) {

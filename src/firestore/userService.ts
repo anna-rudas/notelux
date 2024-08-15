@@ -24,7 +24,7 @@ export const addUserInDb = async (userToAdd: User): Promise<void> => {
     await setDoc(userRef, userToAdd);
     return;
   }
-  throw "user already exists";
+  throw new Error("User already exists.");
 };
 
 export const updateUserInDb = async (userToUpdate: User): Promise<void> => {
