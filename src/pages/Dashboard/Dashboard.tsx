@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import AddNote from "../../components/AddNote";
-import EditNote from "../../components/EditNote";
+import EditNoteModal from "../../components/EditNoteModal";
 import Notes from "../../components/Notes";
 import PageWrapper from "../../components/PageWrapper";
 import { DashboardContext } from "../../context/DashboardContext";
@@ -13,7 +13,7 @@ function Dashboard() {
       <>
         <AddNote />
         <Notes />
-        {isEditing && <EditNote />}
+        {isEditing && <EditNoteModal />}
       </>
     </PageWrapper>
   );

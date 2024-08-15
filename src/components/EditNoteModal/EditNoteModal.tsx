@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { className, evalErrorCode } from "../../utilities/helpers";
-import * as style from "./EditNote.module.css";
+import * as style from "./EditNoteModal.module.css";
 import NoteForm from "../NoteForm";
 import DeleteConfirmation from "../DeleteConfirmation";
 import { AppContext } from "../../context/AppContext";
@@ -11,7 +11,7 @@ import { updateNoteInDb, deleteNoteInDb } from "../../firestore/noteService";
 import { getUserIdFromEmail } from "../../firestore/userService";
 import { FirebaseError } from "firebase/app";
 
-function EditNote() {
+function EditNoteModal() {
   const { setIsLoading, setToastMessageContent } = useContext(AppContext);
   const { activeNote, setActiveNote, resetDefaultNoteState } =
     useContext(DashboardContext);
@@ -177,4 +177,4 @@ function EditNote() {
   );
 }
 
-export default EditNote;
+export default EditNoteModal;

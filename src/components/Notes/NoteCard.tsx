@@ -25,7 +25,7 @@ function NoteCard({ note }: NoteCardProps) {
     return text;
   };
 
-  const handleEditNoteOpen = (note: Note) => {
+  const handleOpenEditNoteModal = (note: Note) => {
     setIsEditing(true);
     setIsAddNoteOpen(false);
     setActiveNote(note);
@@ -36,7 +36,7 @@ function NoteCard({ note }: NoteCardProps) {
     <button
       disabled={isLoading}
       {...className(style.noteCard, isLoading ? shared.btnDisabled : "")}
-      onClick={() => handleEditNoteOpen(note)}
+      onClick={() => handleOpenEditNoteModal(note)}
       style={user?.theme === "light" ? { backgroundColor: colors[color] } : {}}
     >
       {title && (
