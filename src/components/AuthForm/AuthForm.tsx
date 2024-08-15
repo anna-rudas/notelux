@@ -10,27 +10,31 @@ import { signInSchema, signUpSchema } from "../../utilities/validationSchemas";
 type AuthFormProps = {
   handleSubmit: (v: FormikValues) => void;
   primaryButtonText: string;
-  isName?: boolean;
+  showUsername?: boolean;
 };
 
-function AuthForm({ handleSubmit, primaryButtonText, isName }: AuthFormProps) {
+function AuthForm({
+  handleSubmit,
+  primaryButtonText,
+  showUsername,
+}: AuthFormProps) {
   const { isLoading } = useContext(AppContext);
 
   return (
     <Formik
       initialValues={
-        isName
+        showUsername
           ? { username: "", email: "", password: "" }
           : { email: "", password: "" }
       }
-      validationSchema={isName ? signUpSchema : signInSchema}
+      validationSchema={showUsername ? signUpSchema : signInSchema}
       onSubmit={(values, { setSubmitting }) => {
         handleSubmit(values);
         setSubmitting(false);
       }}
     >
       <Form noValidate {...className(style.formCon)}>
-        {isName && (
+        {showUsername && (
           <GeneralInput
             type="text"
             config={{ name: "username" }}

@@ -100,7 +100,7 @@ function SignUp() {
           <AuthForm
             handleSubmit={handleSignUp}
             primaryButtonText="Sign up"
-            isName={true}
+            showUsername={true}
           />
           <div {...className(sharedPages.redirectCon)}>
             <span {...className(shared.normalText)}>
