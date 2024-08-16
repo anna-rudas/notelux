@@ -10,15 +10,12 @@ import { className } from "../../utilities/helpers";
 import { DashboardContext } from "../../context/DashboardContext";
 import { getUserEmailFromId } from "../../firestore/userService";
 
-type EmailChangeConfirmationProps = {
+type ShareNoteModalProps = {
   handleSubmit: (v: FormikValues) => void;
   handleCancel: () => void;
 };
 
-function ShareNoteModal({
-  handleSubmit,
-  handleCancel,
-}: EmailChangeConfirmationProps) {
+function ShareNoteModal({ handleSubmit, handleCancel }: ShareNoteModalProps) {
   const [activeNoteCollaborators, setActiveNoteCollaborators] = useState<
     string[] | null
   >(null);

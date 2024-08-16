@@ -1,250 +1,22 @@
 import React, { useContext, useState } from "react";
 import { AppContext } from "../../context/AppContext";
-import { className, evalErrorCode } from "../../utilities/helpers";
+import { className } from "../../utilities/helpers";
 import * as style from "./AccountSettings.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
 import * as sharedPages from "../../assets/styles/sharedPages.module.css";
-import DeleteUserConfirmation from "../../components/DeleteUserConfirmation";
-import { FirebaseError } from "firebase/app";
-import { useNavigate } from "react-router-dom";
-import GeneralInput from "../../components/GeneralInput";
-import ChangeEmailConfirmation from "../../components/ChangeEmailConfirmation";
-import ChangePasswordConfirmation from "../../components/ChangePasswordConfirmation";
+import DeleteUserModal from "../../components/DeleteUserModal";
+import ChangeEmailModal from "../../components/ChangeEmailModal";
+import ChangePasswordModal from "../../components/ChangePasswordModal";
 import PageWrapper from "../../components/PageWrapper";
-import { Formik, Form, FormikValues } from "formik";
-import { settingsSchema } from "../../utilities/validationSchemas";
-import { deleteUserDataInDb } from "../../firestore/userService";
-import {
-  reauthenticateUser,
-  deleteUserAccount,
-  changeUserPassword,
-  changeUserEmail,
-  sendVerificationEmail,
-  signOutUser,
-} from "../../firestore/authService";
+import ChangeUsername from "../../components/ChangeUsername";
 
 function AccountSettings() {
-  const {
-    user,
-    setToastMessageContent,
-    setUser,
-    setIsLoading,
-    isLoading,
-    setAuthenticatedUserId,
-  } = useContext(AppContext);
+  const { user, isLoading } = useContext(AppContext);
 
-  const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
-    useState(false);
+  const [isDeleteUserModalOpen, setIsDeleteUserModalOpen] = useState(false);
   const [isChangeEmailModalOpen, setIsChangeEmailModalOpen] = useState(false);
   const [isChangePasswordModalOpen, setIsChangePasswordModalOpen] =
     useState(false);
-  const navigate = useNavigate();
-
-  const handleDeleteUser = async (values: FormikValues) => {
-    setIsLoading(true);
-    if (user) {
-      try {
-        const reauthResult = await reauthenticateUser(
-          user.email,
-          values.password
-        );
-        if (reauthResult) {
-          try {
-            //delete user data
-            await deleteUserDataInDb(user.id);
-            //delete user account
-            await deleteUserAccount();
-            setToastMessageContent({
-              actionButtonText: "",
-              isPersisting: true,
-              showMessage: true,
-              isError: false,
-              description:
-                "User deletion successful. You will be automatically signed out",
-            });
-            setTimeout(() => {
-              navigate(0);
-            }, 5000);
-          } catch (error) {
-            console.error("Failed to delete user: ", error);
-            if (error instanceof FirebaseError) {
-              setToastMessageContent({
-                actionButtonText: "",
-                isPersisting: false,
-                showMessage: true,
-                isError: true,
-                description: `Failed to delete user: ${evalErrorCode(
-                  error.code
-                )}`,
-              });
-            }
-            setIsLoading(false);
-          }
-        }
-      } catch (error: unknown) {
-        console.error("Failed to reauthenticate user: ", error);
-        if (error instanceof FirebaseError) {
-          setToastMessageContent({
-            actionButtonText: "",
-            isPersisting: false,
-            showMessage: true,
-            isError: true,
-            description: `Failed to authenticate: ${evalErrorCode(error.code)}`,
-          });
-        }
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const handleChangeEmail = async (values: FormikValues) => {
-    setIsLoading(true);
-    if (user) {
-      try {
-        const reauthResult = await reauthenticateUser(
-          user.email,
-          values.password
-        );
-        if (reauthResult && user.email !== values.newEmail) {
-          try {
-            await changeUserEmail(values.newEmail);
-            try {
-              await sendVerificationEmail();
-              setUser({ ...user, email: values.newEmail });
-              setToastMessageContent({
-                actionButtonText: "",
-                isPersisting: true,
-                showMessage: true,
-                isError: false,
-                description:
-                  "Verification email sent. You will be automatically signed out",
-              });
-              setTimeout(async () => {
-                await signOutUser();
-                setUser(null);
-                setAuthenticatedUserId(null);
-                navigate(0);
-              }, 5000);
-            } catch (error: unknown) {
-              console.error("Failed to send verification email: ", error);
-              if (error instanceof FirebaseError) {
-                setToastMessageContent({
-                  actionButtonText: "",
-                  isPersisting: false,
-                  showMessage: true,
-                  isError: true,
-                  description: `Failed to send verification email: ${evalErrorCode(
-                    error.code
-                  )}`,
-                });
-              }
-              setIsLoading(false);
-            }
-          } catch (error: unknown) {
-            console.error("Failed to update email: ", error);
-            if (error instanceof FirebaseError) {
-              setToastMessageContent({
-                actionButtonText: "",
-                isPersisting: false,
-                showMessage: true,
-                isError: true,
-                description: `Failed to update email: ${evalErrorCode(
-                  error.code
-                )}`,
-              });
-              setIsLoading(false);
-            }
-          }
-        } else {
-          setToastMessageContent({
-            actionButtonText: "",
-            isPersisting: false,
-            showMessage: true,
-            description: "The new email address can't be the old email address",
-            isError: true,
-          });
-          setIsLoading(false);
-        }
-      } catch (error: unknown) {
-        console.error("Failed to reauthenticate user: ", error);
-        if (error instanceof FirebaseError) {
-          setToastMessageContent({
-            actionButtonText: "",
-            isPersisting: false,
-            showMessage: true,
-            isError: true,
-            description: `Failed to authenticate: ${evalErrorCode(error.code)}`,
-          });
-          setIsLoading(false);
-        }
-      }
-    }
-  };
-
-  const handleChangePassword = async (values: FormikValues) => {
-    setIsLoading(true);
-    if (user) {
-      try {
-        const reauthResult = await reauthenticateUser(
-          user.email,
-          values.oldPassword
-        );
-        if (reauthResult) {
-          try {
-            await changeUserPassword(values.newPassword);
-            setToastMessageContent({
-              actionButtonText: "",
-              isPersisting: false,
-              showMessage: true,
-              isError: false,
-              description: "Password successfully updated",
-            });
-          } catch (error: unknown) {
-            console.error("Failed to update password: ", error);
-            if (error instanceof FirebaseError) {
-              setToastMessageContent({
-                actionButtonText: "",
-                isPersisting: false,
-                showMessage: true,
-                isError: true,
-                description: `Failed to update password: ${evalErrorCode(
-                  error.code
-                )}`,
-              });
-            }
-          }
-        }
-      } catch (error: unknown) {
-        console.error("Failed to reauthenticate user: ", error);
-        if (error instanceof FirebaseError) {
-          setToastMessageContent({
-            actionButtonText: "",
-            isPersisting: false,
-            showMessage: true,
-            isError: true,
-            description: `Failed to authenticate: ${evalErrorCode(error.code)}`,
-          });
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    }
-  };
-
-  const handleChangeUsername = (values: FormikValues) => {
-    setIsLoading(true);
-    if (user) {
-      setUser({ ...user, username: values.username });
-    }
-    setToastMessageContent({
-      showMessage: true,
-      actionButtonText: "",
-      isPersisting: false,
-      isError: false,
-      description: "Username updated successfully",
-    });
-    setIsLoading(false);
-  };
 
   return (
     <PageWrapper>
@@ -296,41 +68,7 @@ function AccountSettings() {
             </div>
           </div>
           <div {...className(sharedPages.settingsItem)}>
-            <span {...className(shared.secondaryTitleText)}>Name</span>
-            <span>Set what name to display in the menu</span>
-            <Formik
-              initialValues={{ username: user?.username }}
-              validationSchema={settingsSchema}
-              onSubmit={(values, { setSubmitting }) => {
-                handleChangeUsername(values);
-                setSubmitting(false);
-              }}
-            >
-              <Form
-                noValidate
-                {...className(
-                  sharedPages.settingsItemCon,
-                  sharedPages.settingsItemConName
-                )}
-              >
-                <GeneralInput
-                  type="username"
-                  config={{ name: "username" }}
-                  placeholder="Username"
-                />
-                <button
-                  disabled={isLoading}
-                  type="submit"
-                  {...className(
-                    shared.btn,
-                    shared.buttonPrimary,
-                    isLoading ? shared.btnDisabled : ""
-                  )}
-                >
-                  Save changes
-                </button>
-              </Form>
-            </Formik>
+            <ChangeUsername />
           </div>
           <div {...className(shared.divider)} />
           <div {...className(sharedPages.settingsItem)}>
@@ -344,7 +82,7 @@ function AccountSettings() {
             <button
               disabled={isLoading}
               onClick={() => {
-                setIsDeleteConfirmationModalOpen(true);
+                setIsDeleteUserModalOpen(true);
               }}
               {...className(
                 shared.btn,
@@ -356,21 +94,18 @@ function AccountSettings() {
             </button>
           </div>
         </div>
-        {isDeleteConfirmationModalOpen && (
-          <DeleteUserConfirmation
-            handleSubmit={handleDeleteUser}
-            handleCancel={() => setIsDeleteConfirmationModalOpen(false)}
+        {isDeleteUserModalOpen && (
+          <DeleteUserModal
+            handleCancel={() => setIsDeleteUserModalOpen(false)}
           />
         )}
         {isChangeEmailModalOpen && (
-          <ChangeEmailConfirmation
-            handleSubmit={handleChangeEmail}
+          <ChangeEmailModal
             handleCancel={() => setIsChangeEmailModalOpen(false)}
           />
         )}
         {isChangePasswordModalOpen && (
-          <ChangePasswordConfirmation
-            handleSubmit={handleChangePassword}
+          <ChangePasswordModal
             handleCancel={() => setIsChangePasswordModalOpen(false)}
           />
         )}
