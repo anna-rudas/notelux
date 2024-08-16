@@ -129,7 +129,20 @@ function AppContextProvider({ children }: AppContextProviderProps) {
 
   useEffect(() => {
     if (user) {
-      updateUserInDb(user);
+      try {
+        updateUserInDb(user);
+      } catch (error: unknown) {
+        console.error("Failed to update user in database: ", error);
+        if (error instanceof FirebaseError) {
+          setToastMessageContent({
+            actionButtonText: "",
+            isPersisting: false,
+            showMessage: true,
+            isError: true,
+            description: `Failed to save changes: ${evalErrorCode(error.code)}`,
+          });
+        }
+      }
     }
   }, [user]);
 
