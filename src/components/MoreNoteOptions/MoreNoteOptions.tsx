@@ -9,15 +9,9 @@ import { DashboardContext } from "../../context/DashboardContext";
 
 type MoreNoteOptionsProps = {
   backgroundColor: string;
-  setIsDelConfOpen?: (value: boolean) => void;
-  setIsShareNoteOpen?: (value: boolean) => void;
 };
 
-function MoreNoteOptions({
-  backgroundColor,
-  setIsDelConfOpen,
-  setIsShareNoteOpen,
-}: MoreNoteOptionsProps) {
+function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
   const { isLoading, user } = useContext(AppContext);
 
   const {
@@ -25,6 +19,8 @@ function MoreNoteOptions({
     isMoreNoteOptionsOpen,
     moreNoteOptionsButtonRef,
     setIsMoreNoteOptionsOpen,
+    setIsDeleteNoteModalOpen,
+    setIsShareNoteModalOpen,
   } = useContext(DashboardContext);
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -65,9 +61,7 @@ function MoreNoteOptions({
           isLoading ? shared.btnDisabled : ""
         )}
         onClick={() => {
-          if (setIsShareNoteOpen) {
-            setIsShareNoteOpen(true);
-          }
+          setIsShareNoteModalOpen(true);
         }}
         type="button"
       >
@@ -81,9 +75,7 @@ function MoreNoteOptions({
           isLoading ? shared.btnDisabled : ""
         )}
         onClick={() => {
-          if (setIsDelConfOpen) {
-            setIsDelConfOpen(true);
-          }
+          setIsDeleteNoteModalOpen(true);
         }}
         type="button"
       >

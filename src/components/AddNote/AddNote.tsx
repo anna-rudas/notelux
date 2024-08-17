@@ -20,7 +20,7 @@ function AddNote() {
     resetDefaultNoteState,
   } = useContext(DashboardContext);
 
-  const handleSubmit = async () => {
+  const handleNewNoteSubmit = async () => {
     if (activeNote) {
       setIsLoading(true);
       try {
@@ -81,7 +81,7 @@ function AddNote() {
       )}
       {isAddNoteOpen && activeNote !== null && (
         <NoteForm
-          handleSubmit={handleSubmit}
+          handleSubmit={handleNewNoteSubmit}
           handleCancel={resetDefaultNoteState}
           noteFormStyle={style.addNoteForm}
           noteBodyStyle={style.addNoteBody}

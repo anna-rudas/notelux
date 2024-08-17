@@ -14,8 +14,6 @@ import { DashboardContext } from "../../context/DashboardContext";
 type NoteFormProps = {
   handleSubmit: () => void;
   handleCancel: () => void;
-  setIsDelConfOpen?: (value: boolean) => void;
-  setIsShareNoteOpen?: (value: boolean) => void;
   noteFormStyle: string;
   noteBodyStyle: string;
 };
@@ -23,8 +21,6 @@ type NoteFormProps = {
 function NoteForm({
   handleSubmit,
   handleCancel,
-  setIsDelConfOpen,
-  setIsShareNoteOpen,
   noteFormStyle,
   noteBodyStyle,
 }: NoteFormProps) {
@@ -146,8 +142,6 @@ function NoteForm({
         </div>
         {isMoreNoteOptionsOpen && (
           <MoreNoteOptions
-            setIsDelConfOpen={setIsDelConfOpen}
-            setIsShareNoteOpen={setIsShareNoteOpen}
             backgroundColor={colors[(activeNote as Note).color]}
           />
         )}

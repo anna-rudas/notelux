@@ -32,6 +32,10 @@ interface DashboardContextInterface {
   setNotes: (value: Array<Note>) => void;
   areNotesLoading: boolean;
   setAreNotesLoading: (value: boolean) => void;
+  isDeleteNoteModalOpen: boolean;
+  setIsDeleteNoteModalOpen: (value: boolean) => void;
+  isShareNoteModalOpen: boolean;
+  setIsShareNoteModalOpen: (value: boolean) => void;
 }
 
 const defaultContextValue: DashboardContextInterface = {
@@ -51,6 +55,10 @@ const defaultContextValue: DashboardContextInterface = {
   setNotes: () => {},
   areNotesLoading: true,
   setAreNotesLoading: () => {},
+  isDeleteNoteModalOpen: false,
+  setIsDeleteNoteModalOpen: () => {},
+  isShareNoteModalOpen: false,
+  setIsShareNoteModalOpen: () => {},
 };
 
 export const DashboardContext =
@@ -69,6 +77,10 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
   const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
   const [notes, setNotes] = useState<Note[]>([]);
   const [areNotesLoading, setAreNotesLoading] = useState(true);
+  // const [isDelConfOpen, setIsDelConfOpen] = useState(false);
+  // const [isShareNoteOpen, setIsShareNoteOpen] = useState(false);
+  const [isDeleteNoteModalOpen, setIsDeleteNoteModalOpen] = useState(false);
+  const [isShareNoteModalOpen, setIsShareNoteModalOpen] = useState(false);
 
   const notesColRef = collection(db, notesColKey);
 
@@ -150,6 +162,10 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
         setNotes,
         areNotesLoading,
         setAreNotesLoading,
+        isDeleteNoteModalOpen,
+        setIsDeleteNoteModalOpen,
+        isShareNoteModalOpen,
+        setIsShareNoteModalOpen,
       }}
     >
       {children}
