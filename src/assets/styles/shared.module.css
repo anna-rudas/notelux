@@ -34,19 +34,19 @@
 }
 
 .buttonPrimary {
-  border: 1.5px solid var(--text-secondary);
+  border: 2px solid var(--text-secondary);
   background-color: var(--text-secondary);
   color: var(--bg) !important;
 }
 
 .buttonSecondary {
-  border: 1.5px solid transparent !important;
+  border: 2px solid transparent !important;
   color: var(--text-secondary);
   background-color: var(--bg);
 }
 
 .buttonDanger {
-  border: 1.5px solid var(--danger);
+  border: 2px solid var(--danger);
   background-color: var(--danger);
   color: var(--lightest);
 }
@@ -67,7 +67,7 @@
   }
 
   .buttonNoteSecondary:hover {
-    border: 1.5px solid var(--text-primary) !important;
+    border: 2px solid var(--text-primary) !important;
   }
 
   .buttonPrimary:hover {
@@ -76,7 +76,7 @@
   }
 
   .buttonSecondary:hover {
-    border: 1.5px solid var(--text-secondary) !important;
+    border: 2px solid var(--text-secondary) !important;
   }
 
   .buttonDanger:hover {

@@ -49,7 +49,7 @@ function NoteForm({
       style={
         user?.theme === "light"
           ? { backgroundColor: colors[(activeNote as Note).color] }
-          : { border: `1.5px solid var(--text-secondary)` }
+          : { border: `2px solid var(--text-secondary)` }
       }
     >
       <input

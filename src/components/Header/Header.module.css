@@ -3,7 +3,7 @@
   background-color: var(--bg);
   gap: var(--gap);
   align-items: center;
-  border-bottom: 1.5px solid var(--text-secondary);
+  border-bottom: 2px solid var(--text-secondary);
   width: 100%;
   height: auto;
   max-height: 95px;

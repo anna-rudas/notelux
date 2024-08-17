@@ -14,7 +14,7 @@
   min-width: 100px;
   width: fit-content;
   height: fit-content;
-  border: 1.5px solid var(--text-secondary);
+  border: 2px solid var(--text-secondary);
   background-color: var(--bg);
 }
 
