@@ -10,7 +10,6 @@ export const signUpSchema = Yup.object({
     .required("This field is required"),
   password: Yup.string()
     .min(6, "Password is too short")
-    .max(20, "Password is too long")
     .required("This field is required"),
 });
 
@@ -37,7 +36,6 @@ export const resetPasswordSchema = Yup.object({
 export const changePasswordSchema = Yup.object({
   newPassword: Yup.string()
     .min(6, "Password is too short")
-    .max(20, "Password is too long")
     .required("This field is required"),
   oldPassword: Yup.string().required("This field is required"),
 });

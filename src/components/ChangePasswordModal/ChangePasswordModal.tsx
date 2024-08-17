@@ -80,13 +80,13 @@ function ChangePasswordModal({ handleCancel }: ChangePasswordModalProps) {
     >
       <GeneralInput
         type="password"
-        config={{ name: "newPassword" }}
-        placeholder="New password"
+        config={{ name: "oldPassword" }}
+        placeholder="Old password"
       />
       <GeneralInput
         type="password"
-        config={{ name: "oldPassword" }}
-        placeholder="Old password"
+        config={{ name: "newPassword" }}
+        placeholder="New password"
       />
     </ModalContainer>
   );
