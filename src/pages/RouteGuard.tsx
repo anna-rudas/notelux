@@ -68,15 +68,12 @@ function RouteGuard({ children }: RouteGuardProps) {
   }
 
   if (!isPageLoading) {
-    if (location.pathname === "/") {
-      return children;
-    }
-
     if (!user) {
       if (
         location.pathname === "/signup" ||
         location.pathname === "/signin" ||
-        location.pathname === "/resetpassword"
+        location.pathname === "/resetpassword" ||
+        location.pathname === "/"
       ) {
         return children;
       }
@@ -86,7 +83,8 @@ function RouteGuard({ children }: RouteGuardProps) {
     if (
       location.pathname === "/signup" ||
       location.pathname === "/signin" ||
-      location.pathname === "/resetpassword"
+      location.pathname === "/resetpassword" ||
+      location.pathname === "/"
     ) {
       return <Navigate to="/dashboard" replace />;
     }
