@@ -5,7 +5,7 @@ import GeneralInput from "../../components/GeneralInput";
 import { AppContext } from "../../context/AppContext";
 import { className } from "../../utilities/helpers";
 import * as shared from "../../assets/styles/shared.module.css";
-import * as sharedPages from "../../assets/styles/sharedPages.module.css";
+import * as style from "./ChangeUsername.module.css";
 
 function ChangeUsername() {
   const { user, setToastMessageContent, setUser, setIsLoading, isLoading } =
@@ -29,7 +29,9 @@ function ChangeUsername() {
   return (
     <>
       <span {...className(shared.secondaryTitleText)}>Name</span>
-      <span>Set what name to display in the menu</span>
+      <span {...className(shared.normalText)}>
+        Set what name to display in the menu
+      </span>
       <Formik
         initialValues={{ username: user?.username }}
         validationSchema={settingsSchema}
@@ -38,13 +40,7 @@ function ChangeUsername() {
           setSubmitting(false);
         }}
       >
-        <Form
-          noValidate
-          {...className(
-            sharedPages.settingsItemCon,
-            sharedPages.settingsItemConName
-          )}
-        >
+        <Form noValidate {...className(style.usernameCon)}>
           <GeneralInput
             type="username"
             config={{ name: "username" }}

@@ -31,13 +31,13 @@ function ModalContainer({
   return (
     <div {...className(style.confModalContainer)}>
       <div {...className(shared.shadow, style.confModal)}>
-        <span {...className(shared.secondaryTitleText, style.modalText)}>
+        <span {...className(shared.secondaryTitleText, shared.centerText)}>
           {title}
         </span>
         <span
           {...className(
             shared.normalText,
-            style.modalText,
+            shared.centerText,
             subtitle ? "" : shared.hide
           )}
         >

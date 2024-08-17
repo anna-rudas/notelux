@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import * as sharedPages from "../../assets/styles/sharedPages.module.css";
+import * as style from "./SignUp.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
 import { Link } from "react-router-dom";
 import { className, evalErrorCode } from "../../utilities/helpers";
@@ -95,14 +95,14 @@ function SignUp() {
   return (
     <PageWrapper useUnauthenticatedStyle={true}>
       <>
-        <div {...className(sharedPages.contentCon)}>
+        <div {...className(shared.pageContentContainer)}>
           <span {...className(shared.titleText)}>Sign up</span>
           <AuthForm
             handleSubmit={handleSignUp}
             primaryButtonText="Sign up"
             showUsername={true}
           />
-          <div {...className(sharedPages.redirectCon)}>
+          <div {...className(style.redirectCon)}>
             <span {...className(shared.normalText)}>
               Already have an account?
             </span>

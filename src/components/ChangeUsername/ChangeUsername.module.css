@@ -1,0 +1,6 @@
+.usernameCon {
+  display: flex;
+  gap: calc(var(--gap) * 2);
+  flex-direction: column;
+  align-items: flex-start;
+}

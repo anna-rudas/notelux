@@ -6,7 +6,7 @@ import LoadingIcon from "../../assets/icons/LoadingIcon";
 
 function PageLoading() {
   return (
-    <div className="wrapper">
+    <div {...className(shared.wrapper)}>
       <div {...className(style.loadingContainer)}>
         <span {...className(shared.titleText)}>Loading...</span>
         <LoadingIcon

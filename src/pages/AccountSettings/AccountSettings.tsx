@@ -3,7 +3,6 @@ import { AppContext } from "../../context/AppContext";
 import { className } from "../../utilities/helpers";
 import * as style from "./AccountSettings.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
-import * as sharedPages from "../../assets/styles/sharedPages.module.css";
 import DeleteUserModal from "../../components/DeleteUserModal";
 import ChangeEmailModal from "../../components/ChangeEmailModal";
 import ChangePasswordModal from "../../components/ChangePasswordModal";
@@ -23,15 +22,15 @@ function AccountSettings() {
       <>
         <div
           {...className(
-            sharedPages.contentCon,
+            shared.pageContentContainer,
             shared.normalText,
-            style.settingsCon
+            style.settingsContainer
           )}
         >
           <span {...className(shared.titleText)}>Account settings</span>
-          <div {...className(sharedPages.settingsItem)}>
+          <div {...className(style.settingsItem)}>
             <span {...className(shared.secondaryTitleText)}>Email address</span>
-            <div {...className(sharedPages.settingsItemCon)}>
+            <div {...className(style.settingsItemContent)}>
               <span>Your current email address: {user?.email}</span>
               <button
                 disabled={isLoading}
@@ -48,9 +47,9 @@ function AccountSettings() {
               </button>
             </div>
           </div>
-          <div {...className(sharedPages.settingsItem)}>
+          <div {...className(style.settingsItem)}>
             <span {...className(shared.secondaryTitleText)}>Password</span>
-            <div {...className(sharedPages.settingsItemCon)}>
+            <div {...className(style.settingsItemContent)}>
               <span>Set a new password</span>
               <button
                 disabled={isLoading}
@@ -67,11 +66,11 @@ function AccountSettings() {
               </button>
             </div>
           </div>
-          <div {...className(sharedPages.settingsItem)}>
+          <div {...className(style.settingsItem)}>
             <ChangeUsername />
           </div>
           <div {...className(shared.divider)} />
-          <div {...className(sharedPages.settingsItem)}>
+          <div {...className(style.settingsItem)}>
             <span {...className(shared.secondaryTitleText)}>
               Delete account
             </span>

@@ -43,3 +43,9 @@
   gap: calc(var(--gap) * 2);
   width: 100%;
 }
+
+@media (max-width: 350px) {
+  .msgContent {
+    width: 90%;
+  }
+}

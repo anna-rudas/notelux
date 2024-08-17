@@ -5,6 +5,8 @@ import { AppContext } from "../../context/AppContext";
 import { defaultTheme } from "../../data/constants";
 import ToastMessage from "../../components/ToastMessage";
 import ActionLoading from "../ActionLoading";
+import { className } from "../../utilities/helpers";
+import * as shared from "../../assets/styles/shared.module.css";
 
 type ModalContainerProps = {
   children?: JSX.Element;
@@ -22,7 +24,10 @@ function PageWrapper({
   const { isLoading, isDropdownOpen, user, toastMessageContent } =
     useContext(AppContext);
   return (
-    <div className="wrapper" data-theme={user?.theme ?? defaultTheme}>
+    <div
+      {...className(shared.wrapper)}
+      data-theme={user?.theme ?? defaultTheme}
+    >
       {isLoading && <ActionLoading />}
       <Header
         useLandingPageStyle={useLandingPageStyle}

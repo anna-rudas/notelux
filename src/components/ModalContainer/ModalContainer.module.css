@@ -1,5 +1,5 @@
 .confModalContainer {
-  position: absolute;
+  position: fixed;
   inset: 0;
   background-color: var(--bg-transparent);
   display: flex;
@@ -23,7 +23,7 @@
   width: fit-content;
   gap: calc(var(--gap) * 4);
   border: 2px solid var(--text-secondary);
-  min-width: 360px;
+  min-width: 300px;
 }
 
 .confModalBtnsCon {
@@ -48,6 +48,8 @@
   align-items: center;
 }
 
-.modalText {
-  text-align: center;
+@media (max-width: 350px) {
+  .confModal {
+    width: 90%;
+  }
 }

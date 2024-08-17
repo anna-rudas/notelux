@@ -1,4 +1,22 @@
-.settingsCon {
+.settingsContainer {
   align-items: flex-start;
-  padding: calc(var(--padding) * 3);
+}
+
+.settingsItem {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--gap) * 2);
+}
+
+.settingsItemContent {
+  display: flex;
+  gap: calc(var(--gap) * 2);
+  align-items: center;
+}
+
+@media (max-width: 350px) {
+  .settingsItemContent {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

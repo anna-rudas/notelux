@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import GeneralInput from "../../components/GeneralInput";
 import { AppContext } from "../../context/AppContext";
 import { className, evalErrorCode } from "../../utilities/helpers";
-import * as sharedPages from "../../assets/styles/sharedPages.module.css";
+import * as style from "./ResetPassword.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
 import { FirebaseError } from "firebase/app";
 import { Link } from "react-router-dom";
@@ -45,9 +45,9 @@ function ResetPassword() {
   return (
     <PageWrapper useUnauthenticatedStyle={true}>
       <>
-        <div {...className(sharedPages.contentCon)}>
+        <div {...className(shared.pageContentContainer)}>
           <span {...className(shared.titleText)}>Reset your password</span>
-          <span {...className(shared.normalText)}>
+          <span {...className(shared.normalText, shared.centerText)}>
             Enter your email address and we will send instructions on how to
             reset your password
           </span>
@@ -59,19 +59,13 @@ function ResetPassword() {
               setSubmitting(false);
             }}
           >
-            <Form
-              noValidate
-              {...className(
-                sharedPages.settingsItemCon,
-                sharedPages.settingsItemConName
-              )}
-            >
+            <Form noValidate {...className(style.formContainer)}>
               <GeneralInput
                 type="email"
                 config={{ name: "email" }}
                 placeholder="Email address"
               />
-              <div {...className(sharedPages.redirectCon)}>
+              <div {...className(style.redirectCon)}>
                 <Link
                   to="/signin"
                   {...className(
