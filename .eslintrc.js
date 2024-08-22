@@ -17,16 +17,20 @@ module.exports = {
       parserOptions: {
         sourceType: "script",
       },
+      parser: "espree", // Use the default JavaScript parser
     },
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
+    project: "./tsconfig.json",
   },
   plugins: ["@typescript-eslint", "react"],
   rules: {
     "@typescript-eslint/no-unused-vars": ["warn"],
+    "@typescript-eslint/no-unnecessary-condition": "error",
+    "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "no-else-return": "error",
   },
 };
