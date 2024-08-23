@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import * as style from "./SignIn.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { className, evalErrorCode } from "../../utilities/helpers";
 import { AppContext } from "../../context/AppContext";
 import { useNavigate } from "react-router-dom";
@@ -26,12 +26,27 @@ function SignIn() {
   } = useContext(AppContext);
 
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     if (user) {
       navigate("/dashboard");
     }
   }, [user]);
+
+  useEffect(() => {
+    if (searchParams.get("verificationEmailSent") === "true") {
+      setToastMessageContent({
+        actionButtonText: "",
+        isPersisting: true,
+        showMessage: true,
+        isError: false,
+        description:
+          "You have been signed out. Verify your new email address before signing in.",
+      });
+    }
+    setSearchParams({});
+  }, [searchParams]);
 
   const handleSendVerifyEmail = async () => {
     setIsLoading(true);

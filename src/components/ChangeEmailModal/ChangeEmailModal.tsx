@@ -8,25 +8,20 @@ import {
   reauthenticateUser,
   changeUserEmail,
   sendVerificationEmail,
-  signOutUser,
 } from "../../firestore/authService";
 import { FirebaseError } from "firebase/app";
 import { evalErrorCode } from "../../utilities/helpers";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { updateUserInDb } from "../../firestore/userService";
 
 type ChangeEmailModalProps = {
   handleCancel: () => void;
 };
 
 function ChangeEmailModal({ handleCancel }: ChangeEmailModalProps) {
-  const {
-    user,
-    setToastMessageContent,
-    setUser,
-    setIsLoading,
-    setAuthenticatedUserId,
-  } = useContext(AppContext);
+  const { user, setToastMessageContent, setIsLoading } = useContext(AppContext);
   const navigate = useNavigate();
+  const [, setSearchParams] = useSearchParams();
 
   const handleChangeEmail = async (values: FormikValues) => {
     setIsLoading(true);
@@ -41,21 +36,25 @@ function ChangeEmailModal({ handleCancel }: ChangeEmailModalProps) {
             await changeUserEmail(values.newEmail);
             try {
               await sendVerificationEmail();
-              setUser({ ...user, email: values.newEmail });
-              setToastMessageContent({
-                actionButtonText: "",
-                isPersisting: true,
-                showMessage: true,
-                isError: false,
-                description:
-                  "Verification email sent. You will be automatically signed out",
-              });
-              setTimeout(async () => {
-                await signOutUser();
-                setUser(null);
-                setAuthenticatedUserId(null);
+              try {
+                await updateUserInDb({ ...user, email: values.newEmail });
+                navigate("/signin");
+                setSearchParams({ verificationEmailSent: "true" });
                 navigate(0);
-              }, 5000);
+              } catch (error) {
+                console.error("Failed to update user in database: ", error);
+                if (error instanceof FirebaseError) {
+                  setToastMessageContent({
+                    actionButtonText: "",
+                    isPersisting: false,
+                    showMessage: true,
+                    isError: true,
+                    description: `Failed to update user in database: ${evalErrorCode(
+                      error.code
+                    )}`,
+                  });
+                }
+              }
             } catch (error: unknown) {
               console.error("Failed to send verification email: ", error);
               if (error instanceof FirebaseError) {
