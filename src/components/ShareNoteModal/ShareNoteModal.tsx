@@ -37,18 +37,17 @@ function ShareNoteModal() {
       const noteOwnerEmail = await getUserEmailFromId(ownerId);
       const noteCollaborators = await Promise.all(
         coUserIds.map(async (currentUserId) => {
-          const temp = await getUserEmailFromId(currentUserId);
-          return temp;
+          return await getUserEmailFromId(currentUserId);
         })
       );
 
-      const temp = noteCollaborators.map((curr) => {
+      const updatedNoteCollaborators = noteCollaborators.map((curr) => {
         if (curr === noteOwnerEmail) {
           return `${noteOwnerEmail} (owner)`;
         }
         return curr;
       });
-      setActiveNoteCollaborators(temp);
+      setActiveNoteCollaborators(updatedNoteCollaborators);
     } catch (error) {
       console.error("Error setting collaborators for note: ", error);
     }
@@ -136,9 +135,7 @@ function ShareNoteModal() {
     <ModalContainer
       title="Add a collaborator to this note"
       handleSubmit={handleShareNoteSubmit}
-      handleCancel={() => {
-        setIsShareNoteModalOpen(false);
-      }}
+      handleCancel={() => setIsShareNoteModalOpen(false)}
       primaryButtonText="Add user"
       initialFormValues={{ newUserEmail: "" }}
       validationSchema={shareNoteSchema}

@@ -37,13 +37,19 @@ function Notes() {
   }, []);
 
   useEffect(() => {
-    const numberOfColumns = user?.layout === "list" ? 1 : isSmallScreen ? 2 : 4;
+    const numberOfColumns = (() => {
+      if (user?.layout === "list") return 1;
+      return isSmallScreen ? 2 : 4;
+    })();
 
-    const temp1 = filterNotesBySearch(notes, search);
-    setFilteredNotes(temp1);
+    const filteredNotesResult = filterNotesBySearch(notes, search);
+    setFilteredNotes(filteredNotesResult);
 
-    const temp2 = sortNotesIntoColumns(temp1, numberOfColumns);
-    setSortedNotes(temp2);
+    const sortedNotesResult = sortNotesIntoColumns(
+      filteredNotesResult,
+      numberOfColumns
+    );
+    setSortedNotes(sortedNotesResult);
   }, [notes, search, isSmallScreen]);
 
   if (areNotesLoading) {

@@ -52,7 +52,7 @@ function ChangeUsername() {
             {...className(
               shared.btn,
               shared.buttonPrimary,
-              isLoading ? shared.btnDisabled : ""
+              isLoading && shared.btnDisabled
             )}
           >
             Save changes

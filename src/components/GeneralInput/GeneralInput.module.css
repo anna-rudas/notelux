@@ -33,20 +33,20 @@
   font-size: 1rem;
 }
 
-.buttonPassVisibility {
+.buttonPasswordVisibility {
   padding: 0 !important;
   border: none;
   background-color: var(--bg);
   display: flex;
 }
 
-.passVisibilityIcon {
+.passwordVisibilityIcon {
   width: 25px;
   height: 25px;
   stroke: var(--text-secondary);
 }
 
-.iconErrorStyle {
+.iconError {
   stroke: var(--danger);
 }
 
@@ -76,6 +76,6 @@
   display: none;
 }
 
-.labelErrorStyle {
+.labelError {
   color: var(--danger);
 }

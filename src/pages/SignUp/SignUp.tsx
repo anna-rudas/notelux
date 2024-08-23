@@ -32,7 +32,7 @@ function SignUp() {
     setIsLoading(true);
     try {
       const signUpResult = await signUpUser(values.email, values.password);
-      if (signUpResult && signUpResult.user.email) {
+      if (signUpResult.user.email) {
         try {
           await addUserInDb({
             id: signUpResult.user.uid,

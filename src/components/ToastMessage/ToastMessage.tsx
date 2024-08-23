@@ -58,7 +58,7 @@ function ToastMessage({
           {...className(
             shared.btn,
             shared.buttonSecondary,
-            isLoading ? shared.btnDisabled : ""
+            isLoading && shared.btnDisabled
           )}
           onClick={actionButtonHandle}
         >
@@ -76,7 +76,7 @@ function ToastMessage({
           {...className(
             shared.btn,
             style.buttonClose,
-            isLoading ? shared.btnDisabled : ""
+            isLoading && shared.btnDisabled
           )}
         >
           <CloseIcon {...className(style.closeIcon)} />

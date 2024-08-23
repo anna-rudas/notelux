@@ -6,7 +6,6 @@ import { colors } from "../../data/constants";
 import * as style from "./NoteForm.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
 import { AppContext } from "../../context/AppContext";
-import { Note } from "../../types/types";
 import MoreOptionsIcon from "../../assets/icons/MoreOptionsIcon";
 import MoreNoteOptions from "../MoreNoteOptions";
 import { DashboardContext } from "../../context/DashboardContext";
@@ -42,13 +41,17 @@ function NoteForm({
     handleSubmit();
   };
 
+  if (activeNote === null) {
+    return null;
+  }
+
   return (
     <form
       {...className(noteFormStyle, style.noteForm, shared.shadow)}
       onSubmit={handleSubmitForm}
       style={
         user?.theme === "light"
-          ? { backgroundColor: colors[(activeNote as Note).color] }
+          ? { backgroundColor: colors[activeNote.color] }
           : { border: `2px solid var(--text-secondary)` }
       }
     >
@@ -57,7 +60,7 @@ function NoteForm({
         maxLength={1000}
         type="text"
         placeholder="Title"
-        value={(activeNote as Note).title}
+        value={activeNote.title}
         onChange={(event) => setActiveNoteValue("title", event.target.value)}
         autoFocus
       />
@@ -65,7 +68,7 @@ function NoteForm({
         {...className(noteBodyStyle, style.noteBody)}
         placeholder="Take a note"
         maxLength={20000}
-        value={(activeNote as Note).body}
+        value={activeNote.body}
         onChange={(event) => setActiveNoteValue("body", event.target.value)}
       ></textarea>
       <div {...className(style.noteSet)}>
@@ -74,14 +77,9 @@ function NoteForm({
             <>
               <button
                 ref={moreNoteOptionsButtonRef}
-                onClick={() => {
-                  setIsMoreNoteOptionsOpen(!isMoreNoteOptionsOpen);
-                }}
+                onClick={() => setIsMoreNoteOptionsOpen(!isMoreNoteOptionsOpen)}
                 disabled={isLoading}
-                {...className(
-                  style.btnIcon,
-                  isLoading ? shared.btnDisabled : ""
-                )}
+                {...className(style.btnIcon, isLoading && shared.btnDisabled)}
                 type="button"
                 title="More options"
               >
@@ -92,11 +90,9 @@ function NoteForm({
           <div {...className(style.paletteCon)}>
             <button
               disabled={isLoading}
-              {...className(style.btnIcon, isLoading ? shared.btnDisabled : "")}
+              {...className(style.btnIcon, isLoading && shared.btnDisabled)}
               type="button"
-              onClick={() => {
-                setIsPaletteOpen(!isPaletteOpen);
-              }}
+              onClick={() => setIsPaletteOpen(!isPaletteOpen)}
               title="Colors"
             >
               <PaletteIcon {...className(style.paletteIcon)} />
@@ -111,12 +107,10 @@ function NoteForm({
             {...className(
               shared.btn,
               style.buttonNotePrimary,
-              isLoading ? shared.btnDisabled : ""
+              isLoading && shared.btnDisabled
             )}
             style={
-              user?.theme === "light"
-                ? { color: colors[(activeNote as Note).color] }
-                : {}
+              user?.theme === "light" ? { color: colors[activeNote.color] } : {}
             }
             type="submit"
           >
@@ -131,7 +125,7 @@ function NoteForm({
             )}
             style={
               user?.theme === "light"
-                ? { backgroundColor: colors[(activeNote as Note).color] }
+                ? { backgroundColor: colors[activeNote.color] }
                 : { backgroundColor: "var(--bg)" }
             }
             type="button"
@@ -141,9 +135,7 @@ function NoteForm({
           </button>
         </div>
         {isMoreNoteOptionsOpen && (
-          <MoreNoteOptions
-            backgroundColor={colors[(activeNote as Note).color]}
-          />
+          <MoreNoteOptions backgroundColor={colors[activeNote.color]} />
         )}
       </div>
     </form>

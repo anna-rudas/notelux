@@ -19,9 +19,7 @@ function ChangeBackground() {
               name="bg-color"
               value={currentInput}
               aria-label={currentInput}
-              onClick={() => {
-                setActiveNoteValue("color", currentInput);
-              }}
+              onClick={() => setActiveNoteValue("color", currentInput)}
               autoFocus={currentInput === activeNote?.color}
             />
             <div

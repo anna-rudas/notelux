@@ -48,21 +48,14 @@ function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
 
   return (
     <div
-      style={
-        user?.theme === "light" ? { backgroundColor: backgroundColor } : {}
-      }
+      style={user?.theme === "light" ? { backgroundColor } : {}}
       ref={moreNoteOptionsRef}
       {...className(style.moreOptionsCon, shared.shadow)}
     >
       <button
         disabled={isLoading}
-        {...className(
-          style.moreOptionsItem,
-          isLoading ? shared.btnDisabled : ""
-        )}
-        onClick={() => {
-          setIsShareNoteModalOpen(true);
-        }}
+        {...className(style.moreOptionsItem, isLoading && shared.btnDisabled)}
+        onClick={() => setIsShareNoteModalOpen(true)}
         type="button"
       >
         <ShareIcon {...className(style.shareIcon)} />
@@ -70,13 +63,8 @@ function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
       </button>
       <button
         disabled={isLoading}
-        {...className(
-          style.moreOptionsItem,
-          isLoading ? shared.btnDisabled : ""
-        )}
-        onClick={() => {
-          setIsDeleteNoteModalOpen(true);
-        }}
+        {...className(style.moreOptionsItem, isLoading && shared.btnDisabled)}
+        onClick={() => setIsDeleteNoteModalOpen(true)}
         type="button"
       >
         <TrashIcon {...className(style.trashIcon)} />

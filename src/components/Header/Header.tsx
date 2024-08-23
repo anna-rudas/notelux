@@ -50,44 +50,38 @@ function Header({ useLandingPageStyle, useUnauthenticatedStyle }: HeaderProps) {
     );
   }
 
-  {
-    return (
-      <div
-        {...className(
-          style.gridHeader,
-          style.generalHeader,
-          !isDashboardPage && style.flexHeader
-        )}
-      >
-        <AppLogo />
-        <>
-          {isDashboardPage && <SearchInput />}
+  return (
+    <div
+      {...className(
+        style.gridHeader,
+        style.generalHeader,
+        !isDashboardPage && style.flexHeader
+      )}
+    >
+      <AppLogo />
+      <>
+        {isDashboardPage && <SearchInput />}
 
-          <div {...className(style.setCon)}>
-            {isDashboardPage && <LayoutToggle />}
-            <ThemeToggle />
-            <button
-              disabled={isLoading}
-              ref={dropdownButtonRef}
-              id="account-btn"
-              onClick={() => {
-                setTimeout(() => {
-                  setIsDropdownOpen(!isDropdownOpen);
-                });
-              }}
-              {...className(
-                shared.btn,
-                style.buttonAccount,
-                isLoading ? shared.btnDisabled : ""
-              )}
-            >
-              <UserIcon {...className(style.accountIcon)} />
-            </button>
-          </div>
-        </>
-      </div>
-    );
-  }
+        <div {...className(style.setCon)}>
+          {isDashboardPage && <LayoutToggle />}
+          <ThemeToggle />
+          <button
+            disabled={isLoading}
+            ref={dropdownButtonRef}
+            id="account-btn"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            {...className(
+              shared.btn,
+              style.buttonAccount,
+              isLoading && shared.btnDisabled
+            )}
+          >
+            <UserIcon {...className(style.accountIcon)} />
+          </button>
+        </div>
+      </>
+    </div>
+  );
 }
 
 export default Header;

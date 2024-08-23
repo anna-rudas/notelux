@@ -38,7 +38,7 @@ function ModalContainer({
           {...className(
             shared.normalText,
             shared.centerText,
-            subtitle ? "" : shared.hide
+            !subtitle && shared.hide
           )}
         >
           {subtitle}
@@ -62,7 +62,7 @@ function ModalContainer({
                   shared.btn,
                   shared.buttonPrimary,
                   style.btn,
-                  isLoading ? shared.btnDisabled : ""
+                  isLoading && shared.btnDisabled
                 )}
               >
                 {primaryButtonText}
@@ -70,14 +70,12 @@ function ModalContainer({
               <button
                 type="button"
                 disabled={isLoading}
-                onClick={() => {
-                  handleCancel();
-                }}
+                onClick={handleCancel}
                 {...className(
                   shared.btn,
                   shared.buttonSecondary,
                   style.btn,
-                  isLoading ? shared.btnDisabled : ""
+                  isLoading && shared.btnDisabled
                 )}
               >
                 Cancel

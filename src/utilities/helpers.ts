@@ -26,6 +26,7 @@ export const sortNotesIntoColumns: (
 
   notes.sort((a, b) => a.title.length - b.title.length);
 
+  // distribute note length evenly across columns
   for (let i = 0; i < notes.length; i = i + numberOfColumns) {
     for (let j = 0; j < numberOfColumns; j++) {
       if (notes[i + j]) {

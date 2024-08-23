@@ -70,15 +70,19 @@ function AccountDropdown() {
     }
   };
 
+  if (user === null) {
+    return null;
+  }
+
   return (
     <div
       ref={dropdownRef}
       id="account-modal"
       {...className(style.dropdownCon, shared.shadow)}
     >
-      <span {...className(style.emailText)}>{user?.email}</span>
+      <span {...className(style.emailText)}>{user.email}</span>
       <span {...className(shared.titleText)}>
-        Hello, {user?.username !== "" ? user?.username : "guest"}!
+        Hello, {user.username !== "" ? user.username : "guest"}!
       </span>
       <div {...className(style.dropdownItemCon)}>
         <Link to="/dashboard" {...className(style.dropdownItem)}>
@@ -90,14 +94,8 @@ function AccountDropdown() {
         <div {...className(shared.divider)} />
         <button
           disabled={isLoading}
-          onClick={() => {
-            handleSignOutUser();
-          }}
-          {...className(
-            shared.btn,
-            style.dropdownItem,
-            isLoading ? shared.btnDisabled : ""
-          )}
+          onClick={handleSignOutUser}
+          {...className(shared.btn, style.dropdownItem)}
         >
           Sign out
         </button>

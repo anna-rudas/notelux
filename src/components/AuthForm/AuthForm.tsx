@@ -57,7 +57,7 @@ function AuthForm({
           {...className(
             shared.btn,
             shared.buttonPrimary,
-            isLoading ? shared.btnDisabled : ""
+            isLoading && shared.btnDisabled
           )}
         >
           {primaryButtonText}

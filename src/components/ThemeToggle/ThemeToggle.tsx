@@ -10,25 +10,25 @@ import { className } from "../../utilities/helpers";
 function ThemeToggle() {
   const { user, setUser, isLoading } = useContext(AppContext);
 
+  if (user === null) {
+    return null;
+  }
+
   const toggleTheme = () => {
-    if (user) {
-      setUser({
-        ...user,
-        theme: user.theme === "light" ? "dark" : "light",
-      });
-    }
+    setUser({
+      ...user,
+      theme: user.theme === "light" ? "dark" : "light",
+    });
   };
 
   return (
     <button
       disabled={isLoading}
-      {...className(style.iconBtn, isLoading ? shared.btnDisabled : "")}
+      {...className(style.iconBtn, isLoading && shared.btnDisabled)}
       onClick={toggleTheme}
-      title={
-        (user?.theme ?? defaultTheme) === "light" ? "Light mode" : "Dark mode"
-      }
+      title={user.theme === "light" ? "Light mode" : "Dark mode"}
     >
-      {(user?.theme ?? defaultTheme) === "light" ? (
+      {user.theme === "light" ? (
         <SunIcon {...className(style.icon)} />
       ) : (
         <MoonIcon {...className(style.icon)} />

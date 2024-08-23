@@ -34,13 +34,11 @@ function AccountSettings() {
               <span>Your current email address: {user?.email}</span>
               <button
                 disabled={isLoading}
-                onClick={() => {
-                  setIsChangeEmailModalOpen(true);
-                }}
+                onClick={() => setIsChangeEmailModalOpen(true)}
                 {...className(
                   shared.btn,
                   shared.buttonSecondary,
-                  isLoading ? shared.btnDisabled : ""
+                  isLoading && shared.btnDisabled
                 )}
               >
                 Change
@@ -53,13 +51,11 @@ function AccountSettings() {
               <span>Set a new password</span>
               <button
                 disabled={isLoading}
-                onClick={() => {
-                  setIsChangePasswordModalOpen(true);
-                }}
+                onClick={() => setIsChangePasswordModalOpen(true)}
                 {...className(
                   shared.btn,
                   shared.buttonSecondary,
-                  isLoading ? shared.btnDisabled : ""
+                  isLoading && shared.btnDisabled
                 )}
               >
                 Change
@@ -80,13 +76,11 @@ function AccountSettings() {
             </span>
             <button
               disabled={isLoading}
-              onClick={() => {
-                setIsDeleteUserModalOpen(true);
-              }}
+              onClick={() => setIsDeleteUserModalOpen(true)}
               {...className(
                 shared.btn,
                 shared.buttonDanger,
-                isLoading ? shared.btnDisabled : ""
+                isLoading && shared.btnDisabled
               )}
             >
               Delete account

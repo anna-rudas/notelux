@@ -82,7 +82,7 @@ function ResetPassword() {
                   {...className(
                     shared.btn,
                     shared.buttonPrimary,
-                    isLoading ? shared.btnDisabled : ""
+                    isLoading && shared.btnDisabled
                   )}
                 >
                   Reset password

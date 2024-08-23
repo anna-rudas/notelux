@@ -23,9 +23,10 @@ function GeneralInput(props: GeneralInputProps<string>) {
     setError(meta.touched && meta.error);
   }, [meta]);
 
-  const togglePassVisibility = () => {
+  const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
   if (props.type == "password") {
     return (
       <div {...className(style.textInputHelper)}>
@@ -35,7 +36,7 @@ function GeneralInput(props: GeneralInputProps<string>) {
               style.labelText,
               shared.smallText,
               !field.value && style.hideLabelText,
-              error && style.labelErrorStyle
+              error && style.labelError
             )}
             htmlFor={props.config.name}
           >
@@ -54,24 +55,24 @@ function GeneralInput(props: GeneralInputProps<string>) {
             disabled={isLoading}
             {...className(
               shared.btn,
-              style.buttonPassVisibility,
-              isLoading ? shared.btnDisabled : ""
+              style.buttonPasswordVisibility,
+              isLoading && shared.btnDisabled
             )}
             type="button"
-            onClick={togglePassVisibility}
+            onClick={togglePasswordVisibility}
           >
             {showPassword ? (
               <HideEyeIcon
                 {...className(
-                  style.passVisibilityIcon,
-                  error && style.iconErrorStyle
+                  style.passwordVisibilityIcon,
+                  error && style.iconError
                 )}
               />
             ) : (
               <ShowEyeIcon
                 {...className(
-                  style.passVisibilityIcon,
-                  error && style.iconErrorStyle
+                  style.passwordVisibilityIcon,
+                  error && style.iconError
                 )}
               />
             )}
@@ -99,7 +100,7 @@ function GeneralInput(props: GeneralInputProps<string>) {
             style.labelText,
             shared.smallText,
             !field.value && style.hideLabelText,
-            error && style.labelErrorStyle
+            error && style.labelError
           )}
           htmlFor={props.config.name}
         >
