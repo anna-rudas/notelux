@@ -79,7 +79,7 @@ function NoteForm({
                 ref={moreNoteOptionsButtonRef}
                 onClick={() => setIsMoreNoteOptionsOpen(!isMoreNoteOptionsOpen)}
                 disabled={isLoading}
-                {...className(style.btnIcon, isLoading && shared.btnDisabled)}
+                {...className(style.btnIcon)}
                 type="button"
                 title="More options"
               >
@@ -90,7 +90,7 @@ function NoteForm({
           <div {...className(style.paletteCon)}>
             <button
               disabled={isLoading}
-              {...className(style.btnIcon, isLoading && shared.btnDisabled)}
+              {...className(style.btnIcon)}
               type="button"
               onClick={() => setIsPaletteOpen(!isPaletteOpen)}
               title="Colors"
@@ -104,11 +104,7 @@ function NoteForm({
         <div {...className(style.btnsCon)}>
           <button
             disabled={isLoading}
-            {...className(
-              shared.btn,
-              style.buttonNotePrimary,
-              isLoading && shared.btnDisabled
-            )}
+            {...className(shared.btn, style.buttonNotePrimary)}
             style={
               user?.theme === "light" ? { color: colors[activeNote.color] } : {}
             }
@@ -118,11 +114,7 @@ function NoteForm({
           </button>
           <button
             disabled={isLoading}
-            {...className(
-              shared.btn,
-              style.buttonNoteSecondary,
-              isLoading ? shared.btnDisabled : ""
-            )}
+            {...className(shared.btn, style.buttonNoteSecondary)}
             style={
               user?.theme === "light"
                 ? { backgroundColor: colors[activeNote.color] }

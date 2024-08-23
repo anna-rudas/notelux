@@ -54,7 +54,7 @@ function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
     >
       <button
         disabled={isLoading}
-        {...className(style.moreOptionsItem, isLoading && shared.btnDisabled)}
+        {...className(style.moreOptionsItem)}
         onClick={() => setIsShareNoteModalOpen(true)}
         type="button"
       >
@@ -63,7 +63,7 @@ function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
       </button>
       <button
         disabled={isLoading}
-        {...className(style.moreOptionsItem, isLoading && shared.btnDisabled)}
+        {...className(style.moreOptionsItem)}
         onClick={() => setIsDeleteNoteModalOpen(true)}
         type="button"
       >

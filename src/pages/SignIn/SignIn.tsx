@@ -17,7 +17,6 @@ import {
 
 function SignIn() {
   const {
-    isLoading,
     setIsLoading,
     user,
     toastMessageContent,
@@ -127,11 +126,7 @@ function SignIn() {
             </span>
             <Link
               to="/signup"
-              {...className(
-                shared.btn,
-                shared.buttonSecondary,
-                isLoading && shared.disabledLink
-              )}
+              {...className(shared.btn, shared.buttonSecondary)}
             >
               Sign up
             </Link>
@@ -139,11 +134,7 @@ function SignIn() {
           <div {...className(shared.divider)}></div>
           <Link
             to="/resetpassword"
-            {...className(
-              shared.btn,
-              shared.buttonSecondary,
-              isLoading && shared.disabledLink
-            )}
+            {...className(shared.btn, shared.buttonSecondary)}
           >
             Forgot password?
           </Link>

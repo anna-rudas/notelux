@@ -26,7 +26,7 @@ function NoteCard({ note }: NoteCardProps) {
   return (
     <button
       disabled={isLoading}
-      {...className(style.noteCard, isLoading && shared.btnDisabled)}
+      {...className(style.noteCard)}
       onClick={() => handleOpenEditNoteModal(note)}
       style={user?.theme === "light" ? { backgroundColor: colors[color] } : {}}
     >

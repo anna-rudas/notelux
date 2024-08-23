@@ -35,11 +35,7 @@ function AccountSettings() {
               <button
                 disabled={isLoading}
                 onClick={() => setIsChangeEmailModalOpen(true)}
-                {...className(
-                  shared.btn,
-                  shared.buttonSecondary,
-                  isLoading && shared.btnDisabled
-                )}
+                {...className(shared.btn, shared.buttonSecondary)}
               >
                 Change
               </button>
@@ -52,11 +48,7 @@ function AccountSettings() {
               <button
                 disabled={isLoading}
                 onClick={() => setIsChangePasswordModalOpen(true)}
-                {...className(
-                  shared.btn,
-                  shared.buttonSecondary,
-                  isLoading && shared.btnDisabled
-                )}
+                {...className(shared.btn, shared.buttonSecondary)}
               >
                 Change
               </button>
@@ -77,11 +69,7 @@ function AccountSettings() {
             <button
               disabled={isLoading}
               onClick={() => setIsDeleteUserModalOpen(true)}
-              {...className(
-                shared.btn,
-                shared.buttonDanger,
-                isLoading && shared.btnDisabled
-              )}
+              {...className(shared.btn, shared.buttonDanger)}
             >
               Delete account
             </button>

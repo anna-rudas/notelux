@@ -54,11 +54,7 @@ function AuthForm({
         <button
           disabled={isLoading}
           type="submit"
-          {...className(
-            shared.btn,
-            shared.buttonPrimary,
-            isLoading && shared.btnDisabled
-          )}
+          {...className(shared.btn, shared.buttonPrimary)}
         >
           {primaryButtonText}
         </button>

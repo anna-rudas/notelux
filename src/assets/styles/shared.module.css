@@ -23,10 +23,6 @@
   box-shadow: 3px 3px 0px 0px var(--text-secondary);
 }
 
-.disabledLink {
-  pointer-events: none;
-}
-
 .divider {
   border: 1px solid var(--border);
   width: 100%;
@@ -58,6 +54,11 @@
   align-items: center;
 }
 
+.btn:disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
 .buttonPrimary {
   border: 2px solid var(--text-secondary);
   background-color: var(--text-secondary);
@@ -74,11 +75,6 @@
   border: 2px solid var(--danger);
   background-color: var(--danger);
   color: var(--lightest);
-}
-
-.btnDisabled {
-  cursor: default;
-  pointer-events: none;
 }
 
 @media (hover: hover) {
@@ -107,11 +103,6 @@
   .buttonDanger:hover {
     background-color: var(--lightest);
     color: var(--text-primary);
-  }
-
-  .btnDisabled:hover {
-    cursor: default;
-    pointer-events: none;
   }
 }
 
@@ -188,6 +179,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
 }
 
 .loadingIcon {

@@ -19,7 +19,6 @@ import { useErrorBoundary } from "react-error-boundary";
 
 function SignUp() {
   const {
-    isLoading,
     setIsLoading,
     setToastMessageContent,
     setUser,
@@ -108,11 +107,7 @@ function SignUp() {
             </span>
             <Link
               to="/signin"
-              {...className(
-                shared.btn,
-                shared.buttonSecondary,
-                isLoading && shared.disabledLink
-              )}
+              {...className(shared.btn, shared.buttonSecondary)}
             >
               Sign in
             </Link>

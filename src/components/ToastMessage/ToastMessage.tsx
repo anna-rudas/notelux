@@ -55,11 +55,7 @@ function ToastMessage({
               ? { backgroundColor: "var(--error-bg)" }
               : { backgroundColor: "var(--success-bg)" }
           }
-          {...className(
-            shared.btn,
-            shared.buttonSecondary,
-            isLoading && shared.btnDisabled
-          )}
+          {...className(shared.btn, shared.buttonSecondary)}
           onClick={actionButtonHandle}
         >
           {actionButtonText}
@@ -73,11 +69,7 @@ function ToastMessage({
               ? { backgroundColor: "var(--error-bg)" }
               : { backgroundColor: "var(--success-bg)" }
           }
-          {...className(
-            shared.btn,
-            style.buttonClose,
-            isLoading && shared.btnDisabled
-          )}
+          {...className(shared.btn, style.buttonClose)}
         >
           <CloseIcon {...className(style.closeIcon)} />
         </button>

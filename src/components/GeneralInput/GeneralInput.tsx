@@ -53,11 +53,7 @@ function GeneralInput(props: GeneralInputProps<string>) {
 
           <button
             disabled={isLoading}
-            {...className(
-              shared.btn,
-              style.buttonPasswordVisibility,
-              isLoading && shared.btnDisabled
-            )}
+            {...className(shared.btn, style.buttonPasswordVisibility)}
             type="button"
             onClick={togglePasswordVisibility}
           >

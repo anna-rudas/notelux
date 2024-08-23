@@ -70,11 +70,7 @@ function Header({ useLandingPageStyle, useUnauthenticatedStyle }: HeaderProps) {
             ref={dropdownButtonRef}
             id="account-btn"
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            {...className(
-              shared.btn,
-              style.buttonAccount,
-              isLoading && shared.btnDisabled
-            )}
+            {...className(shared.btn, style.buttonAccount)}
           >
             <UserIcon {...className(style.accountIcon)} />
           </button>

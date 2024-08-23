@@ -7,13 +7,10 @@ import * as shared from "../../assets/styles/shared.module.css";
 import { AppContext } from "../../context/AppContext";
 
 function AppLogo() {
-  const { user, isLoading } = useContext(AppContext);
+  const { user } = useContext(AppContext);
   return (
     <div {...className(style.logoCon)}>
-      <Link
-        {...className(style.linkCon, isLoading && shared.disabledLink)}
-        to={user ? "/dashboard" : "/"}
-      >
+      <Link {...className(style.linkCon)} to={user ? "/dashboard" : "/"}>
         <NoteLuxLogo {...className(style.notesIcon)} />
         <span {...className(style.name, shared.titleText)}>NoteLux</span>
       </Link>

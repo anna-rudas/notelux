@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import GridIcon from "../../assets/icons/GridIcon";
 import ListIcon from "../../assets/icons/ListIcon";
 import * as style from "./LayoutToggle.module.css";
-import * as shared from "../../assets/styles/shared.module.css";
 import { AppContext } from "../../context/AppContext";
 import { className } from "../../utilities/helpers";
 
@@ -23,7 +22,7 @@ function LayoutToggle() {
   return (
     <button
       disabled={isLoading}
-      {...className(style.iconBtn, isLoading && shared.btnDisabled)}
+      {...className(style.iconBtn)}
       onClick={toggleLayout}
       title={user.layout === "grid" ? "Grid view" : "List view"}
     >

@@ -68,22 +68,14 @@ function ResetPassword() {
               <div {...className(style.redirectCon)}>
                 <Link
                   to="/signin"
-                  {...className(
-                    shared.btn,
-                    shared.buttonSecondary,
-                    isLoading && shared.disabledLink
-                  )}
+                  {...className(shared.btn, shared.buttonSecondary)}
                 >
                   Go back
                 </Link>
                 <button
                   disabled={isLoading}
                   type="submit"
-                  {...className(
-                    shared.btn,
-                    shared.buttonPrimary,
-                    isLoading && shared.btnDisabled
-                  )}
+                  {...className(shared.btn, shared.buttonPrimary)}
                 >
                   Reset password
                 </button>
