@@ -1,5 +1,5 @@
 import React from "react";
-import PageWrapper from "../../components/PageWrapper";
+import PageWrapper from "../../components/templates/PageWrapper";
 import { className } from "../../utilities/helpers";
 import * as shared from "../../assets/styles/shared.module.css";
 import * as textStyles from "../../assets/styles/text-styles.module.css";

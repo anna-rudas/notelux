@@ -8,8 +8,8 @@ import { className, evalErrorCode } from "../../utilities/helpers";
 import { AppContext } from "../../context/AppContext";
 import { useNavigate } from "react-router-dom";
 import { FirebaseError } from "firebase/app";
-import AuthForm from "../../components/AuthForm";
-import PageWrapper from "../../components/PageWrapper";
+import AuthForm from "../../components/templates/AuthForm";
+import PageWrapper from "../../components/templates/PageWrapper";
 import { FormikValues } from "formik";
 import {
   signInUser,

@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import GeneralInput from "../../components/GeneralInput";
+import GeneralInput from "../../components/inputs/GeneralInput";
 import { AppContext } from "../../context/AppContext";
 import { className, evalErrorCode } from "../../utilities/helpers";
 import * as style from "./ResetPassword.module.css";
@@ -8,7 +8,7 @@ import * as buttons from "../../assets/styles/buttons.module.css";
 import * as textStyles from "../../assets/styles/text-styles.module.css";
 import { FirebaseError } from "firebase/app";
 import { Link } from "react-router-dom";
-import PageWrapper from "../../components/PageWrapper";
+import PageWrapper from "../../components/templates/PageWrapper";
 import { Formik, Form, FormikValues } from "formik";
 import { resetPasswordSchema } from "../../utilities/validationSchemas";
 import { resetUserPassword } from "../../firestore/authService";

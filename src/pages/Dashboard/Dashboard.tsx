@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import AddNote from "../../components/AddNote";
-import EditNoteModal from "../../components/EditNoteModal";
-import Notes from "../../components/Notes";
-import PageWrapper from "../../components/PageWrapper";
+import AddNote from "../../components/features/AddNote";
+import EditNoteModal from "../../components/modals/EditNoteModal";
+import Notes from "../../components/features/Notes";
+import PageWrapper from "../../components/templates/PageWrapper";
 import { DashboardContext } from "../../context/DashboardContext";
 
 function Dashboard() {

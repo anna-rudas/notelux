@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../context/AppContext";
 import { Navigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import PageLoading from "../components/PageLoading/PageLoading";
+import PageLoading from "../components/loaders/PageLoading/PageLoading";
 import { useLocation } from "react-router-dom";
 import { defaultToastMessage } from "../data/constants";
 import { FirebaseError } from "firebase/app";

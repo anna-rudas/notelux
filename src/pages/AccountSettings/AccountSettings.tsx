@@ -5,11 +5,11 @@ import * as style from "./AccountSettings.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
 import * as buttons from "../../assets/styles/buttons.module.css";
 import * as textStyles from "../../assets/styles/text-styles.module.css";
-import DeleteUserModal from "../../components/DeleteUserModal";
-import ChangeEmailModal from "../../components/ChangeEmailModal";
-import ChangePasswordModal from "../../components/ChangePasswordModal";
-import PageWrapper from "../../components/PageWrapper";
-import ChangeUsername from "../../components/ChangeUsername";
+import DeleteUserModal from "../../components/modals/DeleteUserModal";
+import ChangeEmailModal from "../../components/modals/ChangeEmailModal";
+import ChangePasswordModal from "../../components/modals/ChangePasswordModal";
+import PageWrapper from "../../components/templates/PageWrapper";
+import ChangeUsername from "../../components/features/ChangeUsername";
 
 function AccountSettings() {
   const { user, isLoading } = useContext(AppContext);

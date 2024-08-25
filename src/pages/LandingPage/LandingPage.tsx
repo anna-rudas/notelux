@@ -1,5 +1,5 @@
 import React from "react";
-import PageWrapper from "../../components/PageWrapper";
+import PageWrapper from "../../components/templates/PageWrapper";
 import { className } from "../../utilities/helpers";
 import * as style from "./LandingPage.module.css";
 import * as buttons from "../../assets/styles/buttons.module.css";

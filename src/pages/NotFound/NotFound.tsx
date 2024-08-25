@@ -4,7 +4,7 @@ import * as buttons from "../../assets/styles/buttons.module.css";
 import * as textStyles from "../../assets/styles/text-styles.module.css";
 import { className } from "../../utilities/helpers";
 import { Link } from "react-router-dom";
-import PageWrapper from "../../components/PageWrapper";
+import PageWrapper from "../../components/templates/PageWrapper";
 
 function NotFound() {
   return (
