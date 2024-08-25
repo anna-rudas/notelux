@@ -3,6 +3,8 @@ import { AppContext } from "../../context/AppContext";
 import { className } from "../../utilities/helpers";
 import * as style from "./AccountSettings.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
+import * as buttons from "../../assets/styles/buttons.module.css";
+import * as textStyles from "../../assets/styles/text-styles.module.css";
 import DeleteUserModal from "../../components/DeleteUserModal";
 import ChangeEmailModal from "../../components/ChangeEmailModal";
 import ChangePasswordModal from "../../components/ChangePasswordModal";
@@ -23,32 +25,32 @@ function AccountSettings() {
         <div
           {...className(
             shared.pageContentContainer,
-            shared.normalText,
+            textStyles.normalText,
             style.settingsContainer
           )}
         >
-          <span {...className(shared.titleText)}>Account settings</span>
+          <span {...className(textStyles.titleText)}>Account settings</span>
           <div {...className(style.settingsItem)}>
-            <span {...className(shared.secondaryTitleText)}>Email address</span>
+            <span {...className(textStyles.subtitleText)}>Email address</span>
             <div {...className(style.settingsItemContent)}>
               <span>Your current email address: {user?.email}</span>
               <button
                 disabled={isLoading}
                 onClick={() => setIsChangeEmailModalOpen(true)}
-                {...className(shared.btn, shared.buttonSecondary)}
+                {...className(buttons.btn, buttons.buttonSecondary)}
               >
                 Change
               </button>
             </div>
           </div>
           <div {...className(style.settingsItem)}>
-            <span {...className(shared.secondaryTitleText)}>Password</span>
+            <span {...className(textStyles.subtitleText)}>Password</span>
             <div {...className(style.settingsItemContent)}>
               <span>Set a new password</span>
               <button
                 disabled={isLoading}
                 onClick={() => setIsChangePasswordModalOpen(true)}
-                {...className(shared.btn, shared.buttonSecondary)}
+                {...className(buttons.btn, buttons.buttonSecondary)}
               >
                 Change
               </button>
@@ -59,9 +61,7 @@ function AccountSettings() {
           </div>
           <div {...className(shared.divider)} />
           <div {...className(style.settingsItem)}>
-            <span {...className(shared.secondaryTitleText)}>
-              Delete account
-            </span>
+            <span {...className(textStyles.subtitleText)}>Delete account</span>
             <span>
               If you delete your account you won&apos;t be able to access your
               notes anymore
@@ -69,7 +69,7 @@ function AccountSettings() {
             <button
               disabled={isLoading}
               onClick={() => setIsDeleteUserModalOpen(true)}
-              {...className(shared.btn, shared.buttonDanger)}
+              {...className(buttons.btn, buttons.buttonDanger)}
             >
               Delete account
             </button>

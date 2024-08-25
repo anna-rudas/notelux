@@ -5,6 +5,8 @@ import ColorPalette from "../ColorPalette";
 import { colors } from "../../data/constants";
 import * as style from "./NoteForm.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
+import * as buttons from "../../assets/styles/buttons.module.css";
+import * as textStyles from "../../assets/styles/text-styles.module.css";
 import { AppContext } from "../../context/AppContext";
 import MoreOptionsIcon from "../../assets/icons/MoreOptionsIcon";
 import MoreNoteOptions from "../MoreNoteOptions";
@@ -56,7 +58,7 @@ function NoteForm({
       }
     >
       <input
-        {...className(style.noteTitle)}
+        {...className(style.noteTitle, textStyles.subtitleText)}
         maxLength={1000}
         type="text"
         placeholder="Title"
@@ -65,7 +67,7 @@ function NoteForm({
         autoFocus
       />
       <textarea
-        {...className(noteBodyStyle, style.noteBody)}
+        {...className(noteBodyStyle, style.noteBody, textStyles.noteBodyText)}
         placeholder="Take a note"
         maxLength={20000}
         value={activeNote.body}
@@ -104,7 +106,7 @@ function NoteForm({
         <div {...className(style.btnsCon)}>
           <button
             disabled={isLoading}
-            {...className(shared.btn, style.buttonNotePrimary)}
+            {...className(buttons.btn, style.buttonNotePrimary)}
             style={
               user?.theme === "light" ? { color: colors[activeNote.color] } : {}
             }
@@ -114,7 +116,7 @@ function NoteForm({
           </button>
           <button
             disabled={isLoading}
-            {...className(shared.btn, style.buttonNoteSecondary)}
+            {...className(buttons.btn, style.buttonNoteSecondary)}
             style={
               user?.theme === "light"
                 ? { backgroundColor: colors[activeNote.color] }

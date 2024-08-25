@@ -5,7 +5,8 @@ import {
   sortNotesIntoColumns,
 } from "../../utilities/helpers";
 import * as style from "./Notes.module.css";
-import * as shared from "../../assets/styles/shared.module.css";
+import * as textStyles from "../../assets/styles/text-styles.module.css";
+import * as modals from "../../assets/styles/modals.module.css";
 import NoteCard from "../NoteCard";
 import { AppContext } from "../../context/AppContext";
 import { DashboardContext } from "../../context/DashboardContext";
@@ -56,7 +57,7 @@ function Notes() {
     return (
       <div {...className(style.notesContainer)}>
         <LoadingIcon
-          {...className(shared.loadingIcon, shared.loadingAnimation)}
+          {...className(modals.loadingIcon, modals.loadingAnimation)}
         />
       </div>
     );
@@ -67,9 +68,7 @@ function Notes() {
       {filteredNotes.length > 0 ? (
         <div {...className(style.notesContent)}>
           {search !== "" && (
-            <span {...className(shared.secondaryTitleText)}>
-              Search results:
-            </span>
+            <span {...className(textStyles.subtitleText)}>Search results:</span>
           )}
           <div
             {...className(
@@ -88,11 +87,11 @@ function Notes() {
           </div>
         </div>
       ) : search !== "" ? (
-        <span {...className(shared.secondaryTitleText)}>
+        <span {...className(textStyles.subtitleText)}>
           No notes match your search
         </span>
       ) : (
-        <span {...className(shared.secondaryTitleText)}>
+        <span {...className(textStyles.subtitleText)}>
           You have no notes saved
         </span>
       )}

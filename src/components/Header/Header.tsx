@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { className } from "../../utilities/helpers";
 import * as style from "./Header.module.css";
-import * as shared from "../../assets/styles/shared.module.css";
+import * as buttons from "../../assets/styles/buttons.module.css";
 import { AppContext } from "../../context/AppContext";
 import { Link } from "react-router-dom";
 import UserIcon from "../../assets/icons/UserIcon";
@@ -33,13 +33,17 @@ function Header({ useLandingPageStyle, useUnauthenticatedStyle }: HeaderProps) {
           <div {...className(style.navBtnsContainer)}>
             <Link
               to="/signup"
-              {...className(shared.btn, shared.buttonSecondary)}
+              {...className(buttons.btn, buttons.buttonSecondary)}
             >
               Create a new account
             </Link>
             <Link
               to="/signin"
-              {...className(shared.btn, shared.buttonPrimary, style.signInBtn)}
+              {...className(
+                buttons.btn,
+                buttons.buttonPrimary,
+                style.signInBtn
+              )}
             >
               <span>Sign in</span>
               <SignInIcon {...className(style.signInIcon)} />
@@ -70,7 +74,7 @@ function Header({ useLandingPageStyle, useUnauthenticatedStyle }: HeaderProps) {
             ref={dropdownButtonRef}
             id="account-btn"
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            {...className(shared.btn, style.buttonAccount)}
+            {...className(buttons.btn, style.buttonAccount)}
           >
             <UserIcon {...className(style.accountIcon)} />
           </button>

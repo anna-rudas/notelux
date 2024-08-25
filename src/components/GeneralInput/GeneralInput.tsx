@@ -3,7 +3,8 @@ import ShowEyeIcon from "../../assets/icons/ShowEyeIcon";
 import HideEyeIcon from "../../assets/icons/HideEyeIcon";
 import { className } from "../../utilities/helpers";
 import * as style from "./GeneralInput.module.css";
-import * as shared from "../../assets/styles/shared.module.css";
+import * as buttons from "../../assets/styles/buttons.module.css";
+import * as textStyles from "../../assets/styles/text-styles.module.css";
 import { AppContext } from "../../context/AppContext";
 import { useField, FieldHookConfig } from "formik";
 
@@ -34,7 +35,7 @@ function GeneralInput(props: GeneralInputProps<string>) {
           <label
             {...className(
               style.labelText,
-              shared.smallText,
+              textStyles.smallText,
               !field.value && style.hideLabelText,
               error && style.labelError
             )}
@@ -53,7 +54,7 @@ function GeneralInput(props: GeneralInputProps<string>) {
 
           <button
             disabled={isLoading}
-            {...className(shared.btn, style.buttonPasswordVisibility)}
+            {...className(buttons.btn, style.buttonPasswordVisibility)}
             type="button"
             onClick={togglePasswordVisibility}
           >
@@ -75,7 +76,7 @@ function GeneralInput(props: GeneralInputProps<string>) {
           </button>
         </div>
         {error ? (
-          <div {...className(style.validationErrorText, shared.smallText)}>
+          <div {...className(style.validationErrorText, textStyles.smallText)}>
             {meta.error}
           </div>
         ) : null}
@@ -94,7 +95,7 @@ function GeneralInput(props: GeneralInputProps<string>) {
         <label
           {...className(
             style.labelText,
-            shared.smallText,
+            textStyles.smallText,
             !field.value && style.hideLabelText,
             error && style.labelError
           )}
@@ -112,7 +113,7 @@ function GeneralInput(props: GeneralInputProps<string>) {
         />
       </div>
       {error ? (
-        <div {...className(style.validationErrorText, shared.smallText)}>
+        <div {...className(style.validationErrorText, textStyles.smallText)}>
           {meta.error}
         </div>
       ) : null}

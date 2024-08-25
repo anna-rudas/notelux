@@ -3,7 +3,7 @@ import NoteLuxLogo from "../../assets/icons/NoteLuxLogo";
 import { Link } from "react-router-dom";
 import { className } from "../../utilities/helpers";
 import * as style from "./AppLogo.module.css";
-import * as shared from "../../assets/styles/shared.module.css";
+import * as textStyles from "../../assets/styles/text-styles.module.css";
 import { AppContext } from "../../context/AppContext";
 
 function AppLogo() {
@@ -12,7 +12,7 @@ function AppLogo() {
     <div {...className(style.logoCon)}>
       <Link {...className(style.linkCon)} to={user ? "/dashboard" : "/"}>
         <NoteLuxLogo {...className(style.notesIcon)} />
-        <span {...className(style.name, shared.titleText)}>NoteLux</span>
+        <span {...className(style.name, textStyles.titleText)}>NoteLux</span>
       </Link>
     </div>
   );

@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import * as style from "./ModalContainer.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
+import * as buttons from "../../assets/styles/buttons.module.css";
+import * as textStyles from "../../assets/styles/text-styles.module.css";
 import { className } from "../../utilities/helpers";
 import { AppContext } from "../../context/AppContext";
 import { Formik, Form, FormikValues } from "formik";
@@ -31,13 +33,13 @@ function ModalContainer({
   return (
     <div {...className(style.confModalContainer)}>
       <div {...className(shared.shadow, style.confModal)}>
-        <span {...className(shared.secondaryTitleText, shared.centerText)}>
+        <span {...className(textStyles.subtitleText, textStyles.centerText)}>
           {title}
         </span>
         <span
           {...className(
-            shared.normalText,
-            shared.centerText,
+            textStyles.normalText,
+            textStyles.centerText,
             !subtitle && shared.hide
           )}
         >
@@ -58,7 +60,7 @@ function ModalContainer({
               <button
                 disabled={isLoading}
                 type="submit"
-                {...className(shared.btn, shared.buttonPrimary, style.btn)}
+                {...className(buttons.btn, buttons.buttonPrimary, style.btn)}
               >
                 {primaryButtonText}
               </button>
@@ -66,7 +68,7 @@ function ModalContainer({
                 type="button"
                 disabled={isLoading}
                 onClick={handleCancel}
-                {...className(shared.btn, shared.buttonSecondary, style.btn)}
+                {...className(buttons.btn, buttons.buttonSecondary, style.btn)}
               >
                 Cancel
               </button>

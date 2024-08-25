@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { className, readyNoteTextPreview } from "../../utilities/helpers";
-import * as style from "./NoteCard.module.css";
 import { colors } from "../../data/constants";
 import { AppContext } from "../../context/AppContext";
 import { Note } from "../../types/types";
-import * as shared from "../../assets/styles/shared.module.css";
+import * as style from "./NoteCard.module.css";
+import * as textStyles from "../../assets/styles/text-styles.module.css";
 import { DashboardContext } from "../../context/DashboardContext";
 
 type NoteCardProps = {
@@ -31,11 +31,11 @@ function NoteCard({ note }: NoteCardProps) {
       style={user?.theme === "light" ? { backgroundColor: colors[color] } : {}}
     >
       {title && (
-        <span {...className(style.noteTitle, shared.noteTitleText)}>
+        <span {...className(style.noteTitle, textStyles.noteTitleText)}>
           {readyNoteTextPreview(title)}
         </span>
       )}
-      <span {...className(style.noteBody, shared.noteBodyText)}>
+      <span {...className(style.noteBody, textStyles.noteBodyText)}>
         {readyNoteTextPreview(body)}
       </span>
     </button>

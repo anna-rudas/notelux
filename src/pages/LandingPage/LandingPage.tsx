@@ -2,7 +2,8 @@ import React from "react";
 import PageWrapper from "../../components/PageWrapper";
 import { className } from "../../utilities/helpers";
 import * as style from "./LandingPage.module.css";
-import * as shared from "../../assets/styles/shared.module.css";
+import * as buttons from "../../assets/styles/buttons.module.css";
+import * as textStyles from "../../assets/styles/text-styles.module.css";
 import { Link } from "react-router-dom";
 import BlobImage from "../../assets/images/landingpage_blob";
 import ArrowIcon from "../../assets/icons/ArrowIcon";
@@ -16,8 +17,8 @@ function LandingPage() {
             <div {...className(style.textContent)}>
               <div
                 {...className(
-                  shared.welcomeTextPrimary,
-                  shared.oneWordOneLine,
+                  textStyles.landingPagePrimary,
+                  textStyles.oneWordOneLine,
                   style.titleTextContent
                 )}
               >
@@ -31,15 +32,15 @@ function LandingPage() {
                   <span>thoughts</span>
                 </div>
               </div>
-              <span {...className(shared.welcomeTextSecondary)}>
+              <span {...className(textStyles.landingPageSecondary)}>
                 With <mark>Notelux</mark> it&apos;s easy
               </span>
               <Link
                 to="/signin"
                 {...className(
-                  shared.btn,
-                  shared.buttonPrimary,
-                  shared.welcomeTextSecondary,
+                  buttons.btn,
+                  buttons.buttonPrimary,
+                  textStyles.landingPageSecondary,
                   style.actionBtn
                 )}
               >
@@ -48,7 +49,9 @@ function LandingPage() {
             </div>
 
             <a href="#pageHero" {...className(style.scrollToHero)}>
-              <span {...className(shared.normalText)}>Discover Notelux</span>
+              <span {...className(textStyles.normalText)}>
+                Discover Notelux
+              </span>
               <ArrowIcon {...className(style.arrowIcon)} />
             </a>
           </div>
@@ -56,15 +59,17 @@ function LandingPage() {
             <div {...className(style.heroContent)}>
               <div {...className(style.row, style.topRow)}>
                 <div {...className(style.heroItem, style.rectangle)}>
-                  <span {...className(shared.noteTitleText)}>Customize</span>
-                  <span {...className(shared.noteBodyText)}>
+                  <span {...className(textStyles.noteTitleText)}>
+                    Customize
+                  </span>
+                  <span {...className(textStyles.noteBodyText)}>
                     Choose the best colors for your notes - use the dark theme
                     for a more distraction-free experience.
                   </span>
                 </div>
                 <div {...className(style.heroItem, style.circle)}>
-                  <span {...className(shared.noteTitleText)}>Organize</span>
-                  <span {...className(shared.noteBodyText)}>
+                  <span {...className(textStyles.noteTitleText)}>Organize</span>
+                  <span {...className(textStyles.noteBodyText)}>
                     Just log in and create - it&apos;s that easy! Use Notelux to
                     never forget what&apos;s important.
                   </span>
@@ -79,8 +84,10 @@ function LandingPage() {
                   <BlobImage {...className(style.blobImage)} />
                 </div>
                 <div {...className(style.heroItem, style.drop)}>
-                  <span {...className(shared.noteTitleText)}>Collaborate</span>
-                  <span {...className(shared.noteBodyText)}>
+                  <span {...className(textStyles.noteTitleText)}>
+                    Collaborate
+                  </span>
+                  <span {...className(textStyles.noteBodyText)}>
                     Share your notes with others and work together to make sure
                     no task is left undone.
                   </span>
@@ -93,9 +100,9 @@ function LandingPage() {
               <Link
                 to="/signin"
                 {...className(
-                  shared.btn,
-                  shared.buttonPrimary,
-                  shared.welcomeTextSecondary,
+                  buttons.btn,
+                  buttons.buttonPrimary,
+                  textStyles.landingPageSecondary,
                   style.actionBtn
                 )}
               >

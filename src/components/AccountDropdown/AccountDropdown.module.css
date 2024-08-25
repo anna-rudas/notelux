@@ -26,11 +26,8 @@
 }
 
 .dropdownItem {
-  color: var(--text-secondary);
   background-color: var(--bg);
   white-space: nowrap;
-  font-size: 1rem;
-  font-weight: 500 !important;
   padding: var(--padding);
   border: none;
 }

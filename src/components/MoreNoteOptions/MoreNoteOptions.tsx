@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import * as style from "./MoreNoteOptions.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
+import * as textStyles from "../../assets/styles/text-styles.module.css";
 import { className } from "../../utilities/helpers";
 import { AppContext } from "../../context/AppContext";
 import TrashIcon from "../../assets/icons/TrashIcon";
@@ -59,7 +60,7 @@ function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
         type="button"
       >
         <ShareIcon {...className(style.shareIcon)} />
-        <span {...className(shared.normalText)}>Share note</span>
+        <span {...className(textStyles.normalText)}>Share note</span>
       </button>
       <button
         disabled={isLoading}
@@ -68,7 +69,7 @@ function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
         type="button"
       >
         <TrashIcon {...className(style.trashIcon)} />
-        <span {...className(shared.normalText)}>Delete note</span>
+        <span {...className(textStyles.normalText)}>Delete note</span>
       </button>
     </div>
   );

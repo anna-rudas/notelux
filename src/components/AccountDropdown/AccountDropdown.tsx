@@ -2,6 +2,8 @@ import React, { useContext, useEffect } from "react";
 import { className } from "../../utilities/helpers";
 import * as style from "./AccountDropdown.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
+import * as buttons from "../../assets/styles/buttons.module.css";
+import * as textStyles from "../../assets/styles/text-styles.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import { FirebaseError } from "firebase/app";
@@ -81,21 +83,31 @@ function AccountDropdown() {
       {...className(style.dropdownCon, shared.shadow)}
     >
       <span {...className(style.emailText)}>{user.email}</span>
-      <span {...className(shared.titleText)}>
+      <span {...className(textStyles.titleText)}>
         Hello, {user.username !== "" ? user.username : "guest"}!
       </span>
       <div {...className(style.dropdownItemCon)}>
-        <Link to="/dashboard" {...className(style.dropdownItem)}>
+        <Link
+          to="/dashboard"
+          {...className(style.dropdownItem, textStyles.subtitleText)}
+        >
           Dashboard
         </Link>
-        <Link to="/settings" {...className(style.dropdownItem)}>
+        <Link
+          to="/settings"
+          {...className(style.dropdownItem, textStyles.subtitleText)}
+        >
           Account settings
         </Link>
         <div {...className(shared.divider)} />
         <button
           disabled={isLoading}
           onClick={handleSignOutUser}
-          {...className(shared.btn, style.dropdownItem)}
+          {...className(
+            buttons.btn,
+            style.dropdownItem,
+            textStyles.subtitleText
+          )}
         >
           Sign out
         </button>

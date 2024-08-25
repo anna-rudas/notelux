@@ -1,0 +1,86 @@
+/* general */
+
+.titleText {
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+  font-size: 1.7rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.subtitleText {
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.normalText {
+  color: var(--text-secondary);
+  font-weight: 300;
+  font-size: 1rem;
+}
+
+.smallText {
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* notes */
+
+.noteTitleText {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.noteBodyText {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
+/* text align */
+
+.centerText {
+  text-align: center;
+}
+
+.oneWordOneLine {
+  word-spacing: 1000px;
+}
+
+/* landing page */
+
+.landingPagePrimary {
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+  font-size: 4rem;
+  color: var(--text-secondary);
+  letter-spacing: 2px;
+}
+
+.landingPageSecondary {
+  font-weight: 500;
+  font-size: 1.7rem;
+  color: var(--text-secondary);
+}
+
+@media (max-height: 700px) {
+  .landingPagePrimary {
+    font-size: 3rem;
+  }
+  .landingPageSecondary {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .landingPagePrimary {
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+  }
+  .landingPageSecondary {
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,64 @@
+.btn {
+  font-size: 1rem;
+  font-weight: 500;
+  padding: var(--padding);
+  border-radius: calc(var(--border-radius) * 2);
+  transition: 0.2s ease-in-out;
+  white-space: nowrap;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn:disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+.buttonPrimary {
+  border: 2px solid var(--text-secondary);
+  background-color: var(--text-secondary);
+  color: var(--bg) !important;
+}
+
+.buttonSecondary {
+  border: 2px solid transparent !important;
+  color: var(--text-secondary);
+  background-color: var(--bg);
+}
+
+.buttonDanger {
+  border: 2px solid var(--danger);
+  background-color: var(--danger);
+  color: var(--lightest);
+}
+
+@media (hover: hover) {
+  .btn:hover {
+    cursor: pointer;
+  }
+
+  .buttonNotePrimary:hover {
+    background-color: transparent;
+    color: var(--text-primary) !important;
+  }
+
+  .buttonNoteSecondary:hover {
+    border: 2px solid var(--text-primary) !important;
+  }
+
+  .buttonPrimary:hover {
+    background-color: var(--bg);
+    color: var(--text-secondary) !important;
+  }
+
+  .buttonSecondary:hover {
+    border: 2px solid var(--text-secondary) !important;
+  }
+
+  .buttonDanger:hover {
+    background-color: var(--lightest);
+    color: var(--text-primary);
+  }
+}

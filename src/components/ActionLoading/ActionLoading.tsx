@@ -1,15 +1,15 @@
 import React from "react";
-import * as shared from "../../assets/styles/shared.module.css";
 import * as style from "./ActionLoading.module.css";
+import * as modals from "../../assets/styles/modals.module.css";
 import { className } from "../../utilities/helpers";
 import LoadingIcon from "../../assets/icons/LoadingIcon";
 
 function ActionLoading() {
   return (
-    <div {...className(shared.loadingModal)}>
+    <div {...className(modals.loadingModal)}>
       <div {...className(style.loadingIconContainer)}>
         <LoadingIcon
-          {...className(shared.loadingIcon, shared.loadingAnimation)}
+          {...className(modals.loadingIcon, modals.loadingAnimation)}
         />
       </div>
     </div>

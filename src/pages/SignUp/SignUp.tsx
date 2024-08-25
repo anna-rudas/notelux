@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import * as style from "./SignUp.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
+import * as buttons from "../../assets/styles/buttons.module.css";
+import * as textStyles from "../../assets/styles/text-styles.module.css";
 import { Link } from "react-router-dom";
 import { className, evalErrorCode } from "../../utilities/helpers";
 import { AppContext } from "../../context/AppContext";
@@ -95,19 +97,19 @@ function SignUp() {
     <PageWrapper useUnauthenticatedStyle={true}>
       <>
         <div {...className(shared.pageContentContainer)}>
-          <span {...className(shared.titleText)}>Sign up</span>
+          <span {...className(textStyles.titleText)}>Sign up</span>
           <AuthForm
             handleSubmit={handleSignUp}
             primaryButtonText="Sign up"
             showUsername={true}
           />
           <div {...className(style.redirectCon)}>
-            <span {...className(shared.normalText)}>
+            <span {...className(textStyles.normalText)}>
               Already have an account?
             </span>
             <Link
               to="/signin"
-              {...className(shared.btn, shared.buttonSecondary)}
+              {...className(buttons.btn, buttons.buttonSecondary)}
             >
               Sign in
             </Link>

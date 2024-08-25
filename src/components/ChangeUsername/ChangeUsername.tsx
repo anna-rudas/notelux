@@ -4,8 +4,9 @@ import { settingsSchema } from "../../utilities/validationSchemas";
 import GeneralInput from "../../components/GeneralInput";
 import { AppContext } from "../../context/AppContext";
 import { className } from "../../utilities/helpers";
-import * as shared from "../../assets/styles/shared.module.css";
 import * as style from "./ChangeUsername.module.css";
+import * as buttons from "../../assets/styles/buttons.module.css";
+import * as textStyles from "../../assets/styles/text-styles.module.css";
 
 function ChangeUsername() {
   const { user, setToastMessageContent, setUser, setIsLoading, isLoading } =
@@ -28,8 +29,8 @@ function ChangeUsername() {
 
   return (
     <>
-      <span {...className(shared.secondaryTitleText)}>Name</span>
-      <span {...className(shared.normalText)}>
+      <span {...className(textStyles.subtitleText)}>Name</span>
+      <span {...className(textStyles.normalText)}>
         Set what name to display in the menu
       </span>
       <Formik
@@ -49,7 +50,7 @@ function ChangeUsername() {
           <button
             disabled={isLoading}
             type="submit"
-            {...className(shared.btn, shared.buttonPrimary)}
+            {...className(buttons.btn, buttons.buttonPrimary)}
           >
             Save changes
           </button>

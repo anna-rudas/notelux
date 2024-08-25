@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import * as style from "./SignIn.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
+import * as buttons from "../../assets/styles/buttons.module.css";
+import * as textStyles from "../../assets/styles/text-styles.module.css";
 import { Link, useSearchParams } from "react-router-dom";
 import { className, evalErrorCode } from "../../utilities/helpers";
 import { AppContext } from "../../context/AppContext";
@@ -118,15 +120,15 @@ function SignIn() {
     >
       <>
         <div {...className(shared.pageContentContainer)}>
-          <span {...className(shared.titleText)}>Sign in</span>
+          <span {...className(textStyles.titleText)}>Sign in</span>
           <AuthForm handleSubmit={handleSignIn} primaryButtonText="Sign in" />
           <div {...className(style.redirectCon)}>
-            <span {...className(shared.normalText)}>
+            <span {...className(textStyles.normalText)}>
               Don&apos;t have an account yet?
             </span>
             <Link
               to="/signup"
-              {...className(shared.btn, shared.buttonSecondary)}
+              {...className(buttons.btn, buttons.buttonSecondary)}
             >
               Sign up
             </Link>
@@ -134,7 +136,7 @@ function SignIn() {
           <div {...className(shared.divider)}></div>
           <Link
             to="/resetpassword"
-            {...className(shared.btn, shared.buttonSecondary)}
+            {...className(buttons.btn, buttons.buttonSecondary)}
           >
             Forgot password?
           </Link>

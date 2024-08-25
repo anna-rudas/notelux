@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { className, evalErrorCode } from "../../utilities/helpers";
 import * as style from "./AddNote.module.css";
+import * as textStyles from "../../assets/styles/text-styles.module.css";
 import NoteForm from "../NoteForm";
 import { AppContext } from "../../context/AppContext";
 import { DashboardContext } from "../../context/DashboardContext";
@@ -75,7 +76,7 @@ function AddNote() {
         <input
           type="text"
           placeholder="Take a note"
-          {...className(style.addNoteInput)}
+          {...className(style.addNoteInput, textStyles.subtitleText)}
           onFocus={handleOpeningAddNote}
         />
       )}

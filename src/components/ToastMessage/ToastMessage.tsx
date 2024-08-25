@@ -5,6 +5,8 @@ import CloseIcon from "../../assets/icons/CloseIcon";
 import { className } from "../../utilities/helpers";
 import * as style from "./ToastMessage.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
+import * as buttons from "../../assets/styles/buttons.module.css";
+import * as textStyles from "../../assets/styles/text-styles.module.css";
 import { AppContext } from "../../context/AppContext";
 
 type ToastMessageProps = {
@@ -42,10 +44,10 @@ function ToastMessage({
         <SuccessIcon {...className(style.icon)} />
       )}
       <div {...className(style.textCon)}>
-        <span {...className(shared.secondaryTitleText)}>
+        <span {...className(textStyles.subtitleText)}>
           {isError ? "Error" : "Success"}
         </span>
-        <span {...className(shared.normalText)}>{description}</span>
+        <span {...className(textStyles.normalText)}>{description}</span>
       </div>
       {actionButtonText ? (
         <button
@@ -55,7 +57,7 @@ function ToastMessage({
               ? { backgroundColor: "var(--error-bg)" }
               : { backgroundColor: "var(--success-bg)" }
           }
-          {...className(shared.btn, shared.buttonSecondary)}
+          {...className(buttons.btn, buttons.buttonSecondary)}
           onClick={actionButtonHandle}
         >
           {actionButtonText}
@@ -69,7 +71,7 @@ function ToastMessage({
               ? { backgroundColor: "var(--error-bg)" }
               : { backgroundColor: "var(--success-bg)" }
           }
-          {...className(shared.btn, style.buttonClose)}
+          {...className(buttons.btn, style.buttonClose)}
         >
           <CloseIcon {...className(style.closeIcon)} />
         </button>

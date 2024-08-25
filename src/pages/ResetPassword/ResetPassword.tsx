@@ -4,6 +4,8 @@ import { AppContext } from "../../context/AppContext";
 import { className, evalErrorCode } from "../../utilities/helpers";
 import * as style from "./ResetPassword.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
+import * as buttons from "../../assets/styles/buttons.module.css";
+import * as textStyles from "../../assets/styles/text-styles.module.css";
 import { FirebaseError } from "firebase/app";
 import { Link } from "react-router-dom";
 import PageWrapper from "../../components/PageWrapper";
@@ -46,8 +48,8 @@ function ResetPassword() {
     <PageWrapper useUnauthenticatedStyle={true}>
       <>
         <div {...className(shared.pageContentContainer)}>
-          <span {...className(shared.titleText)}>Reset your password</span>
-          <span {...className(shared.normalText, shared.centerText)}>
+          <span {...className(textStyles.titleText)}>Reset your password</span>
+          <span {...className(textStyles.normalText, textStyles.centerText)}>
             Enter your email address and we will send instructions on how to
             reset your password
           </span>
@@ -68,14 +70,14 @@ function ResetPassword() {
               <div {...className(style.redirectCon)}>
                 <Link
                   to="/signin"
-                  {...className(shared.btn, shared.buttonSecondary)}
+                  {...className(buttons.btn, buttons.buttonSecondary)}
                 >
                   Go back
                 </Link>
                 <button
                   disabled={isLoading}
                   type="submit"
-                  {...className(shared.btn, shared.buttonPrimary)}
+                  {...className(buttons.btn, buttons.buttonPrimary)}
                 >
                   Reset password
                 </button>
