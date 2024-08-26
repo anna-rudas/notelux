@@ -5,7 +5,7 @@ import { className } from "../../utilities/helpers";
 import PageWrapper from "../../components/templates/PageWrapper";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 
-function NotFound() {
+function PageNotFound() {
   return (
     <PageWrapper>
       <div {...className(shared.pageContentContainer)}>
@@ -17,4 +17,4 @@ function NotFound() {
   );
 }
 
-export default NotFound;
+export default PageNotFound;

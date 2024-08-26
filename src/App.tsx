@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import SignIn from "./pages/SignIn/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
-import NotFound from "./pages/NotFound/NotFound";
+import PageNotFound from "./pages/PageNotFound/PageNotFound";
 import RouteGuard from "./pages/RouteGuard";
 import AccountSettings from "./pages/AccountSettings/AccountSettings";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
@@ -78,7 +78,7 @@ function App() {
         </ErrorBoundary>
       ),
     },
-    { path: "/*", element: <NotFound /> },
+    { path: "/*", element: <PageNotFound /> },
   ]);
 
   return <RouterProvider router={router}></RouterProvider>;
