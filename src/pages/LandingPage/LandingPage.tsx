@@ -2,11 +2,10 @@ import React from "react";
 import PageWrapper from "../../components/templates/PageWrapper";
 import { className } from "../../utilities/helpers";
 import * as style from "./LandingPage.module.css";
-import * as buttons from "../../assets/styles/buttons.module.css";
 import * as textStyles from "../../assets/styles/text-styles.module.css";
-import { Link } from "react-router-dom";
 import BlobImage from "../../assets/images/landingpage_blob";
 import ArrowIcon from "../../assets/icons/ArrowIcon";
+import PrimaryButton from "../../components/buttons/PrimaryButton";
 
 function LandingPage() {
   return (
@@ -35,17 +34,11 @@ function LandingPage() {
               <span {...className(textStyles.landingPageSecondary)}>
                 With <mark>Notelux</mark> it&apos;s easy
               </span>
-              <Link
-                to="/signin"
-                {...className(
-                  buttons.btn,
-                  buttons.buttonPrimary,
-                  textStyles.landingPageSecondary,
-                  style.actionBtn
-                )}
-              >
-                Get started
-              </Link>
+              <PrimaryButton
+                navigateTo="/signin"
+                buttonText="Get started"
+                buttonStyle={`${textStyles.landingPageSecondary} ${style.actionBtn}`}
+              />
             </div>
 
             <a href="#pageHero" {...className(style.scrollToHero)}>
@@ -97,22 +90,16 @@ function LandingPage() {
 
             <div {...className(style.heroCTA)}>
               <span>Interested?</span>
-              <Link
-                to="/signin"
-                {...className(
-                  buttons.btn,
-                  buttons.buttonPrimary,
-                  textStyles.landingPageSecondary,
-                  style.actionBtn
-                )}
-              >
-                Get started
-              </Link>
+              <PrimaryButton
+                navigateTo="/signin"
+                buttonText="Get started"
+                buttonStyle={`${textStyles.landingPageSecondary} ${style.actionBtn}`}
+              />
             </div>
           </div>
         </div>
         <footer {...className(style.landingPageFooter)}>
-          made by{" "}
+          made by
           <a target="_blank" rel="noreferrer" href="https://annarudas.com/">
             anna
           </a>

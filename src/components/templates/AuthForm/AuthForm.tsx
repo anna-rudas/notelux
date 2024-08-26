@@ -1,14 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import { className } from "../../../utilities/helpers";
 import * as style from "./AuthForm.module.css";
-import * as buttons from "../../../assets/styles/buttons.module.css";
-import { AppContext } from "../../../context/AppContext";
 import GeneralInput from "../../inputs/GeneralInput";
 import { Formik, Form, FormikValues } from "formik";
 import {
   signInSchema,
   signUpSchema,
 } from "../../../utilities/validationSchemas";
+import PrimaryButton from "../../buttons/PrimaryButton";
 
 type AuthFormProps = {
   handleSubmit: (v: FormikValues) => void;
@@ -21,8 +20,6 @@ function AuthForm({
   primaryButtonText,
   showUsername,
 }: AuthFormProps) {
-  const { isLoading } = useContext(AppContext);
-
   return (
     <Formik
       initialValues={
@@ -54,13 +51,7 @@ function AuthForm({
           config={{ name: "password" }}
           placeholder="Password"
         />
-        <button
-          disabled={isLoading}
-          type="submit"
-          {...className(buttons.btn, buttons.buttonPrimary)}
-        >
-          {primaryButtonText}
-        </button>
+        <PrimaryButton buttonText={primaryButtonText} />
       </Form>
     </Formik>
   );

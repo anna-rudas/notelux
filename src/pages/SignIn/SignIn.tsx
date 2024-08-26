@@ -1,9 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import * as style from "./SignIn.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
-import * as buttons from "../../assets/styles/buttons.module.css";
 import * as textStyles from "../../assets/styles/text-styles.module.css";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { className, evalErrorCode } from "../../utilities/helpers";
 import { AppContext } from "../../context/AppContext";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +15,7 @@ import {
   isUserEmailVerified,
   sendVerificationEmail,
 } from "../../firestore/authService";
+import SecondaryButton from "../../components/buttons/SecondaryButton";
 
 function SignIn() {
   const {
@@ -126,20 +126,13 @@ function SignIn() {
             <span {...className(textStyles.normalText)}>
               Don&apos;t have an account yet?
             </span>
-            <Link
-              to="/signup"
-              {...className(buttons.btn, buttons.buttonSecondary)}
-            >
-              Sign up
-            </Link>
+            <SecondaryButton buttonText="Sign up" navigateTo="/signup" />
           </div>
           <div {...className(shared.divider)}></div>
-          <Link
-            to="/resetpassword"
-            {...className(buttons.btn, buttons.buttonSecondary)}
-          >
-            Forgot password?
-          </Link>
+          <SecondaryButton
+            buttonText="Forgot password?"
+            navigateTo="/resetpassword"
+          />
         </div>
       </>
     </PageWrapper>

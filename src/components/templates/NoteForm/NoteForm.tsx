@@ -5,12 +5,13 @@ import ColorPalette from "../../features/ColorPalette";
 import { colors } from "../../../data/constants";
 import * as style from "./NoteForm.module.css";
 import * as shared from "../../../assets/styles/shared.module.css";
-import * as buttons from "../../../assets/styles/buttons.module.css";
 import * as textStyles from "../../../assets/styles/text-styles.module.css";
 import { AppContext } from "../../../context/AppContext";
 import MoreOptionsIcon from "../../../assets/icons/MoreOptionsIcon";
 import MoreNoteOptions from "../../features/MoreNoteOptions";
 import { DashboardContext } from "../../../context/DashboardContext";
+import PrimaryButton from "../../buttons/PrimaryButton";
+import SecondaryButton from "../../buttons/SecondaryButton";
 
 type NoteFormProps = {
   handleSubmit: () => void;
@@ -104,29 +105,8 @@ function NoteForm({
           </div>
         </div>
         <div {...className(style.btnsCon)}>
-          <button
-            disabled={isLoading}
-            {...className(buttons.btn, style.buttonNotePrimary)}
-            style={
-              user?.theme === "light" ? { color: colors[activeNote.color] } : {}
-            }
-            type="submit"
-          >
-            Save
-          </button>
-          <button
-            disabled={isLoading}
-            {...className(buttons.btn, style.buttonNoteSecondary)}
-            style={
-              user?.theme === "light"
-                ? { backgroundColor: colors[activeNote.color] }
-                : { backgroundColor: "var(--bg)" }
-            }
-            type="button"
-            onClick={handleCancel}
-          >
-            Cancel
-          </button>
+          <PrimaryButton handleClick={handleSubmit} buttonText="Save" />
+          <SecondaryButton handleClick={handleCancel} buttonText="Cancel" />
         </div>
         {isMoreNoteOptionsOpen && (
           <MoreNoteOptions backgroundColor={colors[activeNote.color]} />

@@ -10,9 +10,11 @@ import ChangeEmailModal from "../../components/modals/ChangeEmailModal";
 import ChangePasswordModal from "../../components/modals/ChangePasswordModal";
 import PageWrapper from "../../components/templates/PageWrapper";
 import ChangeUsername from "../../components/features/ChangeUsername";
+import SecondaryButton from "../../components/buttons/SecondaryButton";
+import PrimaryButton from "../../components/buttons/PrimaryButton";
 
 function AccountSettings() {
-  const { user, isLoading } = useContext(AppContext);
+  const { user } = useContext(AppContext);
 
   const [isDeleteUserModalOpen, setIsDeleteUserModalOpen] = useState(false);
   const [isChangeEmailModalOpen, setIsChangeEmailModalOpen] = useState(false);
@@ -34,26 +36,20 @@ function AccountSettings() {
             <span {...className(textStyles.subtitleText)}>Email address</span>
             <div {...className(style.settingsItemContent)}>
               <span>Your current email address: {user?.email}</span>
-              <button
-                disabled={isLoading}
-                onClick={() => setIsChangeEmailModalOpen(true)}
-                {...className(buttons.btn, buttons.buttonSecondary)}
-              >
-                Change
-              </button>
+              <SecondaryButton
+                handleClick={() => setIsChangeEmailModalOpen(true)}
+                buttonText="Change"
+              />
             </div>
           </div>
           <div {...className(style.settingsItem)}>
             <span {...className(textStyles.subtitleText)}>Password</span>
             <div {...className(style.settingsItemContent)}>
               <span>Set a new password</span>
-              <button
-                disabled={isLoading}
-                onClick={() => setIsChangePasswordModalOpen(true)}
-                {...className(buttons.btn, buttons.buttonSecondary)}
-              >
-                Change
-              </button>
+              <SecondaryButton
+                handleClick={() => setIsChangePasswordModalOpen(true)}
+                buttonText="Change"
+              />
             </div>
           </div>
           <div {...className(style.settingsItem)}>
@@ -66,13 +62,11 @@ function AccountSettings() {
               If you delete your account you won&apos;t be able to access your
               notes anymore
             </span>
-            <button
-              disabled={isLoading}
-              onClick={() => setIsDeleteUserModalOpen(true)}
-              {...className(buttons.btn, buttons.buttonDanger)}
-            >
-              Delete account
-            </button>
+            <PrimaryButton
+              handleClick={() => setIsDeleteUserModalOpen(true)}
+              buttonText="Delete account"
+              buttonStyle={buttons.buttonDanger}
+            />
           </div>
         </div>
         {isDeleteUserModalOpen && (

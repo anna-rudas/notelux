@@ -80,25 +80,3 @@
   height: 33px;
   fill: var(--text-secondary);
 }
-
-.buttonNotePrimary {
-  border: 2px solid var(--text-secondary);
-  background-color: var(--text-secondary);
-  color: var(--bg);
-}
-
-.buttonNoteSecondary {
-  border: 2px solid transparent !important;
-  color: var(--text-secondary);
-}
-
-@media (hover: hover) {
-  .buttonNotePrimary:hover {
-    background-color: transparent;
-    color: var(--text-secondary) !important;
-  }
-
-  .buttonNoteSecondary:hover {
-    border: 2px solid var(--text-secondary) !important;
-  }
-}

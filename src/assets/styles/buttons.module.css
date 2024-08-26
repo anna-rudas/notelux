@@ -16,22 +16,10 @@
   pointer-events: none;
 }
 
-.buttonPrimary {
-  border: 2px solid var(--text-secondary);
-  background-color: var(--text-secondary);
-  color: var(--bg) !important;
-}
-
-.buttonSecondary {
-  border: 2px solid transparent !important;
-  color: var(--text-secondary);
-  background-color: var(--bg);
-}
-
 .buttonDanger {
-  border: 2px solid var(--danger);
-  background-color: var(--danger);
-  color: var(--lightest);
+  border: 2px solid var(--danger) !important;
+  background-color: var(--danger) !important;
+  color: var(--lightest) !important;
 }
 
 @media (hover: hover) {
@@ -39,26 +27,8 @@
     cursor: pointer;
   }
 
-  .buttonNotePrimary:hover {
-    background-color: transparent;
-    color: var(--text-primary) !important;
-  }
-
-  .buttonNoteSecondary:hover {
-    border: 2px solid var(--text-primary) !important;
-  }
-
-  .buttonPrimary:hover {
-    background-color: var(--bg);
-    color: var(--text-secondary) !important;
-  }
-
-  .buttonSecondary:hover {
-    border: 2px solid var(--text-secondary) !important;
-  }
-
   .buttonDanger:hover {
-    background-color: var(--lightest);
-    color: var(--text-primary);
+    background-color: var(--lightest) !important;
+    color: var(--text-primary) !important;
   }
 }

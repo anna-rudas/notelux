@@ -3,7 +3,6 @@ import { className } from "../../../utilities/helpers";
 import * as style from "./Header.module.css";
 import * as buttons from "../../../assets/styles/buttons.module.css";
 import { AppContext } from "../../../context/AppContext";
-import { Link } from "react-router-dom";
 import UserIcon from "../../../assets/icons/UserIcon";
 import SignInIcon from "../../../assets/icons/SignInIcon";
 import { useLocation } from "react-router-dom";
@@ -11,6 +10,8 @@ import AppLogo from "../AppLogo";
 import ThemeToggle from "../../buttons/ThemeToggle";
 import LayoutToggle from "../../buttons/LayoutToggle";
 import SearchInput from "../../inputs/SearchInput";
+import SecondaryButton from "../../buttons/SecondaryButton";
+import PrimaryButton from "../../buttons/PrimaryButton";
 
 type HeaderProps = {
   useLandingPageStyle?: boolean;
@@ -31,23 +32,14 @@ function Header({ useLandingPageStyle, useUnauthenticatedStyle }: HeaderProps) {
         <AppLogo />
         {useLandingPageStyle && (
           <div {...className(style.navBtnsContainer)}>
-            <Link
-              to="/signup"
-              {...className(buttons.btn, buttons.buttonSecondary)}
-            >
-              Create a new account
-            </Link>
-            <Link
-              to="/signin"
-              {...className(
-                buttons.btn,
-                buttons.buttonPrimary,
-                style.signInBtn
-              )}
-            >
+            <SecondaryButton
+              navigateTo="/signup"
+              buttonText="Create a new account"
+            />
+            <PrimaryButton navigateTo="/signin" buttonStyle={style.signInBtn}>
               <span>Sign in</span>
               <SignInIcon {...className(style.signInIcon)} />
-            </Link>
+            </PrimaryButton>
           </div>
         )}
       </div>

@@ -1,0 +1,18 @@
+.buttonNoteSecondary {
+  background-color: transparent;
+}
+
+.buttonSecondary {
+  background-color: var(--bg);
+}
+
+.btn {
+  border: 2px solid transparent !important;
+  color: var(--text-secondary);
+}
+
+@media (hover: hover) {
+  .btn:hover {
+    border: 2px solid var(--text-secondary) !important;
+  }
+}

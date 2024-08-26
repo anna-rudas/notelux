@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import * as style from "./ModalContainer.module.css";
 import * as shared from "../../../assets/styles/shared.module.css";
-import * as buttons from "../../../assets/styles/buttons.module.css";
 import * as textStyles from "../../../assets/styles/text-styles.module.css";
 import { className } from "../../../utilities/helpers";
-import { AppContext } from "../../../context/AppContext";
 import { Formik, Form, FormikValues } from "formik";
+import PrimaryButton from "../../buttons/PrimaryButton";
+import SecondaryButton from "../../buttons/SecondaryButton";
 
 type ModalContainerProps = {
   handleCancel: () => void;
@@ -28,8 +28,6 @@ function ModalContainer({
   initialFormValues,
   validationSchema,
 }: ModalContainerProps) {
-  const { isLoading } = useContext(AppContext);
-
   return (
     <div {...className(style.confModalContainer)}>
       <div {...className(shared.shadow, style.confModal)}>
@@ -57,21 +55,15 @@ function ModalContainer({
           <Form noValidate {...className(style.inputsCon)}>
             <div {...className(style.inputsCon)}>{children}</div>
             <div {...className(style.confModalBtnsCon)}>
-              <button
-                disabled={isLoading}
-                type="submit"
-                {...className(buttons.btn, buttons.buttonPrimary, style.btn)}
-              >
-                {primaryButtonText}
-              </button>
-              <button
-                type="button"
-                disabled={isLoading}
-                onClick={handleCancel}
-                {...className(buttons.btn, buttons.buttonSecondary, style.btn)}
-              >
-                Cancel
-              </button>
+              <PrimaryButton
+                buttonText={primaryButtonText}
+                buttonStyle={style.btn}
+              />
+              <SecondaryButton
+                buttonText="Cancel"
+                handleClick={handleCancel}
+                buttonStyle={style.btn}
+              />
             </div>
           </Form>
         </Formik>

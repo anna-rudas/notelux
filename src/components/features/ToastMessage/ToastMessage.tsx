@@ -8,6 +8,7 @@ import * as shared from "../../../assets/styles/shared.module.css";
 import * as buttons from "../../../assets/styles/buttons.module.css";
 import * as textStyles from "../../../assets/styles/text-styles.module.css";
 import { AppContext } from "../../../context/AppContext";
+import SecondaryButton from "../../buttons/SecondaryButton";
 
 type ToastMessageProps = {
   isError: boolean;
@@ -50,18 +51,11 @@ function ToastMessage({
         <span {...className(textStyles.normalText)}>{description}</span>
       </div>
       {actionButtonText ? (
-        <button
-          disabled={isLoading}
-          style={
-            isError
-              ? { backgroundColor: "var(--error-bg)" }
-              : { backgroundColor: "var(--success-bg)" }
-          }
-          {...className(buttons.btn, buttons.buttonSecondary)}
-          onClick={actionButtonHandle}
-        >
-          {actionButtonText}
-        </button>
+        <SecondaryButton
+          handleClick={actionButtonHandle}
+          buttonText={actionButtonText}
+          buttonStyle={isError ? style.errorBg : style.successBg}
+        />
       ) : (
         <button
           disabled={isLoading}

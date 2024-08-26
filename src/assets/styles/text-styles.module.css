@@ -61,8 +61,8 @@
 }
 
 .landingPageSecondary {
-  font-weight: 500;
-  font-size: 1.7rem;
+  font-weight: 500 !important;
+  font-size: 1.7rem !important;
   color: var(--text-secondary);
 }
 

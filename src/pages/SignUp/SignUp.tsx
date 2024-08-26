@@ -1,9 +1,7 @@
 import React, { useContext } from "react";
 import * as style from "./SignUp.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
-import * as buttons from "../../assets/styles/buttons.module.css";
 import * as textStyles from "../../assets/styles/text-styles.module.css";
-import { Link } from "react-router-dom";
 import { className, evalErrorCode } from "../../utilities/helpers";
 import { AppContext } from "../../context/AppContext";
 import { FirebaseError } from "firebase/app";
@@ -18,6 +16,7 @@ import {
 } from "../../firestore/authService";
 import { addUserInDb } from "../../firestore/userService";
 import { useErrorBoundary } from "react-error-boundary";
+import SecondaryButton from "../../components/buttons/SecondaryButton";
 
 function SignUp() {
   const {
@@ -107,12 +106,7 @@ function SignUp() {
             <span {...className(textStyles.normalText)}>
               Already have an account?
             </span>
-            <Link
-              to="/signin"
-              {...className(buttons.btn, buttons.buttonSecondary)}
-            >
-              Sign in
-            </Link>
+            <SecondaryButton buttonText="Sign in" navigateTo="/signin" />
           </div>
         </div>
       </>

@@ -44,6 +44,14 @@
   width: 100%;
 }
 
+.errorBg {
+  background-color: var(--error-bg);
+}
+
+.successBg {
+  background-color: var(--success-bg);
+}
+
 @media (max-width: 350px) {
   .msgContent {
     width: 90%;

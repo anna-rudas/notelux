@@ -23,7 +23,9 @@
   width: fit-content;
   gap: calc(var(--gap) * 4);
   border: 2px solid var(--text-secondary);
+  max-width: 380px;
   min-width: 300px;
+  width: 90%;
 }
 
 .confModalBtnsCon {
@@ -46,10 +48,4 @@
   gap: calc(var(--gap) * 3);
   width: 100%;
   align-items: center;
-}
-
-@media (max-width: 350px) {
-  .confModal {
-    width: 90%;
-  }
 }

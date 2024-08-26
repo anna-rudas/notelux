@@ -5,11 +5,11 @@ import GeneralInput from "../../../components/inputs/GeneralInput";
 import { AppContext } from "../../../context/AppContext";
 import { className } from "../../../utilities/helpers";
 import * as style from "./ChangeUsername.module.css";
-import * as buttons from "../../../assets/styles/buttons.module.css";
 import * as textStyles from "../../../assets/styles/text-styles.module.css";
+import PrimaryButton from "../../buttons/PrimaryButton";
 
 function ChangeUsername() {
-  const { user, setToastMessageContent, setUser, setIsLoading, isLoading } =
+  const { user, setToastMessageContent, setUser, setIsLoading } =
     useContext(AppContext);
 
   const handleChangeUsername = (values: FormikValues) => {
@@ -47,13 +47,7 @@ function ChangeUsername() {
             config={{ name: "username" }}
             placeholder="Username"
           />
-          <button
-            disabled={isLoading}
-            type="submit"
-            {...className(buttons.btn, buttons.buttonPrimary)}
-          >
-            Save changes
-          </button>
+          <PrimaryButton buttonText="Save changes" />
         </Form>
       </Formik>
     </>
