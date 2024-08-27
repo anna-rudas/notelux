@@ -11,6 +11,17 @@ export const colors = {
   grey: "#E8EAED",
 } as const;
 
+export const errorColors = {
+  default: "#e7200d",
+  red: "#A01508",
+  yellow: "#BD190A",
+  green: "#D01B0B",
+  blue: "#A51609",
+  purple: "#AE1709",
+  pink: "#BD190A",
+  grey: "#D01B0B",
+} as const;
+
 export const colorInputs = Object.keys(colors) as Array<Color>;
 
 export const notesColKey = "notes";

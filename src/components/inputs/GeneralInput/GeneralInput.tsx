@@ -5,8 +5,10 @@ import { className } from "../../../utilities/helpers";
 import * as style from "./GeneralInput.module.css";
 import * as buttons from "../../../assets/styles/buttons.module.css";
 import * as textStyles from "../../../assets/styles/text-styles.module.css";
-import { AppContext } from "../../../context/AppContext";
 import { useField, FieldHookConfig } from "formik";
+import { AppContext } from "../../../context/AppContext";
+import { DashboardContext } from "../../../context/DashboardContext";
+import { colors, errorColors } from "../../../data/constants";
 
 type GeneralInputProps<T> = {
   placeholder: string;
@@ -19,6 +21,8 @@ function GeneralInput(props: GeneralInputProps<string>) {
   const [showPassword, setShowPassword] = useState(false);
   const [field, meta] = useField(props.config);
   const [error, setError] = useState(meta.touched && meta.error);
+  const { activeNote } = useContext(DashboardContext);
+  const { user } = useContext(AppContext);
 
   useEffect(() => {
     setError(meta.touched && meta.error);
@@ -91,6 +95,18 @@ function GeneralInput(props: GeneralInputProps<string>) {
           style.inputCon,
           meta.touched && meta.error && style.validationError
         )}
+        style={
+          activeNote && user?.theme === "light" && meta.touched && meta.error
+            ? {
+                backgroundColor: colors[activeNote.color],
+                border: `2px solid ${errorColors[activeNote.color]}`,
+              }
+            : activeNote && user?.theme === "light"
+            ? {
+                backgroundColor: colors[activeNote.color],
+              }
+            : {}
+        }
       >
         <label
           {...className(
@@ -99,11 +115,28 @@ function GeneralInput(props: GeneralInputProps<string>) {
             !field.value && style.hideLabelText,
             error && style.labelError
           )}
+          style={
+            activeNote && user?.theme === "light" && error
+              ? {
+                  color: errorColors[activeNote.color],
+                  backgroundColor: colors[activeNote.color],
+                }
+              : activeNote && user?.theme === "light"
+              ? {
+                  backgroundColor: colors[activeNote.color],
+                }
+              : {}
+          }
           htmlFor={props.config.name}
         >
           {props.placeholder}
         </label>
         <input
+          style={
+            activeNote && user?.theme === "light"
+              ? { backgroundColor: colors[activeNote.color] }
+              : {}
+          }
           id={props.config.name}
           {...field}
           {...props}
@@ -113,7 +146,14 @@ function GeneralInput(props: GeneralInputProps<string>) {
         />
       </div>
       {error ? (
-        <div {...className(style.validationErrorText, textStyles.smallText)}>
+        <div
+          {...className(style.validationErrorText, textStyles.smallText)}
+          style={
+            activeNote && user?.theme === "light"
+              ? { color: errorColors[activeNote.color] }
+              : {}
+          }
+        >
           {meta.error}
         </div>
       ) : null}

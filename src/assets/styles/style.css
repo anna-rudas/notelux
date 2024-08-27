@@ -6,7 +6,7 @@
   --text-secondary: #38312e;
   --bg: #fff;
   --lightest: #fff;
-  --danger: #f34030;
+  --danger: #e7200d;
   --bg-transparent: rgba(95, 95, 97, 0.5);
   --border: #ececec;
   --padding: 10px;
@@ -19,7 +19,7 @@
   --highlight-2: #dbffb3;
   --highlight-3: #cbdcfb;
   --scroll-btn: #e2c5fc;
-  --placeholder-text: #7a7575;
+  --placeholder-text: #635f5f;
 }
 
 [data-theme="dark"] {
