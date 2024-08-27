@@ -14,7 +14,7 @@ import LoadingIcon from "../../../assets/icons/LoadingIcon";
 import { Note } from "../../../types/types";
 
 function Notes() {
-  const { search, user } = useContext(AppContext);
+  const { termToSearch, user } = useContext(AppContext);
   const { notes, areNotesLoading } = useContext(DashboardContext);
 
   const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
@@ -43,7 +43,7 @@ function Notes() {
       return isSmallScreen ? 2 : 4;
     })();
 
-    const filteredNotesResult = filterNotesBySearch(notes, search);
+    const filteredNotesResult = filterNotesBySearch(notes, termToSearch);
     setFilteredNotes(filteredNotesResult);
 
     const sortedNotesResult = sortNotesIntoColumns(
@@ -51,7 +51,7 @@ function Notes() {
       numberOfColumns
     );
     setSortedNotes(sortedNotesResult);
-  }, [notes, search, isSmallScreen]);
+  }, [notes, termToSearch, isSmallScreen]);
 
   if (areNotesLoading) {
     return (
@@ -67,7 +67,7 @@ function Notes() {
     <div {...className(style.notesContainer)}>
       {filteredNotes.length > 0 ? (
         <div {...className(style.notesContent)}>
-          {search !== "" && (
+          {termToSearch !== "" && (
             <span {...className(textStyles.subtitleText)}>Search results:</span>
           )}
           <div
@@ -86,7 +86,7 @@ function Notes() {
             })}
           </div>
         </div>
-      ) : search !== "" ? (
+      ) : termToSearch !== "" ? (
         <span {...className(textStyles.subtitleText)}>
           No notes match your search
         </span>

@@ -15,8 +15,8 @@ import { evalErrorCode } from "../utilities/helpers";
 import { updateUserInDb } from "../firestore/userService";
 
 interface AppContextInterface {
-  search: string;
-  setSearch: (value: string) => void;
+  termToSearch: string;
+  setTermToSearch: (value: string) => void;
   user: User | null;
   setUser: (value: User | null) => void;
   isLoading: boolean;
@@ -34,8 +34,8 @@ interface AppContextInterface {
 }
 
 const defaultContextValue: AppContextInterface = {
-  search: "",
-  setSearch: () => {},
+  termToSearch: "",
+  setTermToSearch: () => {},
   user: null,
   setUser: async () => {},
   isLoading: true,
@@ -60,7 +60,7 @@ type AppContextProviderProps = {
 };
 
 function AppContextProvider({ children }: AppContextProviderProps) {
-  const [search, setSearch] = useState("");
+  const [termToSearch, setTermToSearch] = useState("");
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -149,8 +149,8 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   return (
     <AppContext.Provider
       value={{
-        search,
-        setSearch,
+        termToSearch,
+        setTermToSearch,
         user,
         setUser,
         isLoading,
