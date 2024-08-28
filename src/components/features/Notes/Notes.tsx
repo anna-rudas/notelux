@@ -12,6 +12,7 @@ import { AppContext } from "../../../context/AppContext";
 import { DashboardContext } from "../../../context/DashboardContext";
 import LoadingIcon from "../../../assets/icons/LoadingIcon";
 import { Note } from "../../../types/types";
+import { useMediaQuery } from "usehooks-ts";
 
 function Notes() {
   const { termToSearch, user } = useContext(AppContext);
@@ -19,23 +20,8 @@ function Notes() {
 
   const [filteredNotes, setFilteredNotes] = useState<Note[]>([]);
   const [sortedNotes, setSortedNotes] = useState<Note[][]>([]);
-  const [isSmallScreen, setIsSmallScreen] = useState(
-    window.matchMedia("(max-width: 600px)").matches
-  );
 
-  useEffect(() => {
-    window
-      .matchMedia("(max-width: 600px)")
-      .addEventListener("change", (event) => setIsSmallScreen(event.matches));
-
-    return () => {
-      window
-        .matchMedia("(max-width: 600px)")
-        .removeEventListener("change", (event) =>
-          setIsSmallScreen(event.matches)
-        );
-    };
-  }, []);
+  const isSmallScreen = useMediaQuery("(max-width: 600px)");
 
   useEffect(() => {
     const numberOfColumns = (() => {
