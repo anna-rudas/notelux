@@ -142,14 +142,16 @@ function ShareNoteModal() {
     >
       <div {...className(style.collabCon)}>
         {activeNoteCollaborators?.map((currentUserEmail) => {
-          return (
-            <div key={currentUserEmail} {...className(style.collabItem)}>
-              <div {...className(style.userIconCon)}>
-                <UserIcon {...className(style.userIcon)} />
+          if (currentUserEmail !== "") {
+            return (
+              <div key={currentUserEmail} {...className(style.collabItem)}>
+                <div {...className(style.userIconCon)}>
+                  <UserIcon {...className(style.userIcon)} />
+                </div>
+                <span>{currentUserEmail}</span>
               </div>
-              <span>{currentUserEmail}</span>
-            </div>
-          );
+            );
+          }
         })}
       </div>
       <div {...className(style.addUserCon)}>
