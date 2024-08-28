@@ -45,11 +45,11 @@
 }
 
 .errorBg {
-  background-color: var(--error-bg);
+  background-color: var(--error-bg) !important;
 }
 
 .successBg {
-  background-color: var(--success-bg);
+  background-color: var(--success-bg) !important;
 }
 
 @media (max-width: 350px) {
