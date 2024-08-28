@@ -37,7 +37,7 @@ function Notes() {
       numberOfColumns
     );
     setSortedNotes(sortedNotesResult);
-  }, [notes, termToSearch, isSmallScreen]);
+  }, [notes, termToSearch, isSmallScreen, user]);
 
   if (areNotesLoading) {
     return (
