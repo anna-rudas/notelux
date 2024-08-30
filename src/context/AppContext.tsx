@@ -13,6 +13,9 @@ import { FirebaseError } from "firebase/app";
 import { ToastMessage, User } from "../types/types";
 import { evalErrorCode } from "../utilities/helpers";
 import { updateUserInDb } from "../firestore/userService";
+import { defaultLayout, defaultTheme } from "../data/constants";
+import { addUserInDb } from "../firestore/userService";
+import { useErrorBoundary } from "react-error-boundary";
 
 interface AppContextInterface {
   termToSearch: string;
@@ -29,6 +32,8 @@ interface AppContextInterface {
   setToastMessageContent: (value: ToastMessage) => void;
   authenticatedUserId: string | null;
   setAuthenticatedUserId: (value: string | null) => void;
+  anonymousUserId: string | null;
+  setAnonymousUserId: (value: string | null) => void;
   error: Error | null;
   setError: (value: Error | null) => void;
 }
@@ -48,6 +53,8 @@ const defaultContextValue: AppContextInterface = {
   setToastMessageContent: () => {},
   authenticatedUserId: null,
   setAuthenticatedUserId: async () => {},
+  anonymousUserId: null,
+  setAnonymousUserId: async () => {},
   error: null,
   setError: () => {},
 };
@@ -72,7 +79,10 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(
     null
   );
+  const [anonymousUserId, setAnonymousUserId] = useState<string | null>(null);
   const [error, setError] = useState<Error | null>(null);
+
+  const { showBoundary } = useErrorBoundary();
 
   useEffect(() => {
     if (authenticatedUserId) {
@@ -99,7 +109,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
               isError: true,
               isPersisting: true,
               actionButtonText: "",
-              description: `Failed to load user id: ${evalErrorCode(
+              description: `Failed to load user with id: ${evalErrorCode(
                 error.code
               )}`,
               showMessage: true,
@@ -111,6 +121,61 @@ function AppContextProvider({ children }: AppContextProviderProps) {
       return unSubscribe;
     }
   }, [authenticatedUserId]);
+
+  useEffect(() => {
+    if (anonymousUserId) {
+      const userRef = doc(db, usersColKey, anonymousUserId);
+      const unSubscribe = onSnapshot(
+        userRef,
+        (doc) => {
+          const userResult = doc.data();
+          //if user exists in db
+          if (userResult) {
+            setUser({
+              email: userResult.email,
+              id: userResult.id,
+              username: userResult.username,
+              theme: userResult.theme,
+              layout: userResult.layout,
+            });
+            setIsLoading(false);
+          } else {
+            const addAnonymousUser = async () => {
+              try {
+                await addUserInDb({
+                  id: anonymousUserId,
+                  email: "",
+                  theme: defaultTheme,
+                  username: "guest",
+                  layout: defaultLayout,
+                });
+              } catch (error) {
+                console.error("Failed to add user: ", error);
+                showBoundary(error);
+              }
+            };
+            addAnonymousUser();
+          }
+        },
+        (error: unknown) => {
+          console.error(error);
+          if (error instanceof FirebaseError) {
+            setToastMessageContent({
+              isError: true,
+              isPersisting: true,
+              actionButtonText: "",
+              description: `Failed to load user with id: ${evalErrorCode(
+                error.code
+              )}`,
+              showMessage: true,
+            });
+          }
+        }
+      );
+
+      return unSubscribe;
+    }
+  }, [anonymousUserId]);
 
   useEffect(() => {
     if (msgTimeoutId) {
@@ -163,6 +228,8 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         setToastMessageContent,
         authenticatedUserId,
         setAuthenticatedUserId,
+        anonymousUserId,
+        setAnonymousUserId,
         error,
         setError,
       }}

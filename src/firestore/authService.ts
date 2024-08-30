@@ -11,6 +11,7 @@ import {
   EmailAuthProvider,
   updatePassword,
   updateEmail,
+  signInAnonymously,
 } from "firebase/auth";
 
 const auth = getAuth();
@@ -20,6 +21,11 @@ export const signInUser = async (
   password: string
 ): Promise<UserCredential> => {
   const signInResult = await signInWithEmailAndPassword(auth, email, password);
+  return signInResult;
+};
+
+export const signInAnonymousUser = async (): Promise<UserCredential> => {
+  const signInResult = await signInAnonymously(auth);
   return signInResult;
 };
 
@@ -56,6 +62,10 @@ export const signOutUser = async () => {
 
 export const isUserEmailVerified = (signInResult: UserCredential): boolean => {
   return signInResult.user.emailVerified;
+};
+
+export const isUserAnonymous = (signInResult: UserCredential): boolean => {
+  return signInResult.user.isAnonymous;
 };
 
 export const sendVerificationEmail = async () => {

@@ -14,8 +14,11 @@ import {
   signInUser,
   isUserEmailVerified,
   sendVerificationEmail,
+  signInAnonymousUser,
+  isUserAnonymous,
 } from "../../firestore/authService";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
+import PrimaryButton from "../../components/buttons/PrimaryButton";
 
 function SignIn() {
   const {
@@ -113,6 +116,18 @@ function SignIn() {
     }
   };
 
+  const handleSignInAnonymousUser = async () => {
+    setIsLoading(true);
+    try {
+      const signInResult = await signInAnonymousUser();
+      if (isUserAnonymous(signInResult)) {
+        setAuthenticatedUserId(signInResult.user.uid);
+      }
+    } catch (error) {
+      console.error("Failed to sign in anonymously: ", error);
+    }
+  };
+
   return (
     <PageWrapper
       toastMessageAction={handleSendVerifyEmail}
@@ -120,6 +135,11 @@ function SignIn() {
     >
       <>
         <div {...className(shared.pageContentContainer)}>
+          <PrimaryButton
+            buttonText="Continue as guest"
+            handleClick={handleSignInAnonymousUser}
+          />
+          <span {...className(textStyles.normalText)}>or</span>
           <span {...className(textStyles.titleText)}>Sign in</span>
           <AuthForm handleSubmit={handleSignIn} primaryButtonText="Sign in" />
           <div {...className(style.redirectCon)}>

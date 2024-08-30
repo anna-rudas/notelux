@@ -83,9 +83,7 @@ function AccountDropdown() {
       {...className(style.dropdownCon, shared.shadow)}
     >
       <span {...className(style.emailText)}>{user.email}</span>
-      <span {...className(textStyles.titleText)}>
-        Hello, {user.username !== "" ? user.username : "guest"}!
-      </span>
+      <span {...className(textStyles.titleText)}>Hello, {user.username}!</span>
       <div {...className(style.dropdownItemCon)}>
         <Link
           to="/dashboard"

@@ -18,6 +18,7 @@ function RouteGuard({ children }: RouteGuardProps) {
     user,
     setToastMessageContent,
     setAuthenticatedUserId,
+    setAnonymousUserId,
     setUser,
     error,
     setIsDropdownOpen,
@@ -44,6 +45,8 @@ function RouteGuard({ children }: RouteGuardProps) {
     const unSubscribe = onAuthStateChanged(auth, (userResult) => {
       if (userResult?.emailVerified) {
         setAuthenticatedUserId(userResult.uid);
+      } else if (userResult?.isAnonymous) {
+        setAnonymousUserId(userResult.uid);
       } else {
         setIsPageLoading(false);
       }

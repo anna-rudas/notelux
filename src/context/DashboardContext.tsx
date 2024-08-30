@@ -77,14 +77,12 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
   const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
   const [notes, setNotes] = useState<Note[]>([]);
   const [areNotesLoading, setAreNotesLoading] = useState(true);
-  // const [isDelConfOpen, setIsDelConfOpen] = useState(false);
-  // const [isShareNoteOpen, setIsShareNoteOpen] = useState(false);
   const [isDeleteNoteModalOpen, setIsDeleteNoteModalOpen] = useState(false);
   const [isShareNoteModalOpen, setIsShareNoteModalOpen] = useState(false);
 
   const notesColRef = collection(db, notesColKey);
 
-  const { authenticatedUserId, setToastMessageContent } =
+  const { authenticatedUserId, setToastMessageContent, anonymousUserId } =
     useContext(AppContext);
 
   const setActiveNoteValue = (field: string, value: string) => {
@@ -142,6 +140,44 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
       return unSubscribe;
     }
   }, [authenticatedUserId]);
+
+  useEffect(() => {
+    if (anonymousUserId) {
+      const q = query(notesColRef, where("userId", "==", anonymousUserId));
+      const unSubscribe = onSnapshot(
+        q,
+        (querySnapshot) => {
+          const resolvedNotes: Note[] = [];
+          querySnapshot.forEach((doc) => {
+            resolvedNotes.push({
+              id: doc.id,
+              title: doc.data().title,
+              color: doc.data().color,
+              body: doc.data().body,
+              date: doc.data().date,
+              userId: doc.data().userId,
+              coUsers: doc.data().coUsers,
+            });
+          });
+          setNotes(resolvedNotes);
+          setAreNotesLoading(false);
+        },
+        (error: unknown) => {
+          console.error(error);
+          if (error instanceof FirebaseError) {
+            setToastMessageContent({
+              isError: true,
+              isPersisting: true,
+              actionButtonText: "",
+              description: `Failed to load notes: ${evalErrorCode(error.code)}`,
+              showMessage: true,
+            });
+          }
+        }
+      );
+      return unSubscribe;
+    }
+  }, [anonymousUserId]);
 
   return (
     <DashboardContext.Provider
