@@ -9,6 +9,7 @@ import SecondaryButton from "../../buttons/SecondaryButton";
 import { AppContext } from "../../../context/AppContext";
 import { DashboardContext } from "../../../context/DashboardContext";
 import { colors } from "../../../data/constants";
+import * as Yup from "yup";
 
 type ModalContainerProps = {
   handleCancel: () => void;
@@ -16,8 +17,8 @@ type ModalContainerProps = {
   subtitle?: string;
   primaryButtonText: string;
   children?: JSX.Element[] | JSX.Element;
-  initialFormValues: object;
-  validationSchema: object;
+  initialFormValues?: object;
+  validationSchema?: object;
   handleSubmit: (v: FormikValues) => void;
 };
 
@@ -28,8 +29,8 @@ function ModalContainer({
   title,
   subtitle,
   primaryButtonText,
-  initialFormValues,
-  validationSchema,
+  initialFormValues = {},
+  validationSchema = Yup.object({}),
 }: ModalContainerProps) {
   const { activeNote } = useContext(DashboardContext);
   const { user } = useContext(AppContext);

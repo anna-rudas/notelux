@@ -10,6 +10,7 @@ import { FirebaseError } from "firebase/app";
 import { signOutUser } from "../../../firestore/authService";
 import { evalErrorCode } from "../../../utilities/helpers";
 import PrimaryButton from "../../buttons/PrimaryButton";
+import { DashboardContext } from "../../../context/DashboardContext";
 
 function AccountDropdown() {
   const {
@@ -25,6 +26,7 @@ function AccountDropdown() {
     setAuthenticatedUserId,
     setToastMessageContent,
   } = useContext(AppContext);
+  const { setIsUpgradeAccountModalOpen } = useContext(DashboardContext);
   const navigate = useNavigate();
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -93,12 +95,26 @@ function AccountDropdown() {
         >
           Dashboard
         </Link>
-        <Link
-          to="/settings"
-          {...className(style.dropdownItem, textStyles.subtitleText)}
-        >
-          Account settings
-        </Link>
+        {anonymousUserId ? (
+          <button
+            disabled={isLoading}
+            onClick={() => setIsUpgradeAccountModalOpen(true)}
+            {...className(
+              buttons.btn,
+              style.dropdownItem,
+              textStyles.subtitleText
+            )}
+          >
+            Account settings
+          </button>
+        ) : (
+          <Link
+            to="/settings"
+            {...className(style.dropdownItem, textStyles.subtitleText)}
+          >
+            Account settings
+          </Link>
+        )}
         <div {...className(shared.divider)} />
         {anonymousUserId ? (
           <PrimaryButton

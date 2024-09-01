@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import ModalContainer from "../../templates/ModalContainer";
-import { deleteNoteSchema } from "../../../utilities/validationSchemas";
 import { deleteNoteInDb } from "../../../firestore/noteService";
 import { AppContext } from "../../../context/AppContext";
 import { DashboardContext } from "../../../context/DashboardContext";
@@ -48,8 +47,6 @@ function DeleteNoteModal() {
         setIsDeleteNoteModalOpen(false);
       }}
       primaryButtonText="Delete"
-      initialFormValues={{}}
-      validationSchema={deleteNoteSchema}
     ></ModalContainer>
   );
 }

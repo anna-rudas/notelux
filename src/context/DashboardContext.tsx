@@ -36,6 +36,8 @@ interface DashboardContextInterface {
   setIsDeleteNoteModalOpen: (value: boolean) => void;
   isShareNoteModalOpen: boolean;
   setIsShareNoteModalOpen: (value: boolean) => void;
+  isUpgradeAccountModalOpen: boolean;
+  setIsUpgradeAccountModalOpen: (value: boolean) => void;
 }
 
 const defaultContextValue: DashboardContextInterface = {
@@ -59,6 +61,8 @@ const defaultContextValue: DashboardContextInterface = {
   setIsDeleteNoteModalOpen: () => {},
   isShareNoteModalOpen: false,
   setIsShareNoteModalOpen: () => {},
+  isUpgradeAccountModalOpen: false,
+  setIsUpgradeAccountModalOpen: () => {},
 };
 
 export const DashboardContext =
@@ -79,6 +83,8 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
   const [areNotesLoading, setAreNotesLoading] = useState(true);
   const [isDeleteNoteModalOpen, setIsDeleteNoteModalOpen] = useState(false);
   const [isShareNoteModalOpen, setIsShareNoteModalOpen] = useState(false);
+  const [isUpgradeAccountModalOpen, setIsUpgradeAccountModalOpen] =
+    useState(false);
 
   const notesColRef = collection(db, notesColKey);
 
@@ -202,6 +208,8 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
         setIsDeleteNoteModalOpen,
         isShareNoteModalOpen,
         setIsShareNoteModalOpen,
+        isUpgradeAccountModalOpen,
+        setIsUpgradeAccountModalOpen,
       }}
     >
       {children}

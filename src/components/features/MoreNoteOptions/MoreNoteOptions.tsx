@@ -13,7 +13,7 @@ type MoreNoteOptionsProps = {
 };
 
 function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
-  const { isLoading, user } = useContext(AppContext);
+  const { isLoading, user, anonymousUserId } = useContext(AppContext);
 
   const {
     moreNoteOptionsRef,
@@ -22,6 +22,7 @@ function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
     setIsMoreNoteOptionsOpen,
     setIsDeleteNoteModalOpen,
     setIsShareNoteModalOpen,
+    setIsUpgradeAccountModalOpen,
   } = useContext(DashboardContext);
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -47,6 +48,14 @@ function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
     };
   }, [isMoreNoteOptionsOpen]);
 
+  const handleClickShareNoteButton = () => {
+    if (anonymousUserId) {
+      setIsUpgradeAccountModalOpen(true);
+    } else {
+      setIsShareNoteModalOpen(true);
+    }
+  };
+
   return (
     <div
       style={user?.theme === "light" ? { backgroundColor } : {}}
@@ -56,7 +65,7 @@ function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
       <button
         disabled={isLoading}
         {...className(style.moreOptionsItem)}
-        onClick={() => setIsShareNoteModalOpen(true)}
+        onClick={handleClickShareNoteButton}
         type="button"
       >
         <ShareIcon {...className(style.shareIcon)} />
