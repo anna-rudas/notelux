@@ -21,6 +21,7 @@ function RouteGuard({ children }: RouteGuardProps) {
     setAnonymousUserId,
     setUser,
     error,
+    authenticatedUserId,
     setIsDropdownOpen,
   } = useContext(AppContext);
   const auth = getAuth();
@@ -43,7 +44,7 @@ function RouteGuard({ children }: RouteGuardProps) {
     setToastMessageContent(defaultToastMessage);
     setIsDropdownOpen(false);
     const unSubscribe = onAuthStateChanged(auth, (userResult) => {
-      if (userResult?.emailVerified) {
+      if (userResult?.emailVerified && !userResult.isAnonymous) {
         setAuthenticatedUserId(userResult.uid);
       } else if (userResult?.isAnonymous) {
         setAnonymousUserId(userResult.uid);
@@ -71,23 +72,28 @@ function RouteGuard({ children }: RouteGuardProps) {
   }
 
   if (!isPageLoading) {
+    //user is signed out
     if (!user) {
       if (
         location.pathname === "/signup" ||
         location.pathname === "/signin" ||
-        location.pathname === "/resetpassword" ||
-        location.pathname === "/"
+        location.pathname === "/resetpassword"
       ) {
         return children;
       }
       return <Navigate to="/signin" replace />;
     }
 
+    //user is signed in
     if (
       location.pathname === "/signup" ||
       location.pathname === "/signin" ||
-      location.pathname === "/resetpassword" ||
-      location.pathname === "/"
+      location.pathname === "/resetpassword"
+    ) {
+      return <Navigate to="/dashboard" replace />;
+    } else if (
+      authenticatedUserId &&
+      location.pathname === "/upgrade-account"
     ) {
       return <Navigate to="/dashboard" replace />;
     }

@@ -35,3 +35,7 @@
 .emailText {
   color: var(--text-secondary);
 }
+
+.btn {
+  width: 100%;
+}

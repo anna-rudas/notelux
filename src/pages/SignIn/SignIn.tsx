@@ -27,6 +27,7 @@ function SignIn() {
     toastMessageContent,
     setToastMessageContent,
     setAuthenticatedUserId,
+    setAnonymousUserId,
   } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -130,7 +131,7 @@ function SignIn() {
     try {
       const signInResult = await signInAnonymousUser();
       if (isUserAnonymous(signInResult)) {
-        setAuthenticatedUserId(signInResult.user.uid);
+        setAnonymousUserId(signInResult.user.uid);
       }
     } catch (error) {
       console.error("Failed to sign in anonymously: ", error);

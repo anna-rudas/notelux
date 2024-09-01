@@ -9,6 +9,7 @@ import { AppContext } from "../../../context/AppContext";
 import { FirebaseError } from "firebase/app";
 import { signOutUser } from "../../../firestore/authService";
 import { evalErrorCode } from "../../../utilities/helpers";
+import PrimaryButton from "../../buttons/PrimaryButton";
 
 function AccountDropdown() {
   const {
@@ -19,6 +20,7 @@ function AccountDropdown() {
     dropdownRef,
     dropdownButtonRef,
     isLoading,
+    anonymousUserId,
     setIsLoading,
     setAuthenticatedUserId,
     setToastMessageContent,
@@ -98,17 +100,25 @@ function AccountDropdown() {
           Account settings
         </Link>
         <div {...className(shared.divider)} />
-        <button
-          disabled={isLoading}
-          onClick={handleSignOutUser}
-          {...className(
-            buttons.btn,
-            style.dropdownItem,
-            textStyles.subtitleText
-          )}
-        >
-          Sign out
-        </button>
+        {anonymousUserId ? (
+          <PrimaryButton
+            buttonText="Upgrade account"
+            buttonStyle={style.btn}
+            navigateTo="/upgrade-account"
+          />
+        ) : (
+          <button
+            disabled={isLoading}
+            onClick={handleSignOutUser}
+            {...className(
+              buttons.btn,
+              style.dropdownItem,
+              textStyles.subtitleText
+            )}
+          >
+            Sign out
+          </button>
+        )}
       </div>
     </div>
   );
