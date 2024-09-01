@@ -12,6 +12,7 @@ import {
   updatePassword,
   updateEmail,
   signInAnonymously,
+  linkWithCredential,
 } from "firebase/auth";
 
 const auth = getAuth();
@@ -54,6 +55,21 @@ export const signUpUser = async (
     password
   );
   return signUpResult;
+};
+
+export const upgradeUserAccountToPermanent = async (
+  email: string,
+  password: string
+): Promise<UserCredential | null> => {
+  if (auth.currentUser) {
+    const credential = EmailAuthProvider.credential(email, password);
+    const upgradeResult = await linkWithCredential(
+      auth.currentUser,
+      credential
+    );
+    return upgradeResult;
+  }
+  return null;
 };
 
 export const signOutUser = async () => {

@@ -39,14 +39,23 @@ function SignIn() {
   }, [user]);
 
   useEffect(() => {
-    if (searchParams.get("verificationEmailSent") === "true") {
+    if (searchParams.get("changeEmailSuccess") === "true") {
       setToastMessageContent({
         actionButtonText: "",
         isPersisting: true,
         showMessage: true,
         isError: false,
         description:
-          "You have been signed out. Verify your new email address before signing in.",
+          "Email changed successfully. Verify your new email address before signing in.",
+      });
+    } else if (searchParams.get("upgradeAccountSuccess") === "true") {
+      setToastMessageContent({
+        actionButtonText: "",
+        isPersisting: false,
+        showMessage: true,
+        isError: false,
+        description:
+          "Account upgraded successfully. Verify your email address before signing in.",
       });
     }
     setSearchParams({});

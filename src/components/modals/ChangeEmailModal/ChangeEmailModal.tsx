@@ -39,7 +39,7 @@ function ChangeEmailModal({ handleCancel }: ChangeEmailModalProps) {
               try {
                 await updateUserInDb({ ...user, email: values.newEmail });
                 navigate("/signin");
-                setSearchParams({ verificationEmailSent: "true" });
+                setSearchParams({ changeEmailSuccess: "true" });
                 navigate(0);
               } catch (error) {
                 console.error("Failed to update user in database: ", error);
@@ -54,6 +54,7 @@ function ChangeEmailModal({ handleCancel }: ChangeEmailModalProps) {
                     )}`,
                   });
                 }
+                setIsLoading(false);
               }
             } catch (error: unknown) {
               console.error("Failed to send verification email: ", error);

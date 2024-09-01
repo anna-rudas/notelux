@@ -46,7 +46,12 @@ function ResetPassword() {
   return (
     <PageWrapper useUnauthenticatedStyle={true}>
       <>
-        <div {...className(shared.pageContentContainer)}>
+        <div
+          {...className(
+            shared.pageContentContainer,
+            style.pageContentContainer
+          )}
+        >
           <span {...className(textStyles.titleText)}>Reset your password</span>
           <span {...className(textStyles.normalText, textStyles.centerText)}>
             Enter your email address and we will send instructions on how to
