@@ -91,10 +91,7 @@ function RouteGuard({ children }: RouteGuardProps) {
       location.pathname === "/resetpassword"
     ) {
       return <Navigate to="/dashboard" replace />;
-    } else if (
-      authenticatedUserId &&
-      location.pathname === "/upgrade-account"
-    ) {
+    } else if (authenticatedUserId && location.pathname === "/create-account") {
       return <Navigate to="/dashboard" replace />;
     }
     return children;

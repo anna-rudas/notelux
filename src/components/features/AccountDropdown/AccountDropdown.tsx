@@ -26,7 +26,7 @@ function AccountDropdown() {
     setAuthenticatedUserId,
     setToastMessageContent,
   } = useContext(AppContext);
-  const { setIsUpgradeAccountModalOpen } = useContext(DashboardContext);
+  const { setIsCreateAccountModalOpen } = useContext(DashboardContext);
   const navigate = useNavigate();
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -98,7 +98,7 @@ function AccountDropdown() {
         {anonymousUserId ? (
           <button
             disabled={isLoading}
-            onClick={() => setIsUpgradeAccountModalOpen(true)}
+            onClick={() => setIsCreateAccountModalOpen(true)}
             {...className(
               buttons.btn,
               style.dropdownItem,
@@ -118,9 +118,9 @@ function AccountDropdown() {
         <div {...className(shared.divider)} />
         {anonymousUserId ? (
           <PrimaryButton
-            buttonText="Upgrade account"
+            buttonText="Create account"
             buttonStyle={style.btn}
-            navigateTo="/upgrade-account"
+            navigateTo="/create-account"
           />
         ) : (
           <button

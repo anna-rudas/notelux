@@ -22,7 +22,7 @@ function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
     setIsMoreNoteOptionsOpen,
     setIsDeleteNoteModalOpen,
     setIsShareNoteModalOpen,
-    setIsUpgradeAccountModalOpen,
+    setIsCreateAccountModalOpen,
   } = useContext(DashboardContext);
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -50,7 +50,7 @@ function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
 
   const handleClickShareNoteButton = () => {
     if (anonymousUserId) {
-      setIsUpgradeAccountModalOpen(true);
+      setIsCreateAccountModalOpen(true);
     } else {
       setIsShareNoteModalOpen(true);
     }

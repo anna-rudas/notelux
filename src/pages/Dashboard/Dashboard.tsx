@@ -5,10 +5,10 @@ import Notes from "../../components/features/Notes";
 import PageWrapper from "../../components/templates/PageWrapper";
 import { DashboardContext } from "../../context/DashboardContext";
 import { AppContext } from "../../context/AppContext";
-import UpgradeAccountModal from "../../components/modals/UpgradeAccountModal";
+import CreateAccountModal from "../../components/modals/CreateAccountModal";
 
 function Dashboard() {
-  const { isEditing, isUpgradeAccountModalOpen } = useContext(DashboardContext);
+  const { isEditing, isCreateAccountModalOpen } = useContext(DashboardContext);
   const { termToSearch } = useContext(AppContext);
 
   return (
@@ -17,7 +17,7 @@ function Dashboard() {
         {termToSearch == "" && <AddNote />}
         <Notes />
         {isEditing && <EditNoteModal />}
-        {isUpgradeAccountModalOpen && <UpgradeAccountModal />}
+        {isCreateAccountModalOpen && <CreateAccountModal />}
       </>
     </PageWrapper>
   );

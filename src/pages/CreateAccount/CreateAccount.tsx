@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import * as style from "./UpgradeAccount.module.css";
+import * as style from "./CreateAccount.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
 import * as textStyles from "../../assets/styles/text-styles.module.css";
 import { className, evalErrorCode } from "../../utilities/helpers";
@@ -10,26 +10,26 @@ import PageWrapper from "../../components/templates/PageWrapper";
 import { FormikValues } from "formik";
 import {
   sendVerificationEmail,
-  upgradeUserAccountToPermanent,
+  createUserAccountToPermanent,
 } from "../../firestore/authService";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { updateUserInDb } from "../../firestore/userService";
 
-function UpgradeAccount() {
+function CreateAccount() {
   const { setIsLoading, setToastMessageContent, user } = useContext(AppContext);
   const navigate = useNavigate();
   const [, setSearchParams] = useSearchParams();
 
-  const handleUpgradeAccount = async (values: FormikValues) => {
+  const handleCreateAccount = async (values: FormikValues) => {
     setIsLoading(true);
 
     try {
-      const upgradeResult = await upgradeUserAccountToPermanent(
+      const createAccountResult = await createUserAccountToPermanent(
         values.email,
         values.password
       );
-      if (upgradeResult && user) {
+      if (createAccountResult && user) {
         try {
           await sendVerificationEmail();
 
@@ -40,7 +40,7 @@ function UpgradeAccount() {
               username: values.username,
             });
             navigate("/signin");
-            setSearchParams({ upgradeAccountSuccess: "true" });
+            setSearchParams({ createAccountSuccess: "true" });
             navigate(0);
           } catch (error: unknown) {
             console.error("Failed to update user in database: ", error);
@@ -74,16 +74,14 @@ function UpgradeAccount() {
         }
       }
     } catch (error: unknown) {
-      console.error("Failed to upgrade account: ", error);
+      console.error("Failed to create account: ", error);
       if (error instanceof FirebaseError) {
         setToastMessageContent({
           actionButtonText: "",
           isPersisting: false,
           showMessage: true,
           isError: true,
-          description: `Failed to upgrade account: ${evalErrorCode(
-            error.code
-          )}`,
+          description: `Failed to create account: ${evalErrorCode(error.code)}`,
         });
       }
       setIsLoading(false);
@@ -99,14 +97,14 @@ function UpgradeAccount() {
             style.pageContentContainer
           )}
         >
-          <span {...className(textStyles.titleText)}>Upgrade your account</span>
+          <span {...className(textStyles.titleText)}>Create your account</span>
           <span {...className(textStyles.normalText, textStyles.centerText)}>
             By creating a permanent account you will be able to share your notes
             and access them anywhere, anytime.
           </span>
           <AuthForm
-            handleSubmit={handleUpgradeAccount}
-            primaryButtonText="Upgrade account"
+            handleSubmit={handleCreateAccount}
+            primaryButtonText="Create account"
             showUsername={true}
           />
           <div {...className(style.redirectCon)}>
@@ -118,4 +116,4 @@ function UpgradeAccount() {
   );
 }
 
-export default UpgradeAccount;
+export default CreateAccount;

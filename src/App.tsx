@@ -13,7 +13,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import DashboardContextProvider from "./context/DashboardContext";
-import UpgradeAccount from "./pages/UpgradeAccount";
+import CreateAccount from "./pages/CreateAccount";
 
 function App() {
   const router = createBrowserRouter([
@@ -70,11 +70,11 @@ function App() {
       ),
     },
     {
-      path: "/upgrade-account",
+      path: "/create-account",
       element: (
         <ErrorBoundary onError={logError} FallbackComponent={ErrorPage}>
           <RouteGuard>
-            <UpgradeAccount />
+            <CreateAccount />
           </RouteGuard>
         </ErrorBoundary>
       ),

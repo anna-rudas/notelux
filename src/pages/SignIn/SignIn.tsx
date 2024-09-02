@@ -49,14 +49,14 @@ function SignIn() {
         description:
           "Email changed successfully. Verify your new email address before signing in.",
       });
-    } else if (searchParams.get("upgradeAccountSuccess") === "true") {
+    } else if (searchParams.get("createAccountSuccess") === "true") {
       setToastMessageContent({
         actionButtonText: "",
         isPersisting: false,
         showMessage: true,
         isError: false,
         description:
-          "Account upgraded successfully. Verify your email address before signing in.",
+          "Account created successfully. Verify your email address before signing in.",
       });
     }
     setSearchParams({});

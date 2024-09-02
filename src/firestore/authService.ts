@@ -57,17 +57,17 @@ export const signUpUser = async (
   return signUpResult;
 };
 
-export const upgradeUserAccountToPermanent = async (
+export const createUserAccountToPermanent = async (
   email: string,
   password: string
 ): Promise<UserCredential | null> => {
   if (auth.currentUser) {
     const credential = EmailAuthProvider.credential(email, password);
-    const upgradeResult = await linkWithCredential(
+    const createAccountResult = await linkWithCredential(
       auth.currentUser,
       credential
     );
-    return upgradeResult;
+    return createAccountResult;
   }
   return null;
 };
