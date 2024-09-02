@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useRef } from "react";
 import SearchIcon from "../../../assets/icons/SearchIcon";
 import { AppContext } from "../../../context/AppContext";
 import { className } from "../../../utilities/helpers";
@@ -8,64 +8,51 @@ import * as buttons from "../../../assets/styles/buttons.module.css";
 import CloseIcon from "../../../assets/icons/CloseIcon";
 
 function SearchInput() {
-  const { setTermToSearch } = useContext(AppContext);
-  const [searchInput, setSearchInput] = useState("");
-  const [isInputFocused, setIsInputFocused] = useState(false);
+  const { setTermToSearch, termToSearch } = useContext(AppContext);
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const blurInput = () => {
-    setIsInputFocused(false);
     searchInputRef.current?.blur();
   };
 
   const clearSearch = (event: React.MouseEvent) => {
     event.preventDefault();
     setTermToSearch("");
-    setSearchInput("");
     blurInput();
   };
 
   const handleSearchSubmit = (event: React.MouseEvent) => {
     event.preventDefault();
-    setTermToSearch(searchInput);
     blurInput();
   };
 
   return (
     <form {...className(style.searchInputCon)}>
+      <button
+        type="submit"
+        onClick={handleSearchSubmit}
+        {...className(buttons.btn, style.searchIconBtn)}
+      >
+        <SearchIcon {...className(style.searchIcon)} />
+      </button>
       <input
         {...className(style.searchInput, textStyles.subtitleText)}
         ref={searchInputRef}
         type="search"
         placeholder="Search"
-        value={searchInput}
+        value={termToSearch}
         onChange={(event) => {
-          setSearchInput(event.target.value);
-          setIsInputFocused(true);
-        }}
-        onKeyUp={(event) => {
-          if (event.code === "Enter") {
-            setTermToSearch(searchInput);
-            blurInput();
-          }
+          setTermToSearch(event.target.value);
         }}
       />
 
-      {searchInput != "" && !isInputFocused ? (
+      {termToSearch != "" && (
         <button
           type="submit"
           onClick={clearSearch}
-          {...className(buttons.btn, style.btn)}
+          {...className(buttons.btn, style.clearIconBtn)}
         >
-          <CloseIcon {...className(style.closeIcon)} />
-        </button>
-      ) : (
-        <button
-          type="submit"
-          onClick={handleSearchSubmit}
-          {...className(buttons.btn, style.btn)}
-        >
-          <SearchIcon {...className(style.searchIcon)} />
+          <CloseIcon {...className(style.clearIcon)} />
         </button>
       )}
     </form>

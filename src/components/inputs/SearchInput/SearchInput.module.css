@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: calc(var(--gap) * 2);
+  gap: var(--gap);
   border: 2px solid var(--text-secondary);
   border-radius: calc(var(--border-radius) * 5);
   height: fit-content;
@@ -20,12 +20,29 @@
   min-height: 15px;
 }
 
-.closeIcon {
+.searchIconBtn {
+  background-color: var(--text-secondary);
+  padding: var(--padding);
+  height: 40px;
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 0;
+}
+
+.clearIcon {
   width: 15px;
   height: 15px;
-  stroke: var(--bg);
-  fill: var(--bg);
+  stroke: var(--text-secondary);
+  fill: var(--text-secondary);
   stroke-width: 1;
+}
+
+.clearIconBtn {
+  background-color: var(--bg);
+  padding: 5px 10px 5px 5px !important;
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 0;
 }
 
 .searchInput {
@@ -33,18 +50,8 @@
   height: 20px;
   border: none;
   background-color: var(--bg);
-  margin: var(--margin);
 }
 
 .searchInput:focus {
   outline: none;
-}
-
-.btn {
-  background-color: var(--text-secondary);
-  padding: var(--padding);
-  height: 40px;
-  aspect-ratio: 1;
-  border: none;
-  border-radius: 0;
 }
