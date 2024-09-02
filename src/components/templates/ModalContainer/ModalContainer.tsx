@@ -10,6 +10,7 @@ import { AppContext } from "../../../context/AppContext";
 import { DashboardContext } from "../../../context/DashboardContext";
 import { colors } from "../../../data/constants";
 import * as Yup from "yup";
+import FocusTrap from "focus-trap-react";
 
 type ModalContainerProps = {
   handleCancel: () => void;
@@ -36,53 +37,62 @@ function ModalContainer({
   const { user } = useContext(AppContext);
 
   return (
-    <div {...className(style.confModalContainer)}>
-      <div
-        {...className(shared.shadow, style.confModal)}
-        style={
-          activeNote && user?.theme === "light"
-            ? { backgroundColor: colors[activeNote.color] }
-            : {}
-        }
-      >
-        <span {...className(textStyles.subtitleText, textStyles.centerText)}>
-          {title}
-        </span>
-        <span
-          {...className(
-            textStyles.normalText,
-            textStyles.centerText,
-            !subtitle && shared.hide
-          )}
+    <FocusTrap
+      focusTrapOptions={{
+        allowOutsideClick: true,
+        onDeactivate: () => {
+          handleCancel();
+        },
+      }}
+    >
+      <div {...className(style.confModalContainer)}>
+        <div
+          {...className(shared.shadow, style.confModal)}
+          style={
+            activeNote && user?.theme === "light"
+              ? { backgroundColor: colors[activeNote.color] }
+              : {}
+          }
         >
-          {subtitle}
-        </span>
-        <Formik
-          initialValues={initialFormValues}
-          validationSchema={validationSchema}
-          onSubmit={(values, { setSubmitting, resetForm }) => {
-            handleSubmit(values);
-            resetForm();
-            setSubmitting(false);
-          }}
-        >
-          <Form noValidate {...className(style.inputsCon)}>
-            <div {...className(style.inputsCon)}>{children}</div>
-            <div {...className(style.confModalBtnsCon)}>
-              <PrimaryButton
-                buttonText={primaryButtonText}
-                buttonStyle={style.btn}
-              />
-              <SecondaryButton
-                buttonText="Cancel"
-                handleClick={handleCancel}
-                buttonStyle={style.btn}
-              />
-            </div>
-          </Form>
-        </Formik>
+          <span {...className(textStyles.subtitleText, textStyles.centerText)}>
+            {title}
+          </span>
+          <span
+            {...className(
+              textStyles.normalText,
+              textStyles.centerText,
+              !subtitle && shared.hide
+            )}
+          >
+            {subtitle}
+          </span>
+          <Formik
+            initialValues={initialFormValues}
+            validationSchema={validationSchema}
+            onSubmit={(values, { setSubmitting, resetForm }) => {
+              handleSubmit(values);
+              resetForm();
+              setSubmitting(false);
+            }}
+          >
+            <Form noValidate {...className(style.inputsCon)}>
+              <div {...className(style.inputsCon)}>{children}</div>
+              <div {...className(style.confModalBtnsCon)}>
+                <PrimaryButton
+                  buttonText={primaryButtonText}
+                  buttonStyle={style.btn}
+                />
+                <SecondaryButton
+                  buttonText="Cancel"
+                  handleClick={handleCancel}
+                  buttonStyle={style.btn}
+                />
+              </div>
+            </Form>
+          </Formik>
+        </div>
       </div>
-    </div>
+    </FocusTrap>
   );
 }
 

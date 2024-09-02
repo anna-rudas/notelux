@@ -7,6 +7,7 @@ import { AppContext } from "../../../context/AppContext";
 import TrashIcon from "../../../assets/icons/TrashIcon";
 import ShareIcon from "../../../assets/icons/ShareIcon";
 import { DashboardContext } from "../../../context/DashboardContext";
+import FocusTrap from "focus-trap-react";
 
 type MoreNoteOptionsProps = {
   backgroundColor: string;
@@ -57,30 +58,39 @@ function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
   };
 
   return (
-    <div
-      style={user?.theme === "light" ? { backgroundColor } : {}}
-      ref={moreNoteOptionsRef}
-      {...className(style.moreOptionsCon, shared.shadow)}
+    <FocusTrap
+      focusTrapOptions={{
+        allowOutsideClick: true,
+        onDeactivate: () => {
+          setIsMoreNoteOptionsOpen(false);
+        },
+      }}
     >
-      <button
-        disabled={isLoading}
-        {...className(style.moreOptionsItem)}
-        onClick={handleClickShareNoteButton}
-        type="button"
+      <div
+        style={user?.theme === "light" ? { backgroundColor } : {}}
+        ref={moreNoteOptionsRef}
+        {...className(style.moreOptionsCon, shared.shadow)}
       >
-        <ShareIcon {...className(style.shareIcon)} />
-        <span {...className(textStyles.normalText)}>Share</span>
-      </button>
-      <button
-        disabled={isLoading}
-        {...className(style.moreOptionsItem)}
-        onClick={() => setIsDeleteNoteModalOpen(true)}
-        type="button"
-      >
-        <TrashIcon {...className(style.trashIcon)} />
-        <span {...className(textStyles.normalText)}>Delete</span>
-      </button>
-    </div>
+        <button
+          disabled={isLoading}
+          {...className(style.moreOptionsItem)}
+          onClick={handleClickShareNoteButton}
+          type="button"
+        >
+          <ShareIcon {...className(style.shareIcon)} />
+          <span {...className(textStyles.normalText)}>Share</span>
+        </button>
+        <button
+          disabled={isLoading}
+          {...className(style.moreOptionsItem)}
+          onClick={() => setIsDeleteNoteModalOpen(true)}
+          type="button"
+        >
+          <TrashIcon {...className(style.trashIcon)} />
+          <span {...className(textStyles.normalText)}>Delete</span>
+        </button>
+      </div>
+    </FocusTrap>
   );
 }
 

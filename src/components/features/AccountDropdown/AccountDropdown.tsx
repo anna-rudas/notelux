@@ -11,6 +11,7 @@ import { signOutUser } from "../../../firestore/authService";
 import { evalErrorCode } from "../../../utilities/helpers";
 import PrimaryButton from "../../buttons/PrimaryButton";
 import { DashboardContext } from "../../../context/DashboardContext";
+import FocusTrap from "focus-trap-react";
 
 function AccountDropdown() {
   const {
@@ -81,62 +82,73 @@ function AccountDropdown() {
   }
 
   return (
-    <div
-      ref={dropdownRef}
-      id="account-modal"
-      {...className(style.dropdownCon, shared.shadow)}
+    <FocusTrap
+      focusTrapOptions={{
+        allowOutsideClick: true,
+        onDeactivate: () => {
+          setIsDropdownOpen(false);
+        },
+      }}
     >
-      <span {...className(style.emailText)}>{user.email}</span>
-      <span {...className(textStyles.titleText)}>Hello, {user.username}!</span>
-      <div {...className(style.dropdownItemCon)}>
-        <Link
-          to="/dashboard"
-          {...className(style.dropdownItem, textStyles.subtitleText)}
-        >
-          Dashboard
-        </Link>
-        {anonymousUserId ? (
-          <button
-            disabled={isLoading}
-            onClick={() => setIsCreateAccountModalOpen(true)}
-            {...className(
-              buttons.btn,
-              style.dropdownItem,
-              textStyles.subtitleText
-            )}
-          >
-            Account settings
-          </button>
-        ) : (
+      <div
+        ref={dropdownRef}
+        id="account-modal"
+        {...className(style.dropdownCon, shared.shadow)}
+      >
+        <span {...className(style.emailText)}>{user.email}</span>
+        <span {...className(textStyles.titleText)}>
+          Hello, {user.username}!
+        </span>
+        <div {...className(style.dropdownItemCon)}>
           <Link
-            to="/settings"
+            to="/dashboard"
             {...className(style.dropdownItem, textStyles.subtitleText)}
           >
-            Account settings
+            Dashboard
           </Link>
-        )}
-        <div {...className(shared.divider)} />
-        {anonymousUserId ? (
-          <PrimaryButton
-            buttonText="Create account"
-            buttonStyle={style.btn}
-            navigateTo="/create-account"
-          />
-        ) : (
-          <button
-            disabled={isLoading}
-            onClick={handleSignOutUser}
-            {...className(
-              buttons.btn,
-              style.dropdownItem,
-              textStyles.subtitleText
-            )}
-          >
-            Sign out
-          </button>
-        )}
+          {anonymousUserId ? (
+            <button
+              disabled={isLoading}
+              onClick={() => setIsCreateAccountModalOpen(true)}
+              {...className(
+                buttons.btn,
+                style.dropdownItem,
+                textStyles.subtitleText
+              )}
+            >
+              Account settings
+            </button>
+          ) : (
+            <Link
+              to="/settings"
+              {...className(style.dropdownItem, textStyles.subtitleText)}
+            >
+              Account settings
+            </Link>
+          )}
+          <div {...className(shared.divider)} />
+          {anonymousUserId ? (
+            <PrimaryButton
+              buttonText="Create account"
+              buttonStyle={style.btn}
+              navigateTo="/create-account"
+            />
+          ) : (
+            <button
+              disabled={isLoading}
+              onClick={handleSignOutUser}
+              {...className(
+                buttons.btn,
+                style.dropdownItem,
+                textStyles.subtitleText
+              )}
+            >
+              Sign out
+            </button>
+          )}
+        </div>
       </div>
-    </div>
+    </FocusTrap>
   );
 }
 
