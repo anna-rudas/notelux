@@ -69,7 +69,7 @@ function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
         type="button"
       >
         <ShareIcon {...className(style.shareIcon)} />
-        <span {...className(textStyles.normalText)}>Share note</span>
+        <span {...className(textStyles.normalText)}>Share</span>
       </button>
       <button
         disabled={isLoading}
@@ -78,7 +78,7 @@ function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
         type="button"
       >
         <TrashIcon {...className(style.trashIcon)} />
-        <span {...className(textStyles.normalText)}>Delete note</span>
+        <span {...className(textStyles.normalText)}>Delete</span>
       </button>
     </div>
   );
