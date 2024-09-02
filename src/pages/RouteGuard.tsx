@@ -77,7 +77,8 @@ function RouteGuard({ children }: RouteGuardProps) {
       if (
         location.pathname === "/signup" ||
         location.pathname === "/signin" ||
-        location.pathname === "/resetpassword"
+        location.pathname === "/resetpassword" ||
+        location.pathname === "/"
       ) {
         return children;
       }
