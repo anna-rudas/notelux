@@ -85,9 +85,9 @@ export const isUserAnonymous = (signInResult: UserCredential): boolean => {
 };
 
 export const sendVerificationEmail = async () => {
-  if (auth.currentUser) {
+  if (auth.currentUser && process.env.REACT_APP_FIREBASE_REDIRECT_URL) {
     await sendEmailVerification(auth.currentUser, {
-      url: "http://localhost:1234/signin",
+      url: process.env.REACT_APP_FIREBASE_REDIRECT_URL,
     });
   }
 };
