@@ -22,6 +22,7 @@ function RouteGuard({ children }: RouteGuardProps) {
     setUser,
     error,
     authenticatedUserId,
+    anonymousUserId,
     setIsDropdownOpen,
   } = useContext(AppContext);
   const auth = getAuth();
@@ -93,6 +94,8 @@ function RouteGuard({ children }: RouteGuardProps) {
     ) {
       return <Navigate to="/dashboard" replace />;
     } else if (authenticatedUserId && location.pathname === "/create-account") {
+      return <Navigate to="/dashboard" replace />;
+    } else if (anonymousUserId && location.pathname === "/settings") {
       return <Navigate to="/dashboard" replace />;
     }
     return children;
