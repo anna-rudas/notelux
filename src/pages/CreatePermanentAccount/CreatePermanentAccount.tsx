@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import * as style from "./CreateAccount.module.css";
+import * as style from "./CreatePermanentAccount.module.css";
 import * as shared from "../../assets/styles/shared.module.css";
 import * as textStyles from "../../assets/styles/text-styles.module.css";
 import { className, evalErrorCode } from "../../utilities/helpers";
@@ -10,7 +10,7 @@ import PageWrapper from "../../components/templates/PageWrapper";
 import { FormikValues } from "formik";
 import {
   sendVerificationEmail,
-  createUserAccountToPermanent,
+  upgradeUserAccountToPermanent,
   signOutUser,
 } from "../../firestore/authService";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
@@ -18,7 +18,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { updateUserInDb } from "../../firestore/userService";
 import { User } from "../../types/types";
 
-function CreateAccount() {
+function CreatePermanentAccount() {
   const {
     setIsLoading,
     setToastMessageContent,
@@ -49,7 +49,7 @@ function CreateAccount() {
     }
   };
 
-  const handleCreateAccount = async (values: FormikValues) => {
+  const handleCreatePermanentAccount = async (values: FormikValues) => {
     setIsLoading(true);
 
     if (user === null) {
@@ -71,7 +71,7 @@ function CreateAccount() {
     setIsLoading(true);
 
     try {
-      const createAccountResult = await createUserAccountToPermanent(
+      const createAccountResult = await upgradeUserAccountToPermanent(
         values.email,
         values.password
       );
@@ -135,7 +135,7 @@ function CreateAccount() {
             and access them anywhere, anytime.
           </span>
           <AuthForm
-            handleSubmit={handleCreateAccount}
+            handleSubmit={handleCreatePermanentAccount}
             primaryButtonText="Create account"
             showUsername={true}
           />
@@ -148,4 +148,4 @@ function CreateAccount() {
   );
 }
 
-export default CreateAccount;
+export default CreatePermanentAccount;

@@ -13,7 +13,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import DashboardContextProvider from "./context/DashboardContext";
-import CreateAccount from "./pages/CreateAccount";
+import CreateAccount from "./pages/CreatePermanentAccount";
 
 function App() {
   const router = createBrowserRouter([

@@ -57,7 +57,7 @@ export const signUpUser = async (
   return signUpResult;
 };
 
-export const createUserAccountToPermanent = async (
+export const upgradeUserAccountToPermanent = async (
   email: string,
   password: string
 ): Promise<UserCredential | null> => {
