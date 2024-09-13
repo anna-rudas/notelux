@@ -3,78 +3,118 @@ import GeneralInput from "../../inputs/GeneralInput";
 import ModalContainer from "../../templates/ModalContainer";
 import { FormikValues } from "formik";
 import { deleteUserSchema } from "../../../utilities/validationSchemas";
-import { deleteUserDataInDb } from "../../../firestore/userService";
+import {
+  addUserInDb,
+  deleteUserDataInDb,
+} from "../../../firestore/userService";
 import {
   reauthenticateUser,
   deleteUserAccount,
+  signOutUser,
 } from "../../../firestore/authService";
 import { AppContext } from "../../../context/AppContext";
 import { FirebaseError } from "firebase/app";
 import { evalErrorCode } from "../../../utilities/helpers";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { User } from "../../../types/types";
 
 type DeleteUserModalProps = {
   handleCancel: () => void;
 };
 
 function DeleteUserModal({ handleCancel }: DeleteUserModalProps) {
-  const { user, setToastMessageContent, setIsLoading } = useContext(AppContext);
+  const {
+    user,
+    setToastMessageContent,
+    setIsLoading,
+    setUser,
+    setAnonymousUserId,
+    setAuthenticatedUserId,
+  } = useContext(AppContext);
   const navigate = useNavigate();
+  const [, setSearchParams] = useSearchParams();
+
+  const reAddUserData = async (userData: User) => {
+    try {
+      await addUserInDb(userData);
+    } catch (error: unknown) {
+      console.error("Failed to readd user: ", error);
+    }
+  };
 
   const handleDeleteUser = async (values: FormikValues) => {
     setIsLoading(true);
-    if (user) {
-      try {
-        const reauthResult = await reauthenticateUser(
-          user.email,
-          values.password
-        );
-        if (reauthResult) {
+    if (user === null) {
+      throw new Error("expected user to be signed in when changing email");
+    }
+    const userData = { ...user };
+
+    try {
+      const reauthResult = await reauthenticateUser(
+        user.email,
+        values.password
+      );
+      if (reauthResult) {
+        try {
+          //delete user data
+          await deleteUserDataInDb(user.id);
+          setUser(null);
+          setAnonymousUserId(null);
+          setAuthenticatedUserId(null);
+          setIsLoading(true);
           try {
-            //delete user data
-            await deleteUserDataInDb(user.id);
             //delete user account
             await deleteUserAccount();
-            setToastMessageContent({
-              actionButtonText: "",
-              isPersisting: true,
-              showMessage: true,
-              isError: false,
-              description:
-                "User deletion successful. You will be automatically signed out",
+            await signOutUser();
+            navigate("/signin");
+            setSearchParams({
+              deleteAccountSuccess: "true",
             });
-            setTimeout(() => {
-              navigate(0);
-            }, 5000);
+            setIsLoading(false);
           } catch (error) {
-            console.error("Failed to delete user: ", error);
+            reAddUserData(userData);
+            console.error("Failed to delete user account: ", error);
             if (error instanceof FirebaseError) {
               setToastMessageContent({
                 actionButtonText: "",
                 isPersisting: false,
                 showMessage: true,
                 isError: true,
-                description: `Failed to delete user: ${evalErrorCode(
+                description: `Failed to delete user account: ${evalErrorCode(
                   error.code
                 )}`,
               });
             }
             setIsLoading(false);
           }
+        } catch (error) {
+          console.error("Failed to delete user: ", error);
+          if (error instanceof FirebaseError) {
+            setToastMessageContent({
+              actionButtonText: "",
+              isPersisting: false,
+              showMessage: true,
+              isError: true,
+              description: `Failed to delete user: ${evalErrorCode(
+                error.code
+              )}`,
+            });
+          }
+          setIsLoading(false);
         }
-      } catch (error: unknown) {
-        console.error("Failed to reauthenticate user: ", error);
-        if (error instanceof FirebaseError) {
-          setToastMessageContent({
-            actionButtonText: "",
-            isPersisting: false,
-            showMessage: true,
-            isError: true,
-            description: `Failed to authenticate: ${evalErrorCode(error.code)}`,
-          });
-        }
-        setIsLoading(false);
       }
+    } catch (error: unknown) {
+      console.error("Failed to reauthenticate user: ", error);
+      if (error instanceof FirebaseError) {
+        setToastMessageContent({
+          actionButtonText: "",
+          isPersisting: false,
+          showMessage: true,
+          isError: true,
+          description: `Failed to authenticate: ${evalErrorCode(error.code)}`,
+        });
+      }
+      setIsLoading(false);
     }
   };
 

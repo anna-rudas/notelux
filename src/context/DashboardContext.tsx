@@ -107,11 +107,9 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
   };
 
   useEffect(() => {
-    if (authenticatedUserId) {
-      const q = query(
-        notesColRef,
-        where("coUsers", "array-contains", authenticatedUserId)
-      );
+    const userId = authenticatedUserId ?? anonymousUserId;
+    if (userId) {
+      const q = query(notesColRef, where("coUsers", "array-contains", userId));
       const unSubscribe = onSnapshot(
         q,
         (querySnapshot) => {
@@ -145,45 +143,7 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
       );
       return unSubscribe;
     }
-  }, [authenticatedUserId]);
-
-  useEffect(() => {
-    if (anonymousUserId) {
-      const q = query(notesColRef, where("userId", "==", anonymousUserId));
-      const unSubscribe = onSnapshot(
-        q,
-        (querySnapshot) => {
-          const resolvedNotes: Note[] = [];
-          querySnapshot.forEach((doc) => {
-            resolvedNotes.push({
-              id: doc.id,
-              title: doc.data().title,
-              color: doc.data().color,
-              body: doc.data().body,
-              date: doc.data().date,
-              userId: doc.data().userId,
-              coUsers: doc.data().coUsers,
-            });
-          });
-          setNotes(resolvedNotes);
-          setAreNotesLoading(false);
-        },
-        (error: unknown) => {
-          console.error(error);
-          if (error instanceof FirebaseError) {
-            setToastMessageContent({
-              isError: true,
-              isPersisting: true,
-              actionButtonText: "",
-              description: `Failed to load notes: ${evalErrorCode(error.code)}`,
-              showMessage: true,
-            });
-          }
-        }
-      );
-      return unSubscribe;
-    }
-  }, [anonymousUserId]);
+  }, [authenticatedUserId, anonymousUserId]);
 
   return (
     <DashboardContext.Provider

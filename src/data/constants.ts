@@ -56,3 +56,5 @@ export const firebaseErrorCodes: Record<string, string> = {
   "auth/user-not-found": "no user with this email address",
   "auth/wrong-password": "wrong password",
 };
+
+export const defaultAnonymousUsername = "guest";

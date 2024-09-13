@@ -11,17 +11,63 @@ import { FormikValues } from "formik";
 import {
   sendVerificationEmail,
   createUserAccountToPermanent,
+  signOutUser,
 } from "../../firestore/authService";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { updateUserInDb } from "../../firestore/userService";
+import { User } from "../../types/types";
 
 function CreateAccount() {
-  const { setIsLoading, setToastMessageContent, user } = useContext(AppContext);
+  const {
+    setIsLoading,
+    setToastMessageContent,
+    user,
+    setUser,
+    setAnonymousUserId,
+    setAuthenticatedUserId,
+  } = useContext(AppContext);
   const navigate = useNavigate();
   const [, setSearchParams] = useSearchParams();
 
+  const updateUserData = async (userData: User) => {
+    try {
+      await updateUserInDb(userData);
+    } catch (error: unknown) {
+      console.error("Failed to update user in database: ", error);
+      if (error instanceof FirebaseError) {
+        setToastMessageContent({
+          actionButtonText: "",
+          isPersisting: false,
+          showMessage: true,
+          isError: true,
+          description: `Failed to update user in database: ${evalErrorCode(
+            error.code
+          )}`,
+        });
+      }
+    }
+  };
+
   const handleCreateAccount = async (values: FormikValues) => {
+    setIsLoading(true);
+
+    if (user === null) {
+      throw new Error(
+        "expected anonymous user to be signed in when creating account"
+      );
+    }
+    const userData = { ...user };
+
+    await updateUserData({
+      ...userData,
+      email: values.email,
+      username: values.username,
+    });
+
+    setUser(null);
+    setAnonymousUserId(null);
+    setAuthenticatedUserId(null);
     setIsLoading(true);
 
     try {
@@ -29,33 +75,18 @@ function CreateAccount() {
         values.email,
         values.password
       );
-      if (createAccountResult && user) {
+      if (createAccountResult) {
         try {
           await sendVerificationEmail();
-
           try {
-            await updateUserInDb({
-              ...user,
-              email: values.email,
-              username: values.username,
-            });
+            await signOutUser();
             navigate("/signin");
-            setSearchParams({ createAccountSuccess: "true" });
-            navigate(0);
-          } catch (error: unknown) {
-            console.error("Failed to update user in database: ", error);
-            if (error instanceof FirebaseError) {
-              setToastMessageContent({
-                actionButtonText: "",
-                isPersisting: false,
-                showMessage: true,
-                isError: true,
-                description: `Failed to update user in database: ${evalErrorCode(
-                  error.code
-                )}`,
-              });
-            }
+            setSearchParams({
+              createAccountSuccess: "true",
+            });
             setIsLoading(false);
+          } catch (error: unknown) {
+            console.error("Failed to sign out user: ", error);
           }
         } catch (error: unknown) {
           console.error("Failed to send verification email: ", error);
@@ -74,6 +105,7 @@ function CreateAccount() {
         }
       }
     } catch (error: unknown) {
+      await updateUserData(userData);
       console.error("Failed to create account: ", error);
       if (error instanceof FirebaseError) {
         setToastMessageContent({

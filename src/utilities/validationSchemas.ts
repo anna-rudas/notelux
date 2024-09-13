@@ -3,7 +3,6 @@ import * as Yup from "yup";
 export const signUpSchema = Yup.object({
   username: Yup.string()
     .max(17, "Username is too long")
-    .min(1, "Username is too short")
     .required("This field is required"),
   email: Yup.string()
     .email("Not a valid email address")
@@ -23,7 +22,6 @@ export const signInSchema = Yup.object({
 export const settingsSchema = Yup.object({
   username: Yup.string()
     .max(17, "Username is too long")
-    .min(1, "Username is too short")
     .required("This field is required"),
 });
 

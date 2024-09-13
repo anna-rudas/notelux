@@ -6,7 +6,11 @@ import React, {
   useRef,
   RefObject,
 } from "react";
-import { defaultToastMessage, usersColKey } from "../data/constants";
+import {
+  defaultAnonymousUsername,
+  defaultToastMessage,
+  usersColKey,
+} from "../data/constants";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firestore/firestoreConfig";
 import { FirebaseError } from "firebase/app";
@@ -146,7 +150,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
                   id: anonymousUserId,
                   email: "",
                   theme: defaultTheme,
-                  username: "guest",
+                  username: defaultAnonymousUsername,
                   layout: defaultLayout,
                 });
               } catch (error) {

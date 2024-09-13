@@ -7,24 +7,15 @@ import {
   deleteDoc,
   doc,
   setDoc,
-  getDoc,
 } from "firebase/firestore";
 import { User } from "../types/types";
 import { db } from "./firestoreConfig";
-import { notesColKey, usersColKey } from "../data/constants";
+import { usersColKey } from "../data/constants";
 
-const notesColRef = collection(db, notesColKey);
 const usersColRef = collection(db, usersColKey);
 
 export const addUserInDb = async (userToAdd: User): Promise<void> => {
-  const userRef = doc(db, usersColKey, userToAdd.id);
-  const docSnapshot = await getDoc(userRef);
-
-  if (!docSnapshot.exists()) {
-    await setDoc(userRef, userToAdd);
-    return;
-  }
-  throw new Error("User already exists.");
+  await setDoc(doc(db, usersColKey, userToAdd.id), userToAdd);
 };
 
 export const updateUserInDb = async (userToUpdate: User): Promise<void> => {
@@ -37,15 +28,6 @@ export const deleteUserDataInDb = async (userId: string): Promise<void> => {
 
   //delete user document
   await deleteDoc(userRef);
-
-  //delete notes
-  const q = query(notesColRef, where("userId", "==", userId));
-  const querySnapshot = await getDocs(q);
-  if (querySnapshot.docs.length !== 0) {
-    querySnapshot.docs.map(async (doc) => {
-      await deleteDoc(doc.ref);
-    });
-  }
 };
 
 export const getUserEmailFromId = async (userId: string): Promise<string> => {

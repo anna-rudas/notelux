@@ -58,6 +58,14 @@ function SignIn() {
         description:
           "Account created successfully. Verify your email address before signing in.",
       });
+    } else if (searchParams.get("deleteAccountSuccess") === "true") {
+      setToastMessageContent({
+        actionButtonText: "",
+        isPersisting: false,
+        showMessage: true,
+        isError: false,
+        description: "Account deleted successfully.",
+      });
     }
     setSearchParams({});
   }, [searchParams]);
