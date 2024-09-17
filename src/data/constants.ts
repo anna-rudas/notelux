@@ -30,11 +30,6 @@ export const usersColKey = "users";
 
 export const maxNoteCharToShow = 150;
 
-export const defaultNoteColor: Record<Theme, Color> = {
-  light: "yellow",
-  dark: "default",
-};
-
 export const defaultTheme: Theme = "light";
 
 export const defaultLayout: Layout = "grid";

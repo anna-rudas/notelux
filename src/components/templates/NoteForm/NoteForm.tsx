@@ -85,19 +85,22 @@ function NoteForm({
         ></textarea>
         <div {...className(style.noteSet)}>
           <div {...className(style.btnsCon)}>
-            <div {...className(style.paletteCon)}>
-              <button
-                disabled={isLoading}
-                {...className(style.btnIcon)}
-                type="button"
-                onClick={() => setIsPaletteOpen(!isPaletteOpen)}
-                title="Colors"
-              >
-                <PaletteIcon {...className(style.paletteIcon)} />
-              </button>
+            {user?.theme === "light" && (
+              <div {...className(style.paletteCon)}>
+                <button
+                  disabled={isLoading}
+                  {...className(style.btnIcon)}
+                  type="button"
+                  onClick={() => setIsPaletteOpen(!isPaletteOpen)}
+                  title="Colors"
+                >
+                  <PaletteIcon {...className(style.paletteIcon)} />
+                </button>
 
-              {isPaletteOpen && <ColorPalette />}
-            </div>
+                {isPaletteOpen && <ColorPalette />}
+              </div>
+            )}
+
             {isEditing && (
               <>
                 <button
@@ -120,7 +123,12 @@ function NoteForm({
             <SecondaryButton handleClick={handleCancel} buttonText="Cancel" />
           </div>
           {isMoreNoteOptionsOpen && (
-            <MoreNoteOptions backgroundColor={colors[activeNote.color]} />
+            <MoreNoteOptions
+              optionsContainerStyle={
+                user?.theme === "light" ? "" : style.moreOptionsCon
+              }
+              backgroundColor={colors[activeNote.color]}
+            />
           )}
         </div>
       </form>

@@ -11,9 +11,13 @@ import FocusTrap from "focus-trap-react";
 
 type MoreNoteOptionsProps = {
   backgroundColor: string;
+  optionsContainerStyle: string;
 };
 
-function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
+function MoreNoteOptions({
+  backgroundColor,
+  optionsContainerStyle,
+}: MoreNoteOptionsProps) {
   const { isLoading, user, anonymousUserId } = useContext(AppContext);
 
   const {
@@ -69,7 +73,11 @@ function MoreNoteOptions({ backgroundColor }: MoreNoteOptionsProps) {
       <div
         style={user?.theme === "light" ? { backgroundColor } : {}}
         ref={moreNoteOptionsRef}
-        {...className(style.moreOptionsCon, shared.shadow)}
+        {...className(
+          style.moreOptionsCon,
+          shared.shadow,
+          optionsContainerStyle
+        )}
       >
         <button
           disabled={isLoading}

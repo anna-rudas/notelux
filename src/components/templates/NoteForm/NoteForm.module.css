@@ -80,3 +80,7 @@
   height: 33px;
   fill: var(--text-secondary);
 }
+
+.moreOptionsCon {
+  left: 0px !important;
+}

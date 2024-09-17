@@ -6,7 +6,6 @@ import NoteForm from "../../templates/NoteForm";
 import { AppContext } from "../../../context/AppContext";
 import { DashboardContext } from "../../../context/DashboardContext";
 import { v4 as uuidv4 } from "uuid";
-import { defaultNoteColor } from "../../../data/constants";
 import { addNoteInDb } from "../../../firestore/noteService";
 import { FirebaseError } from "firebase/app";
 
@@ -60,7 +59,7 @@ function AddNote() {
         id: uuidv4(),
         title: "",
         body: "",
-        color: defaultNoteColor[user.theme],
+        color: "default",
         date: new Date().toISOString(),
         userId: user.id,
         coUsers: [user.id],
