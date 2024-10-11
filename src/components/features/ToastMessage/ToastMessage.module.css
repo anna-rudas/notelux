@@ -30,7 +30,7 @@
   border: 2px solid var(--text-secondary);
   padding: var(--padding);
   gap: calc(var(--gap) * 2);
-  width: 100%;
+  width: 90%;
   max-width: 500px;
   position: fixed;
   bottom: 20px;
