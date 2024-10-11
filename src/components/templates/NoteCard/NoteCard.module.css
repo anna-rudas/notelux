@@ -3,10 +3,10 @@
   background-color: var(--bg);
   display: flex;
   flex-direction: column;
-  gap: calc(var(--gap) * 2);
+  gap: var(--gap-sm);
   height: fit-content;
-  border-radius: calc(var(--border-radius) * 2);
-  padding: var(--padding);
+  border-radius: var(--border-radius-sm);
+  padding: var(--padding-xs);
   cursor: pointer;
   text-align: left;
   overflow: hidden;

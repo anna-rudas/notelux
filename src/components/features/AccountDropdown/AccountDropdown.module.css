@@ -1,14 +1,14 @@
 .dropdownCon {
   background-color: var(--bg);
-  border-radius: calc(var(--border-radius) * 2);
+  border-radius: var(--border-radius-sm);
   position: absolute;
-  padding: var(--padding);
+  padding: var(--padding-xs);
   right: 20px;
   top: 75px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--gap);
+  gap: var(--gap-xs);
   max-width: 320px;
   min-width: 200px;
   width: 90%;
@@ -22,13 +22,13 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--gap);
+  gap: var(--gap-xs);
 }
 
 .dropdownItem {
   background-color: var(--bg);
   white-space: nowrap;
-  padding: var(--padding);
+  padding: var(--padding-xs);
   border: none;
 }
 

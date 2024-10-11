@@ -5,12 +5,12 @@
 .settingsItem {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--gap) * 2);
+  gap: var(--gap-sm);
 }
 
 .settingsItemContent {
   display: flex;
-  gap: calc(var(--gap) * 2);
+  gap: var(--gap-sm);
   align-items: center;
 }
 

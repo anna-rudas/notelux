@@ -7,10 +7,10 @@
   position: absolute;
   bottom: 43px;
   left: 0px;
-  padding: 5px var(--padding);
+  padding: 5px var(--padding-xs);
   width: 33px;
   background-color: var(--text-primary);
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius-xs);
   animation-name: slowDisplay;
   animation-duration: 0.5s;
   border: 2px solid var(--text-secondary);

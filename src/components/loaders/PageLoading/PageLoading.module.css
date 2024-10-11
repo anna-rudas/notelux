@@ -1,7 +1,7 @@
 .loadingContainer {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--gap) * 4);
+  gap: var(--gap-md);
   align-items: center;
   justify-content: center;
   width: 100%;

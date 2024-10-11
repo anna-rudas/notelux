@@ -12,7 +12,7 @@
 .landingPageCon {
   display: flex;
   height: 100%;
-  gap: calc(var(--gap) * 3);
+  gap: var(--gap-sm);
   width: 100%;
   justify-content: space-between;
   z-index: 1;
@@ -21,7 +21,7 @@
 
 .actionBtn {
   padding: 15px 30px;
-  border-radius: calc(var(--border-radius) * 4);
+  border-radius: var(--border-radius-md);
 }
 
 /* summary */
@@ -33,10 +33,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: calc(var(--padding) * 5) calc(var(--padding) * 10);
+  padding: var(--padding-md) var(--padding-xl);
   z-index: 20;
   position: relative;
-  padding-right: calc(var(--padding) * 4);
+  padding-right: var(--padding-md);
   animation-name: fadeInFromLeft;
   animation-duration: 500ms;
   animation-timing-function: ease-in-out;
@@ -54,7 +54,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: calc(var(--gap) * 5);
+  gap: var(--gap-md);
   animation-name: fadeInAnimation;
   animation-duration: 500ms;
   animation-timing-function: ease-in-out;
@@ -107,10 +107,10 @@
   border: none;
   color: var(--text-secondary);
   z-index: 2;
-  gap: calc(var(--gap) * 4);
-  padding: calc(var(--padding) * 2);
+  gap: var(--gap-md);
+  padding: var(--padding-sm);
   width: 100%;
-  border-radius: calc(var(--border-radius) * 20);
+  border-radius: var(--border-radius-xl);
   animation-name: fadeInAnimation;
   animation-duration: 500ms;
   animation-timing-function: ease-in-out;
@@ -126,13 +126,13 @@
 /* hero */
 
 .landingPageHero {
-  padding: calc(var(--padding) * 2);
+  padding: var(--padding-sm);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
-  padding-right: calc(var(--padding) * 10);
+  padding-right: var(--padding-xl);
   animation-name: fadeInFromRight;
   animation-duration: 500ms;
   animation-timing-function: ease-in-out;
@@ -179,7 +179,7 @@
   justify-content: center;
   align-items: center;
   line-height: 1.4rem;
-  gap: calc(var(--gap) * 2);
+  gap: var(--gap-sm);
   padding: 35px;
 }
 
@@ -241,7 +241,7 @@
   justify-content: center;
   align-items: center;
   z-index: 2;
-  gap: calc(var(--gap) * 4);
+  gap: var(--gap-md);
 }
 
 /* footer */
@@ -291,19 +291,19 @@
 
 @keyframes fadeInFromLeft {
   0% {
-    padding-left: calc(var(--padding) * 5);
+    padding-left: var(--padding-md);
   }
   100% {
-    padding-left: calc(var(--padding) * 10);
+    padding-left: var(--padding-xl);
   }
 }
 
 @keyframes fadeInFromRight {
   0% {
-    padding-right: calc(var(--padding) * 5);
+    padding-right: var(--padding-md);
   }
   100% {
-    padding-right: calc(var(--padding) * 10);
+    padding-right: var(--padding-xl);
   }
 }
 
@@ -329,11 +329,11 @@
 @media (max-width: 1000px) {
   .landingPageCon {
     flex-direction: column;
-    gap: calc(var(--gap) * 10);
+    gap: var(--gap-xl);
   }
 
   .landingPageWrapper {
-    gap: calc(var(--gap) * 10);
+    gap: var(--gap-xl);
     height: auto;
   }
 
@@ -346,19 +346,19 @@
     max-width: 100%;
     justify-content: space-between;
     animation: none;
-    padding: calc(var(--padding) * 5);
+    padding: var(--padding-md);
   }
 
   .landingPageHero {
-    padding: calc(var(--padding) * 2);
+    padding: var(--padding-sm);
     min-height: 100dvh;
     justify-content: space-evenly;
-    gap: calc(var(--gap) * 30);
+    gap: var(--gap-xxl);
     animation: none;
   }
 
   .textContent {
-    padding-left: calc(var(--padding) * 6);
+    padding-left: var(--padding-md);
   }
 
   .scrollToHero {
@@ -382,8 +382,8 @@
 
 @media (max-width: 600px) {
   .landingPageSummary {
-    padding: calc(var(--padding) * 4);
-    padding-top: calc(var(--padding) * 6);
+    padding: var(--padding-md);
+    padding-top: var(--padding-md);
   }
 
   .landingPageHero {
@@ -391,7 +391,7 @@
   }
 
   .heroContent {
-    gap: calc(var(--gap) * 4);
+    gap: var(--gap-md);
   }
 
   .textContent {
@@ -400,19 +400,19 @@
 
   .topRow {
     flex-direction: column;
-    gap: calc(var(--gap) * 4);
+    gap: var(--gap-md);
     justify-content: flex-end;
   }
 
   .bottomRow {
     flex-direction: column-reverse;
-    gap: calc(var(--gap) * 4);
+    gap: var(--gap-md);
   }
 
   .heroItem {
     aspect-ratio: auto;
     max-width: 100%;
-    padding: calc(var(--padding) * 2) calc(var(--padding) * 4);
+    padding: var(--padding-sm) var(--padding-md);
   }
 
   .rectangle {
@@ -443,7 +443,7 @@
 
 @media (max-width: 350px) {
   .landingPageSummary {
-    padding: calc(var(--padding) * 3);
+    padding: var(--padding-sm);
     padding-bottom: 10px;
   }
 

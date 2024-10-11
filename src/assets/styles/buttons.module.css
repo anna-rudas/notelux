@@ -1,8 +1,8 @@
 .btn {
   font-size: 1rem;
   font-weight: 500;
-  padding: var(--padding);
-  border-radius: calc(var(--border-radius) * 2);
+  padding: var(--padding-xs);
+  border-radius: var(--border-radius-sm);
   transition: 0.2s ease-in-out;
   white-space: nowrap;
   width: fit-content;

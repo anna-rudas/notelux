@@ -1,11 +1,11 @@
 .searchInputCon {
-  margin: 0 var(--margin);
+  margin: 0 var(--margin-sm);
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: var(--gap);
+  gap: var(--gap-xs);
   border: 2px solid var(--text-secondary);
-  border-radius: calc(var(--border-radius) * 5);
+  border-radius: var(--border-radius-lg);
   height: fit-content;
   background-color: var(--bg);
   color: var(--text-secondary);
@@ -22,7 +22,7 @@
 
 .searchIconBtn {
   background-color: var(--text-secondary);
-  padding: var(--padding);
+  padding: var(--padding-xs);
   height: 40px;
   aspect-ratio: 1;
   border: none;

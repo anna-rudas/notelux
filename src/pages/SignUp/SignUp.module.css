@@ -1,7 +1,7 @@
 .redirectCon {
   display: flex;
   flex-direction: row;
-  gap: var(--gap);
+  gap: var(--gap-xs);
   justify-content: center;
   align-items: center;
   width: 100%;

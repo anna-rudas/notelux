@@ -1,7 +1,7 @@
 .formCon {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--gap) * 2);
+  gap: var(--gap-sm);
   max-width: 300px;
   align-items: center;
 }

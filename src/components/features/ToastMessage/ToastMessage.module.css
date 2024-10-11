@@ -26,10 +26,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: calc(var(--border-radius) * 2);
+  border-radius: var(--border-radius-sm);
   border: 2px solid var(--text-secondary);
-  padding: var(--padding);
-  gap: calc(var(--gap) * 2);
+  padding: var(--padding-xs);
+  gap: var(--gap-sm);
   width: 90%;
   max-width: 500px;
   position: fixed;
@@ -40,7 +40,7 @@
 .textCon {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--gap) * 2);
+  gap: var(--gap-sm);
   width: 100%;
 }
 

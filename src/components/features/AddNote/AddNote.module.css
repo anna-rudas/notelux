@@ -10,9 +10,9 @@
   width: 60%;
   border: 2px solid var(--text-secondary);
   color: var(--text-secondary);
-  padding: var(--padding);
-  margin: var(--margin);
-  border-radius: calc(var(--border-radius) * 2);
+  padding: var(--padding-xs);
+  margin: var(--margin-sm);
+  border-radius: var(--border-radius-sm);
   background-color: var(--bg);
   max-width: 1500px;
 }
@@ -22,7 +22,7 @@
 }
 
 .addNoteForm {
-  margin: var(--margin);
+  margin: var(--margin-sm);
   width: 60%;
   max-width: 1500px;
 }

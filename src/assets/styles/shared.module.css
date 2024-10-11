@@ -30,7 +30,7 @@
 .pageContentContainer {
   display: flex;
   flex-direction: column;
-  gap: calc(var(--gap) * 6);
+  gap: var(--gap-lg);
   align-items: center;
   justify-content: flex-start;
   width: 100%;
