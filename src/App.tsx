@@ -14,6 +14,10 @@ import ErrorPage from "./pages/ErrorPage/ErrorPage";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import DashboardContextProvider from "./context/DashboardContext";
 import CreateAccount from "./pages/CreatePermanentAccount";
+import FontFaceObserver from "fontfaceobserver";
+
+const primaryFontObserver = new FontFaceObserver("Roboto");
+const secondaryFontObserver = new FontFaceObserver("Oswald");
 
 function App() {
   const router = createBrowserRouter([
@@ -111,4 +115,8 @@ function AppWithProvider() {
 
 export default AppWithProvider;
 
-createRoot(document.getElementById("root")!).render(<AppWithProvider />);
+Promise.all([primaryFontObserver.load(), secondaryFontObserver.load()]).then(
+  () => {
+    createRoot(document.getElementById("root")!).render(<AppWithProvider />);
+  }
+);
