@@ -251,7 +251,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 15px;
+  padding: var(--padding-xs);
 }
 
 .landingPageFooter a {
@@ -447,18 +447,18 @@
   }
 
   .textContent {
-    gap: 20px;
+    gap: var(--gap-md);
   }
 
   .scrollToHero {
-    padding: 10px;
+    padding: var(--padding-xs);
   }
 
   .arrowIcon {
     width: 25px;
   }
   .actionBtn {
-    padding: 10px 20px;
+    padding: var(--padding-xs) var(--padding-sm);
     border-radius: var(--border-radius-sm);
   }
 }
