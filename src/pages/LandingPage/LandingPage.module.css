@@ -444,11 +444,10 @@
 @media (max-width: 350px) {
   .landingPageSummary {
     padding: var(--padding-sm);
-    padding-bottom: 10px;
   }
 
   .textContent {
-    gap: 10px;
+    gap: 20px;
   }
 
   .scrollToHero {
@@ -457,5 +456,9 @@
 
   .arrowIcon {
     width: 25px;
+  }
+  .actionBtn {
+    padding: 10px 20px;
+    border-radius: var(--border-radius-sm);
   }
 }
