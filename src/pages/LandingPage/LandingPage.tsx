@@ -71,7 +71,7 @@ function LandingPage() {
               <div {...className(style.row, style.bottomRow)}>
                 <div {...className(style.heroItem, style.phone)}>
                   <img
-                    src={require("../../assets/images/phone_screenshot_placeholder.png")}
+                    src={require("../../assets/images/landing_page_screenshot.png")}
                     alt="Example image of the app on a phone device"
                   />
                   <BlobImage {...className(style.blobImage)} />
