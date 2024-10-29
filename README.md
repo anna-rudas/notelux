@@ -12,3 +12,7 @@ Notelux is a web application for writing, organizing and sharing notes. Built wi
 - light and dark themes
 - grid and list view
 - option to delete account
+
+## credits
+
+- icons from [SVG Repo](https://www.svgrepo.com/)
