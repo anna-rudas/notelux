@@ -1,12 +1,8 @@
 # Notelux
 
----
-
 Notelux is a web application for writing, organizing and sharing notes. Built with React and Firebase.
 
 ## features
-
----
 
 - users account with email and password
 - anonymous users to use as guest
