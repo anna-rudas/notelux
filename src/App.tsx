@@ -15,6 +15,12 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import DashboardContextProvider from "./context/DashboardContext";
 import CreateAccount from "./pages/CreatePermanentAccount";
 import FontFaceObserver from "fontfaceobserver";
+import * as Sentry from "@sentry/react";
+
+Sentry.init({
+  dsn: "https://3c5d948cc7227d50f73bd18e5f5fcc19@o4508161927348224.ingest.de.sentry.io/4508455583940688",
+  integrations: [],
+});
 
 const primaryFontObserver = new FontFaceObserver("Roboto");
 const secondaryFontObserver = new FontFaceObserver("Oswald");
