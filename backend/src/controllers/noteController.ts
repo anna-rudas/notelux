@@ -52,3 +52,14 @@ export const deleteNote = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const searchNotes = async (req: Request, res: Response) => {
+  try {
+    const searchTerm = req.query.q as string;
+    const notes = await noteService.searchNotes(searchTerm);
+    res.status(200).json(notes);
+  } catch (error) {
+    console.error("Error searching note: ", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};

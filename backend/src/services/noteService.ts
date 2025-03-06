@@ -32,3 +32,11 @@ export const deleteNote = async (noteId: string) => {
   ]);
   return rowCount ? rowCount > 0 : false;
 };
+
+export const searchNotes = async (searchTerm: string) => {
+  const { rows } = await db.query(
+    `SELECT * FROM notes WHERE title ILIKE $1 OR body ILIKE $1`,
+    [`%${searchTerm}%`]
+  );
+  return rows;
+};
