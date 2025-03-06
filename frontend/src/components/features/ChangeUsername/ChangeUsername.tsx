@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Formik, Form, FormikValues } from "formik";
 import { settingsSchema } from "../../../utilities/validationSchemas";
-import GeneralInput from "../../../components/inputs/GeneralInput";
+import GeneralInput from "../../inputs/GeneralInput";
 import { AppContext } from "../../../context/AppContext";
 import { className } from "../../../utilities/helpers";
 import * as style from "./ChangeUsername.module.css";

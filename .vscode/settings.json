@@ -1,0 +1,14 @@
+{
+  "cSpell.ignoreWords": ["formik"],
+  "cSpell.words": [
+    "collab",
+    "firestore",
+    "Immer",
+    "Notelux",
+    "reauth",
+    "reduxjs",
+    "signin",
+    "signup",
+    "uuidv"
+  ]
+}
