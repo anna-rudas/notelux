@@ -25,3 +25,10 @@ export const updateNote = async (noteData: NoteData, noteId: string) => {
   );
   return rows[0];
 };
+
+export const deleteNote = async (noteId: string) => {
+  const { rowCount } = await db.query(`DELETE FROM notes WHERE id = $1`, [
+    noteId,
+  ]);
+  return rowCount ? rowCount > 0 : false;
+};
