@@ -15,3 +15,13 @@ export const createNote = async (noteData: NoteData) => {
   );
   return rows[0];
 };
+
+export const updateNote = async (noteData: NoteData, noteId: string) => {
+  const { title, body, color, date, coUsers } = noteData;
+
+  const { rows } = await db.query(
+    `UPDATE notes SET title = $1, body = $2, color = $3, date = $4, "coUsers" = $5 WHERE id = $6 RETURNING *`,
+    [title, body, color, date, coUsers, noteId]
+  );
+  return rows[0];
+};
