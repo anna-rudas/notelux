@@ -23,7 +23,7 @@ function SignUp() {
     setIsLoading,
     setToastMessageContent,
     setUser,
-    setAuthenticatedUserId,
+    setAuthenticatedUser,
   } = useContext(AppContext);
 
   const { showBoundary } = useErrorBoundary();
@@ -53,7 +53,7 @@ function SignUp() {
             try {
               await signOutUser();
               setUser(null);
-              setAuthenticatedUserId(null);
+              setAuthenticatedUser(null);
             } catch (error: unknown) {
               console.error("Failed to sign out user: ", error);
             }

@@ -18,6 +18,11 @@ export type User = {
   username: string;
 };
 
+export type AuthUser = {
+  id: string;
+  isAnonymous: boolean;
+};
+
 export type Theme = "light" | "dark";
 
 export type Layout = "grid" | "list";

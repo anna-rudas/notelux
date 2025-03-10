@@ -27,8 +27,7 @@ function ChangeEmailModal({ handleCancel }: ChangeEmailModalProps) {
     setToastMessageContent,
     setIsLoading,
     setUser,
-    setAnonymousUserId,
-    setAuthenticatedUserId,
+    setAuthenticatedUser,
   } = useContext(AppContext);
   const navigate = useNavigate();
   const [, setSearchParams] = useSearchParams();
@@ -74,8 +73,7 @@ function ChangeEmailModal({ handleCancel }: ChangeEmailModalProps) {
       );
       if (reauthResult && userData.email !== values.newEmail) {
         setUser(null);
-        setAnonymousUserId(null);
-        setAuthenticatedUserId(null);
+        setAuthenticatedUser(null);
         setIsLoading(true);
         try {
           await changeUserEmail(values.newEmail);

@@ -22,9 +22,9 @@ function AccountDropdown() {
     dropdownRef,
     dropdownButtonRef,
     isLoading,
-    anonymousUserId,
+    authenticatedUser,
     setIsLoading,
-    setAuthenticatedUserId,
+    setAuthenticatedUser,
     setToastMessageContent,
   } = useContext(AppContext);
   const { setIsCreateAccountModalOpen } = useContext(DashboardContext);
@@ -58,7 +58,7 @@ function AccountDropdown() {
     try {
       await signOutUser();
       setUser(null);
-      setAuthenticatedUserId(null);
+      setAuthenticatedUser(null);
       setIsDropdownOpen(false);
       navigate("/signin");
     } catch (error: unknown) {
@@ -106,7 +106,7 @@ function AccountDropdown() {
           >
             Dashboard
           </Link>
-          {anonymousUserId ? (
+          {authenticatedUser?.isAnonymous ? (
             <button
               disabled={isLoading}
               onClick={() => setIsCreateAccountModalOpen(true)}
@@ -127,7 +127,7 @@ function AccountDropdown() {
             </Link>
           )}
           <div {...className(shared.divider)} />
-          {anonymousUserId ? (
+          {authenticatedUser?.isAnonymous ? (
             <PrimaryButton
               buttonText="Create account"
               buttonStyle={style.btn}

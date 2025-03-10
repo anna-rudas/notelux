@@ -28,8 +28,7 @@ function DeleteUserModal({ handleCancel }: DeleteUserModalProps) {
     setToastMessageContent,
     setIsLoading,
     setUser,
-    setAnonymousUserId,
-    setAuthenticatedUserId,
+    setAuthenticatedUser,
   } = useContext(AppContext);
   const navigate = useNavigate();
   const [, setSearchParams] = useSearchParams();
@@ -59,8 +58,7 @@ function DeleteUserModal({ handleCancel }: DeleteUserModalProps) {
           //delete user data
           await deleteUserDataInDb(user.id);
           setUser(null);
-          setAnonymousUserId(null);
-          setAuthenticatedUserId(null);
+          setAuthenticatedUser(null);
           setIsLoading(true);
           try {
             //delete user account

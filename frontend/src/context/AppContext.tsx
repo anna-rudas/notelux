@@ -14,7 +14,7 @@ import {
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firestore/firestoreConfig";
 import { FirebaseError } from "firebase/app";
-import { ToastMessage, User } from "../types/types";
+import { AuthUser, ToastMessage, User } from "../types/types";
 import { evalErrorCode } from "../utilities/helpers";
 import { updateUserInDb } from "../firestore/userService";
 import { defaultLayout, defaultTheme } from "../data/constants";
@@ -34,10 +34,8 @@ interface AppContextInterface {
   dropdownButtonRef: RefObject<HTMLButtonElement> | null;
   toastMessageContent: ToastMessage;
   setToastMessageContent: (value: ToastMessage) => void;
-  authenticatedUserId: string | null;
-  setAuthenticatedUserId: (value: string | null) => void;
-  anonymousUserId: string | null;
-  setAnonymousUserId: (value: string | null) => void;
+  authenticatedUser: AuthUser | null;
+  setAuthenticatedUser: (value: AuthUser | null) => void;
   error: Error | null;
   setError: (value: Error | null) => void;
 }
@@ -55,10 +53,8 @@ const defaultContextValue: AppContextInterface = {
   dropdownButtonRef: null,
   toastMessageContent: defaultToastMessage,
   setToastMessageContent: () => {},
-  authenticatedUserId: null,
-  setAuthenticatedUserId: async () => {},
-  anonymousUserId: null,
-  setAnonymousUserId: async () => {},
+  authenticatedUser: null,
+  setAuthenticatedUser: () => {},
   error: null,
   setError: () => {},
 };
@@ -80,17 +76,16 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const [toastMessageContent, setToastMessageContent] =
     useState<ToastMessage>(defaultToastMessage);
   const [msgTimeoutId, setMsgTimeoutId] = useState<NodeJS.Timeout | null>(null);
-  const [authenticatedUserId, setAuthenticatedUserId] = useState<string | null>(
+  const [authenticatedUser, setAuthenticatedUser] = useState<AuthUser | null>(
     null
   );
-  const [anonymousUserId, setAnonymousUserId] = useState<string | null>(null);
   const [error, setError] = useState<Error | null>(null);
 
   const { showBoundary } = useErrorBoundary();
 
   useEffect(() => {
-    if (authenticatedUserId) {
-      const userRef = doc(db, usersColKey, authenticatedUserId);
+    if (authenticatedUser && !authenticatedUser.isAnonymous) {
+      const userRef = doc(db, usersColKey, authenticatedUser.id);
       const unSubscribe = onSnapshot(
         userRef,
         (doc) => {
@@ -123,12 +118,8 @@ function AppContextProvider({ children }: AppContextProviderProps) {
       );
 
       return unSubscribe;
-    }
-  }, [authenticatedUserId]);
-
-  useEffect(() => {
-    if (anonymousUserId) {
-      const userRef = doc(db, usersColKey, anonymousUserId);
+    } else if (authenticatedUser && authenticatedUser.isAnonymous) {
+      const userRef = doc(db, usersColKey, authenticatedUser.id);
       const unSubscribe = onSnapshot(
         userRef,
         (doc) => {
@@ -147,7 +138,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
             const addAnonymousUser = async () => {
               try {
                 await addUserInDb({
-                  id: anonymousUserId,
+                  id: authenticatedUser.id,
                   email: "",
                   theme: defaultTheme,
                   username: defaultAnonymousUsername,
@@ -179,7 +170,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
 
       return unSubscribe;
     }
-  }, [anonymousUserId]);
+  }, [authenticatedUser]);
 
   useEffect(() => {
     if (msgTimeoutId) {
@@ -230,10 +221,8 @@ function AppContextProvider({ children }: AppContextProviderProps) {
         dropdownButtonRef,
         toastMessageContent,
         setToastMessageContent,
-        authenticatedUserId,
-        setAuthenticatedUserId,
-        anonymousUserId,
-        setAnonymousUserId,
+        authenticatedUser,
+        setAuthenticatedUser,
         error,
         setError,
       }}

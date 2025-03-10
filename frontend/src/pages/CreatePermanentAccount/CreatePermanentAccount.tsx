@@ -24,8 +24,7 @@ function CreatePermanentAccount() {
     setToastMessageContent,
     user,
     setUser,
-    setAnonymousUserId,
-    setAuthenticatedUserId,
+    setAuthenticatedUser,
   } = useContext(AppContext);
   const navigate = useNavigate();
   const [, setSearchParams] = useSearchParams();
@@ -66,8 +65,7 @@ function CreatePermanentAccount() {
     });
 
     setUser(null);
-    setAnonymousUserId(null);
-    setAuthenticatedUserId(null);
+    setAuthenticatedUser(null);
     setIsLoading(true);
 
     try {

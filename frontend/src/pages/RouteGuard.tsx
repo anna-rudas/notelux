@@ -17,12 +17,10 @@ function RouteGuard({ children }: RouteGuardProps) {
   const {
     user,
     setToastMessageContent,
-    setAuthenticatedUserId,
-    setAnonymousUserId,
     setUser,
     error,
-    authenticatedUserId,
-    anonymousUserId,
+    authenticatedUser,
+    setAuthenticatedUser,
     setIsDropdownOpen,
   } = useContext(AppContext);
   const auth = getAuth();
@@ -32,7 +30,7 @@ function RouteGuard({ children }: RouteGuardProps) {
   const handleSignOut = async () => {
     try {
       await signOutUser();
-      setAuthenticatedUserId(null);
+      setAuthenticatedUser(null);
       setUser(null);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
@@ -46,9 +44,9 @@ function RouteGuard({ children }: RouteGuardProps) {
     setIsDropdownOpen(false);
     const unSubscribe = onAuthStateChanged(auth, (userResult) => {
       if (userResult?.emailVerified && !userResult.isAnonymous) {
-        setAuthenticatedUserId(userResult.uid);
+        setAuthenticatedUser({ id: userResult.uid, isAnonymous: false });
       } else if (userResult?.isAnonymous) {
-        setAnonymousUserId(userResult.uid);
+        setAuthenticatedUser({ id: userResult.uid, isAnonymous: true });
       } else {
         setIsPageLoading(false);
       }
@@ -93,9 +91,17 @@ function RouteGuard({ children }: RouteGuardProps) {
       location.pathname === "/resetpassword"
     ) {
       return <Navigate to="/dashboard" replace />;
-    } else if (authenticatedUserId && location.pathname === "/create-account") {
+    } else if (
+      authenticatedUser &&
+      !authenticatedUser.isAnonymous &&
+      location.pathname === "/create-account"
+    ) {
       return <Navigate to="/dashboard" replace />;
-    } else if (anonymousUserId && location.pathname === "/settings") {
+    } else if (
+      authenticatedUser &&
+      authenticatedUser.isAnonymous &&
+      location.pathname === "/settings"
+    ) {
       return <Navigate to="/dashboard" replace />;
     }
     return children;
