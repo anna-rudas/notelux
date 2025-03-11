@@ -9,11 +9,12 @@ import React, {
 } from "react";
 import { Note } from "../types/types";
 import { AppContext } from "./AppContext";
-import { collection, query, where, onSnapshot } from "firebase/firestore";
-import { notesColKey } from "../data/constants";
-import { db } from "../firestore/firestoreConfig";
-import { FirebaseError } from "firebase/app";
-import { evalErrorCode } from "../utilities/helpers";
+import io from "socket.io-client";
+import { getNotesFromDb } from "../services/noteService";
+
+const socket = io(process.env.REACT_APP_BACKEND_URL, {
+  transports: ["websocket"],
+});
 
 interface DashboardContextInterface {
   activeNote: Note | null;
@@ -86,8 +87,6 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
   const [isCreateAccountModalOpen, setIsCreateAccountModalOpen] =
     useState(false);
 
-  const notesColRef = collection(db, notesColKey);
-
   const { authenticatedUser, setToastMessageContent } = useContext(AppContext);
 
   const setActiveNoteValue = (field: string, value: string) => {
@@ -106,45 +105,38 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
   };
 
   useEffect(() => {
-    if (authenticatedUser) {
-      const q = query(
-        notesColRef,
-        where("coUsers", "array-contains", authenticatedUser.id)
-      );
-      const unSubscribe = onSnapshot(
-        q,
-        (querySnapshot) => {
-          const resolvedNotes: Note[] = [];
-          querySnapshot.forEach((doc) => {
-            resolvedNotes.push({
-              id: doc.id,
-              title: doc.data().title,
-              color: doc.data().color,
-              body: doc.data().body,
-              date: doc.data().date,
-              userId: doc.data().userId,
-              coUsers: doc.data().coUsers,
-            });
-          });
-          setNotes(resolvedNotes);
-          setAreNotesLoading(false);
-        },
-        (error: unknown) => {
-          console.error(error);
-          if (error instanceof FirebaseError) {
-            setToastMessageContent({
-              isError: true,
-              isPersisting: true,
-              actionButtonText: "",
-              description: `Failed to load notes: ${evalErrorCode(error.code)}`,
-              showMessage: true,
-            });
-          }
-        }
-      );
-      return unSubscribe;
-    }
+    fetchNotes();
+    const onDatabaseChange = () => {
+      fetchNotes();
+    };
+
+    socket.on("notes_table_updated", onDatabaseChange);
+
+    return () => {
+      socket.off("notes_table_updated", onDatabaseChange);
+    };
   }, [authenticatedUser]);
+
+  const fetchNotes = async () => {
+    if (authenticatedUser) {
+      setAreNotesLoading(true);
+      try {
+        const result: Note[] = await getNotesFromDb(authenticatedUser.id);
+        setNotes([...result]);
+        setAreNotesLoading(false);
+      } catch (err) {
+        console.error("Error getting notes from database:", err);
+        setToastMessageContent({
+          isError: true,
+          isPersisting: true,
+          actionButtonText: "",
+          description: `Failed to load notes`,
+          showMessage: true,
+        });
+        setAreNotesLoading(false);
+      }
+    }
+  };
 
   return (
     <DashboardContext.Provider

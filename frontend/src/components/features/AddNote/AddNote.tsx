@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
-import { className, evalErrorCode } from "../../../utilities/helpers";
+import { className } from "../../../utilities/helpers";
 import * as style from "./AddNote.module.css";
 import * as textStyles from "../../../assets/styles/text-styles.module.css";
 import NoteForm from "../../templates/NoteForm";
 import { AppContext } from "../../../context/AppContext";
 import { DashboardContext } from "../../../context/DashboardContext";
 import { v4 as uuidv4 } from "uuid";
-import { addNoteInDb } from "../../../firestore/noteService";
-import { FirebaseError } from "firebase/app";
+import { addNoteInDb } from "../../../services/noteService";
 
 function AddNote() {
   const { user, setIsDropdownOpen, setToastMessageContent, setIsLoading } =
@@ -36,17 +35,15 @@ function AddNote() {
           description: "Note added successfully",
         });
         resetDefaultNoteState();
-      } catch (error: unknown) {
+      } catch (error) {
         console.error("Failed to save note in database: ", error);
-        if (error instanceof FirebaseError) {
-          setToastMessageContent({
-            actionButtonText: "",
-            isPersisting: false,
-            showMessage: true,
-            isError: true,
-            description: `Failed to save note: ${evalErrorCode(error.code)}`,
-          });
-        }
+        setToastMessageContent({
+          actionButtonText: "",
+          isPersisting: true,
+          showMessage: true,
+          isError: true,
+          description: `Failed to save note`,
+        });
       } finally {
         setIsLoading(false);
       }

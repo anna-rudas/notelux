@@ -1,5 +1,7 @@
 import { Pool } from "pg";
 import dotenv from "dotenv";
+import { io } from "./index";
+
 dotenv.config();
 
 const pool = new Pool({
@@ -14,6 +16,17 @@ pool.on("error", (err) => {
   console.error("Unexpected error on idle client", err);
   process.exit(-1);
 });
+
+async function listenForDbChanges() {
+  const client = await pool.connect();
+  await client.query("LISTEN notes_updates");
+
+  client.on("notification", (msg) => {
+    io.emit("notes_table_updated", msg.payload);
+  });
+}
+
+listenForDbChanges().catch(console.error);
 
 export const db = {
   query: (text: string, params?: unknown[]) => pool.query(text, params),

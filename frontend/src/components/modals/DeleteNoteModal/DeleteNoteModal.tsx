@@ -1,10 +1,8 @@
 import React, { useContext } from "react";
 import ModalContainer from "../../templates/ModalContainer";
-import { deleteNoteInDb } from "../../../firestore/noteService";
+import { deleteNoteInDb } from "../../../services/noteService";
 import { AppContext } from "../../../context/AppContext";
 import { DashboardContext } from "../../../context/DashboardContext";
-import { FirebaseError } from "firebase/app";
-import { evalErrorCode } from "../../../utilities/helpers";
 
 function DeleteNoteModal() {
   const { setToastMessageContent } = useContext(AppContext);
@@ -14,7 +12,7 @@ function DeleteNoteModal() {
   const handleDeleteNoteSubmit = async () => {
     if (activeNote) {
       try {
-        await deleteNoteInDb(activeNote);
+        await deleteNoteInDb(activeNote.id);
         setToastMessageContent({
           actionButtonText: "",
           isPersisting: false,
@@ -24,17 +22,15 @@ function DeleteNoteModal() {
         });
         resetDefaultNoteState();
         setIsDeleteNoteModalOpen(false);
-      } catch (error: unknown) {
+      } catch (error) {
         console.error("Failed to delete note in database: ", error);
-        if (error instanceof FirebaseError) {
-          setToastMessageContent({
-            actionButtonText: "",
-            isPersisting: false,
-            showMessage: true,
-            isError: true,
-            description: `Failed to delete note: ${evalErrorCode(error.code)}`,
-          });
-        }
+        setToastMessageContent({
+          actionButtonText: "",
+          isPersisting: true,
+          showMessage: true,
+          isError: true,
+          description: `Failed to delete note`,
+        });
       }
     }
   };

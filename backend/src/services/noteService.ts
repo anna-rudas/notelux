@@ -1,8 +1,11 @@
 import { db } from "../db";
 import { NoteData } from "../types/types";
 
-export const getNotes = async () => {
-  const { rows } = await db.query("SELECT * FROM notes");
+export const getNotes = async (userId: string) => {
+  const { rows } = await db.query(
+    `SELECT * FROM notes WHERE $1 = ANY("coUsers")`,
+    [userId]
+  );
   return rows;
 };
 

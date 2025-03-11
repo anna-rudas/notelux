@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
-import { className, evalErrorCode } from "../../../utilities/helpers";
+import { className } from "../../../utilities/helpers";
 import * as style from "./EditNoteModal.module.css";
 import NoteForm from "../../templates/NoteForm";
 import DeleteNoteModal from "../DeleteNoteModal";
 import { AppContext } from "../../../context/AppContext";
 import ShareNoteModal from "../ShareNoteModal";
 import { DashboardContext } from "../../../context/DashboardContext";
-import { updateNoteInDb } from "../../../firestore/noteService";
-import { FirebaseError } from "firebase/app";
+import { updateNoteInDb } from "../../../services/noteService";
 
 function EditNoteModal() {
   const { setToastMessageContent } = useContext(AppContext);
@@ -30,17 +29,15 @@ function EditNoteModal() {
           description: "Note updated successfully",
         });
         resetDefaultNoteState();
-      } catch (error: unknown) {
+      } catch (error) {
         console.error("Failed to update note in database: ", error);
-        if (error instanceof FirebaseError) {
-          setToastMessageContent({
-            actionButtonText: "",
-            isPersisting: false,
-            showMessage: true,
-            isError: true,
-            description: `Failed to update note: ${evalErrorCode(error.code)}`,
-          });
-        }
+        setToastMessageContent({
+          actionButtonText: "",
+          isPersisting: true,
+          showMessage: true,
+          isError: true,
+          description: `Failed to update note`,
+        });
       }
     }
   };

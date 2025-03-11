@@ -11,9 +11,8 @@ import { DashboardContext } from "../../../context/DashboardContext";
 import { getUserEmailFromId } from "../../../firestore/userService";
 import { AppContext } from "../../../context/AppContext";
 import { FirebaseError } from "firebase/app";
-import { evalErrorCode } from "../../../utilities/helpers";
 import { getUserIdFromEmail } from "../../../firestore/userService";
-import { updateNoteInDb } from "../../../firestore/noteService";
+import { updateNoteInDb } from "../../../services/noteService";
 
 function ShareNoteModal() {
   const [activeNoteCollaborators, setActiveNoteCollaborators] = useState<
@@ -101,17 +100,15 @@ function ShareNoteModal() {
               isError: false,
               description: "New user added",
             });
-          } catch (error: unknown) {
+          } catch (error) {
             console.error("Failed to add collaborator: ", error);
-            if (error instanceof FirebaseError) {
-              setToastMessageContent({
-                actionButtonText: "",
-                isPersisting: false,
-                showMessage: true,
-                isError: true,
-                description: `Failed to add user: ${evalErrorCode(error.code)}`,
-              });
-            }
+            setToastMessageContent({
+              actionButtonText: "",
+              isPersisting: false,
+              showMessage: true,
+              isError: true,
+              description: `Failed to add user`,
+            });
           }
         }
       }

@@ -3,7 +3,8 @@ import * as noteService from "../services/noteService";
 
 export const getNotes = async (req: Request, res: Response) => {
   try {
-    const notes = await noteService.getNotes();
+    const userId = req.params.userId;
+    const notes = await noteService.getNotes(userId);
     res.status(200).json(notes);
   } catch (error) {
     console.error("Error fetching notes: ", error);
