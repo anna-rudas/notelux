@@ -20,4 +20,5 @@ export type UserData = {
   theme: Theme;
   layout: Layout;
   username: string;
+  userId: string;
 };

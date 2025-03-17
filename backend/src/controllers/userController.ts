@@ -11,3 +11,14 @@ export const getUser = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const createUser = async (req: Request, res: Response) => {
+  try {
+    const userData = req.body;
+    const newUser = await userService.createUser(userData);
+    res.status(200).json(newUser);
+  } catch (error) {
+    console.error("Error creating user: ", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
