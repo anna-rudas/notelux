@@ -27,3 +27,10 @@ export const updateUser = async (userData: UserData, userId: string) => {
   );
   return rows[0];
 };
+
+export const deleteUser = async (userId: string) => {
+  const { rowCount } = await db.query(`DELETE FROM users WHERE "userId" = $1`, [
+    userId,
+  ]);
+  return rowCount ? rowCount > 0 : false;
+};
