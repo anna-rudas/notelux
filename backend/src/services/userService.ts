@@ -34,3 +34,19 @@ export const deleteUser = async (userId: string) => {
   ]);
   return rowCount ? rowCount > 0 : false;
 };
+
+export const getUserEmailFromUserId = async (userId: string) => {
+  const { rows } = await db.query(
+    `SELECT email FROM users WHERE "userId" = $1`,
+    [userId]
+  );
+  return rows[0];
+};
+
+export const getUserIdFromUserEmail = async (userEmail: string) => {
+  const { rows } = await db.query(
+    `SELECT "userId" FROM users WHERE email  = $1`,
+    [userEmail]
+  );
+  return rows[0];
+};

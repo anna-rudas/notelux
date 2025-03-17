@@ -52,3 +52,25 @@ export const deleteUser = async (req: Request, res: Response) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const getUserEmailFromUserId = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    const userEmail = await userService.getUserEmailFromUserId(userId);
+    res.status(200).json(userEmail);
+  } catch (error) {
+    console.error("Error fetching user email: ", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const getUserIdFromUserEmail = async (req: Request, res: Response) => {
+  try {
+    const userEmail = req.params.userEmail;
+    const userId = await userService.getUserIdFromUserEmail(userEmail);
+    res.status(200).json(userId);
+  } catch (error) {
+    console.error("Error fetching user id: ", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
