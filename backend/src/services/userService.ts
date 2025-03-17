@@ -17,3 +17,13 @@ export const createUser = async (userData: UserData) => {
   );
   return rows[0];
 };
+
+export const updateUser = async (userData: UserData, userId: string) => {
+  const { email, theme, layout, username } = userData;
+
+  const { rows } = await db.query(
+    `UPDATE users SET email = $1, theme = $2, layout = $3, username = $4 WHERE "userId" = $5 RETURNING *`,
+    [email, theme, layout, username, userId]
+  );
+  return rows[0];
+};
