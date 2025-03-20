@@ -4,19 +4,31 @@ import MoonIcon from "../../../assets/icons/MoonIcon";
 import * as style from "./ThemeToggle.module.css";
 import { AppContext } from "../../../context/AppContext";
 import { className } from "../../../utilities/helpers";
+import { updateUserInDb } from "../../../services/userService";
 
 function ThemeToggle() {
-  const { user, setUser, isLoading } = useContext(AppContext);
+  const { user, isLoading, setToastMessageContent } = useContext(AppContext);
 
   if (user === null) {
     return null;
   }
 
   const toggleTheme = () => {
-    setUser({
-      ...user,
-      theme: user.theme === "light" ? "dark" : "light",
-    });
+    try {
+      updateUserInDb({
+        ...user,
+        theme: user.theme === "light" ? "dark" : "light",
+      });
+    } catch (error: unknown) {
+      console.error("Failed to update user in database: ", error);
+      setToastMessageContent({
+        actionButtonText: "",
+        isPersisting: false,
+        showMessage: true,
+        isError: true,
+        description: `Failed to save changes: ${error}`,
+      });
+    }
   };
 
   return (

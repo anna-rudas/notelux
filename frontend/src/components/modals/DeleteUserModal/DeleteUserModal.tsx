@@ -3,10 +3,7 @@ import GeneralInput from "../../inputs/GeneralInput";
 import ModalContainer from "../../templates/ModalContainer";
 import { FormikValues } from "formik";
 import { deleteUserSchema } from "../../../utilities/validationSchemas";
-import {
-  addUserInDb,
-  deleteUserDataInDb,
-} from "../../../firestore/userService";
+import { addUserInDb, deleteUserDataInDb } from "../../../services/userService";
 import {
   reauthenticateUser,
   deleteUserAccount,
@@ -56,7 +53,7 @@ function DeleteUserModal({ handleCancel }: DeleteUserModalProps) {
       if (reauthResult) {
         try {
           //delete user data
-          await deleteUserDataInDb(user.id);
+          await deleteUserDataInDb(user.userId);
           setUser(null);
           setAuthenticatedUser(null);
           setIsLoading(true);

@@ -13,7 +13,7 @@ import {
 import { FirebaseError } from "firebase/app";
 import { evalErrorCode } from "../../../utilities/helpers";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { updateUserInDb } from "../../../firestore/userService";
+import { updateUserInDb } from "../../../services/userService";
 import { User } from "../../../types/types";
 import { useErrorBoundary } from "react-error-boundary";
 

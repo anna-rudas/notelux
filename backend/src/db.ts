@@ -19,10 +19,13 @@ pool.on("error", (err) => {
 
 async function listenForDbChanges() {
   const client = await pool.connect();
-  await client.query("LISTEN notes_updates");
+  const channels = ["notes_updates", "users_updates"];
+  for (const channel of channels) {
+    await client.query(`LISTEN ${channel}`);
+  }
 
   client.on("notification", (msg) => {
-    io.emit("notes_table_updated", msg.payload);
+    io.emit(`${msg.channel}`, msg.payload);
   });
 }
 

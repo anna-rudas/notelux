@@ -7,15 +7,26 @@ import { className } from "../../../utilities/helpers";
 import * as style from "./ChangeUsername.module.css";
 import * as textStyles from "../../../assets/styles/text-styles.module.css";
 import PrimaryButton from "../../buttons/PrimaryButton";
+import { updateUserInDb } from "../../../services/userService";
 
 function ChangeUsername() {
-  const { user, setToastMessageContent, setUser, setIsLoading } =
-    useContext(AppContext);
+  const { user, setToastMessageContent, setIsLoading } = useContext(AppContext);
 
   const handleChangeUsername = (values: FormikValues) => {
     setIsLoading(true);
     if (user) {
-      setUser({ ...user, username: values.username });
+      try {
+        updateUserInDb({ ...user, username: values.username });
+      } catch (error: unknown) {
+        console.error("Failed to update user in database: ", error);
+        setToastMessageContent({
+          actionButtonText: "",
+          isPersisting: false,
+          showMessage: true,
+          isError: true,
+          description: `Failed to save changes: ${error}`,
+        });
+      }
     }
     setToastMessageContent({
       showMessage: true,

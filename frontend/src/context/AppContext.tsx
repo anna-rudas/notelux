@@ -6,20 +6,21 @@ import React, {
   useRef,
   RefObject,
 } from "react";
+import "../firestore/firestoreConfig";
 import {
   defaultAnonymousUsername,
   defaultToastMessage,
-  usersColKey,
 } from "../data/constants";
-import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "../firestore/firestoreConfig";
-import { FirebaseError } from "firebase/app";
 import { AuthUser, ToastMessage, User } from "../types/types";
-import { evalErrorCode } from "../utilities/helpers";
-import { updateUserInDb } from "../firestore/userService";
 import { defaultLayout, defaultTheme } from "../data/constants";
-import { addUserInDb } from "../firestore/userService";
+import { addUserInDb, getUserFromDb } from "../services/userService";
 import { useErrorBoundary } from "react-error-boundary";
+import io from "socket.io-client";
+
+const socket = io(process.env.REACT_APP_BACKEND_URL, {
+  transports: ["websocket"],
+  reconnectionAttempts: 3,
+});
 
 interface AppContextInterface {
   termToSearch: string;
@@ -84,93 +85,55 @@ function AppContextProvider({ children }: AppContextProviderProps) {
   const { showBoundary } = useErrorBoundary();
 
   useEffect(() => {
-    if (authenticatedUser && !authenticatedUser.isAnonymous) {
-      const userRef = doc(db, usersColKey, authenticatedUser.id);
-      const unSubscribe = onSnapshot(
-        userRef,
-        (doc) => {
-          const userResult = doc.data();
-          if (userResult) {
-            setUser({
-              email: userResult.email,
-              id: userResult.id,
-              username: userResult.username,
-              theme: userResult.theme,
-              layout: userResult.layout,
-            });
-            setIsLoading(false);
-          }
-        },
-        (error: unknown) => {
-          console.error(error);
-          if (error instanceof FirebaseError) {
-            setToastMessageContent({
-              isError: true,
-              isPersisting: true,
-              actionButtonText: "",
-              description: `Failed to load user with id: ${evalErrorCode(
-                error.code
-              )}`,
-              showMessage: true,
-            });
-          }
-        }
-      );
+    fetchUserData();
+    const onDatabaseChange = () => {
+      fetchUserData();
+    };
 
-      return unSubscribe;
-    } else if (authenticatedUser && authenticatedUser.isAnonymous) {
-      const userRef = doc(db, usersColKey, authenticatedUser.id);
-      const unSubscribe = onSnapshot(
-        userRef,
-        (doc) => {
-          const userResult = doc.data();
-          //if user exists in db
-          if (userResult) {
-            setUser({
-              email: userResult.email,
-              id: userResult.id,
-              username: userResult.username,
-              theme: userResult.theme,
-              layout: userResult.layout,
-            });
-            setIsLoading(false);
-          } else {
-            const addAnonymousUser = async () => {
-              try {
-                await addUserInDb({
-                  id: authenticatedUser.id,
-                  email: "",
-                  theme: defaultTheme,
-                  username: defaultAnonymousUsername,
-                  layout: defaultLayout,
-                });
-              } catch (error) {
-                console.error("Failed to add user: ", error);
-                showBoundary(error);
-              }
-            };
-            addAnonymousUser();
-          }
-        },
-        (error: unknown) => {
-          console.error(error);
-          if (error instanceof FirebaseError) {
-            setToastMessageContent({
-              isError: true,
-              isPersisting: true,
-              actionButtonText: "",
-              description: `Failed to load user with id: ${evalErrorCode(
-                error.code
-              )}`,
-              showMessage: true,
-            });
-          }
-        }
-      );
+    socket.on("users_updates", onDatabaseChange);
 
-      return unSubscribe;
-    }
+    return () => {
+      socket.off("users_updates", onDatabaseChange);
+    };
   }, [authenticatedUser]);
+
+  const fetchUserData = async () => {
+    if (authenticatedUser) {
+      try {
+        setIsLoading(true);
+        const result = await getUserFromDb(authenticatedUser.id);
+        if (result) {
+          setUser(result);
+        }
+        if (!result && authenticatedUser.isAnonymous) {
+          try {
+            await addUserInDb({
+              userId: authenticatedUser.id,
+              email: "",
+              theme: defaultTheme,
+              username: defaultAnonymousUsername,
+              layout: defaultLayout,
+            });
+          } catch (error) {
+            console.error("Failed to add user: ", error);
+            showBoundary(error);
+          }
+        }
+
+        setIsLoading(false);
+      } catch (err) {
+        console.error("Error getting user from database:", err);
+        setToastMessageContent({
+          isError: true,
+          isPersisting: true,
+          actionButtonText: "",
+          description: `Failed to load user`,
+          showMessage: true,
+        });
+        setIsLoading(false);
+      }
+    }
+  };
 
   useEffect(() => {
     if (msgTimeoutId) {
@@ -186,25 +149,6 @@ function AppContextProvider({ children }: AppContextProviderProps) {
       setMsgTimeoutId(timeoutId);
     }
   }, [toastMessageContent]);
-
-  useEffect(() => {
-    if (user) {
-      try {
-        updateUserInDb(user);
-      } catch (error: unknown) {
-        console.error("Failed to update user in database: ", error);
-        if (error instanceof FirebaseError) {
-          setToastMessageContent({
-            actionButtonText: "",
-            isPersisting: false,
-            showMessage: true,
-            isError: true,
-            description: `Failed to save changes: ${evalErrorCode(error.code)}`,
-          });
-        }
-      }
-    }
-  }, [user]);
 
   return (
     <AppContext.Provider

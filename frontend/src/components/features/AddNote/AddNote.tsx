@@ -58,8 +58,8 @@ function AddNote() {
         body: "",
         color: "default",
         date: new Date().toISOString(),
-        userId: user.id,
-        coUsers: [user.id],
+        userId: user.userId,
+        coUsers: [user.userId],
       });
       setIsDropdownOpen(false);
       setIsAddNoteOpen(true);

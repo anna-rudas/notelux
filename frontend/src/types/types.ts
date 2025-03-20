@@ -11,7 +11,7 @@ export type Note = {
 };
 
 export type User = {
-  id: string;
+  userId: string;
   email: string;
   theme: Theme;
   layout: Layout;

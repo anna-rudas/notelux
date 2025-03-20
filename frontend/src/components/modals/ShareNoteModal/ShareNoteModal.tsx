@@ -8,10 +8,10 @@ import UserIcon from "../../../assets/icons/UserIcon";
 import * as style from "./ShareNoteModal.module.css";
 import { className } from "../../../utilities/helpers";
 import { DashboardContext } from "../../../context/DashboardContext";
-import { getUserEmailFromId } from "../../../firestore/userService";
+import { getUserEmailFromUserId } from "../../../services/userService";
 import { AppContext } from "../../../context/AppContext";
 import { FirebaseError } from "firebase/app";
-import { getUserIdFromEmail } from "../../../firestore/userService";
+import { getUserIdFromUserEmail } from "../../../services/userService";
 import { updateNoteInDb } from "../../../services/noteService";
 
 function ShareNoteModal() {
@@ -33,10 +33,10 @@ function ShareNoteModal() {
     coUserIds: string[]
   ): Promise<void> => {
     try {
-      const noteOwnerEmail = await getUserEmailFromId(ownerId);
+      const noteOwnerEmail = await getUserEmailFromUserId(ownerId);
       const noteCollaborators = await Promise.all(
         coUserIds.map(async (currentUserId) => {
-          return await getUserEmailFromId(currentUserId);
+          return await getUserEmailFromUserId(currentUserId);
         })
       );
 
@@ -57,7 +57,7 @@ function ShareNoteModal() {
 
     try {
       //get user id
-      const newUserId = await getUserIdFromEmail(values.newUserEmail);
+      const newUserId = await getUserIdFromUserEmail(values.newUserEmail);
       if (!newUserId) {
         setToastMessageContent({
           showMessage: true,

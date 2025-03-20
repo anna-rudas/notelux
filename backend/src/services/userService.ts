@@ -1,14 +1,17 @@
 import { db } from "../db";
 import { UserData } from "../types/types";
 
-export const getUser = async (userId: string) => {
+export const getUser = async (
+  userId: string | null
+): Promise<UserData | null> => {
   const { rows } = await db.query(`SELECT * FROM users WHERE "userId" = $1`, [
     userId,
   ]);
-  return rows[0];
+
+  return rows.length > 0 ? rows[0] : null;
 };
 
-export const createUser = async (userData: UserData) => {
+export const createUser = async (userData: UserData): Promise<UserData> => {
   const { email, theme, layout, username, userId } = userData;
 
   const { rows } = await db.query(
@@ -18,7 +21,10 @@ export const createUser = async (userData: UserData) => {
   return rows[0];
 };
 
-export const updateUser = async (userData: UserData, userId: string) => {
+export const updateUser = async (
+  userData: UserData,
+  userId: string
+): Promise<UserData> => {
   const { email, theme, layout, username } = userData;
 
   const { rows } = await db.query(
@@ -28,25 +34,29 @@ export const updateUser = async (userData: UserData, userId: string) => {
   return rows[0];
 };
 
-export const deleteUser = async (userId: string) => {
+export const deleteUser = async (userId: string): Promise<boolean> => {
   const { rowCount } = await db.query(`DELETE FROM users WHERE "userId" = $1`, [
     userId,
   ]);
   return rowCount ? rowCount > 0 : false;
 };
 
-export const getUserEmailFromUserId = async (userId: string) => {
+export const getUserEmailFromUserId = async (
+  userId: string
+): Promise<string | null> => {
   const { rows } = await db.query(
     `SELECT email FROM users WHERE "userId" = $1`,
     [userId]
   );
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };
 
-export const getUserIdFromUserEmail = async (userEmail: string) => {
+export const getUserIdFromUserEmail = async (
+  userEmail: string
+): Promise<UserData | null> => {
   const { rows } = await db.query(
     `SELECT "userId" FROM users WHERE email  = $1`,
     [userEmail]
   );
-  return rows[0];
+  return rows.length > 0 ? rows[0] : null;
 };

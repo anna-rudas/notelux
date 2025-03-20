@@ -15,7 +15,7 @@ import {
 } from "../../firestore/authService";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { updateUserInDb } from "../../firestore/userService";
+import { updateUserInDb } from "../../services/userService";
 import { User } from "../../types/types";
 
 function CreatePermanentAccount() {

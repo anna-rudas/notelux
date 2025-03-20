@@ -14,7 +14,7 @@ import {
   sendVerificationEmail,
   signOutUser,
 } from "../../firestore/authService";
-import { addUserInDb } from "../../firestore/userService";
+import { addUserInDb } from "../../services/userService";
 import { useErrorBoundary } from "react-error-boundary";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
 
@@ -35,7 +35,7 @@ function SignUp() {
       if (signUpResult.user.email) {
         try {
           await addUserInDb({
-            id: signUpResult.user.uid,
+            userId: signUpResult.user.uid,
             email: signUpResult.user.email,
             theme: defaultTheme,
             username: values.username,

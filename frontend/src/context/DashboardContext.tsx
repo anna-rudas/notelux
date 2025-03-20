@@ -14,6 +14,7 @@ import { getNotesFromDb } from "../services/noteService";
 
 const socket = io(process.env.REACT_APP_BACKEND_URL, {
   transports: ["websocket"],
+  reconnectionAttempts: 3,
 });
 
 interface DashboardContextInterface {
@@ -110,10 +111,10 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
       fetchNotes();
     };
 
-    socket.on("notes_table_updated", onDatabaseChange);
+    socket.on("notes_updates", onDatabaseChange);
 
     return () => {
-      socket.off("notes_table_updated", onDatabaseChange);
+      socket.off("notes_updates", onDatabaseChange);
     };
   }, [authenticatedUser]);
 

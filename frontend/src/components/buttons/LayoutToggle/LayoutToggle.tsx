@@ -4,19 +4,31 @@ import ListIcon from "../../../assets/icons/ListIcon";
 import * as style from "./LayoutToggle.module.css";
 import { AppContext } from "../../../context/AppContext";
 import { className } from "../../../utilities/helpers";
+import { updateUserInDb } from "../../../services/userService";
 
 function LayoutToggle() {
-  const { user, setUser, isLoading } = useContext(AppContext);
+  const { user, isLoading, setToastMessageContent } = useContext(AppContext);
 
   if (user === null) {
     return null;
   }
 
   const toggleLayout = () => {
-    setUser({
-      ...user,
-      layout: user.layout === "grid" ? "list" : "grid",
-    });
+    try {
+      updateUserInDb({
+        ...user,
+        layout: user.layout === "grid" ? "list" : "grid",
+      });
+    } catch (error: unknown) {
+      console.error("Failed to update user in database: ", error);
+      setToastMessageContent({
+        actionButtonText: "",
+        isPersisting: false,
+        showMessage: true,
+        isError: true,
+        description: `Failed to save changes: ${error}`,
+      });
+    }
   };
 
   return (
