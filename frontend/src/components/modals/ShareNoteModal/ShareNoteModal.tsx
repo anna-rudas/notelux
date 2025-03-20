@@ -10,7 +10,6 @@ import { className } from "../../../utilities/helpers";
 import { DashboardContext } from "../../../context/DashboardContext";
 import { getUserEmailFromUserId } from "../../../services/userService";
 import { AppContext } from "../../../context/AppContext";
-import { FirebaseError } from "firebase/app";
 import { getUserIdFromUserEmail } from "../../../services/userService";
 import { updateNoteInDb } from "../../../services/noteService";
 
@@ -114,15 +113,13 @@ function ShareNoteModal() {
       }
     } catch (error: unknown) {
       console.error("Failed to find user: ", error);
-      if (error instanceof FirebaseError) {
-        setToastMessageContent({
-          actionButtonText: "",
-          isPersisting: false,
-          showMessage: true,
-          isError: true,
-          description: "Failed to find user:",
-        });
-      }
+      setToastMessageContent({
+        actionButtonText: "",
+        isPersisting: false,
+        showMessage: true,
+        isError: true,
+        description: "Failed to find user",
+      });
     } finally {
       setIsLoading(false);
     }

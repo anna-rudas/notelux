@@ -34,17 +34,13 @@ function CreatePermanentAccount() {
       await updateUserInDb(userData);
     } catch (error: unknown) {
       console.error("Failed to update user in database: ", error);
-      if (error instanceof FirebaseError) {
-        setToastMessageContent({
-          actionButtonText: "",
-          isPersisting: false,
-          showMessage: true,
-          isError: true,
-          description: `Failed to update user in database: ${evalErrorCode(
-            error.code
-          )}`,
-        });
-      }
+      setToastMessageContent({
+        actionButtonText: "",
+        isPersisting: false,
+        showMessage: true,
+        isError: true,
+        description: `Failed to update user in database`,
+      });
     }
   };
 
