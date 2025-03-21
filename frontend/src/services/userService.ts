@@ -1,6 +1,6 @@
 import { User } from "../types/types";
 
-export const addUserInDb = async (userToAdd: User): Promise<void> => {
+export const addUserInDb = async (userToAdd: User): Promise<User | null> => {
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
   if (!backendUrl) {
     throw new Error("Backend URL is not defined");
@@ -22,6 +22,8 @@ export const addUserInDb = async (userToAdd: User): Promise<void> => {
   if (!response.ok) {
     throw new Error(`${response.status}: ${response.statusText}`);
   }
+
+  return await response.json();
 };
 
 export const getUserFromDb = async (userId: string): Promise<User | null> => {
@@ -45,10 +47,9 @@ export const getUserFromDb = async (userId: string): Promise<User | null> => {
 
 export const updateUserInDb = async (
   userToUpdate: User | null
-): Promise<void> => {
-  //   console.log("in updateUserInDb, ", userToUpdate);
+): Promise<User | null> => {
   if (!userToUpdate) {
-    return;
+    return null;
   }
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
   if (!backendUrl) {
@@ -74,19 +75,27 @@ export const updateUserInDb = async (
   if (!response.ok) {
     throw new Error(`${response.status}: ${response.statusText}`);
   }
+
+  return await response.json();
 };
 
-export const deleteUserDataInDb = async (userId: string): Promise<void> => {
+export const deleteUserDataInDb = async (userId: string): Promise<boolean> => {
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
   if (!backendUrl) {
     throw new Error("Backend URL is not defined");
   }
-  await fetch(`${backendUrl}/api/users/${userId}`, {
+  const response = await fetch(`${backendUrl}/api/users/${userId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
   });
+
+  if (!response.ok) {
+    throw new Error(`${response.status}: ${response.statusText}`);
+  }
+
+  return await response.json();
 };
 
 export const getUserEmailFromUserId = async (
@@ -110,7 +119,8 @@ export const getUserEmailFromUserId = async (
     throw new Error(`${response.status}: ${response.statusText}`);
   }
 
-  return (await response.json()) as string;
+  const { email } = (await response.json()) as { email: string };
+  return email;
 };
 
 export const getUserIdFromUserEmail = async (
@@ -134,5 +144,6 @@ export const getUserIdFromUserEmail = async (
     throw new Error(`${response.status}: ${response.statusText}`);
   }
 
-  return (await response.json()) as string;
+  const { userId } = (await response.json()) as { userId: string };
+  return userId;
 };

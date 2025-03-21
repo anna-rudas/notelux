@@ -22,3 +22,11 @@ export type UserData = {
   username: string;
   userId: string;
 };
+
+export type UserDataGetEmail = {
+  email: string;
+};
+
+export type UserDataGetUserId = {
+  userId: string;
+};
