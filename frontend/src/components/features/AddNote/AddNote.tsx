@@ -19,6 +19,10 @@ function AddNote() {
     resetDefaultNoteState,
   } = useContext(DashboardContext);
 
+  if (!user) {
+    return null;
+  }
+
   const handleNewNoteSubmit = async () => {
     if (activeNote) {
       setIsLoading(true);
@@ -51,19 +55,17 @@ function AddNote() {
   };
 
   const handleOpeningAddNote = () => {
-    if (user) {
-      setActiveNote({
-        id: uuidv4(),
-        title: "",
-        body: "",
-        color: "default",
-        date: new Date().toISOString(),
-        userId: user.userId,
-        coUsers: [user.userId],
-      });
-      setIsDropdownOpen(false);
-      setIsAddNoteOpen(true);
-    }
+    setActiveNote({
+      id: uuidv4(),
+      title: "",
+      body: "",
+      color: "default",
+      date: new Date().toISOString(),
+      userId: user.userId,
+      coUsers: [user.userId],
+    });
+    setIsDropdownOpen(false);
+    setIsAddNoteOpen(true);
   };
 
   return (

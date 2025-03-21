@@ -18,53 +18,56 @@ type ChangePasswordModalProps = {
 function ChangePasswordModal({ handleCancel }: ChangePasswordModalProps) {
   const { user, setToastMessageContent, setIsLoading } = useContext(AppContext);
 
+  if (!user) {
+    return null;
+  }
+
   const handleChangePassword = async (values: FormikValues) => {
     setIsLoading(true);
-    if (user) {
-      try {
-        const reauthResult = await reauthenticateUser(
-          user.email,
-          values.oldPassword
-        );
-        if (reauthResult) {
-          try {
-            await changeUserPassword(values.newPassword);
-            setToastMessageContent({
-              actionButtonText: "",
-              isPersisting: false,
-              showMessage: true,
-              isError: false,
-              description: "Password successfully updated",
-            });
-          } catch (error: unknown) {
-            console.error("Failed to update password: ", error);
-            if (error instanceof FirebaseError) {
-              setToastMessageContent({
-                actionButtonText: "",
-                isPersisting: false,
-                showMessage: true,
-                isError: true,
-                description: `Failed to update password: ${evalErrorCode(
-                  error.code
-                )}`,
-              });
-            }
-          }
-        }
-      } catch (error: unknown) {
-        console.error("Failed to reauthenticate user: ", error);
-        if (error instanceof FirebaseError) {
+
+    try {
+      const reauthResult = await reauthenticateUser(
+        user.email,
+        values.oldPassword
+      );
+      if (reauthResult) {
+        try {
+          await changeUserPassword(values.newPassword);
           setToastMessageContent({
             actionButtonText: "",
             isPersisting: false,
             showMessage: true,
-            isError: true,
-            description: `Failed to authenticate: ${evalErrorCode(error.code)}`,
+            isError: false,
+            description: "Password successfully updated",
           });
+        } catch (error: unknown) {
+          console.error("Failed to update password: ", error);
+          if (error instanceof FirebaseError) {
+            setToastMessageContent({
+              actionButtonText: "",
+              isPersisting: false,
+              showMessage: true,
+              isError: true,
+              description: `Failed to update password: ${evalErrorCode(
+                error.code
+              )}`,
+            });
+          }
         }
-      } finally {
-        setIsLoading(false);
       }
+    } catch (error: unknown) {
+      console.error("Failed to reauthenticate user: ", error);
+      if (error instanceof FirebaseError) {
+        setToastMessageContent({
+          actionButtonText: "",
+          isPersisting: false,
+          showMessage: true,
+          isError: true,
+          description: `Failed to authenticate: ${evalErrorCode(error.code)}`,
+        });
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 

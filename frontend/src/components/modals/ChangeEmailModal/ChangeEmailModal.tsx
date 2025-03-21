@@ -33,6 +33,10 @@ function ChangeEmailModal({ handleCancel }: ChangeEmailModalProps) {
   const [, setSearchParams] = useSearchParams();
   const { showBoundary } = useErrorBoundary();
 
+  if (!user) {
+    return null;
+  }
+
   const updateUserData = async (userData: User) => {
     try {
       await updateUserInDb(userData);
@@ -51,9 +55,6 @@ function ChangeEmailModal({ handleCancel }: ChangeEmailModalProps) {
   const handleChangeEmail = async (values: FormikValues) => {
     setIsLoading(true);
 
-    if (user === null) {
-      throw new Error("expected user to be signed in when changing email");
-    }
     const userData = { ...user };
 
     await updateUserData({
@@ -145,7 +146,7 @@ function ChangeEmailModal({ handleCancel }: ChangeEmailModalProps) {
   return (
     <ModalContainer
       title="Set your new email and confirm using your password"
-      subtitle={`Your current email: ${user?.email}`}
+      subtitle={`Your current email: ${user.email}`}
       handleSubmit={handleChangeEmail}
       handleCancel={handleCancel}
       primaryButtonText="Change email"

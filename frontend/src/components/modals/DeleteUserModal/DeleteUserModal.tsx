@@ -30,6 +30,10 @@ function DeleteUserModal({ handleCancel }: DeleteUserModalProps) {
   const navigate = useNavigate();
   const [, setSearchParams] = useSearchParams();
 
+  if (!user) {
+    return null;
+  }
+
   const reAddUserData = async (userData: User) => {
     try {
       await addUserInDb(userData);
@@ -40,9 +44,6 @@ function DeleteUserModal({ handleCancel }: DeleteUserModalProps) {
 
   const handleDeleteUser = async (values: FormikValues) => {
     setIsLoading(true);
-    if (user === null) {
-      throw new Error("expected user to be signed in when changing email");
-    }
     const userData = { ...user };
 
     try {

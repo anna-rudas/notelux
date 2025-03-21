@@ -30,6 +30,10 @@ function AccountDropdown() {
   const { setIsCreateAccountModalOpen } = useContext(DashboardContext);
   const navigate = useNavigate();
 
+  if (!user) {
+    return null;
+  }
+
   const handleClickOutside = (event: MouseEvent) => {
     if (dropdownRef && dropdownButtonRef) {
       if (
@@ -76,10 +80,6 @@ function AccountDropdown() {
       setIsLoading(false);
     }
   };
-
-  if (user === null) {
-    return null;
-  }
 
   return (
     <FocusTrap

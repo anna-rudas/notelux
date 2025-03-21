@@ -29,6 +29,10 @@ function CreatePermanentAccount() {
   const navigate = useNavigate();
   const [, setSearchParams] = useSearchParams();
 
+  if (!user) {
+    return null;
+  }
+
   const updateUserData = async (userData: User) => {
     try {
       await updateUserInDb(userData);
@@ -47,11 +51,6 @@ function CreatePermanentAccount() {
   const handleCreatePermanentAccount = async (values: FormikValues) => {
     setIsLoading(true);
 
-    if (user === null) {
-      throw new Error(
-        "expected anonymous user to be signed in when creating account"
-      );
-    }
     const userData = { ...user };
 
     await updateUserData({
