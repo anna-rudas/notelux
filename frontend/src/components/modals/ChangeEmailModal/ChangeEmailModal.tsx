@@ -14,7 +14,6 @@ import { FirebaseError } from "firebase/app";
 import { evalErrorCode } from "../../../utilities/helpers";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { updateUserInDb } from "../../../services/userService";
-import { User } from "../../../types/types";
 import { useErrorBoundary } from "react-error-boundary";
 
 type ChangeEmailModalProps = {
@@ -37,31 +36,9 @@ function ChangeEmailModal({ handleCancel }: ChangeEmailModalProps) {
     return null;
   }
 
-  const updateUserData = async (userData: User) => {
-    try {
-      await updateUserInDb(userData);
-    } catch (error: unknown) {
-      console.error("Failed to update user in database: ", error);
-      setToastMessageContent({
-        actionButtonText: "",
-        isPersisting: false,
-        showMessage: true,
-        isError: true,
-        description: `Failed to update user in database`,
-      });
-    }
-  };
-
   const handleChangeEmail = async (values: FormikValues) => {
     setIsLoading(true);
-
     const userData = { ...user };
-
-    await updateUserData({
-      ...user,
-      email: values.newEmail,
-    });
-    setIsLoading(true);
 
     try {
       const reauthResult = await reauthenticateUser(
@@ -69,55 +46,34 @@ function ChangeEmailModal({ handleCancel }: ChangeEmailModalProps) {
         values.password
       );
       if (reauthResult && userData.email !== values.newEmail) {
-        setUser(null);
-        setAuthenticatedUser(null);
-        setIsLoading(true);
         try {
           await changeUserEmail(values.newEmail);
+          await sendVerificationEmail();
+          await updateUserInDb({
+            ...userData,
+            email: values.newEmail,
+          });
           try {
-            await sendVerificationEmail();
-            try {
-              await signOutUser();
-              setIsLoading(false);
-              navigate("/signin");
-              setSearchParams({ changeEmailSuccess: "true" });
-            } catch (error: unknown) {
-              console.error("Failed to sign out user: ", error);
-              showBoundary(error);
-            }
+            setUser(null);
+            setAuthenticatedUser(null);
+            await signOutUser();
+            navigate("/signin");
+            setSearchParams({ changeEmailSuccess: "true" });
           } catch (error: unknown) {
-            console.error("Failed to send verification email: ", error);
-            if (error instanceof FirebaseError) {
-              setToastMessageContent({
-                actionButtonText: "",
-                isPersisting: false,
-                showMessage: true,
-                isError: true,
-                description: `Failed to send verification email: ${evalErrorCode(
-                  error.code
-                )}`,
-              });
-            }
-            setIsLoading(false);
+            console.error("Failed to sign out user: ", error);
+            showBoundary(error);
           }
         } catch (error: unknown) {
-          await updateUserData(userData);
-          console.error("Failed to update email: ", error);
-          if (error instanceof FirebaseError) {
-            setToastMessageContent({
-              actionButtonText: "",
-              isPersisting: false,
-              showMessage: true,
-              isError: true,
-              description: `Failed to update email: ${evalErrorCode(
-                error.code
-              )}`,
-            });
-            setIsLoading(false);
-          }
+          console.error("Error while updating email: ", error);
+          setToastMessageContent({
+            actionButtonText: "",
+            isPersisting: false,
+            showMessage: true,
+            isError: true,
+            description: `Internal error while updating email`,
+          });
         }
       } else {
-        await updateUserData(userData);
         setToastMessageContent({
           actionButtonText: "",
           isPersisting: false,
@@ -128,7 +84,6 @@ function ChangeEmailModal({ handleCancel }: ChangeEmailModalProps) {
         setIsLoading(false);
       }
     } catch (error: unknown) {
-      await updateUserData(userData);
       console.error("Failed to reauthenticate user: ", error);
       if (error instanceof FirebaseError) {
         setToastMessageContent({
@@ -138,8 +93,9 @@ function ChangeEmailModal({ handleCancel }: ChangeEmailModalProps) {
           isError: true,
           description: `Failed to authenticate: ${evalErrorCode(error.code)}`,
         });
-        setIsLoading(false);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
