@@ -5,11 +5,10 @@ import { io } from "./index";
 dotenv.config();
 
 const pool = new Pool({
-  user: process.env.PGUSER,
-  password: process.env.PGPASSWORD,
-  host: process.env.PGHOST,
-  port: parseInt(process.env.PGPORT || "5432"),
-  database: process.env.POSTGRES_DB,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 pool.on("error", (err) => {
