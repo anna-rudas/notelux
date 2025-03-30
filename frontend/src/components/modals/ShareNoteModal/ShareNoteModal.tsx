@@ -21,11 +21,13 @@ function ShareNoteModal() {
     useContext(DashboardContext);
   const { setIsLoading, setToastMessageContent } = useContext(AppContext);
 
+  if (!activeNote) {
+    return null;
+  }
+
   useEffect(() => {
-    if (activeNote) {
-      setNoteCollaborators(activeNote.userId, activeNote.coUsers);
-    }
-  }, [activeNote?.coUsers]);
+    setNoteCollaborators(activeNote.userId, activeNote.coUsers);
+  }, [activeNote.coUsers]);
 
   const setNoteCollaborators = async (
     ownerId: string,
@@ -65,11 +67,7 @@ function ShareNoteModal() {
           isError: true,
           description: "There is no user with this email address",
         });
-      } else if (
-        activeNote &&
-        newUserId &&
-        activeNote.coUsers.indexOf(newUserId) >= 0
-      ) {
+      } else if (newUserId && activeNote.coUsers.indexOf(newUserId) >= 0) {
         setToastMessageContent({
           showMessage: true,
           actionButtonText: "",
@@ -77,38 +75,36 @@ function ShareNoteModal() {
           isError: true,
           description: "User already added",
         });
-      } else {
+      } else if (newUserId !== "") {
         //set note
-        if (activeNote && newUserId !== "") {
-          const newCoUsers = [...activeNote.coUsers, newUserId];
-          try {
-            await updateNoteInDb({
-              ...activeNote,
-              coUsers: newCoUsers,
-              date: new Date().toISOString(),
-            });
-            setActiveNote({
-              ...activeNote,
-              coUsers: newCoUsers,
-              date: new Date().toISOString(),
-            });
-            setToastMessageContent({
-              showMessage: true,
-              actionButtonText: "",
-              isPersisting: false,
-              isError: false,
-              description: "New user added",
-            });
-          } catch (error) {
-            console.error("Failed to add collaborator: ", error);
-            setToastMessageContent({
-              actionButtonText: "",
-              isPersisting: false,
-              showMessage: true,
-              isError: true,
-              description: `Failed to add user`,
-            });
-          }
+        const newCoUsers = [...activeNote.coUsers, newUserId];
+        try {
+          await updateNoteInDb({
+            ...activeNote,
+            coUsers: newCoUsers,
+            date: new Date().toISOString(),
+          });
+          setActiveNote({
+            ...activeNote,
+            coUsers: newCoUsers,
+            date: new Date().toISOString(),
+          });
+          setToastMessageContent({
+            showMessage: true,
+            actionButtonText: "",
+            isPersisting: false,
+            isError: false,
+            description: "New user added",
+          });
+        } catch (error) {
+          console.error("Failed to add collaborator: ", error);
+          setToastMessageContent({
+            actionButtonText: "",
+            isPersisting: false,
+            showMessage: true,
+            isError: true,
+            description: `Failed to add collaborator`,
+          });
         }
       }
     } catch (error: unknown) {
