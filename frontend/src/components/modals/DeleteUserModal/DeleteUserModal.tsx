@@ -3,7 +3,7 @@ import GeneralInput from "../../inputs/GeneralInput";
 import ModalContainer from "../../templates/ModalContainer";
 import { FormikValues } from "formik";
 import { deleteUserSchema } from "../../../utilities/validationSchemas";
-import { addUserInDb, deleteUserDataInDb } from "../../../services/userService";
+import { deleteUserDataInDb } from "../../../services/userService";
 import {
   reauthenticateUser,
   deleteUserAccount,
@@ -13,7 +13,6 @@ import { AppContext } from "../../../context/AppContext";
 import { FirebaseError } from "firebase/app";
 import { evalErrorCode } from "../../../utilities/helpers";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { User } from "../../../types/types";
 
 type DeleteUserModalProps = {
   handleCancel: () => void;
@@ -34,17 +33,8 @@ function DeleteUserModal({ handleCancel }: DeleteUserModalProps) {
     return null;
   }
 
-  const reAddUserData = async (userData: User) => {
-    try {
-      await addUserInDb(userData);
-    } catch (error: unknown) {
-      console.error("Failed to readd user: ", error);
-    }
-  };
-
   const handleDeleteUser = async (values: FormikValues) => {
     setIsLoading(true);
-    const userData = { ...user };
 
     try {
       const reauthResult = await reauthenticateUser(
@@ -53,50 +43,26 @@ function DeleteUserModal({ handleCancel }: DeleteUserModalProps) {
       );
       if (reauthResult) {
         try {
+          //delete user account
+          await deleteUserAccount();
           //delete user data
           await deleteUserDataInDb(user.userId);
           setUser(null);
           setAuthenticatedUser(null);
-          setIsLoading(true);
-          try {
-            //delete user account
-            await deleteUserAccount();
-            await signOutUser();
-            navigate("/signin");
-            setSearchParams({
-              deleteAccountSuccess: "true",
-            });
-            setIsLoading(false);
-          } catch (error) {
-            reAddUserData(userData);
-            console.error("Failed to delete user account: ", error);
-            if (error instanceof FirebaseError) {
-              setToastMessageContent({
-                actionButtonText: "",
-                isPersisting: false,
-                showMessage: true,
-                isError: true,
-                description: `Failed to delete user account: ${evalErrorCode(
-                  error.code
-                )}`,
-              });
-            }
-            setIsLoading(false);
-          }
+          await signOutUser();
+          navigate("/signin");
+          setSearchParams({
+            deleteAccountSuccess: "true",
+          });
         } catch (error) {
-          console.error("Failed to delete user: ", error);
-          if (error instanceof FirebaseError) {
-            setToastMessageContent({
-              actionButtonText: "",
-              isPersisting: false,
-              showMessage: true,
-              isError: true,
-              description: `Failed to delete user: ${evalErrorCode(
-                error.code
-              )}`,
-            });
-          }
-          setIsLoading(false);
+          console.error("Error while deleting user account: ", error);
+          setToastMessageContent({
+            actionButtonText: "",
+            isPersisting: false,
+            showMessage: true,
+            isError: true,
+            description: `Internal error while deleting user account`,
+          });
         }
       }
     } catch (error: unknown) {
@@ -110,6 +76,7 @@ function DeleteUserModal({ handleCancel }: DeleteUserModalProps) {
           description: `Failed to authenticate: ${evalErrorCode(error.code)}`,
         });
       }
+    } finally {
       setIsLoading(false);
     }
   };
