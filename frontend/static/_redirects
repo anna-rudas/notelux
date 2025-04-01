@@ -1,2 +1,2 @@
-/api/*  https://notelux-production.up.railway.app/api/:splat  200
+/api/*  https://notelux-production.up.railway.app/:splat  200
 /* /index.html 
