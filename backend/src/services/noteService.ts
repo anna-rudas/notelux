@@ -3,7 +3,7 @@ import { NoteData } from "../types/types";
 
 export const getNotes = async (userId: string): Promise<NoteData[] | null> => {
   const { rows } = await db.query(
-    `SELECT * FROM notes WHERE $1 = ANY(cousers)`,
+    `SELECT * FROM notes WHERE $1 = ANY(co_users)`,
     [userId]
   );
   return rows.length > 0 ? rows : null;
@@ -12,11 +12,11 @@ export const getNotes = async (userId: string): Promise<NoteData[] | null> => {
 export const createNote = async (
   noteData: NoteData
 ): Promise<NoteData | null> => {
-  const { title, body, color, date, userId, coUsers } = noteData;
+  const { title, body, color, date, user_id, co_users } = noteData;
 
   const { rows } = await db.query(
-    `INSERT INTO notes (title, body, color, date, userid, cousers) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-    [title, body, color, date, userId, coUsers]
+    `INSERT INTO notes (title, body, color, date, user_id, co_users) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+    [title, body, color, date, user_id, co_users]
   );
   return rows.length > 0 ? rows[0] : null;
 };
@@ -25,11 +25,11 @@ export const updateNote = async (
   noteData: NoteData,
   noteId: string
 ): Promise<NoteData | null> => {
-  const { title, body, color, date, coUsers } = noteData;
+  const { title, body, color, date, co_users } = noteData;
 
   const { rows } = await db.query(
-    `UPDATE notes SET title = $1, body = $2, color = $3, date = $4, cousers = $5 WHERE id = $6 RETURNING *`,
-    [title, body, color, date, coUsers, noteId]
+    `UPDATE notes SET title = $1, body = $2, color = $3, date = $4, co_users = $5 WHERE id = $6 RETURNING *`,
+    [title, body, color, date, co_users, noteId]
   );
   return rows.length > 0 ? rows[0] : null;
 };

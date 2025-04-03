@@ -11,8 +11,8 @@ export type NoteData = {
   body: string;
   color: Color;
   date: string;
-  userId: string;
-  coUsers: string[];
+  user_id: string;
+  co_users: string[];
 };
 
 export type UserData = {
@@ -20,7 +20,7 @@ export type UserData = {
   theme: Theme;
   layout: Layout;
   username: string;
-  userId: string;
+  user_id: string;
 };
 
 export type UserDataGetEmail = {
@@ -28,5 +28,5 @@ export type UserDataGetEmail = {
 };
 
 export type UserDataGetUserId = {
-  userId: string;
+  user_id: string;
 };

@@ -11,7 +11,7 @@ export const addUserInDb = async (userToAdd: User): Promise<User | null> => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      userId: userToAdd.userId,
+      user_id: userToAdd.userId,
       email: userToAdd.email,
       theme: userToAdd.theme,
       layout: userToAdd.layout,
@@ -23,7 +23,8 @@ export const addUserInDb = async (userToAdd: User): Promise<User | null> => {
     throw new Error(`${response.status}: ${response.statusText}`);
   }
 
-  return await response.json();
+  const result = await response.json();
+  return { ...result, userId: result.user_id };
 };
 
 export const getUserFromDb = async (userId: string): Promise<User | null> => {
@@ -41,8 +42,8 @@ export const getUserFromDb = async (userId: string): Promise<User | null> => {
   if (!response.ok) {
     throw new Error(`${response.status}: ${response.statusText}`);
   }
-
-  return await response.json();
+  const result = await response.json();
+  return { ...result, userId: result.user_id };
 };
 
 export const updateUserInDb = async (
@@ -63,7 +64,7 @@ export const updateUserInDb = async (
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userId: userToUpdate.userId,
+        user_id: userToUpdate.userId,
         email: userToUpdate.email,
         theme: userToUpdate.theme,
         layout: userToUpdate.layout,
@@ -76,7 +77,8 @@ export const updateUserInDb = async (
     throw new Error(`${response.status}: ${response.statusText}`);
   }
 
-  return await response.json();
+  const result = await response.json();
+  return { ...result, userId: result.user_id };
 };
 
 export const deleteUserDataInDb = async (userId: string): Promise<boolean> => {
@@ -144,6 +146,6 @@ export const getUserIdFromUserEmail = async (
     throw new Error(`${response.status}: ${response.statusText}`);
   }
 
-  const { userId } = (await response.json()) as { userId: string };
-  return userId;
+  const result = await response.json();
+  return result.user_id;
 };

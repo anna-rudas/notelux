@@ -18,7 +18,8 @@ export const getNotesFromDb = async (
     throw new Error(`${response.status}: ${response.statusText}`);
   }
 
-  return await response.json();
+  const result = await response.json();
+  return { ...result, userId: result.user_id, coUsers: result.co_users };
 };
 
 export const addNoteInDb = async (noteToAdd: Note): Promise<Note | null> => {
@@ -36,8 +37,8 @@ export const addNoteInDb = async (noteToAdd: Note): Promise<Note | null> => {
       body: noteToAdd.body,
       color: noteToAdd.color,
       date: noteToAdd.date,
-      userId: noteToAdd.userId,
-      coUsers: noteToAdd.coUsers,
+      user_id: noteToAdd.userId,
+      co_users: noteToAdd.coUsers,
     }),
   });
 
@@ -45,7 +46,8 @@ export const addNoteInDb = async (noteToAdd: Note): Promise<Note | null> => {
     throw new Error(`${response.status}: ${response.statusText}`);
   }
 
-  return await response.json();
+  const result = await response.json();
+  return { ...result, userId: result.user_id, coUsers: result.co_users };
 };
 
 export const updateNoteInDb = async (
@@ -65,8 +67,8 @@ export const updateNoteInDb = async (
       body: noteToUpdate.body,
       color: noteToUpdate.color,
       date: noteToUpdate.date,
-      userId: noteToUpdate.userId,
-      coUsers: noteToUpdate.coUsers,
+      user_id: noteToUpdate.userId,
+      co_users: noteToUpdate.coUsers,
     }),
   });
 
@@ -74,7 +76,8 @@ export const updateNoteInDb = async (
     throw new Error(`${response.status}: ${response.statusText}`);
   }
 
-  return await response.json();
+  const result = await response.json();
+  return { ...result, userId: result.user_id, coUsers: result.co_users };
 };
 
 export const deleteNoteInDb = async (noteId: string): Promise<boolean> => {
