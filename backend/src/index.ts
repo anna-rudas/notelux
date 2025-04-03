@@ -17,7 +17,7 @@ const io = new Server(server, {
   },
 });
 
-const allowedOrigins = [process.env.FRONTEND_URL];
+const allowedOrigins = [process.env.FRONTEND_URL, process.env.LOCAL_URL];
 
 const corsOptions = {
   origin: (
