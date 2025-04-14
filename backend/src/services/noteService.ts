@@ -3,7 +3,7 @@ import { NoteData } from "../types/types";
 
 export const getNotes = async (userId: string): Promise<NoteData[] | null> => {
   const { rows } = await db.query(
-    `SELECT * FROM notes WHERE $1::text IN (SELECT jsonb_array_elements_text(co_users))`,
+    `SELECT * FROM notes WHERE co_users::jsonb @> to_jsonb(ARRAY[$1])`,
     [userId]
   );
   return rows.length > 0 ? rows : null;
@@ -13,10 +13,16 @@ export const createNote = async (
   noteData: NoteData
 ): Promise<NoteData | null> => {
   const { title, body, color, date, user_id, co_users } = noteData;
-
+  const co_users_result =
+    typeof co_users === "string" ? JSON.parse(co_users) : co_users;
+  console.log(
+    "logging out co_users and co_users_result",
+    co_users,
+    co_users_result
+  );
   const { rows } = await db.query(
     `INSERT INTO notes (title, body, color, date, user_id, co_users) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-    [title, body, color, date, user_id, co_users]
+    [title, body, color, date, user_id, co_users_result]
   );
   return rows.length > 0 ? rows[0] : null;
 };
