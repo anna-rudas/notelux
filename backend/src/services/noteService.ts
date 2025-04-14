@@ -13,16 +13,10 @@ export const createNote = async (
   noteData: NoteData
 ): Promise<NoteData | null> => {
   const { title, body, color, date, user_id, co_users } = noteData;
-  const co_users_result =
-    typeof co_users === "string" ? JSON.parse(co_users) : co_users;
-  console.log(
-    "logging out co_users and co_users_result",
-    co_users,
-    co_users_result
-  );
+
   const { rows } = await db.query(
     `INSERT INTO notes (title, body, color, date, user_id, co_users) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-    [title, body, color, date, user_id, co_users_result]
+    [title, body, color, date, user_id, JSON.stringify(co_users)]
   );
   return rows.length > 0 ? rows[0] : null;
 };
