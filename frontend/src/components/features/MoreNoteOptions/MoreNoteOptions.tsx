@@ -18,7 +18,7 @@ function MoreNoteOptions({
   backgroundColor,
   optionsContainerStyle,
 }: MoreNoteOptionsProps) {
-  const { isLoading, user, anonymousUserId } = useContext(AppContext);
+  const { isLoading, user, authenticatedUser } = useContext(AppContext);
 
   const {
     moreNoteOptionsRef,
@@ -54,7 +54,7 @@ function MoreNoteOptions({
   }, [isMoreNoteOptionsOpen]);
 
   const handleClickShareNoteButton = () => {
-    if (anonymousUserId) {
+    if (authenticatedUser?.isAnonymous) {
       setIsCreateAccountModalOpen(true);
     } else {
       setIsShareNoteModalOpen(true);
