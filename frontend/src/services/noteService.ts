@@ -1,4 +1,4 @@
-import { Note } from "../types/types";
+import { Note, NoteData } from "../types/types";
 
 export const getNotesFromDb = async (
   userId: string
@@ -19,7 +19,13 @@ export const getNotesFromDb = async (
   }
 
   const result = await response.json();
-  return { ...result, userId: result.user_id, coUsers: result.co_users };
+
+  if (!result) return null;
+  return result.map((note: NoteData) => ({
+    ...note,
+    userId: note.user_id,
+    coUsers: note.co_users,
+  }));
 };
 
 export const addNoteInDb = async (noteToAdd: Note): Promise<Note | null> => {

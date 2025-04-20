@@ -43,6 +43,8 @@ export const getUserFromDb = async (userId: string): Promise<User | null> => {
     throw new Error(`${response.status}: ${response.statusText}`);
   }
   const result = await response.json();
+
+  if (!result) return null;
   return { ...result, userId: result.user_id };
 };
 

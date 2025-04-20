@@ -10,6 +10,15 @@ export type Note = {
   coUsers: string[];
 };
 
+export type NoteData = {
+  title: string;
+  body: string;
+  color: Color;
+  date: string;
+  user_id: string;
+  co_users: string[];
+};
+
 export type User = {
   userId: string;
   email: string;

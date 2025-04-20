@@ -122,8 +122,10 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
     if (authenticatedUser) {
       setAreNotesLoading(true);
       try {
-        const result: Note[] = await getNotesFromDb(authenticatedUser.id);
-        setNotes([...result]);
+        const result = await getNotesFromDb(authenticatedUser.id);
+        if (result) {
+          setNotes([...result]);
+        }
         setAreNotesLoading(false);
       } catch (err) {
         console.error("Error getting notes from database:", err);
