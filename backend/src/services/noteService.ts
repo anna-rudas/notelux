@@ -3,7 +3,7 @@ import { NoteData } from "../types/types";
 
 export const getNotes = async (userId: string): Promise<NoteData[] | null> => {
   const { rows } = await db.query(
-    `SELECT * FROM notes WHERE $1::text IN (SELECT jsonb_array_elements_text(co_users))`,
+    `SELECT * FROM notes WHERE $1 = ANY(co_users)`,
     [userId]
   );
   return rows.length > 0 ? rows : null;
