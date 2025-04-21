@@ -3,7 +3,7 @@ import { NoteData } from "../types/types";
 
 export const getNotes = async (userId: string): Promise<NoteData[] | null> => {
   const { rows } = await db.query(
-    `SELECT * FROM notes WHERE co_users::jsonb @> to_jsonb(ARRAY[$1])`,
+    `SELECT * FROM notes WHERE $1::text IN (SELECT jsonb_array_elements_text(co_users))`,
     [userId]
   );
   return rows.length > 0 ? rows : null;
@@ -16,7 +16,8 @@ export const createNote = async (
 
   const { rows } = await db.query(
     `INSERT INTO notes (title, body, color, date, user_id, co_users) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-    [title, body, color, date, user_id, JSON.stringify(co_users)]
+
+    [title, body, color, date, user_id, co_users]
   );
   return rows.length > 0 ? rows[0] : null;
 };
