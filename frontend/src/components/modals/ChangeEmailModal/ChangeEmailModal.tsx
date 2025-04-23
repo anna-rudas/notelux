@@ -47,6 +47,8 @@ function ChangeEmailModal({ handleCancel }: ChangeEmailModalProps) {
       );
       if (reauthResult && userData.email !== values.newEmail) {
         try {
+          setUser(null);
+          setAuthenticatedUser(null);
           await changeUserEmail(values.newEmail);
           await sendVerificationEmail();
           await updateUserInDb({
@@ -54,8 +56,6 @@ function ChangeEmailModal({ handleCancel }: ChangeEmailModalProps) {
             email: values.newEmail,
           });
           try {
-            setUser(null);
-            setAuthenticatedUser(null);
             await signOutUser();
             navigate("/signin");
             setSearchParams({ changeEmailSuccess: "true" });
