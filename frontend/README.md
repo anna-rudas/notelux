@@ -1,18 +1,20 @@
 # Notelux
 
-Notelux is a web application for writing, organizing and sharing notes. Built with React and Firebase.
+Notelux is a web application for writing, organizing and sharing notes, built with React.
+
+The project originally used Firestore for data storage but has since transitioned to using a PostgreSQL database hosted on Railway. The version with the Firestore implementation is preserved on the [`legacy/firestore-database`](https://github.com/anna-rudas/notelux/tree/legacy/firestore-database) branch.
 
 ## features
 
-- users account with email and password
-- anonymous users to use as guest
-- pastel palette for note colors
-- share notes with others
-- search
-- light and dark themes
-- grid and list view
-- option to delete account
+- Users account with email and password
+- Guest access via anonymous users
+- Pastel palette for note colors
+- Share notes with others
+- Search functionality
+- Light and dark themes
+- Grid and list view
+- Option to delete account
 
 ## credits
 
-- icons from [SVG Repo](https://www.svgrepo.com/)
+- Icons from [SVG Repo](https://www.svgrepo.com/)
