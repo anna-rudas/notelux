@@ -1,4 +1,5 @@
 import { Note, NoteData } from "../types/types";
+import { getUserIdToken } from "../firebase/authService";
 
 export const getNotesFromDb = async (
   userId: string
@@ -7,10 +8,12 @@ export const getNotesFromDb = async (
   if (!backendUrl) {
     throw new Error("Backend URL is not defined");
   }
+  const token = await getUserIdToken();
   const response = await fetch(`${backendUrl}/api/notes/${userId}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   });
 

@@ -115,3 +115,10 @@ export const deleteUserAccount = async (): Promise<void> => {
     await deleteUser(auth.currentUser);
   }
 };
+
+export const getUserIdToken = async (): Promise<string | null> => {
+  if (auth.currentUser) {
+    return await auth.currentUser.getIdToken();
+  }
+  return null;
+};
