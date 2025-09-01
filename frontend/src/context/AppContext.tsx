@@ -101,7 +101,7 @@ function AppContextProvider({ children }: AppContextProviderProps) {
     if (authenticatedUser) {
       try {
         setIsLoading(true);
-        const result = await getUserFromDb(authenticatedUser.id);
+        const result = await getUserFromDb();
         if (result) {
           setUser(result);
         }

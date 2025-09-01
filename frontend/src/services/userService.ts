@@ -1,14 +1,17 @@
 import { User } from "../types/types";
+import { getUserIdToken } from "../firebase/authService";
 
 export const addUserInDb = async (userToAdd: User): Promise<User | null> => {
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
   if (!backendUrl) {
     throw new Error("Backend URL is not defined");
   }
+  const token = await getUserIdToken();
   const response = await fetch(`${backendUrl}/api/users`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       user_id: userToAdd.userId,
@@ -27,15 +30,17 @@ export const addUserInDb = async (userToAdd: User): Promise<User | null> => {
   return { ...result, userId: result.user_id };
 };
 
-export const getUserFromDb = async (userId: string): Promise<User | null> => {
+export const getUserFromDb = async (): Promise<User | null> => {
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
   if (!backendUrl) {
     throw new Error("Backend URL is not defined");
   }
-  const response = await fetch(`${backendUrl}/api/users/${userId}`, {
+  const token = await getUserIdToken();
+  const response = await fetch(`${backendUrl}/api/users`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   });
 
@@ -58,22 +63,21 @@ export const updateUserInDb = async (
   if (!backendUrl) {
     throw new Error("Backend URL is not defined");
   }
-  const response = await fetch(
-    `${backendUrl}/api/users/${userToUpdate.userId}`,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: userToUpdate.userId,
-        email: userToUpdate.email,
-        theme: userToUpdate.theme,
-        layout: userToUpdate.layout,
-        username: userToUpdate.username,
-      }),
-    }
-  );
+  const token = await getUserIdToken();
+  const response = await fetch(`${backendUrl}/api/users`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      user_id: userToUpdate.userId,
+      email: userToUpdate.email,
+      theme: userToUpdate.theme,
+      layout: userToUpdate.layout,
+      username: userToUpdate.username,
+    }),
+  });
 
   if (!response.ok) {
     throw new Error(`${response.status}: ${response.statusText}`);
@@ -83,15 +87,17 @@ export const updateUserInDb = async (
   return { ...result, userId: result.user_id };
 };
 
-export const deleteUserDataInDb = async (userId: string): Promise<boolean> => {
+export const deleteUserDataInDb = async (): Promise<boolean> => {
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
   if (!backendUrl) {
     throw new Error("Backend URL is not defined");
   }
-  const response = await fetch(`${backendUrl}/api/users/${userId}`, {
+  const token = await getUserIdToken();
+  const response = await fetch(`${backendUrl}/api/users`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   });
 
@@ -109,12 +115,14 @@ export const getUserEmailFromUserId = async (
   if (!backendUrl) {
     throw new Error("Backend URL is not defined");
   }
+  const token = await getUserIdToken();
   const response = await fetch(
     `${backendUrl}/api/users/email-by-id/${userId}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     }
   );
@@ -134,12 +142,14 @@ export const getUserIdFromUserEmail = async (
   if (!backendUrl) {
     throw new Error("Backend URL is not defined");
   }
+  const token = await getUserIdToken();
   const response = await fetch(
     `${backendUrl}/api/users/id-by-email/${userEmail}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     }
   );

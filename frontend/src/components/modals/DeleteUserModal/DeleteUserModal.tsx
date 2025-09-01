@@ -46,7 +46,7 @@ function DeleteUserModal({ handleCancel }: DeleteUserModalProps) {
           //delete user account
           await deleteUserAccount();
           //delete user data
-          await deleteUserDataInDb(user.userId);
+          await deleteUserDataInDb();
           setUser(null);
           setAuthenticatedUser(null);
           await signOutUser();

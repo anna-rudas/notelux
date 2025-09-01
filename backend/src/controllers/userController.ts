@@ -3,7 +3,11 @@ import * as userService from "../services/userService";
 
 export const getUser = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.userId;
+    if (!userId) {
+      res.status(403).json({ message: "Missing User ID" });
+      return;
+    }
     const user = await userService.getUser(userId);
     res.status(200).json(user);
   } catch (error) {
@@ -25,7 +29,11 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const updateUser = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.userId;
+    if (!userId) {
+      res.status(403).json({ message: "Missing User ID" });
+      return;
+    }
     const userData = req.body;
     const updatedUser = await userService.updateUser(userData, userId);
     if (!updatedUser) {
@@ -40,7 +48,11 @@ export const updateUser = async (req: Request, res: Response) => {
 };
 export const deleteUser = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.userId;
+    if (!userId) {
+      res.status(403).json({ message: "Missing User ID" });
+      return;
+    }
     const isUserDeleted = await userService.deleteUser(userId);
     if (!isUserDeleted) {
       res.status(404).json({ message: "User not found" });

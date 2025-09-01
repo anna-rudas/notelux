@@ -34,10 +34,12 @@ export const addNoteInDb = async (noteToAdd: Note): Promise<Note | null> => {
   if (!backendUrl) {
     throw new Error("Backend URL is not defined");
   }
+  const token = await getUserIdToken();
   const response = await fetch(`${backendUrl}/api/notes`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       title: noteToAdd.title,
@@ -64,10 +66,12 @@ export const updateNoteInDb = async (
   if (!backendUrl) {
     throw new Error("Backend URL is not defined");
   }
+  const token = await getUserIdToken();
   const response = await fetch(`${backendUrl}/api/notes/${noteToUpdate.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       title: noteToUpdate.title,
@@ -92,10 +96,12 @@ export const deleteNoteInDb = async (noteId: string): Promise<boolean> => {
   if (!backendUrl) {
     throw new Error("Backend URL is not defined");
   }
+  const token = await getUserIdToken();
   const response = await fetch(`${backendUrl}/api/notes/${noteId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   });
 
