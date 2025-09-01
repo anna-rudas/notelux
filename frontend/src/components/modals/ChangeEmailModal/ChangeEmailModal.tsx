@@ -9,7 +9,7 @@ import {
   changeUserEmail,
   sendVerificationEmail,
   signOutUser,
-} from "../../../firestore/authService";
+} from "../../../firebase/authService";
 import { FirebaseError } from "firebase/app";
 import { evalErrorCode } from "../../../utilities/helpers";
 import { useNavigate, useSearchParams } from "react-router-dom";

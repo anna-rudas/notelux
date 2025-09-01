@@ -12,7 +12,7 @@ import {
   sendVerificationEmail,
   upgradeUserAccountToPermanent,
   signOutUser,
-} from "../../firestore/authService";
+} from "../../firebase/authService";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { updateUserInDb } from "../../services/userService";

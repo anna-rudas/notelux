@@ -6,7 +6,7 @@ import { FormikValues } from "formik";
 import {
   reauthenticateUser,
   changeUserPassword,
-} from "../../../firestore/authService";
+} from "../../../firebase/authService";
 import { AppContext } from "../../../context/AppContext";
 import { FirebaseError } from "firebase/app";
 import { evalErrorCode } from "../../../utilities/helpers";

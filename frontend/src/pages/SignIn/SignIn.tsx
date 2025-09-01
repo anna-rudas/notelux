@@ -16,7 +16,7 @@ import {
   sendVerificationEmail,
   signInAnonymousUser,
   isUserAnonymous,
-} from "../../firestore/authService";
+} from "../../firebase/authService";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 

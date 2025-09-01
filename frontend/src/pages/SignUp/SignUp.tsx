@@ -13,7 +13,7 @@ import {
   signUpUser,
   sendVerificationEmail,
   signOutUser,
-} from "../../firestore/authService";
+} from "../../firebase/authService";
 import { addUserInDb } from "../../services/userService";
 import { useErrorBoundary } from "react-error-boundary";
 import SecondaryButton from "../../components/buttons/SecondaryButton";

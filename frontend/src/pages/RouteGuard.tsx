@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import { defaultToastMessage } from "../data/constants";
 import { FirebaseError } from "firebase/app";
 import ErrorPage from "./ErrorPage/ErrorPage";
-import { signOutUser } from "../firestore/authService";
+import { signOutUser } from "../firebase/authService";
 
 type RouteGuardProps = {
   children: JSX.Element;

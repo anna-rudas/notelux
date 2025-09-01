@@ -9,7 +9,7 @@ import { FirebaseError } from "firebase/app";
 import PageWrapper from "../../components/templates/PageWrapper";
 import { Formik, Form, FormikValues } from "formik";
 import { resetPasswordSchema } from "../../utilities/validationSchemas";
-import { resetUserPassword } from "../../firestore/authService";
+import { resetUserPassword } from "../../firebase/authService";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 import SecondaryButton from "../../components/buttons/SecondaryButton";
 

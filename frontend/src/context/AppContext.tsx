@@ -6,7 +6,7 @@ import React, {
   useRef,
   RefObject,
 } from "react";
-import "../firestore/firestoreConfig";
+import "../firebase/firebaseConfig";
 import {
   defaultAnonymousUsername,
   defaultToastMessage,

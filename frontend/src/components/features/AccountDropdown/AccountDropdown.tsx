@@ -7,7 +7,7 @@ import * as textStyles from "../../../assets/styles/text-styles.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { AppContext } from "../../../context/AppContext";
 import { FirebaseError } from "firebase/app";
-import { signOutUser } from "../../../firestore/authService";
+import { signOutUser } from "../../../firebase/authService";
 import { evalErrorCode } from "../../../utilities/helpers";
 import PrimaryButton from "../../buttons/PrimaryButton";
 import { DashboardContext } from "../../../context/DashboardContext";
