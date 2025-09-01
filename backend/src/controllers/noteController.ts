@@ -3,7 +3,11 @@ import * as noteService from "../services/noteService";
 
 export const getNotes = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.userId;
+    if (!userId) {
+      res.status(403).json({ message: "Missing User ID" });
+      return;
+    }
     const notes = await noteService.getNotes(userId);
     res.status(200).json(notes);
   } catch (error) {

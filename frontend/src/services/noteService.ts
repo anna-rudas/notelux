@@ -1,15 +1,13 @@
 import { Note, NoteData } from "../types/types";
 import { getUserIdToken } from "../firebase/authService";
 
-export const getNotesFromDb = async (
-  userId: string
-): Promise<Note[] | null> => {
+export const getNotesFromDb = async (): Promise<Note[] | null> => {
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
   if (!backendUrl) {
     throw new Error("Backend URL is not defined");
   }
   const token = await getUserIdToken();
-  const response = await fetch(`${backendUrl}/api/notes/${userId}`, {
+  const response = await fetch(`${backendUrl}/api/notes`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

@@ -122,7 +122,7 @@ function DashboardContextProvider({ children }: DashboardContextProviderProps) {
     if (authenticatedUser) {
       setAreNotesLoading(true);
       try {
-        const result = await getNotesFromDb(authenticatedUser.id);
+        const result = await getNotesFromDb();
         if (result) {
           setNotes([...result]);
         }

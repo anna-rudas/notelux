@@ -16,8 +16,8 @@ export const checkIfAuthenticated = async (
     }
 
     const token = req.headers.authorization.split(" ")[1];
-    await admin.auth().verifyIdToken(token);
-
+    const authResult = await admin.auth().verifyIdToken(token);
+    req.userId = authResult.uid;
     return next();
   } catch (e) {
     res.status(401).send({ error: "Invalid token" });

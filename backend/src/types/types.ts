@@ -30,3 +30,9 @@ export type UserDataGetEmail = {
 export type UserDataGetUserId = {
   user_id: string;
 };
+
+declare module "express-serve-static-core" {
+  interface Request {
+    userId?: string;
+  }
+}
