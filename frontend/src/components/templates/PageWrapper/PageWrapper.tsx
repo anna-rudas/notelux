@@ -26,7 +26,7 @@ function PageWrapper({
   return (
     <div
       {...className(shared.wrapper)}
-      data-theme={user?.theme ?? defaultTheme}
+      data-theme={useLandingPageStyle ?? user?.theme ?? defaultTheme}
     >
       {isLoading && <ActionLoading />}
       <Header
